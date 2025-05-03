@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: robolearn-app
+    ports:
+      - "3000:3000"  # Adjust this if your app uses a different port
+    environment:
+      - NODE_ENV=development  # Set the environment to development
+    volumes:
+      - .:/app  # Mounts the current directory to /app in the container (useful for development)
+    networks:
+      - robolearn-network
+
+networks:
+  robolearn-network:
+    driver: bridge
