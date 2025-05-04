@@ -39,6 +39,13 @@ export function Navbar() {
                   {item.name}
                 </Link>
               ))}
+              
+              <Link
+                href="/get-started"
+                className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm px-4 py-2 ml-2"
+              >
+                Explore
+              </Link>
             </div>
           </div>
 
@@ -81,6 +88,14 @@ export function Navbar() {
               {item.name}
             </Link>
           ))}
+          
+          <Link
+            href="/get-started"
+            className="block px-3 py-2 mt-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background font-medium text-base hover:bg-[#383838] dark:hover:bg-[#ccc]"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Explore
+          </Link>
         </div>
       </div>
     </nav>
