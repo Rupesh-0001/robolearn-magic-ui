@@ -1,8 +1,7 @@
 import Link from "next/link";
-
 export function Hero() {
   return (
-    <section className="relative pt-24 pb-32 overflow-hidden">
+    <section className="relative pt-24 pb-24 overflow-hidden">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="gap-12 items-center px-20 pt-8 text-center">
           <div className="flex flex-col gap-6">
