@@ -7,6 +7,8 @@ import { Reviews } from "@/components/sections/Reviews"
 import { FAQ } from "@/components/sections/FAQ"
 import { Stats } from "@/components/sections/Stats"
 import { Particles } from "@/components/magicui/particles";
+import { BentoDemo } from "@/components/sections/BentoGrid";
+
 
 export default function Home() {
 
@@ -25,6 +27,7 @@ export default function Home() {
         <Hero />
         <Stats />
         <Features />
+        <BentoDemo />
         <Reviews />
       <FAQ />
         <CTA />
