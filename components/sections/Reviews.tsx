@@ -64,8 +64,7 @@ const ReviewCard = ({
     <figure
       className={cn(
         "relative h-full w-64 shrink-0 cursor-pointer overflow-hidden rounded-xl border p-4 mx-2",
-        "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
-        "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]",
+        "border-gray-200 bg-gray-50 hover:bg-gray-50",
       )}
     >
       <div className="flex flex-row items-center gap-2">
@@ -88,7 +87,7 @@ export function Reviews() {
   const secondRow = reviews.slice(half);
 
   return (
-    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden mb-12 p-4">
+    <section id="reviews" className="relative flex w-full flex-col items-center justify-center overflow-hidden mb-12 p-4 z-20">
       <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-16">
         What our customers are saying
       </h2>
@@ -104,6 +103,6 @@ export function Reviews() {
       </Marquee>
       <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background"></div>
       <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background"></div>
-    </div>
+    </section>
   );
 }

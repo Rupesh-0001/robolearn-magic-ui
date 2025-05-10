@@ -1,14 +1,15 @@
-FROM node:20-alpine AS builder
+FROM node:20-alpine
 
 WORKDIR /app
 
+# Copy package.json and package-lock.json first for better layer caching
 COPY package*.json ./
 
+# Install dependencies
 RUN npm install
 
+# Copy the rest of the application
 COPY . .
-
-RUN npm install -g next
 
 EXPOSE 3000
 

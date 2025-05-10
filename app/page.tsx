@@ -5,9 +5,8 @@ import { Features } from "@/components/sections/Features";
 import { CTA } from "@/components/sections/CTA";
 import { Reviews } from "@/components/sections/Reviews"
 import { FAQ } from "@/components/sections/FAQ"
-import { Stats } from "@/components/sections/Stats"
 import { Particles } from "@/components/magicui/particles";
-import { BentoDemo } from "@/components/sections/BentoGrid";
+import { BentoDemo } from "@/components/sections/Courses";
 
 
 export default function Home() {
@@ -25,11 +24,10 @@ export default function Home() {
       />
       <div className="relative z-10">
         <Hero />
-        <Stats />
         <Features />
         <BentoDemo />
         <Reviews />
-      <FAQ />
+        <FAQ />
         <CTA />
       </div>
     </div>

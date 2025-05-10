@@ -5,35 +5,63 @@ import { cn } from "@/lib/utils";
 
 const faqs = [
   {
-    question: "How does the AI-powered learning work?",
-    answer: "Our AI system analyzes your learning patterns, progress, and areas of difficulty to create a personalized learning path. It adapts in real-time to provide the most effective content and exercises for your specific needs."
+    question: "Who can join your courses?",
+    answer:
+      "Our courses are ideal for high school students, college students, engineering graduates, tech enthusiasts, and early professionals who want to specialize in future-ready technologies.",
   },
   {
-    question: "Is there a free trial available?",
-    answer: "Yes! We offer a 14-day free trial that gives you full access to all platform features. No credit card required to start."
+    question: "Do I need prior experience to start learning?",
+    answer:
+      "Not necessarily. Most of our beginner-level courses are designed for students with little to no prior experience. For advanced courses, we recommend basic knowledge in programming or electronics, which we can also help you build.",
   },
   {
-    question: "Can I learn at my own pace?",
-    answer: "Absolutely. Our platform is designed to be flexible and self-paced. You can learn whenever it's convenient for you and take as much time as you need with each concept."
+    question: "Will I get a certificate?",
+    answer:
+      "Yes, upon successful completion of any course, you will receive an industry-recognized certificate that can be added to your LinkedIn profile or resume.",
   },
   {
-    question: "What kind of support is available?",
-    answer: "We provide 24/7 technical support, access to our community forums, and regular office hours with expert instructors. You're never alone in your learning journey."
+    question: "What if I get stuck during the course?",
+    answer:
+      "We offer 24/7 student support, discussion forums, and weekly live doubt-clearing sessions to ensure you're never left behind.",
   },
   {
-    question: "Are there any prerequisites?",
-    answer: "No prerequisites are required. Our courses are designed to accommodate learners at all levels, from complete beginners to advanced practitioners."
-  }
+    question: "Will these courses help me get a job or internship?",
+    answer:
+      "Yes, we offer career counseling, resume-building support, and connections with industry partners to help you land internships and jobs.",
+  },
+  {
+    question: "Can I access the course on mobile?",
+    answer:
+      "Yes, our platform is fully optimized for mobile devices, so you can learn anytime, anywhere.",
+  },
+  {
+    question: "Will you help me build a project?",
+    answer:
+      "Absolutely. Every course includes guided projects and the opportunity to build your own capstone project with mentor feedback.",
+  },
+  {
+    question: "Do you offer mentorship?",
+    answer:
+      "Yes, every student gets access to dedicated mentors who provide guidance, solve doubts, and help with career planning.",
+  },
 ];
 
-function FAQItem({ question, answer }: { question: string; answer: string }) {
-  const [isOpen, setIsOpen] = useState(false);
-
+function FAQItem({ 
+  question, 
+  answer, 
+  isOpen, 
+  onClick 
+}: { 
+  question: string; 
+  answer: string; 
+  isOpen: boolean;
+  onClick: () => void;
+}) {
   return (
     <div className="border-b border-border">
       <button
-        className="flex w-full items-center justify-between py-4"
-        onClick={() => setIsOpen(!isOpen)}
+        className="flex w-full items-center justify-between py-4 cursor-pointer"
+        onClick={onClick}
       >
         <span className="text-lg font-medium">{question}</span>
         <ChevronDown
@@ -56,15 +84,27 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 }
 
 export function FAQ() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const handleToggle = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
-    <section className="py-24 bg-background">
+    <section id="faqs" className="py-24 bg-transparent">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-center mb-16">
           Frequently Asked Questions
         </h2>
         <div className="space-y-1">
           {faqs.map((faq, index) => (
-            <FAQItem key={index} {...faq} />
+            <FAQItem 
+              key={index} 
+              question={faq.question}
+              answer={faq.answer}
+              isOpen={openIndex === index}
+              onClick={() => handleToggle(index)}
+            />
           ))}
         </div>
       </div>

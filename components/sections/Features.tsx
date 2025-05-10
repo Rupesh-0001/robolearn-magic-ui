@@ -3,36 +3,36 @@ import { Lightbulb, Brain, Rocket, Users } from "lucide-react";
 const features = [
   {
     title: "AI-Powered Learning",
-    description: "Our advanced AI algorithms adapt to your learning style and pace, providing personalized guidance.",
+    description: "Customized learning powered by Al - we tailor the experience to match each student's pace and understanding.",
     icon: Brain,
   },
   {
     title: "Interactive Exercises",
-    description: "Engage with hands-on exercises that reinforce concepts and build practical skills.",
+    description: "Build real-world skills through fun, hands-on robotics challenges and coding tasks that reinforce key concepts.",
     icon: Lightbulb,
   },
   {
     title: "Global Community",
-    description: "Connect with learners worldwide to share insights, collaborate on projects, and grow together.",
+    description: "Be part of a vibrant, global community of young tech enthusiasts. Share ideas, collaborate, and grow together.",
     icon: Users,
   },
   {
     title: "Accelerated Progress",
-    description: "Learn faster with our proven methodology that combines theory with practical application.",
+    description: "Master robotics faster through a structured blend of theory, experimentation, and guided projects.",
     icon: Rocket,
   },
 ];
 
 export function Features() {
   return (
-    <section id="features" className="py-24 bg-muted/50">
+    <section id="features" className="py-24 bg-muted/50 h-[calc(100vh-64px)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Powerful Features for Effective Learning
+          <h2 className="text-3xl mx-auto font-bold tracking-tight sm:text-4xl">
+            Discover how our platform transforms the way you learn.
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-            Discover how our platform transforms the way you learn with these innovative features.
+            See how our approach to robotics education sparks curiosity and delivers real-world skills.
           </p>
         </div>
 
