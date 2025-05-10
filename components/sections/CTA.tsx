@@ -8,7 +8,8 @@ export function CTA() {
           Ready to transform your learning experience?
         </h2>
         <p className="text-lg max-w-2xl mx-auto mb-8 opacity-90">
-          Join thousands of learners who have accelerated their education with our AI-powered platform.
+          Join thousands of learners who have accelerated their education with
+          our AI-powered platform.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
@@ -27,4 +28,4 @@ export function CTA() {
       </div>
     </section>
   );
-} 
+}
