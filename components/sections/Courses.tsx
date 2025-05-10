@@ -1,6 +1,7 @@
 import {
   CodeIcon
 } from "@radix-ui/react-icons";
+import Image from "next/image";
 
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
 import aiAgent from "@/public/aiAgent.png";
@@ -21,7 +22,7 @@ const courses = [
     className: "lg:col-span-1 lg:row-span-1",
     image: (
       <WarpBackground className="p-0 border-0 flex items-center justify-center">
-        <img src={drone.src} alt="Drone Technology & Applications" className="max-h-96 object-contain" />
+        <Image src={drone} alt="Drone Technology & Applications" className="max-h-96 object-contain" />
       </WarpBackground>
     ),
   },
@@ -34,7 +35,7 @@ const courses = [
     className: "lg:col-span-1 lg:row-span-1",
     image: (
       <WarpBackground className="p-0 border-0 flex items-center justify-center">
-        <img src={aiAgent.src} alt="AI Agents Mastery" className="max-h-96 object-contain" />
+        <Image src={aiAgent} alt="AI Agents Mastery" className="max-h-96 object-contain" />
       </WarpBackground>
     ),
   },
@@ -46,7 +47,7 @@ const courses = [
     cta: "See Integration",
     className: "lg:col-span-1 lg:row-span-2",
     image: (
-      <img src={robotics.src} alt="Industrial Robotics Essentials" className="max-h-96 object-contain" />
+      <Image src={robotics} alt="Industrial Robotics Essentials" className="max-h-96 object-contain" />
     ),
   },
   {
@@ -57,7 +58,7 @@ const courses = [
     cta: "Customize Now",
     className: "lg:col-span-2 lg:row-span-1",
     image: (
-      <img src={autonomous.src} alt="Autonomous Vehicles Engineering" className="max-h-48 object-contain" />
+      <Image src={autonomous} alt="Autonomous Vehicles Engineering" className="max-h-48 object-contain" />
     ),
   },
 ];

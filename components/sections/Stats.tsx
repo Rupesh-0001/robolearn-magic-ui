@@ -5,14 +5,12 @@ interface StatItemProps {
   value: number;
   label: string;
   symbol: string;
-  color?: string;
 }
 
 const StatItem: React.FC<StatItemProps> = ({
   value,
   label,
   symbol,
-  color = "#2196F3",
 }) => {
   return (
     <div className="text-center text-gray-950 flex flex-col items-center">

@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import Image from "next/image";
 import { Marquee } from "@/components/magicui/marquee";
 
 const reviews = [
@@ -42,13 +42,6 @@ const reviews = [
   },
 ];
 
-type Review = {
-  name: string;
-  username: string;
-  body: string;
-  img: string;
-};
-
 const ReviewCard = ({
   img,
   name,
@@ -68,7 +61,7 @@ const ReviewCard = ({
       )}
     >
       <div className="flex flex-row items-center gap-2">
-        <img className="rounded-full" width="32" height="32" alt="" src={img} />
+        <Image className="rounded-full" width={32} height={32} alt={`${name}'s avatar`} src={img} />
         <div className="flex flex-col">
           <figcaption className="text-sm font-medium dark:text-white">
             {name}
