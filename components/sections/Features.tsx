@@ -30,7 +30,7 @@ export function Features() {
 
   return (
     <section id="features" className="py-12 sm:py-16 md:py-24 bg-muted/50 flex flex-col min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow flex flex-col">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col">
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
           <h2 className={`mx-auto font-bold tracking-tight ${
             isSmallScreen ? "text-2xl" : isMediumScreen ? "text-3xl" : "text-4xl"
