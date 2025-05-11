@@ -17,7 +17,7 @@ const StatItem: React.FC<StatItemProps> = ({
       <div className="flex items-center">
         <NumberTicker
           value={value}
-          className="text-4xl font-bold tracking-tighter"
+          className="text-4xl font-bold tracking-tighter 2xl:text-5xl"
         />
         <span className="text-4xl font-bold">{symbol}</span>
       </div>

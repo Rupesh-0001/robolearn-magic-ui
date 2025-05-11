@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactNode } from "react";
+import React, { ComponentPropsWithoutRef, ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -11,19 +11,40 @@ interface BentoCardProps extends ComponentPropsWithoutRef<"div"> {
   name: string;
   className: string;
   background?: string;
-  Icon?: React.ElementType;
   description: string;
   href: string;
   cta?: string;
   image?: string | ReactNode;
+  imagePosition?: "right" | "bottom";
 }
+
+// Function to check if an element is a specific component type
+const isComponentType = (element: React.ReactElement, componentNames: string[]): boolean => {
+  if (!element || !element.type) return false;
+  
+  const typeName = typeof element.type === 'string' 
+    ? element.type 
+    : (element.type as any).displayName || (element.type as any).name || '';
+  
+  return componentNames.includes(typeName);
+};
+
+// Helper function to safely get children from a React element
+const getElementChildren = (element: React.ReactElement): React.ReactNode => {
+  try {
+    // Using type assertion to handle props
+    return (element.props as { children?: React.ReactNode }).children;
+  } catch (e) {
+    return null;
+  }
+};
 
 const BentoGrid = ({ children, className, ...props }: BentoGridProps) => {
   return (
     <div
       className={cn(
-        "grid w-full auto-rows-[28rem] grid-cols-3 gap-4",
-        className,
+        "grid w-full auto-rows-[20rem] grid-cols-3 gap-4",
+        className
       )}
       {...props}
     >
@@ -38,6 +59,7 @@ const BentoCard = ({
   description,
   href,
   image,
+  imagePosition = "right",
   ...props
 }: BentoCardProps) => (
   <div
@@ -48,33 +70,59 @@ const BentoCard = ({
       "bg-transparent border border-neutral-100 [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
       // dark styles
       "transform-gpu dark:bg-transparent dark:border-neutral-800 dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]",
-      className,
+      className
     )}
     {...props}
   >
     <a href={href} className="h-full flex flex-col">
       {/* Text content - reduced padding */}
-      <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-4">
-        <h3 className="text-2xl font-semibold text-[#ff4164] dark:text-neutral-300">
-          {name}
-        </h3>
-        <span className="max-w-lg text-neutral-600 dark:text-neutral-400 text-base">{description}</span>
+      <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-3">
+        <h3 className="text-xl font-semibold text-[#ff4164]">{name}</h3>
+        <span className="max-w-lg text-neutral-600 text-sm">
+          {description}
+        </span>
       </div>
 
-      {/* Image section - expanded for larger images */}
-      <div className="flex-grow flex items-center justify-center p-2 min-h-[65%]">
+      {/* Image section with position-based animations */}
+      <div className="flex-grow flex items-center justify-center p-2 min-h-[60%] overflow-hidden relative">
         {image && (
-          <div className="w-full h-full flex items-center justify-center transition-all duration-300 group-hover:scale-200">
-            {typeof image === "string" ? (
-              <img 
-                src={image} 
-                alt={name} 
-                className="object-contain max-h-full" 
-              />
-            ) : (
-              image
+          <>
+            {/* This is for background elements that should remain fixed */}
+            {typeof image !== "string" && React.isValidElement(image) && (
+              <div className="absolute inset-0 z-0">
+                {/* Extract background component - this won't move */}
+                {isComponentType(image, ['WarpBackground', 'FlickeringGrid', 'Ripple']) 
+                  ? image 
+                  : null}
+              </div>
             )}
-          </div>
+            
+            {/* This is the actual content that will animate on hover */}
+            <div 
+              className={cn(
+                "w-full h-full flex items-center justify-center transition-all duration-300 z-10 relative",
+                imagePosition === "right" 
+                  ? "translate-x-[15%] group-hover:translate-x-0" // Start right, move left on hover
+                  : "translate-y-[15%] group-hover:translate-y-0" // Start bottom, move up on hover
+              )}
+            >
+              {typeof image === "string" ? (
+                <img
+                  src={image}
+                  alt={name}
+                  className="object-contain max-h-full"
+                />
+              ) : React.isValidElement(image) ? (
+                // If the image is a background component, render its children instead
+                isComponentType(image, ['WarpBackground', 'FlickeringGrid', 'Ripple']) && 
+                getElementChildren(image) ? 
+                  getElementChildren(image) : image
+              ) : (
+                // Fallback for any other ReactNode type
+                image
+              )}
+            </div>
+          </>
         )}
       </div>
     </a>

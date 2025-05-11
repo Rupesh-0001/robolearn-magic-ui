@@ -12,6 +12,8 @@ import { WarpBackground } from "@/components/magicui/warp-background";
 import { Ripple } from "@/components/magicui/ripple";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 
+type ImagePosition = "right" | "bottom";
+
 const courses = [
   {
     Icon: CodeIcon,
@@ -20,9 +22,10 @@ const courses = [
     href: "/features/ai-algorithms",
     cta: "Learn More",
     className: "lg:col-span-1 lg:row-span-1",
+    imagePosition: "right" as ImagePosition,
     image: (
       <WarpBackground className="p-0 border-0 flex items-center justify-center">
-        <Image src={drone} alt="Drone Technology & Applications" className="max-h-96 object-contain" />
+        <Image src={drone} alt="Drone Technology & Applications" className="max-h-96 scale-230 object-contain" />
       </WarpBackground>
     ),
   },
@@ -33,9 +36,10 @@ const courses = [
     href: "/features/security",
     cta: "Explore Security",
     className: "lg:col-span-1 lg:row-span-1",
+    imagePosition: "right" as ImagePosition,
     image: (
       <WarpBackground className="p-0 border-0 flex items-center justify-center">
-        <Image src={aiAgent} alt="AI Agents Mastery" className="max-h-96 object-contain" />
+        <Image src={aiAgent} alt="AI Agents Mastery" className="max-h-96 scale-190 object-contain" />
       </WarpBackground>
     ),
   },
@@ -46,8 +50,9 @@ const courses = [
     href: "/features/integration",
     cta: "See Integration",
     className: "lg:col-span-1 lg:row-span-2",
+    imagePosition: "right" as ImagePosition,
     image: (
-      <Image src={robotics} alt="Industrial Robotics Essentials" className="max-h-96 object-contain" />
+      <Image src={robotics} alt="Industrial Robotics Essentials" className="max-h-96 scale-360 object-contain" />
     ),
   },
   {
@@ -57,8 +62,9 @@ const courses = [
     href: "/features/customization",
     cta: "Customize Now",
     className: "lg:col-span-2 lg:row-span-1",
+    imagePosition: "bottom" as ImagePosition,
     image: (
-      <Image src={autonomous} alt="Autonomous Vehicles Engineering" className="max-h-48 object-contain" />
+      <Image src={autonomous} alt="Autonomous Vehicles Engineering" className="max-h-48 scale-200 object-contain" />
     ),
   },
 ];
@@ -70,7 +76,7 @@ export function BentoDemo() {
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-center mb-12">
           Explore Our Courses
         </h2>
-        <BentoGrid className="lg:grid-cols-3 lg:grid-rows-2 gap-6">
+        <BentoGrid className="lg:grid-cols-3 lg:grid-rows-2 gap-6 auto-rows-[18rem]">
           {courses.slice(0, 2).map((course) => (
             <BentoCard 
               key={course.name} 

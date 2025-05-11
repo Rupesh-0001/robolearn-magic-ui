@@ -7,7 +7,7 @@ export function Hero() {
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-24">
         <div className="gap-12 items-center px-20 pt-8 text-center">
           <div className="flex flex-col gap-6">
-            <span className="text-4xl sm:text-5xl tracking-tight">
+            <span className="text-4xl sm:text-5xl 2xl:text-6xl tracking-tight">
               <span className="font-bold">Inspire Young Innovators with</span>{" "}
               <br /> <span className="font-bold">the</span>
               <span className="italic bg-gradient-to-r from-[#ff4164] via-[#ff7e42] to-[#ffb74d] bg-clip-text text-transparent w-fit px-[3px]">
@@ -49,12 +49,6 @@ export function Hero() {
           </svg>
           Explore Free Masterclass
         </Link>
-        {/* <Link
-                href="/learn-more"
-                className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto"
-              >
-                Learn More
-              </Link> */}
       </div>
 
       <div className="w-full pb-8">
