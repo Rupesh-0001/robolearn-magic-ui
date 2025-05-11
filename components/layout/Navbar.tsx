@@ -16,7 +16,6 @@ const navItems = [
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const isSmallScreen = useMediaQuery("(max-width: 640px)");
   const isMediumScreen = useMediaQuery("(max-width: 768px)");
 
@@ -25,15 +24,6 @@ export function Navbar() {
       setIsMenuOpen(false);
     }
   }, [isMediumScreen]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const scrollToSection = (
     e: React.MouseEvent<HTMLAnchorElement>,
