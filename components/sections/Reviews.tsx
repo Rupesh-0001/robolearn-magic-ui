@@ -81,8 +81,8 @@ export function Reviews() {
 
   return (
     <section id="reviews" className="relative flex w-full flex-col items-center justify-center overflow-hidden mb-12 p-4 z-20">
-      <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-16">
-        What our customers are saying
+      <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-16 text-center">
+        <span className="relative z-10">What our customers are saying</span>
       </h2>
       <Marquee pauseOnHover className="[--duration:20s]">
         {firstRow.map((review) => (
