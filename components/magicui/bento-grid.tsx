@@ -15,7 +15,9 @@ interface BentoCardProps extends ComponentPropsWithoutRef<"div"> {
   href: string;
   cta?: string;
   image?: string | ReactNode;
-  imagePosition?: "right" | "bottom";
+  descriptionClassName?: string;
+  imageClassName?: string;
+  hoverClassName?: string;
 }
 
 // Function to check if an element is a specific component type
@@ -59,7 +61,9 @@ const BentoCard = ({
   description,
   href,
   image,
-  imagePosition = "right",
+  descriptionClassName,
+  imageClassName,
+  hoverClassName,
   ...props
 }: BentoCardProps) => (
   <div
@@ -78,13 +82,17 @@ const BentoCard = ({
       {/* Text content - reduced padding */}
       <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-3">
         <h3 className="text-xl font-semibold text-[#ff4164]">{name}</h3>
-        <span className="max-w-lg text-neutral-600 text-sm">
+        <span className={cn(
+            "text-neutral-600 text-sm",
+            descriptionClassName
+          )}
+        >
           {description}
         </span>
       </div>
 
       {/* Image section with position-based animations */}
-      <div className="flex-grow flex items-center justify-center p-2 min-h-[60%] overflow-hidden relative">
+      <div className="flex-grow flex items-center justify-center p-2 min-h-[60%] relative">
         {image && (
           <>
             {/* This is for background elements that should remain fixed */}
@@ -101,9 +109,7 @@ const BentoCard = ({
             <div 
               className={cn(
                 "w-full h-full flex items-center justify-center transition-all duration-300 z-10 relative",
-                imagePosition === "right" 
-                  ? "translate-x-[15%] group-hover:translate-x-0" // Start right, move left on hover
-                  : "translate-y-[15%] group-hover:translate-y-0" // Start bottom, move up on hover
+                imageClassName
               )}
             >
               {typeof image === "string" ? (
@@ -126,7 +132,9 @@ const BentoCard = ({
         )}
       </div>
     </a>
-    <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/[.03] group-hover:dark:bg-neutral-800/10" />
+    <div className={cn("pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:dark:bg-neutral-800/10",
+      hoverClassName
+    )} />
   </div>
 );
 

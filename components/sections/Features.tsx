@@ -4,22 +4,22 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 const features = [
   {
     title: "AI-Powered Learning",
-    description: "Customized learning powered by Al - we tailor the experience to match each student's pace and understanding.",
+    description: "Discover personalized education with AI! We tailor each lesson to fit your pace, style, and needs - making learning more engaging, effective, and uniquely designed for your success.",
     icon: Brain,
   },
   {
     title: "Interactive Exercises",
-    description: "Build real-world skills through fun, hands-on robotics challenges and coding tasks that reinforce key concepts.",
+    description: "Boost your skills with hands-on robotics and coding challenges. These fun, interactive tasks reinforce key concepts and help you apply knowledge in real-world scenarios for deeper learning.",
     icon: Lightbulb,
   },
   {
     title: "Global Community",
-    description: "Be part of a vibrant, global community of young tech enthusiasts. Share ideas, collaborate, and grow together.",
+    description: "Join a vibrant global network of young tech enthusiasts. Collaborate, share ideas, and grow together in a supportive, inspiring environment that connects learners from around the world.",
     icon: Users,
   },
   {
     title: "Accelerated Progress",
-    description: "Master robotics faster through a structured blend of theory, experimentation, and guided projects.",
+    description: "Advance faster in robotics with a balanced mix of theory, guided projects, and hands-on experimentation. Our structured approach helps you build confidence and mastery at an impressive pace.",
     icon: Rocket,
   },
 ];

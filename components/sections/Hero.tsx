@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Stats } from "@/components/sections/Stats";
+import { TypewriterText } from "@/components/ui/TypewriterText";
 
 export function Hero() {
   return (
@@ -9,10 +10,9 @@ export function Hero() {
           <div className="flex flex-col gap-4 sm:gap-6">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl tracking-tight font-bold">
               Inspire Young Innovators with
-              <br className="hidden sm:block" /> the
+              <br className="hidden sm:block" /> the{" "}
               <span className="italic bg-gradient-to-r from-[#ff4164] via-[#ff7e42] to-[#ffb74d] bg-clip-text text-transparent w-fit px-[3px]">
-                {" "}
-                Power of Robotics
+                <TypewriterText text="Power of Robotics" delay={80} />
               </span>
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
