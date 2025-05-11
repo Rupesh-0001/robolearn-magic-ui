@@ -38,7 +38,6 @@ const StatItem: React.FC<StatItemProps> = ({
 
 export const Stats: React.FC = () => {
   const isSmallScreen = useMediaQuery("(max-width: 640px)");
-  const isMediumScreen = useMediaQuery("(max-width: 768px)");
 
   return (
     <section className="pb-12">

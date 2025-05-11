@@ -24,7 +24,7 @@ const isComponentType = (element: React.ReactElement, componentNames: string[]):
   
   const typeName = typeof element.type === 'string' 
     ? element.type 
-    : (element.type as any).displayName || (element.type as any).name || '';
+    : (element.type as React.ComponentType).displayName || (element.type as React.ComponentType).name || '';
   
   return componentNames.includes(typeName);
 };
@@ -34,7 +34,7 @@ const getElementChildren = (element: React.ReactElement): React.ReactNode => {
   try {
     // Using type assertion to handle props
     return (element.props as { children?: React.ReactNode }).children;
-  } catch (e) {
+  } catch {
     return null;
   }
 };

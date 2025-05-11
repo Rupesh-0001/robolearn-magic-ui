@@ -162,7 +162,7 @@ export function Navbar() {
           <Link
             href="/get-started"
             className={cn(
-              "block hidden px-3 py-2 mt-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background font-medium text-base hover:bg-[#383838] dark:hover:bg-[#ccc]"
+              "hidden px-3 py-2 mt-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background font-medium text-base hover:bg-[#383838] dark:hover:bg-[#ccc]"
             )}
             onClick={() => setIsMenuOpen(false)}
           >
