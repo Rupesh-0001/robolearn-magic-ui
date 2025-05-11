@@ -80,8 +80,8 @@ const BentoCard = ({
   >
     <a href={href} className="h-full flex flex-col">
       {/* Text content - reduced padding */}
-      <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-3">
-        <h3 className="text-xl font-semibold text-[#ff4164]">{name}</h3>
+      <div className="pointer-events-none z-50 flex transform-gpu flex-col gap-1 p-3">
+        <h3 className="text-xl font-semibold z-50 text-[#ff4164]">{name}</h3>
         <span className={cn(
             "text-neutral-600 text-sm",
             descriptionClassName
