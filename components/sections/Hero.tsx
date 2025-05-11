@@ -27,7 +27,7 @@ export function Hero() {
 
       <div className="flex justify-center mt-8 sm:mt-12">
         <Link
-          href="/get-started"
+          href="/explore"
           className="rounded border border-solid border-transparent transition-colors flex items-center justify-center bg-[#ff4164] text-background gap-2 hover:bg-[#ff1c46]/90 dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
         >
           <svg

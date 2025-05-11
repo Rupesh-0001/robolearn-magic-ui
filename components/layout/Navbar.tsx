@@ -80,7 +80,7 @@ export function Navbar() {
                 </Link>
               ))}
               <Link
-                href="/get-started"
+                href="/explore"
                 className={cn(
                   "rounded border border-solid border-transparent transition-colors flex items-center justify-center bg-[#ff4164] text-white gap-2 hover:bg-[#ff1c46]/90 dark:hover:bg-[#ccc] font-medium",
                   isSmallScreen ? "text-xs h-8 px-2" : "text-sm h-10 px-3"
@@ -149,7 +149,7 @@ export function Navbar() {
           ))}
 
           <Link
-            href="/get-started"
+            href="/explore"
             className={cn(
               "block px-3 py-2 mt-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background font-medium text-base hover:bg-[#383838] dark:hover:bg-[#ccc]"
             )}
