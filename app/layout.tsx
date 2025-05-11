@@ -15,8 +15,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RoboLearn - AI-Powered Learning Platform",
-  description: "Learn faster with our AI-powered educational platform that adapts to your unique learning style.",
+  title: "RoboLearn",
+  description: "RoboLearn - Igniting the Future of Robotics Education",
+  icons: {
+    icon: "/logo.svg",
+  },
 };
 
 export default function RootLayout({

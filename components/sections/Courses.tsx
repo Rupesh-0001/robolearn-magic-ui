@@ -1,6 +1,3 @@
-import {
-  CodeIcon
-} from "@radix-ui/react-icons";
 import Image from "next/image";
 
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
@@ -16,7 +13,6 @@ type ImagePosition = "right" | "bottom";
 
 const courses = [
   {
-    Icon: CodeIcon,
     name: "Drone Technology & Applications",
     description: "Design, build, and operate drones with a focus on flight control, autonomy, and practical uses.",
     href: "/features/ai-algorithms",
@@ -30,7 +26,6 @@ const courses = [
     ),
   },
   {
-    Icon: CodeIcon,
     name: "AI Agents Mastery",
     description: "Learn to build intelligent AI agents that make decisions, automate tasks, and solve real-world problems.",
     href: "/features/security",
@@ -44,7 +39,6 @@ const courses = [
     ),
   },
   {
-    Icon: CodeIcon,
     name: "Industrial Robotics Essentials",
     description: "Master robotic arms, automation systems, and programming for modern industrial manufacturing environments.",
     href: "/features/integration",
@@ -56,7 +50,6 @@ const courses = [
     ),
   },
   {
-    Icon: CodeIcon,
     name: "Autonomous Vehicles Engineering",
     description: "Explore the tech behind self-driving cars, including sensors, perception, and autonomous navigation systems.",
     href: "/features/customization",
