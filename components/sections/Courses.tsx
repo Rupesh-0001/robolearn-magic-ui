@@ -55,14 +55,14 @@ const courses = [
     href: "/features/integration",
     cta: "See Integration",
     className: "col-span-1 row-span-2",
-    imageClassName: "translate-x-[5%] translate-y-[-10px]",
-    descriptionClassName: "max-w-full",
+    imageClassName: "xl:translate-x-[5%] xl:translate-y-[-10px] translate-x-[23%] translate-y-[-80px]",
+    descriptionClassName: "xl:max-w-full max-w-1/2",
     hoverClassName: "group-hover:bg-orange-500/10",
     image: (
       <Image
         src={robotics}
         alt="Industrial Robotics Essentials"
-        className="max-h-96 scale-390 object-contain"
+        className="max-h-96 xl:scale-390 scale-210 object-contain"
       />
     ),
   },
@@ -73,14 +73,14 @@ const courses = [
     href: "/features/customization",
     cta: "Customize Now",
     className: "col-span-2 row-span-1",
-    imageClassName: "translate-x-[20%] translate-y-[-30%]",
-    descriptionClassName: "max-w-1/3",
+    imageClassName: "xl:translate-x-[20%] xl:translate-y-[-30%]",
+    descriptionClassName: "xl:max-w-1/3 max-w-full",
     hoverClassName: "group-hover:bg-green-500/10",
     image: (
       <Image
         src={autonomous}
         alt="Autonomous Vehicles Engineering"
-        className="max-h-48 scale-250 object-contain"
+        className="max-h-48 xl:scale-250 scale-170 object-contain"
       />
     ),
   },

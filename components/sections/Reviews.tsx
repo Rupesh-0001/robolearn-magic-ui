@@ -84,12 +84,21 @@ export function Reviews() {
       <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-16 text-center">
         <span className="relative z-10">What our customers are saying</span>
       </h2>
-      <Marquee pauseOnHover className="[--duration:20s]">
+      <Marquee 
+        pauseOnHover 
+        className="[--duration:40s] md:[--duration:20s]"
+        repeat={2}
+      >
         {firstRow.map((review) => (
           <ReviewCard key={review.username} {...review} />
         ))}
       </Marquee>
-      <Marquee reverse pauseOnHover className="[--duration:20s]">
+      <Marquee 
+        reverse 
+        pauseOnHover 
+        className="[--duration:40s] md:[--duration:20s]"
+        repeat={2}
+      >
         {secondRow.map((review) => (
           <ReviewCard key={review.username} {...review} />
         ))}
