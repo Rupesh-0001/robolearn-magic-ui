@@ -1,0 +1,111 @@
+"use client";
+
+// import { Particles } from "@/components/magicui/particles";
+// import { useMediaQuery } from "@/hooks/useMediaQuery";
+// import Image from "next/image";
+import Link from "next/link";
+
+export default function ExplorePage() {
+  // const isSmallScreen = useMediaQuery("(max-width: 640px)");
+  // const isMediumScreen = useMediaQuery("(max-width: 768px)");
+
+  return (
+    <div className="relative w-full overflow-hidden">
+      {/* <Particles
+        className="absolute inset-0 z-0"
+        quantity={isSmallScreen ? 100 : isMediumScreen ? 150 : 200}
+        ease={isSmallScreen ? 10 : 20}
+        color="#000000"
+        refresh
+        staticity={50}
+        size={isSmallScreen ? 0.5 : 1}
+      /> */}
+      <div className="relative z-10 container mx-auto px-4 pt-16 2xl:pb-8 pb-10">
+        <div className="my-4">
+          <span className="text-4xl font-bold">Upcoming Masterclasses</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Course Block 1 */}
+          <Link href="/masterclasses/autonomous-car" className="block transition-transform hover:scale-[1.02]">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow h-full flex flex-col">
+              <div className="h-48 bg-gray-200 relative">
+                {/* Image placeholder */}
+              </div>
+              <div className="p-6 flex-grow flex flex-col">
+                <p className="text-sm text-gray-500 mb-2">
+                  17 May 2025 • 11:00am
+                </p>
+                <h2 className="text-2xl font-semibold mb-2">
+                  Building Your Own Autonomous Car
+                </h2>
+                <p className="text-gray-600 mb-4 flex-grow">by Er Harpreet Singh</p>
+                <div className="flex items-center mt-auto">
+                  <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 bg-[#0e8144]/10 font-medium">Free</span>
+                  <span className="ml-2 line-through text-gray-400">₹99</span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          {/* Course Block 2 */}
+          <Link href="/masterclasses/ai-agent" className="block transition-transform hover:scale-[1.02]">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow h-full flex flex-col">
+              <div className="h-48 bg-gray-200 relative">
+                {/* Image placeholder */}
+              </div>
+              <div className="p-6 flex-grow flex flex-col">
+                <p className="text-sm text-gray-500 mb-2">18 May 2025 • 2:00pm</p>
+                <h2 className="text-2xl font-semibold mb-2">
+                  Build Your First AI Agent From Scratch
+                </h2>
+                <p className="text-gray-600 mb-4 flex-grow">by Er Harpreet Singh</p>
+                <div className="flex items-center mt-auto">
+                  <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 bg-[#0e8144]/10 font-medium">Free</span>
+                  <span className="ml-2 line-through text-gray-400">₹99</span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          {/* Course Block 3 */}
+          <Link href="/masterclasses/robotic-arm" className="block transition-transform hover:scale-[1.02]">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow h-full flex flex-col">
+              <div className="h-48 bg-gray-200 relative">
+                {/* Image placeholder */}
+              </div>
+              <div className="p-6 flex-grow flex flex-col">
+                <p className="text-sm text-gray-500 mb-2">19 May 2025 • 3:00pm</p>
+                <h2 className="text-2xl font-semibold mb-2">
+                  Build Your First Robotic Arm
+                </h2>
+                <p className="text-gray-600 mb-4 flex-grow">by Er Harpreet Singh</p>
+                <div className="flex items-center mt-auto">
+                  <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 bg-[#0e8144]/10 font-medium">Free</span>
+                  <span className="ml-2 line-through text-gray-400">₹99</span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          {/* Course Block 4 */}
+          {/* <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="h-48 bg-gray-200 relative">
+              Image placeholder
+            </div>
+            <div className="p-6">
+              <p className="text-sm text-gray-500 mb-2">20 May 2025 • 4:00pm</p>
+              <h2 className="text-2xl font-semibold mb-2">
+                Machine Learning for Robots
+              </h2>
+              <p className="text-gray-600 mb-4">by Prof. David Lee, PhD</p>
+              <div className="flex items-center">
+                <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 bg-[#0e8144]/10 font-medium">Free</span>
+                <span className="ml-2 line-through text-gray-400">₹99</span>
+              </div>
+            </div>
+          </div> */}
+        </div>
+      </div>
+    </div>
+  );
+}

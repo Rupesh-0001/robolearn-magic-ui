@@ -86,8 +86,7 @@ export function Reviews() {
       </h2>
       <Marquee 
         pauseOnHover 
-        className="[--duration:40s] md:[--duration:20s]"
-        repeat={2}
+        className="[--duration:20s]"
       >
         {firstRow.map((review) => (
           <ReviewCard key={review.username} {...review} />
@@ -96,8 +95,7 @@ export function Reviews() {
       <Marquee 
         reverse 
         pauseOnHover 
-        className="[--duration:40s] md:[--duration:20s]"
-        repeat={2}
+        className="[--duration:20s]"
       >
         {secondRow.map((review) => (
           <ReviewCard key={review.username} {...review} />
