@@ -75,7 +75,7 @@ export default function AutonomousCarMasterclass() {
                     </div>
 
                     <div className="bg-white p-4 sm:p-6 rounded-lg shadow mb-6 sm:mb-8">
-                        <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">What You'll Learn</h2>
+                        <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">What You&apos;ll Learn</h2>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                             <li className="flex items-start">
                                 <span className="mr-2 mt-1 text-blue-500">✓</span>
@@ -158,15 +158,15 @@ export default function AutonomousCarMasterclass() {
                         <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">About the Course</h2>
                         <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
                             This comprehensive masterclass will take you through the exciting world of autonomous vehicles. 
-                            From understanding basic concepts to implementing advanced algorithms, you'll gain hands-on 
-                            experience with industry-standard tools and technologies. Whether you're a beginner or an 
+                            From understanding basic concepts to implementing advanced algorithms, you&apos;ll gain hands-on 
+                            experience with industry-standard tools and technologies. Whether you&apos;re a beginner or an 
                             experienced engineer, this course will help you develop the skills needed to contribute to 
                             the future of autonomous transportation.
                             {showFullDescription ? (
                                 <>
-                                    Harpreet's unique teaching approach combines theoretical knowledge with practical 
+                                    Harpreet&apos;s unique teaching approach combines theoretical knowledge with practical 
                                     applications, ensuring you not only understand the concepts but can also apply them 
-                                    in real-world scenarios. You'll work on projects inspired by actual challenges faced 
+                                    in real-world scenarios. You&apos;ll work on projects inspired by actual challenges faced 
                                     in the autonomous vehicle industry, giving you valuable experience that translates 
                                     directly to your career.
                                 </>
