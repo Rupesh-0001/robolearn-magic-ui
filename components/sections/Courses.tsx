@@ -16,7 +16,7 @@ const courses = [
     name: "Drone Technology & Applications",
     description:
       "Design, build, and operate drones with a focus on flight control, autonomy, and practical uses.",
-    href: "/features/ai-algorithms",
+    href: "/courses/drones",
     cta: "Learn More",
     className: "col-span-1 row-span-1",
     imageClassName: "translate-y-[-50px] translate-x-[5%]",
@@ -34,7 +34,7 @@ const courses = [
     name: "AI Agents Mastery",
     description:
       "Learn to build intelligent AI agents that make decisions, automate tasks, and solve real-world problems.",
-    href: "/features/security",
+    href: "/courses/ai-agent",
     cta: "Explore Security",
     className: "col-span-1 row-span-1",
     imageClassName: "translate-y-[-115px] translate-x-[22%]",
@@ -52,7 +52,7 @@ const courses = [
     name: "Industrial Robotics Essentials",
     description:
       "Master robotic arms, automation systems, and programming for modern industrial manufacturing environments.",
-    href: "/features/integration",
+    href: "/courses/robotic-arm",
     cta: "See Integration",
     className: "col-span-1 row-span-2",
     imageClassName: "xl:translate-x-[5%] xl:translate-y-[-10px] translate-x-[23%] translate-y-[-80px]",
@@ -70,7 +70,7 @@ const courses = [
     name: "Autonomous Vehicles Engineering",
     description:
       "Explore the tech behind self-driving cars, including sensors, perception, and autonomous navigation systems.",
-    href: "/features/customization",
+    href: "/courses/autonomous-car",
     cta: "Customize Now",
     className: "col-span-2 row-span-1",
     imageClassName: "xl:translate-x-[20%] xl:translate-y-[-30%]",
