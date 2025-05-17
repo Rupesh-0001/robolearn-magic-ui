@@ -125,15 +125,15 @@ export default function AutonomousCarMasterclass() {
                                     <div className={`px-4 py-2 ${openLecture === 'intro' ? '' : 'hidden'}`}>
                                         <ul className="list-disc pl-5 text-sm sm:text-base">
                                             <li className="flex items-center py-1">
-                                                <RocketLaunchIcon className="h-4 w-4 mr-2 text-blue-500" />
+                                                <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
                                                 Overview
                                             </li>
                                             <li className="flex items-center py-1">
-                                                <CpuIcon className="h-4 w-4 mr-2 text-blue-500" />
+                                                <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
                                                 Key components and systems
                                             </li>
                                             <li className="flex items-center py-1">
-                                                <ChartBarIcon className="h-4 w-4 mr-2 text-blue-500" />
+                                                <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
                                                 Current state of the industry
                                             </li>
                                         </ul>
@@ -147,15 +147,15 @@ export default function AutonomousCarMasterclass() {
                                     <div className={`px-4 py-2 ${openLecture === 'perception' ? '' : 'hidden'}`}>
                                         <ul className="list-disc pl-5 text-sm sm:text-base">
                                             <li className="flex items-center py-1">
-                                                <RocketLaunchIcon className="h-4 w-4 mr-2 text-blue-500" />
+                                                <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
                                                 Sensor fusion techniques
                                             </li>
                                             <li className="flex items-center py-1">
-                                                <CpuIcon className="h-4 w-4 mr-2 text-blue-500" />
+                                                <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
                                                 Object detection and tracking
                                             </li>
                                             <li className="flex items-center py-1">
-                                                <ChartBarIcon className="h-4 w-4 mr-2 text-blue-500" />
+                                                <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
                                                 Lane detection algorithms
                                             </li>
                                         </ul>
@@ -169,15 +169,15 @@ export default function AutonomousCarMasterclass() {
                                     <div className={`px-4 py-2 ${openLecture === 'planning' ? '' : 'hidden'}`}>
                                         <ul className="list-disc pl-5 text-sm sm:text-base">
                                             <li className="flex items-center py-1">
-                                                <RocketLaunchIcon className="h-4 w-4 mr-2 text-blue-500" />
+                                                <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
                                                 Route planning algorithms
                                             </li>
                                             <li className="flex items-center py-1">
-                                                <CpuIcon className="h-4 w-4 mr-2 text-blue-500" />
+                                                <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
                                                 Behavior prediction
                                             </li>
                                             <li className="flex items-center py-1">
-                                                <ChartBarIcon className="h-4 w-4 mr-2 text-blue-500" />
+                                                <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
                                                 Decision-making frameworks
                                             </li>
                                         </ul>
@@ -191,15 +191,15 @@ export default function AutonomousCarMasterclass() {
                                     <div className={`px-4 py-2 ${openLecture === 'control' ? '' : 'hidden'}`}>
                                         <ul className="list-disc pl-5 text-sm sm:text-base">
                                             <li className="flex items-center py-1">
-                                                <RocketLaunchIcon className="h-4 w-4 mr-2 text-blue-500" />
+                                                <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
                                                 PID controllers
                                             </li>
                                             <li className="flex items-center py-1">
-                                                <CpuIcon className="h-4 w-4 mr-2 text-blue-500" />
+                                                <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
                                                 Model Predictive Control (MPC)
                                             </li>
                                             <li className="flex items-center py-1">
-                                                <ChartBarIcon className="h-4 w-4 mr-2 text-blue-500" />
+                                                <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
                                                 Actuator control and simulation
                                             </li>
                                         </ul>
