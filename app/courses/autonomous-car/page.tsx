@@ -3,13 +3,17 @@
 import { useState, useEffect } from 'react';
 import { ChevronUp as ChevronUpIcon, ChevronDown as ChevronDownIcon, CheckCircle as CheckIcon, Clock as ClockIcon, Users as UsersIcon, Rocket as RocketLaunchIcon, Cpu as CpuIcon, ChartBar as ChartBarIcon, BarChart3 as LevelIcon, Clock3 as DurationIcon, Languages as LanguageIcon, Calendar as AccessIcon, Award as CertificateIcon } from 'lucide-react';
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
+import { ShineBorder } from "@/components/magicui/shine-border";
+
 
 export default function AutonomousCarMasterclass() {
     const [openLecture, setOpenLecture] = useState<string | null>(null);
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [timeLeft, setTimeLeft] = useState({
+        days: 0,
         hours: 0,
-        minutes: 0
+        minutes: 0,
+        seconds: 0
     });
 
     useEffect(() => {
@@ -20,14 +24,16 @@ export default function AutonomousCarMasterclass() {
             const difference = endDate.getTime() - now.getTime();
 
             if (difference > 0) {
-                const hours = Math.floor(difference / (1000 * 60 * 60));
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                setTimeLeft({ hours, minutes });
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                setTimeLeft({ days, hours, minutes, seconds });
             }
         };
 
         calculateTimeLeft();
-        const timer = setInterval(calculateTimeLeft, 60000);
+        const timer = setInterval(calculateTimeLeft, 1000);
 
         return () => clearInterval(timer);
     }, []);
@@ -40,11 +46,20 @@ export default function AutonomousCarMasterclass() {
         setShowFullDescription(!showFullDescription);
     };
 
+    const formatTimeLeft = () => {
+        let timeString = '';
+        if (timeLeft.days > 0) timeString += `${timeLeft.days.toString().padStart(2, '0')}d : `;
+        if (timeLeft.days > 0 || timeLeft.hours > 0) timeString += `${timeLeft.hours.toString().padStart(2, '0')}h : `;
+        timeString += `${timeLeft.minutes.toString().padStart(2, '0')}m : ${timeLeft.seconds.toString().padStart(2, '0')}s`;
+        return timeString;
+    };
+
     return (
         <main className="container mx-auto px-4 pt-16 mt-6 2xl:pb-8 pb-24">
             <div className="flex flex-col lg:flex-row gap-11">
                 <div className="w-full lg:w-7/10">
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-8 sm:mb-12 mt-4 sm:mt-6 lg:block hidden">Autonomous Car Masterclass</h1>
+                    <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit">AUTONOMOUS CAR COURSE</span>
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">Autonomous Car Bootcamp</h1>
                     <div className="mb-8 sm:mb-12">
                         <img 
                             src="/autonomousCarMasterclassTemplate.jpeg"
@@ -52,31 +67,41 @@ export default function AutonomousCarMasterclass() {
                             className="rounded-lg shadow-lg w-full h-auto"
                         />
                     </div>
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-8 sm:mb-12 mt-4 sm:mt-6 lg:hidden block">Autonomous Car Masterclass</h1>
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-8 sm:mb-12 mt-4 sm:mt-6 lg:hidden block">Autonomous Car Bootcamp</h1>
 
                     <div className="lg:hidden my-8">
+                    
                         <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                             <h2 className="text-xl sm:text-2xl font-semibold mb-4">Course Details</h2>
                             <ul className="space-y-4">
-                              
                                 <li className="flex items-center text-sm sm:text-base">
-                                    <LevelIcon className="w-4 h-4 mr-3 text-gray-700" />
+                                    <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                                        <LevelIcon className="w-3 h-3 text-gray-700" />
+                                    </div>
                                     <span>Advanced Level</span>
                                 </li>
                                 <li className="flex items-center text-sm sm:text-base">
-                                    <DurationIcon className="w-4 h-4 mr-3 text-gray-700" />
+                                    <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                                        <DurationIcon className="w-3 h-3 text-gray-700" />
+                                    </div>
                                     <span>1 hr of Content</span>
                                 </li>
                                 <li className="flex items-center text-sm sm:text-base">
-                                    <LanguageIcon className="w-4 h-4 mr-3 text-gray-700" />
-                                    <span>Tamil</span>
+                                    <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                                        <LanguageIcon className="w-3 h-3 text-gray-700" />
+                                    </div>
+                                    <span>Hindi</span>
                                 </li>
                                 <li className="flex items-center text-sm sm:text-base">
-                                    <AccessIcon className="w-4 h-4 mr-3 text-gray-700" />
+                                    <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                                        <AccessIcon className="w-3 h-3 text-gray-700" />
+                                    </div>
                                     <span>1 Year Access</span>
                                 </li>
                                 <li className="flex items-center text-sm sm:text-base">
-                                    <CertificateIcon className="w-4 h-4 mr-3 text-gray-700" />
+                                    <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                                        <CertificateIcon className="w-3 h-3 text-gray-700" />
+                                    </div>
                                     <span>Certificate of Completion</span>
                                 </li>
                             </ul>
@@ -84,8 +109,8 @@ export default function AutonomousCarMasterclass() {
                     </div>
 
                     <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200 my-8">
-                        <h2 className="text-xl pb-4 sm:text-2xl font-semibold mb-5">What You&apos;ll Learn</h2>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <h2 className="text-xl pb-4 sm:text-2xl font-semibold mb-2">What You&apos;ll Learn</h2>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <li className="flex items-start">
                                 <span className="mr-3 mt-1 bg-blue-200 rounded-full p-1">
                                     <CheckIcon className="h-3 w-3 text-black" />
@@ -118,7 +143,7 @@ export default function AutonomousCarMasterclass() {
                         <div className="p-3">
                             <div className="space-y-4">
                                 <div className={`border rounded-lg p-1 shadow-md`}>
-                                    <button className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${openLecture === 'intro' ? 'text-blue-600' : ''} cursor-pointer  ${openLecture === 'intro' ? 'bg-blue-100' : ''}`} onClick={() => toggleLecture('intro')}>
+                                    <button className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${openLecture === 'intro' ? 'text-blue-600' : ''} cursor-pointer rounded-md ${openLecture === 'intro' ? 'bg-blue-100' : ''}`} onClick={() => toggleLecture('intro')}>
                                         <span className="text-sm sm:text-base">1. Introduction to Autonomous Vehicles</span>
                                         {openLecture === 'intro' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
                                     </button>
@@ -139,8 +164,8 @@ export default function AutonomousCarMasterclass() {
                                         </ul>
                                     </div>
                                 </div>
-                                <div className={`border rounded-lg p-1 shadow-md`}>
-                                    <button className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${openLecture === 'perception' ? 'text-blue-600' : ''} cursor-pointer  ${openLecture === 'perception' ? 'bg-blue-100' : ''}`} onClick={() => toggleLecture('perception')}>
+                                <div className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}>
+                                    <button className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${openLecture === 'perception' ? 'text-blue-600' : ''} cursor-pointer rounded-md ${openLecture === 'perception' ? 'bg-blue-100' : ''}`} onClick={() => toggleLecture('perception')}>
                                         <span className="text-sm sm:text-base">2. Perception and Computer Vision</span>
                                         {openLecture === 'perception' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
                                     </button>
@@ -161,8 +186,8 @@ export default function AutonomousCarMasterclass() {
                                         </ul>
                                     </div>
                                 </div>
-                                <div className={`border rounded-lg p-1 shadow-md`}>
-                                    <button className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${openLecture === 'planning' ? 'text-blue-600' : ''} cursor-pointer  ${openLecture === 'planning' ? 'bg-blue-100' : ''}`} onClick={() => toggleLecture('planning')}>
+                                <div className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}>
+                                    <button className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${openLecture === 'planning' ? 'text-blue-600' : ''} cursor-pointer rounded-md ${openLecture === 'planning' ? 'bg-blue-100' : ''}`} onClick={() => toggleLecture('planning')}>
                                         <span className="text-sm sm:text-base">3. Path Planning and Decision Making</span>
                                         {openLecture === 'planning' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
                                     </button>
@@ -183,8 +208,8 @@ export default function AutonomousCarMasterclass() {
                                         </ul>
                                     </div>
                                 </div>
-                                <div className={`border rounded-lg p-1 shadow-md`}>
-                                    <button className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${openLecture === 'control' ? 'text-blue-600' : ''} cursor-pointer  ${openLecture === 'control' ? 'bg-blue-100' : ''}`} onClick={() => toggleLecture('control')}>
+                                <div className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}>
+                                    <button className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${openLecture === 'control' ? 'text-blue-600' : ''} cursor-pointer rounded-md ${openLecture === 'control' ? 'bg-blue-100' : ''}`} onClick={() => toggleLecture('control')}>
                                         <span className="text-sm sm:text-base">4. Vehicle Control Systems</span>
                                         {openLecture === 'control' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
                                     </button>
@@ -211,7 +236,7 @@ export default function AutonomousCarMasterclass() {
 
                     <div className="my-8 rounded-lg">
                         <h2 className="text-xl sm:text-2xl font-semibold mb-4">About the Bootcamp</h2>
-                        <p className="text-base text-gray-700 leading-relaxed mb-4 pl-2">
+                        <p className="text-base text-gray-700 leading-relaxed mb-1 pl-2">
                             This is a complete, structured program to help you build a production-grade self-driving car stack from scratch, step-by-step. With live projects, recorded lectures, and professional tools, you&apos;ll graduate with real skills and a full portfolio.
                             {showFullDescription ? (
                                 <>
@@ -253,7 +278,7 @@ export default function AutonomousCarMasterclass() {
                         </p>
                         <button 
                             onClick={toggleDescription} 
-                            className="mt-2 text-base text-blue-400 rounded-md transition pl-2 cursor-pointer"
+                            className="mt-1 text-base text-blue-400 rounded-md transition pl-2 cursor-pointer"
                         >
                             {showFullDescription ? 'Show Less' : 'Show More'}
                         </button>
@@ -305,42 +330,57 @@ export default function AutonomousCarMasterclass() {
                 </div>
 
                 <div className="w-full lg:w-3/10 hidden lg:block">
-                    <div className="bg-white p-6 mt-20 rounded-lg shadow-md border border-gray-200 lg:sticky lg:top-22">
+                
+                    <div className="bg-white p-6 mt-30 rounded-lg shadow-md border border-gray-200 lg:sticky lg:top-22">
+                    <ShineBorder shineColor="#808080" className="w-full"></ShineBorder>
                         <h2 className="text-xl sm:text-2xl font-semibold mb-4">Course Details</h2>
                         <ul className="space-y-3 mb-6">
                             <li className="flex items-center text-sm sm:text-base">
-                                <UsersIcon className="w-4 h-4 mr-3 text-gray-700" />
-                                2,968 Learners enrolled
+                                <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                                    <UsersIcon className="w-3.5 h-3.5 text-gray-700" />
+                                </div>
+                                <strong>2,968&nbsp;</strong> Learners enrolled
                             </li>
                             <li className="flex items-center text-sm sm:text-base">
-                                <LevelIcon className="w-4 h-4 mr-3 text-gray-700" />
+                                <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                                    <LevelIcon className="w-3.5 h-3.5 text-gray-700" />
+                                </div>
                                 Advanced Level
                             </li>
                             <li className="flex items-center text-sm sm:text-base">
-                                <DurationIcon className="w-4 h-4 mr-3 text-gray-700" />
+                                <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                                    <DurationIcon className="w-3.5 h-3.5 text-gray-700" />
+                                </div>
                                 1 hr of Content
                             </li>
                             <li className="flex items-center text-sm sm:text-base">
-                                <LanguageIcon className="w-4 h-4 mr-3 text-gray-700" />
-                                Tamil
+                                <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                                    <LanguageIcon className="w-3.5 h-3.5 text-gray-700" />
+                                </div>
+                                Hindi
                             </li>
                             <li className="flex items-center text-sm sm:text-base">
-                                <AccessIcon className="w-4 h-4 mr-3 text-gray-700" />
+                                <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                                    <AccessIcon className="w-3.5 h-3.5 text-gray-700" />
+                                </div>
                                 1 Year Access
                             </li>
                             <li className="flex items-center text-sm sm:text-base">
-                                <CertificateIcon className="w-4 h-4 mr-3 text-gray-700" />
+                                <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                                    <CertificateIcon className="w-3.5 h-3.5 text-gray-700" />
+                                </div>
                                 Certificate of Completion
                             </li>
                         </ul>
                         <div className="mb-2">
-                            <span className="text-xl sm:text-2xl font-bold text-green-600">₹4,999</span>
-                            <span className="text-lg sm:text-xl text-gray-500 line-through ml-2">₹7,999</span>
+                            <span className="text-xl sm:text-2xl font-bold text-black-600">₹4,999</span>
+                            <span className="text-sm sm:text-xl text-gray-500 line-through ml-2">₹7,999</span>
+                            <span className="text-sm sm:text-base text-black-600 ml-2"> SAVE 38%</span>
                         </div>
-                        <div className="text-sm text-red-500 mb-4">
-                            Offer ends in {timeLeft.hours}hr {timeLeft.minutes}mins
+                        <div className="text-sm mb-4">
+                            <span className="text-black">Offer ends in</span> <span className="text-red-500">{formatTimeLeft()}</span>
                         </div>
-                        <ShimmerButton className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 text-sm sm:text-base cursor-pointer">
+                        <ShimmerButton className="w-full bg-white-600 text-white py-2 px-4 rounded-lg hover:bg-white-700 transition duration-300 text-sm sm:text-base cursor-pointer">
                             Buy Now
                         </ShimmerButton>
                     </div>
@@ -349,23 +389,26 @@ export default function AutonomousCarMasterclass() {
 
             <div className="lg:hidden fixed bottom-0 left-0 right-0">
                 <div className="bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-                    <div className="h-8 bg-red-100 mb-3 flex items-center justify-center">
-                        <div className="text-md text-red-500">
-                            {timeLeft.hours}hr {timeLeft.minutes}min left
+                    <div className="h-6 bg-[#fae3ea] mb-3 flex items-center justify-center">
+                        <div className="text-sm text-[#df4271]">
+                        Offer ends in {formatTimeLeft()}
                         </div>
                     </div>
                     <div className="flex p-2">
                         <div className="w-[40%] flex flex-col justify-center items-end pr-4">
                             <div className="flex items-center gap-2">
-                                <span className="text-xl font-bold text-green-600">₹4,999</span>
+                                <span className="text-xl font-bold text-black-600">₹4,999</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <span className="text-sm text-gray-500 line-through">₹7,999</span>
-                                <span className="text-xs text-green-600">38% off</span>
+                                <span className="text-xs text-black-600">38% off</span>
                             </div>
                         </div>
-                        <div className="w-[60%]">
-                            <ShimmerButton className="w-full bg-blue-600 text-white py-2 px-4 rounded-none hover:bg-blue-700 transition duration-300 text-lg font-medium cursor-pointer">
+                        <div className="w-[70%]">
+                            <ShimmerButton 
+                                borderRadius="0"
+                                className="w-full bg-white-600 text-white py-2 px-4 rounded-none hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
+                            >
                                 Buy Now
                             </ShimmerButton>
                         </div>
