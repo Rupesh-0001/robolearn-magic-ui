@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { ChevronUp as ChevronUpIcon, ChevronDown as ChevronDownIcon, CheckCircle as CheckIcon, Clock as ClockIcon, Users as UsersIcon, Rocket as RocketLaunchIcon, Cpu as CpuIcon, ChartBar as ChartBarIcon, BarChart3 as LevelIcon, Clock3 as DurationIcon, Languages as LanguageIcon, Calendar as AccessIcon, Award as CertificateIcon } from 'lucide-react';
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";
+import Link from 'next/link';
 
 
 export default function AutonomousCarMasterclass() {
@@ -58,7 +59,7 @@ export default function AutonomousCarMasterclass() {
         <main className="container mx-auto px-4 pt-16 mt-6 2xl:pb-8 pb-24">
             <div className="flex flex-col lg:flex-row gap-11">
                 <div className="w-full lg:w-7/10">
-                    <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit">AUTONOMOUS CAR COURSE</span>
+                    <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit rounded-sm font-semibold">AUTONOMOUS CAR COURSE</span>
                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">Autonomous Car Bootcamp</h1>
                     <div className="mb-8 sm:mb-12">
                         <img 
@@ -236,39 +237,39 @@ export default function AutonomousCarMasterclass() {
 
                     <div className="my-8 rounded-lg">
                         <h2 className="text-xl sm:text-2xl font-semibold mb-4">About the Bootcamp</h2>
-                        <p className="text-base text-gray-700 leading-relaxed mb-1 pl-2">
+                        <p className="text-base text-gray-700 leading-relaxed mb-1">
                             This is a complete, structured program to help you build a production-grade self-driving car stack from scratch, step-by-step. With live projects, recorded lectures, and professional tools, you&apos;ll graduate with real skills and a full portfolio.
                             {showFullDescription ? (
                                 <>
                                     <br /><br />
-                                    <strong className="text-lg">Top Projects You Will Build:</strong>
+                                    <strong className="text-lg font-semibold">Top Projects You Will Build:</strong>
                                     <ul className="list-none mt-4 space-y-1">
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>Lane Detection & Following (Level 1)</li>
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>Traffic Light and Sign Handling (Level 2)</li>
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>Lidar + Camera Obstacle Detection (Level 3)</li>
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>Localization & SLAM System (Level 4)</li>
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>Agent Prediction + Path Planning Stack (Level 5–6)</li>
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>MPC Control Simulator (Level 7)</li>
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>Tesla-Style End-to-End Neural Driving Stack (Level 8)</li>
+                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Lane Detection & Following (Level 1)</span></li>
+                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Traffic Light and Sign Handling (Level 2)</span></li>
+                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Lidar + Camera Obstacle Detection (Level 3)</span></li>
+                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Localization & SLAM System (Level 4)</span></li>
+                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Agent Prediction + Path Planning Stack (Level 5–6)</span></li>
+                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">MPC Control Simulator (Level 7)</span></li>
+                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Tesla-Style End-to-End Neural Driving Stack (Level 8)</span></li>
                                     </ul>
                                     <br />
-                                    <strong className="text-lg">Who Is This Bootcamp For:</strong>
+                                    <strong className="text-lg font-semibold">Who Is This Bootcamp For:</strong>
                                     <ul className="list-none mt-4 space-y-2">
                                         <li className="flex items-center">
                                             <span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>
-                                            <div><span className="text-sm sm:text-base sm:font-bold">Students</span> - <span className="text-sm text-gray-600">Learn robotics, AI, and perception hands-on</span></div>
+                                            <div className="text-sm sm:text-base"><span className="font-semibold">Students</span> - <span className="text-gray-600">Learn robotics, AI, and perception hands-on</span></div>
                                         </li>
                                         <li className="flex items-center">
                                             <span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>
-                                            <div><span className="text-sm sm:text-base sm:font-bold">Working Engineers</span> - <span className="text-sm text-gray-600">Upgrade to autonomy, AI-first planning, and ROS2 stacks</span></div>
+                                            <div className="text-sm sm:text-base"><span className="font-semibold">Working Engineers</span> - <span className="text-gray-600">Upgrade to autonomy, AI-first planning, and ROS2 stacks</span></div>
                                         </li>
                                         <li className="flex items-center">
                                             <span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>
-                                            <div><span className="text-sm sm:text-base sm:font-bold">Career Changers</span> - <span className="text-sm text-gray-600">Build a real self-driving portfolio</span></div>
+                                            <div className="text-sm sm:text-base"><span className="font-semibold">Career Changers</span> - <span className="text-gray-600">Build a real self-driving portfolio</span></div>
                                         </li>
                                         <li className="flex items-center">
                                             <span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>
-                                            <div><span className="text-sm sm:text-base sm:font-bold">Entrepreneurs</span> - <span className="text-sm text-gray-600">Understand what it takes to prototype FSD systems</span></div>
+                                            <div className="text-sm sm:text-base"><span className="font-semibold">Entrepreneurs</span> - <span className="text-gray-600">Understand what it takes to prototype FSD systems</span></div>
                                         </li>
                                     </ul>
                                 </>
@@ -278,7 +279,7 @@ export default function AutonomousCarMasterclass() {
                         </p>
                         <button 
                             onClick={toggleDescription} 
-                            className="mt-1 text-base text-blue-400 rounded-md transition pl-2 cursor-pointer"
+                            className="mt-1 text-sm sm:text-base text-blue-400 rounded-md transition cursor-pointer"
                         >
                             {showFullDescription ? 'Show Less' : 'Show More'}
                         </button>
@@ -294,38 +295,65 @@ export default function AutonomousCarMasterclass() {
                         </p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 my-8">
-                        <h2 className="text-xl sm:text-2xl font-semibold mb-8">Learners Also Bought</h2>
+                    <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 my-6">
+                        <h2 className="text-xl sm:text-2xl font-semibold mb-8">Learners also bought</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                            <div className="flex flex-col">
-                                <img 
-                                    src="/aiAgentTemplate.jpeg" 
-                                    alt="AI Agent Masterclass"
-                                    className="w-full h-32 sm:h-40 object-cover rounded-t-lg"
-                                />
+                            <Link href="/courses/ai-agent" className="flex flex-col hover:shadow-lg hover:scale-105 hover:shadow-black-700 p-1 transition-shadow duration-300">
+                                <div className="relative">
+                                    <img 
+                                        src="/aiAgentTemplate.jpeg" 
+                                        alt="AI Agent Bootcamp"
+                                        className="w-full h-32 sm:h-40 object-cover rounded-t-lg"
+                                    />
+                                    <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                                        Popular
+                                    </div>
+                                </div>
                                 <div className="mt-4 flex justify-between items-center">
                                     <div>
-                                        <p className="font-semibold text-sm sm:text-base">AI Agent Masterclass</p>
+                                        <p className="font-semibold text-sm sm:text-base">AI Agent Bootcamp</p>
                                         <p className="text-xs sm:text-sm text-gray-500 mt-1">1275 learners • by Harpreet Singh</p>
                                     </div>
-                                    <p className="text-xs sm:text-sm text-gray-600 font-semibold">₹999</p>
+                                    <div className="text-right">
+                                        <p className="text-xs sm:text-sm text-gray-600 font-semibold">₹4,999</p>
+                                        <p className="text-xs text-[#df4271]"><span className="line-through text-gray-700">₹7,999</span> Save 38%</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex flex-col">
-                                <img 
-                                    src="/industrialRobotTemplate.jpeg"
-                                    alt="Robotic Arm Masterclass" 
-                                    className="w-full h-32 sm:h-40 object-cover rounded-t-lg"
-                                />
+                            </Link>
+                            <Link href="/courses/robotic-arm" className="flex flex-col hover:shadow-lg hover:scale-105 hover:shadow-black-700 p-1 transition-shadow duration-300">
+                                <div className="relative">
+                                    <img 
+                                        src="/industrialRobotTemplate.jpeg"
+                                        alt="Robotic Arm Bootcamp" 
+                                        className="w-full h-32 sm:h-40 object-cover rounded-t-lg"
+                                    />
+                                    <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+                                        New
+                                    </div>
+                                </div>
                                 <div className="mt-4 flex justify-between items-center">
                                     <div>
-                                        <p className="font-semibold text-sm sm:text-base">Robotic Arm Masterclass</p>
+                                        <p className="font-semibold text-sm sm:text-base">Robotic Arm Bootcamp</p>
                                         <p className="text-xs sm:text-sm text-gray-500 mt-1">1275 learners • by Harpreet Singh</p>
                                     </div>
-                                    <p className="text-xs sm:text-sm text-gray-600 font-semibold">₹999</p>
+                                    <div className="text-right">
+                                        <p className="text-xs sm:text-sm text-gray-600 font-semibold">₹999</p>
+                                        <p className="text-xs text-[#df4271]"><span className="line-through text-gray-700">₹7,999</span> Save 38%</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
+                        {/* <div className="mt-8 text-center">
+                            <Link 
+                                href="/courses" 
+                                className="inline-flex items-center text-blue-600 hover:text-blue-800"
+                            >
+                                View All Courses
+                                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </Link>
+                        </div> */}
                     </div>
                 </div>
 
@@ -378,7 +406,7 @@ export default function AutonomousCarMasterclass() {
                             <span className="text-sm sm:text-base text-black-600 ml-2"> SAVE 38%</span>
                         </div>
                         <div className="text-sm mb-4">
-                            <span className="text-black">Offer ends in</span> <span className="text-red-500">{formatTimeLeft()}</span>
+                            <span className="text-black">Offer ends in</span> <span className="text-[#df4271]">{formatTimeLeft()}</span>
                         </div>
                         <ShimmerButton className="w-full bg-white-600 text-white py-2 px-4 rounded-lg hover:bg-white-700 transition duration-300 text-sm sm:text-base cursor-pointer">
                             Buy Now
@@ -406,8 +434,8 @@ export default function AutonomousCarMasterclass() {
                         </div>
                         <div className="w-[70%]">
                             <ShimmerButton 
-                                borderRadius="0"
-                                className="w-full bg-white-600 text-white py-2 px-4 rounded-none hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
+                                borderRadius="8px"
+                                className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
                             >
                                 Buy Now
                             </ShimmerButton>
