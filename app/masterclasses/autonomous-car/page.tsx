@@ -297,11 +297,11 @@ export default function AIAgentMasterclass() {
               </li>
             </ul>
           </div>
-          <div>
+          <div className="block md:hidden">
             <h2 className="text-xl pb-4 sm:text-2xl font-semibold">
               Key Highlight:
             </h2>
-            <div className="block md:hidden bg-white shadow-md rounded-lg p-6 border border-gray-100 transition-all duration-300 relative overflow-hidden">
+            <div className="bg-white shadow-md rounded-lg p-6 border border-gray-100 transition-all duration-300 relative overflow-hidden">
               <ShineBorder className="w-full h-full absolute" />
               <div className="space-y-4 relative z-10">
                 {/* Date and Details */}
