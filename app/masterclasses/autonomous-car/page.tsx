@@ -1,6 +1,7 @@
 "use client";
 
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
+import { ShineBorder } from "@/components/magicui/shine-border";
 import {
   Clock as ClockIcon,
   CheckCircle as CheckIcon,
@@ -8,7 +9,7 @@ import {
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
+import Image from "next/image";
 
 export default function AIAgentMasterclass() {
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -103,53 +104,61 @@ export default function AIAgentMasterclass() {
 
   return (
     <div className="container mx-auto px-4 pt-16 mt-6 2xl:pb-8 pb-10">
-      <div className="inline-block border border-gray-300 bg-neutral-50 text-gray-800 text-sm px-3 py-1 rounded-md mb-4">
+      <div className="inline-block border border-[#df4271] bg-[#fae3ea] font-medium text-[#df4271] text-sm px-3 py-1 rounded-md md:mb-4 mb-2">
         Live Masterclass
       </div>
       <div className="bg-white">
         <div className="flex flex-col md:flex-row">
           {/* Left side - Image */}
           <div className="w-full lg:w-1/3 rounded-lg relative bg-[#f8f9fa] mr-4">
-            <img
+            <Image
               src="/autonomousCarMasterclassTemplate.jpeg"
               alt="Autonomous Car Masterclass"
               className="w-full h-auto object-contain rounded-lg"
+              width={500}
+              height={300}
             />
-            <div className="absolute bottom-1 w-full bg-black/80 text-white px-4 py-2 rounded-b-md text-center flex items-center justify-center gap-2">
-              <img
-                src="/calendar-icon.svg"
+            <div className="absolute bottom-0 w-full bg-black/80 text-white px-4 py-2 rounded-b-md text-center flex items-center justify-center gap-2">
+              <Image
+                src="/calendar-icon-white.svg"
                 alt="Calendar"
                 className="h-4 w-4"
+                width={16}
+                height={16}
               />
               <span>
-                {timeLeft.days > 0 
-                  ? `Starts in ${timeLeft.days} Days : ${timeLeft.hours} Hours : ${timeLeft.minutes} Min`
+                {timeLeft.days > 0
+                  ? `Starts in ${timeLeft.days} Days : ${timeLeft.hours} Hours : ${timeLeft.minutes} Min : ${timeLeft.seconds} Sec`
                   : `Starts in ${timeLeft.hours} Hours : ${timeLeft.minutes} Min : ${timeLeft.seconds} Sec`}
               </span>
             </div>
           </div>
 
           {/* Right side - Content */}
-          <div className="w-full lg:w-3/5 p-8 rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+          <div className="w-full md:block hidden lg:w-3/5 p-8 rounded-lg shadow-lg border border-gray-200 overflow-hidden">
             <h1 className="text-2xl font-bold mb-4">
               Autonomous Vehicles Engineering Masterclass
             </h1>
 
             <div className="flex items-center gap-4 mb-6 bg-gray-100 w-fit rounded p-2">
-                              <div className="flex items-center gap-2">
-                  <img
-                    src="/calendar-icon.svg"
-                    alt="Calendar"
-                    className="w-5 h-5 bg-white border border-gray-300 rounded-full p-0.5"
-                  />
-                  <span>25th May, 2025</span>
-                </div>
+              <div className="flex items-center gap-2">
+                <Image
+                  src="/calendar-icon.svg"
+                  alt="Calendar"
+                  className="w-5 h-5 bg-white border border-gray-300 rounded-full p-0.5"
+                  width={20}
+                  height={20}
+                />
+                <span>25th May, 2025</span>
+              </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
-                <img
+                <Image
                   src="/clock-icon.svg"
                   alt="Clock"
                   className="w-5 h-5 bg-white border border-gray-300 rounded-full p-0.5"
+                  width={20}
+                  height={20}
                 />
                 <span>5:00 pm to 6:00 pm</span>
               </div>
@@ -199,7 +208,52 @@ export default function AIAgentMasterclass() {
         </div>
       </div>
       <div className="flex flex-col md:flex-row">
-        <div className="w-2/3">
+        <div className="md:w-2/3 w-full">
+          <div className="bg-white my-6 block md:hidden">
+            <span className="font-bold">Autonomous Vehicles Masterclass</span>
+            <div className="space-y-3 border border-gray-200 bg-gray-100 py-3 px-4 rounded-lg mt-2">
+              <div className="flex items-center gap-2 text-sm">
+                <div className="text-gray-500 w-6 flex-shrink-0">
+                  <Image
+                    src="/calendar-icon.svg"
+                    alt="Calendar"
+                    className="w-4 h-4"
+                    width={16}
+                    height={16}
+                  />
+                </div>
+                <span className="text-gray-800 font-medium">
+                  25th May, 2025
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 text-sm">
+                <div className="text-gray-500 w-6 flex-shrink-0">
+                  <Image
+                    src="/clock-icon.svg"
+                    alt="Clock"
+                    className="w-4 h-4"
+                    width={16}
+                    height={16}
+                  />
+                </div>
+                <span className="text-gray-800 font-medium">5 pm to 6 pm</span>
+              </div>
+            </div>
+            <div className="flex items-center justify-center w-full mt-4">
+              <div className="flex items-center gap-2">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div
+                      key={i}
+                      className="w-8 h-8 rounded-full bg-gray-200 border-2 border-white"
+                    />
+                  ))}
+                </div>
+                <span className="text-[#df4271]">Limited Seats</span>
+              </div>
+            </div>
+          </div>
           <div className="bg-white my-12">
             <h2 className="text-xl pb-4 sm:text-2xl font-semibold">
               What You&apos;ll Learn
@@ -242,6 +296,72 @@ export default function AIAgentMasterclass() {
                 </span>
               </li>
             </ul>
+          </div>
+          <div>
+            <h2 className="text-xl pb-4 sm:text-2xl font-semibold">
+              Key Highlight:
+            </h2>
+            <div className="block md:hidden bg-white shadow-md rounded-lg p-6 border border-gray-100 transition-all duration-300 relative overflow-hidden">
+              <ShineBorder className="w-full h-full absolute" />
+              <div className="space-y-4 relative z-10">
+                {/* Date and Details */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <div className="text-gray-500 w-6 flex-shrink-0">
+                      <Image
+                        src="/calendar-icon.svg"
+                        alt="Calendar"
+                        className="w-5 h-5"
+                        width={20}
+                        height={20}
+                      />
+                    </div>
+                    <span className="text-gray-800">25th May, 2025</span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <div className="text-gray-500 w-6 flex-shrink-0">
+                      <Image
+                        src="/clock-icon.svg"
+                        alt="Clock"
+                        className="w-5 h-5"
+                        width={20}
+                        height={20}
+                      />
+                    </div>
+                    <span className="text-gray-800">5:00 pm to 6:00 pm</span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <div className="text-gray-500 w-6 flex-shrink-0">
+                      <Image
+                        src="/globe-icon.svg"
+                        alt="Globe"
+                        className="w-5 h-5"
+                        width={20}
+                        height={20}
+                      />
+                    </div>
+                    <span className="text-gray-800">Hindi</span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <div className="text-gray-500 w-6 flex-shrink-0">
+                      <Image
+                        src="/certificate-icon.svg"
+                        alt="Certificate"
+                        className="w-5 h-5"
+                        width={20}
+                        height={20}
+                      />
+                    </div>
+                    <span className="text-gray-800">
+                      Certificate of Participation
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="my-12 rounded-lg">
             <h2 className="text-xl sm:text-2xl font-semibold mb-2">
@@ -312,7 +432,9 @@ export default function AIAgentMasterclass() {
                     </li>
                   </ul>
                   <br />
-                  <strong className="text-lg">Who Is This Bootcamp For:</strong>
+                  <strong className="text-lg">
+                    Who Is This Masterclass For:
+                  </strong>
                   <ul className="list-none mt-4 space-y-2">
                     <li className="flex items-center">
                       <span className="hidden sm:inline text-green-500 mr-2">
@@ -389,16 +511,74 @@ export default function AIAgentMasterclass() {
             </button>
           </div>
           <div className="my-12">
-            <h2 className="text-xl sm:text-2xl font-semibold mb-6">
+            <h2 className="text-xl sm:text-2xl font-semibold md:mb-6 mb-3">
               Who Is This Masterclass For
             </h2>
+            <div className="block md:hidden">
+              <div className="w-full my-3 flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-4 bg-gray-100">
+                <div className="flex items-center mb-2">
+                  <Image
+                    src="/college-student.svg"
+                    alt="College Student"
+                    width={32}
+                    height={32}
+                  />
+                  <span className="text-lg font-semibold ml-2">
+                    College Students
+                  </span>
+                </div>
+                <p className="text-gray-600">
+                  Perfect if you&apos;re studying engineering, computer science
+                  or robotics and want hands-on experience with autonomous
+                  systems.
+                </p>
+              </div>
+
+              {/* Carousel Card 2 */}
+              <div className="w-full my-3 flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-6 bg-gray-100">
+                <div className="flex items-center mb-2">
+                  <Image
+                    src="/working-engineer.svg"
+                    alt="Working Engineer"
+                    width={32}
+                    height={32}
+                  />
+                  <span className="text-lg font-bold ml-2">
+                    Working Engineers & Developers
+                  </span>
+                </div>
+                <p className="text-gray-600">
+                  Ideal for software engineers, mechanical engineers, or
+                  roboticists looking to transition into autonomous vehicles.
+                </p>
+              </div>
+
+              {/* Carousel Card 3 */}
+              <div className="w-full my-3 flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-6 bg-gray-100">
+                <div className="flex items-center mb-2">
+                  <Image
+                    src="/startup-founder.svg"
+                    alt="Startup Founder"
+                    width={32}
+                    height={32}
+                  />
+                  <span className="text-lg font-bold ml-2">
+                    Startup Founders & Innovators
+                  </span>
+                </div>
+                <p className="text-gray-600">
+                  For founders and product managers looking to understand the
+                  technical foundations of autonomous systems.
+                </p>
+              </div>
+            </div>
 
             {/* Carousel Container */}
-            <div className="relative">
+            <div className="relative hidden md:block">
               {/* Left Arrow Button */}
               <button
                 onClick={() => scroll("left")}
-                className={`absolute left-0 top-1/2 cursor-pointer -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-all ${
+                className={`absolute left-0 top-1/2 cursor-pointer ml-2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-all ${
                   canScrollLeft
                     ? "opacity-100"
                     : "opacity-0 pointer-events-none"
@@ -428,7 +608,7 @@ export default function AIAgentMasterclass() {
                 {/* Carousel Card 1 */}
                 <div className="min-w-[calc(40%-1rem)] w-[calc(40%-0.5rem)] flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-4 bg-gray-100">
                   <div className="flex items-center mb-2">
-                    <img
+                    <Image
                       src="/college-student.svg"
                       alt="College Student"
                       width={32}
@@ -439,16 +619,16 @@ export default function AIAgentMasterclass() {
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Perfect if you&apos;re studying engineering, computer science or
-                    robotics and want hands-on experience with autonomous
-                    systems.
+                    Perfect if you&apos;re studying engineering, computer
+                    science or robotics and want hands-on experience with
+                    autonomous systems.
                   </p>
                 </div>
 
                 {/* Carousel Card 2 */}
                 <div className="min-w-[calc(40%-1rem)] w-[calc(40%-0.5rem)] flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-6 bg-gray-100">
                   <div className="flex items-center mb-2">
-                    <img
+                    <Image
                       src="/working-engineer.svg"
                       alt="Working Engineer"
                       width={32}
@@ -467,7 +647,7 @@ export default function AIAgentMasterclass() {
                 {/* Carousel Card 3 */}
                 <div className="min-w-[calc(40%-1rem)] w-[calc(40%-0.5rem)] flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-6 bg-gray-100">
                   <div className="flex items-center mb-2">
-                    <img
+                    <Image
                       src="/startup-founder.svg"
                       alt="Startup Founder"
                       width={32}
@@ -487,7 +667,7 @@ export default function AIAgentMasterclass() {
               {/* Right Arrow Button */}
               <button
                 onClick={() => scroll("right")}
-                className={`absolute right-0 top-1/2 cursor-pointer -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-all ${
+                className={`absolute right-0 top-1/2 cursor-pointer mr-2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-all ${
                   canScrollRight
                     ? "opacity-100"
                     : "opacity-0 pointer-events-none"
@@ -500,7 +680,7 @@ export default function AIAgentMasterclass() {
           </div>
           <div className="my-12">
             <div className="text-xl sm:text-2xl font-semibold mb-4 flex items-center gap-2">
-              <img
+              <Image
                 src="/instructor.svg"
                 alt="Instructor"
                 width={32}
@@ -533,7 +713,7 @@ export default function AIAgentMasterclass() {
               <h3 className="text-lg sm:text-xl font-semibold mb-2">
                 Have More Questions?
               </h3>
-              <p className="text-sm sm:text-base text-gray-500 flex items-center">
+              <p className="text-sm sm:text-base text-gray-500 md:flex items-center">
                 You can email us at&nbsp;
                 <a
                   href="mailto:no-reply@robolearn.in"
@@ -568,17 +748,20 @@ export default function AIAgentMasterclass() {
             </div>
           </div>
         </div>
-        <div className="w-1/3">
+        <div className="w-1/3 hidden md:block">
           <div className="sticky top-20 bg-white shadow-xl rounded-xl p-6 border border-gray-100 transition-all duration-300 m-12">
+            <ShineBorder />
             <div className="space-y-4">
               {/* Date and Details */}
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <div className="text-gray-500 w-6 flex-shrink-0">
-                    <img
+                    <Image
                       src="/calendar-icon.svg"
                       alt="Calendar"
                       className="w-5 h-5"
+                      width={20}
+                      height={20}
                     />
                   </div>
                   <span className="text-gray-800">25th May, 2025</span>
@@ -586,10 +769,12 @@ export default function AIAgentMasterclass() {
 
                 <div className="flex items-center gap-2">
                   <div className="text-gray-500 w-6 flex-shrink-0">
-                    <img
+                    <Image
                       src="/clock-icon.svg"
                       alt="Clock"
                       className="w-5 h-5"
+                      width={20}
+                      height={20}
                     />
                   </div>
                   <span className="text-gray-800">5:00 pm to 6:00 pm</span>
@@ -597,10 +782,12 @@ export default function AIAgentMasterclass() {
 
                 <div className="flex items-center gap-2">
                   <div className="text-gray-500 w-6 flex-shrink-0">
-                    <img
+                    <Image
                       src="/globe-icon.svg"
                       alt="Globe"
                       className="w-5 h-5"
+                      width={20}
+                      height={20}
                     />
                   </div>
                   <span className="text-gray-800">Hindi</span>
@@ -608,10 +795,12 @@ export default function AIAgentMasterclass() {
 
                 <div className="flex items-center gap-2">
                   <div className="text-gray-500 w-6 flex-shrink-0">
-                    <img
+                    <Image
                       src="/certificate-icon.svg"
                       alt="Certificate"
                       className="w-5 h-5"
+                      width={20}
+                      height={20}
                     />
                   </div>
                   <span className="text-gray-800">
@@ -684,6 +873,41 @@ export default function AIAgentMasterclass() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Mobile Sticky Bottom Bar */}
+      <div className="fixed bottom-0 left-0 right-0 pb-3 md:hidden z-50 bg-white">
+        <div className="bg-[#fae3ea] text-[#df4271] px-3 py-1 flex justify-center items-center">
+          <span className="text-sm font-medium">
+            Webinar starts in {timeLeft.days > 0 ? `${timeLeft.days}d : ` : ""}
+            {String(timeLeft.hours).padStart(2, "0")}h :{" "}
+            {String(timeLeft.minutes).padStart(2, "0")}m :{" "}
+            {String(timeLeft.seconds).padStart(2, "0")}s
+          </span>
+        </div>
+        <div className="flex items-center justify-between bg-white border-t pt-3 px-3 border-gray-200 md:hidden z-50">
+          <ShimmerButton
+            borderRadius="5px"
+            className="text-white w-full text-sm font-semibold cursor-pointer group px-4 py-2"
+          >
+            <span className="flex items-center">
+              Enroll Now
+              <svg
+                className="w-4 h-4 ml-1 transition-transform duration-200 ease-in-out group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </span>
+          </ShimmerButton>
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@ export function Navbar() {
     if (!isMediumScreen && isMenuOpen) {
       setIsMenuOpen(false);
     }
-  }, [isMediumScreen]);
+  }, [isMediumScreen, isMenuOpen]);
 
   const scrollToSection = (
     e: React.MouseEvent<HTMLAnchorElement>,

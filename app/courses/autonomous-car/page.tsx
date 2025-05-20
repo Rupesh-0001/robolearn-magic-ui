@@ -5,6 +5,7 @@ import { ChevronUp as ChevronUpIcon, ChevronDown as ChevronDownIcon, CheckCircle
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";
 import Link from 'next/link';
+import Image from 'next/image';
 
 
 export default function AutonomousCarMasterclass() {
@@ -62,10 +63,12 @@ export default function AutonomousCarMasterclass() {
                     <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit rounded-sm font-semibold">AUTONOMOUS CAR COURSE</span>
                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">Autonomous Car Bootcamp</h1>
                     <div className="mb-8 sm:mb-12">
-                        <img 
+                        <Image 
                             src="/autonomousCarMasterclassTemplate.jpeg"
                             alt="Autonomous Car" 
                             className="rounded-lg shadow-lg w-full h-auto"
+                            width={800}
+                            height={450}
                         />
                     </div>
                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-8 sm:mb-12 mt-4 sm:mt-6 lg:hidden block">Autonomous Car Bootcamp</h1>
@@ -300,10 +303,12 @@ export default function AutonomousCarMasterclass() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <Link href="/courses/ai-agent" className="flex flex-col hover:shadow-lg hover:scale-105 hover:shadow-black-700 p-1 transition-shadow duration-300">
                                 <div className="relative">
-                                    <img 
+                                    <Image 
                                         src="/aiAgentTemplate.jpeg" 
                                         alt="AI Agent Bootcamp"
                                         className="w-full h-32 sm:h-40 object-cover rounded-t-lg"
+                                        width={400}
+                                        height={250}
                                     />
                                     <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
                                         Popular
@@ -322,10 +327,12 @@ export default function AutonomousCarMasterclass() {
                             </Link>
                             <Link href="/courses/robotic-arm" className="flex flex-col hover:shadow-lg hover:scale-105 hover:shadow-black-700 p-1 transition-shadow duration-300">
                                 <div className="relative">
-                                    <img 
+                                    <Image 
                                         src="/industrialRobotTemplate.jpeg"
                                         alt="Robotic Arm Bootcamp" 
                                         className="w-full h-32 sm:h-40 object-cover rounded-t-lg"
+                                        width={400}
+                                        height={250}
                                     />
                                     <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
                                         New

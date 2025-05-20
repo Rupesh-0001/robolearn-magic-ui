@@ -1,4 +1,5 @@
 import React, { ComponentPropsWithoutRef, ReactNode } from "react";
+import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
@@ -113,10 +114,12 @@ const BentoCard = ({
               )}
             >
               {typeof image === "string" ? (
-                <img
+                <Image
                   src={image}
                   alt={name}
-                  className="object-contain max-h-full"
+                  className="object-contain max-h-full w-auto h-auto"
+                  width={500}
+                  height={300}
                 />
               ) : React.isValidElement(image) ? (
                 // If the image is a background component, render its children instead
