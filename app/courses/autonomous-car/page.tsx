@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 
+
 export default function AutonomousCarMasterclass() {
     const [openLecture, setOpenLecture] = useState<string | null>(null);
     const [showFullDescription, setShowFullDescription] = useState(false);
@@ -423,7 +424,49 @@ export default function AutonomousCarMasterclass() {
                         <div className="text-sm mb-4">
                             <span className="text-black">Offer ends in</span> <span className="text-[#df4271]">{formatTimeLeft()}</span>
                         </div>
-                        <ShimmerButton className="w-full bg-white-600 text-white py-2 px-4 rounded-lg hover:bg-white-700 transition duration-300 text-sm sm:text-base cursor-pointer">
+                        <ShimmerButton 
+                            className="w-full bg-white-600 text-white py-2 px-4 rounded-lg hover:bg-white-700 transition duration-300 text-sm sm:text-base cursor-pointer"
+                            onClick={() => {
+                                const initializeRazorpay = () => {
+                                    const options = {
+                                        key: 'rzp_test_5UdmjF0dRfzPGw',
+                                        amount: 499900, // ₹4,999 in paise
+                                        currency: "INR",
+                                        name: "Autonomous Car Course",
+                                        description: "Purchase of Autonomous Car Course",
+                                        handler: function (response: {
+                                            razorpay_payment_id: string;
+                                            razorpay_order_id: string;
+                                            razorpay_signature: string;
+                                        }) {
+                                            console.log(response);
+                                            // Handle successful payment
+                                        },
+                                        prefill: {
+                                            name: "User Name",
+                                            email: "user@example.com",
+                                            contact: "9999999999"
+                                        },
+                                        theme: {
+                                            color: "#df4271"
+                                        }
+                                    };
+
+                                    const rzp = new (window as Window & typeof globalThis & { Razorpay: new (options: RazorpayOptions) => RazorpayInstance }).Razorpay(options);
+                                    rzp.open();
+                                };
+
+                                if (typeof window !== 'undefined' && 'Razorpay' in window) {
+                                    initializeRazorpay();
+                                } else {
+                                    const script = document.createElement('script');
+                                    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+                                    script.async = true;
+                                    script.onload = initializeRazorpay;
+                                    document.body.appendChild(script);
+                                }
+                            }}
+                        >
                             Buy Now
                         </ShimmerButton>
                     </div>
