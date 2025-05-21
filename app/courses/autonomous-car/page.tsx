@@ -19,7 +19,7 @@ export default function AutonomousCarMasterclass() {
     });
 
     useEffect(() => {
-        const endDate = new Date('2025-05-19T16:00:00'); // May 19, 4 PM
+        const endDate = new Date('2025-05-24T16:00:00'); // May 19, 4 PM
 
         const calculateTimeLeft = () => {
             const now = new Date();
@@ -60,7 +60,7 @@ export default function AutonomousCarMasterclass() {
         <main className="container mx-auto px-4 pt-16 mt-6 2xl:pb-8 pb-24">
             <div className="flex flex-col lg:flex-row gap-11">
                 <div className="w-full lg:w-7/10">
-                    <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit rounded-sm font-semibold">AUTONOMOUS CAR COURSE</span>
+                    <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit rounded font-semibold">AUTONOMOUS CAR COURSE</span>
                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">Autonomous Car Bootcamp</h1>
                     <div className="mb-8 sm:mb-12">
                         <Image 
@@ -146,7 +146,7 @@ export default function AutonomousCarMasterclass() {
                         <h2 className="text-xl sm:text-2xl font-semibold mb-4">Course Overview</h2>
                         <div className="p-3">
                             <div className="space-y-4">
-                                <div className={`border rounded-lg p-1 shadow-md`}>
+                                <div className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}>
                                     <button className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${openLecture === 'intro' ? 'text-blue-600' : ''} cursor-pointer rounded-md ${openLecture === 'intro' ? 'bg-blue-100' : ''}`} onClick={() => toggleLecture('intro')}>
                                         <span className="text-sm sm:text-base">1. Introduction to Autonomous Vehicles</span>
                                         {openLecture === 'intro' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
@@ -282,14 +282,22 @@ export default function AutonomousCarMasterclass() {
                         </p>
                         <button 
                             onClick={toggleDescription} 
-                            className="mt-1 text-sm sm:text-base text-blue-400 rounded-md transition cursor-pointer"
+                            className="mt-1 text-sm sm:text-base text-[#3e48ce] rounded-md transition cursor-pointer"
                         >
                             {showFullDescription ? 'Show Less' : 'Show More'}
                         </button>
                     </div>
 
                     <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 my-8">
-                        <h2 className="text-xl sm:text-2xl font-semibold mb-4">👨‍🏫 Meet Your Instructor</h2>
+                        <div className="text-xl sm:text-2xl font-semibold mb-4 flex items-center gap-2">
+                            <Image
+                                src="/instructor.svg"
+                                alt="Instructor"
+                                width={32}
+                                height={32}
+                            />{" "}
+                            Meet Your Instructor
+                            </div>
                         <h3 className="text-lg sm:text-xl font-semibold mb-2">Harpreet Singh</h3>
                         <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2"><ClockIcon className="w-4 h-4 mr-2" /><strong>5+ Years Experience</strong></p>
                         <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2"><UsersIcon className="w-4 h-4 mr-2" /><strong>35,466+ Learners</strong></p>
