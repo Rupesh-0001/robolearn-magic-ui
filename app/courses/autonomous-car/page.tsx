@@ -471,12 +471,12 @@ export default function AutonomousCarMasterclass() {
                                             console.log(response);
                                         },
                                         prefill: {
-                                            name: "User Name",
-                                            email: "user@example.com",
-                                            contact: "9999999999"
+                                            name: "",
+                                            email: "", // Empty email to make it mandatory
+                                            contact: "" // Empty contact to make it mandatory
                                         },
                                         theme: {
-                                            color: "#df4271"
+                                            color: "#000000"
                                         }
                                     };
 
@@ -484,15 +484,32 @@ export default function AutonomousCarMasterclass() {
                                     rzp.open();
                                 };
 
-                                if (typeof window !== 'undefined' && 'Razorpay' in window) {
-                                    initializeRazorpay();
-                                } else {
-                                    const script = document.createElement('script');
-                                    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-                                    script.async = true;
-                                    script.onload = initializeRazorpay;
-                                    document.body.appendChild(script);
-                                }
+                                // Load Razorpay script with error handling
+                                const loadRazorpayScript = () => {
+                                    return new Promise((resolve, reject) => {
+                                        if (typeof window !== 'undefined' && 'Razorpay' in window) {
+                                            resolve(true);
+                                            return;
+                                        }
+
+                                        const script = document.createElement('script');
+                                        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+                                        script.async = true;
+                                        
+                                        script.onload = () => resolve(true);
+                                        script.onerror = () => reject(new Error('Failed to load Razorpay script'));
+                                        
+                                        document.body.appendChild(script);
+                                    });
+                                };
+
+                                // Initialize Razorpay with error handling
+                                loadRazorpayScript()
+                                    .then(() => initializeRazorpay())
+                                    .catch(error => {
+                                        console.error('Error loading Razorpay:', error);
+                                        // You might want to show an error message to the user here
+                                    });
                             }}
                         >
                             Buy Now
@@ -522,6 +539,53 @@ export default function AutonomousCarMasterclass() {
                             <ShimmerButton 
                                 borderRadius="8px"
                                 className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
+                                onClick={() => {
+                                    const initializeRazorpay = () => {
+                                        const razorpayKey = "rzp_test_5UdmjF0dRfzPGw";
+                                        
+                                        if (!razorpayKey) {
+                                            console.error('Razorpay key is not defined');
+                                            return;
+                                        }
+
+                                        const options = {
+                                            key: razorpayKey,
+                                            amount: "499900",
+                                            currency: "INR",
+                                            name: "Autonomous Car Course",
+                                            description: "Purchase of Autonomous Car Course",
+                                            handler: function (response: {
+                                                razorpay_payment_id: string;
+                                                razorpay_order_id: string;
+                                                razorpay_signature: string;
+                                            }) {
+                                                console.log(response);
+                                            },
+                                            prefill: {
+                                                name: "",
+                                                email: "",
+                                                contact: ""
+                                            }
+                                        };
+
+                                        try {
+                                            const rzp = new window.Razorpay(options);
+                                            rzp.open();
+                                        } catch (error) {
+                                            console.error('Error initializing Razorpay:', error);
+                                        }
+                                    };
+
+                                    if (typeof window !== 'undefined' && 'Razorpay' in window) {
+                                        initializeRazorpay();
+                                    } else {
+                                        const script = document.createElement('script');
+                                        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+                                        script.async = true;
+                                        script.onload = initializeRazorpay;
+                                        document.body.appendChild(script);
+                                    }
+                                }}
                             >
                                 Buy Now
                             </ShimmerButton>
