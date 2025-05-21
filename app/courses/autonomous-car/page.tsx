@@ -7,7 +7,36 @@ import { ShineBorder } from "@/components/magicui/shine-border";
 import Link from 'next/link';
 import Image from 'next/image';
 
+interface RazorpayOptions {
+    key: string;
+    amount: number;
+    currency: string;
+    name: string;
+    description: string;
+    handler: (response: {
+        razorpay_payment_id: string;
+        razorpay_order_id: string;
+        razorpay_signature: string;
+    }) => void;
+    prefill: {
+        name: string;
+        email: string;
+        contact: string;
+    };
+    theme: {
+        color: string;
+    };
+}
 
+interface RazorpayInstance {
+    open: () => void;
+}
+
+declare global {
+    interface Window {
+        Razorpay: new (options: RazorpayOptions) => RazorpayInstance;
+    }
+}
 
 export default function AutonomousCarMasterclass() {
     const [openLecture, setOpenLecture] = useState<string | null>(null);
@@ -430,7 +459,7 @@ export default function AutonomousCarMasterclass() {
                                 const initializeRazorpay = () => {
                                     const options = {
                                         key: 'rzp_test_5UdmjF0dRfzPGw',
-                                        amount: 499900, // ₹4,999 in paise
+                                        amount: 499900,
                                         currency: "INR",
                                         name: "Autonomous Car Course",
                                         description: "Purchase of Autonomous Car Course",
@@ -440,7 +469,6 @@ export default function AutonomousCarMasterclass() {
                                             razorpay_signature: string;
                                         }) {
                                             console.log(response);
-                                            // Handle successful payment
                                         },
                                         prefill: {
                                             name: "User Name",
@@ -452,7 +480,7 @@ export default function AutonomousCarMasterclass() {
                                         }
                                     };
 
-                                    const rzp = new (window as Window & typeof globalThis & { Razorpay: new (options: RazorpayOptions) => RazorpayInstance }).Razorpay(options);
+                                    const rzp = new window.Razorpay(options);
                                     rzp.open();
                                 };
 
