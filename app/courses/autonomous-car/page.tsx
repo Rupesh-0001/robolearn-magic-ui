@@ -457,8 +457,15 @@ export default function AutonomousCarMasterclass() {
                             className="w-full bg-white-600 text-white py-2 px-4 rounded-lg hover:bg-white-700 transition duration-300 text-sm sm:text-base cursor-pointer"
                             onClick={() => {
                                 const initializeRazorpay = () => {
+                                    const razorpayKey = "rzp_test_5UdmjF0dRfzPGw";
+                                    
+                                    if (!razorpayKey) {
+                                        console.error('Razorpay key is not defined');
+                                        return;
+                                    }
+
                                     const options = {
-                                        key: 'rzp_test_5UdmjF0dRfzPGw',
+                                        key: razorpayKey,
                                         amount: 499900,
                                         currency: "INR",
                                         name: "Autonomous Car Course",
@@ -472,44 +479,31 @@ export default function AutonomousCarMasterclass() {
                                         },
                                         prefill: {
                                             name: "",
-                                            email: "", // Empty email to make it mandatory
-                                            contact: "" // Empty contact to make it mandatory
+                                            email: "",
+                                            contact: ""
                                         },
                                         theme: {
                                             color: "#000000"
                                         }
                                     };
 
-                                    const rzp = new window.Razorpay(options);
-                                    rzp.open();
+                                    try {
+                                        const rzp = new window.Razorpay(options);
+                                        rzp.open();
+                                    } catch (error) {
+                                        console.error('Error initializing Razorpay:', error);
+                                    }
                                 };
 
-                                // Load Razorpay script with error handling
-                                const loadRazorpayScript = () => {
-                                    return new Promise((resolve, reject) => {
-                                        if (typeof window !== 'undefined' && 'Razorpay' in window) {
-                                            resolve(true);
-                                            return;
-                                        }
-
-                                        const script = document.createElement('script');
-                                        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-                                        script.async = true;
-                                        
-                                        script.onload = () => resolve(true);
-                                        script.onerror = () => reject(new Error('Failed to load Razorpay script'));
-                                        
-                                        document.body.appendChild(script);
-                                    });
-                                };
-
-                                // Initialize Razorpay with error handling
-                                loadRazorpayScript()
-                                    .then(() => initializeRazorpay())
-                                    .catch(error => {
-                                        console.error('Error loading Razorpay:', error);
-                                        // You might want to show an error message to the user here
-                                    });
+                                if (typeof window !== 'undefined' && 'Razorpay' in window) {
+                                    initializeRazorpay();
+                                } else {
+                                    const script = document.createElement('script');
+                                    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+                                    script.async = true;
+                                    script.onload = initializeRazorpay;
+                                    document.body.appendChild(script);
+                                }
                             }}
                         >
                             Buy Now
@@ -550,7 +544,7 @@ export default function AutonomousCarMasterclass() {
 
                                         const options = {
                                             key: razorpayKey,
-                                            amount: "499900",
+                                            amount: 499900,
                                             currency: "INR",
                                             name: "Autonomous Car Course",
                                             description: "Purchase of Autonomous Car Course",
@@ -565,6 +559,9 @@ export default function AutonomousCarMasterclass() {
                                                 name: "",
                                                 email: "",
                                                 contact: ""
+                                            },
+                                            theme: {
+                                                color: "#000000"
                                             }
                                         };
 
