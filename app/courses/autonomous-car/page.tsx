@@ -336,23 +336,23 @@ export default function AutonomousCarMasterclass() {
                         </p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 my-6">
-                        <h2 className="text-xl sm:text-2xl font-semibold mb-8">Learners also bought</h2>
+                    <div>
+                        <h2 className="text-xl sm:text-2xl font-semibold mb-4">Learners also bought</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                            <Link href="/courses/ai-agent" className="flex flex-col hover:shadow-lg hover:scale-105 hover:shadow-black-700 p-1 transition-shadow duration-300">
+                            <Link href="/courses/ai-agent" className="flex border border-gray-200 rounded-lg flex-col hover:shadow-lg hover:scale-103 hover:shadow-black-600 transition-shadow duration-300">
                                 <div className="relative">
                                     <Image 
                                         src="/aiAgentTemplate.jpeg" 
                                         alt="AI Agent Bootcamp"
-                                        className="w-full h-32 sm:h-40 object-cover rounded-t-lg"
+                                        className="w-full object-cover rounded-t-lg"
                                         width={400}
                                         height={250}
                                     />
-                                    <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                                    {/* <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
                                         Popular
-                                    </div>
+                                    </div> */}
                                 </div>
-                                <div className="mt-4 flex justify-between items-center">
+                                <div className="mt-3 px-3 pb-2 flex justify-between items-center">
                                     <div>
                                         <p className="font-semibold text-sm sm:text-base">AI Agent Bootcamp</p>
                                         <p className="text-xs sm:text-sm text-gray-500 mt-1">1275 learners • by Harpreet Singh</p>
@@ -363,20 +363,20 @@ export default function AutonomousCarMasterclass() {
                                     </div>
                                 </div>
                             </Link>
-                            <Link href="/courses/robotic-arm" className="flex flex-col hover:shadow-lg hover:scale-105 hover:shadow-black-700 p-1 transition-shadow duration-300">
+                            <Link href="/courses/robotic-arm" className="flex border border-gray-200 rounded-lg flex-col hover:shadow-lg hover:scale-103 hover:shadow-black-600 transition-shadow duration-300">
                                 <div className="relative">
                                     <Image 
                                         src="/industrialRobotTemplate.jpeg"
                                         alt="Robotic Arm Bootcamp" 
-                                        className="w-full h-32 sm:h-40 object-cover rounded-t-lg"
+                                        className="w-full object-cover rounded-t-lg"
                                         width={400}
                                         height={250}
                                     />
-                                    <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+                                    {/* <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
                                         New
-                                    </div>
+                                    </div> */}
                                 </div>
-                                <div className="mt-4 flex justify-between items-center">
+                                <div className="mt-3 px-3 pb-2 flex justify-between items-center">
                                     <div>
                                         <p className="font-semibold text-sm sm:text-base">Robotic Arm Bootcamp</p>
                                         <p className="text-xs sm:text-sm text-gray-500 mt-1">1275 learners • by Harpreet Singh</p>
