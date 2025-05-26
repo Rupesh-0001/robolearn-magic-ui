@@ -6,6 +6,7 @@ import {
   Clock as ClockIcon,
   CheckCircle as CheckIcon,
   Users as UsersIcon,
+  X as XIcon,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -13,8 +14,165 @@ import Image from "next/image";
 
 export default function AIAgentMasterclass() {
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const [showEnrollModal, setShowEnrollModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formErrors, setFormErrors] = useState({
+    name: "",
+    phone: "",
+    email: "",
+  });
+  const [toast, setToast] = useState<{
+    show: boolean;
+    message: string;
+    type: 'success' | 'error';
+  }>({
+    show: false,
+    message: '',
+    type: 'success'
+  });
+
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
+  };
+
+  const showToast = (message: string, type: 'success' | 'error') => {
+    setToast({ show: true, message, type });
+    setTimeout(() => {
+      setToast(prev => ({ ...prev, show: false }));
+    }, 4000);
+  };
+
+  const handleEnrollClick = () => {
+    setShowEnrollModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowEnrollModal(false);
+    setFormData({ name: "", phone: "", email: "" });
+    setFormErrors({ name: "", phone: "", email: "" });
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string) => {
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(phone);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    
+    // Update form data
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
+    // Clear previous errors and validate
+    setFormErrors(prev => ({
+      ...prev,
+      [name]: ""
+    }));
+
+    // Real-time validation
+    if (name === "name") {
+      if (!value.trim()) {
+        setFormErrors(prev => ({ ...prev, name: "Name is required" }));
+      }
+    } else if (name === "phone") {
+      const cleanPhone = value.replace(/\D/g, ''); // Remove non-digits
+      setFormData(prev => ({ ...prev, phone: cleanPhone }));
+      
+      if (!cleanPhone) {
+        setFormErrors(prev => ({ ...prev, phone: "Phone number is required" }));
+      } else if (!validatePhone(cleanPhone)) {
+        setFormErrors(prev => ({ ...prev, phone: "Please enter a 10-digit phone number" }));
+      }
+    } else if (name === "email" && value.trim()) {
+      if (!validateEmail(value)) {
+        setFormErrors(prev => ({ ...prev, email: "Please enter a valid email address" }));
+      }
+    }
+  };
+
+  const isFormValid = () => {
+    return (
+      formData.name.trim() !== '' &&
+      formData.phone.trim() !== '' &&
+      !formErrors.name &&
+      !formErrors.phone &&
+      !formErrors.email &&
+      validatePhone(formData.phone)
+    );
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Final validation
+    const errors = { name: "", phone: "", email: "" };
+    
+    if (!formData.name.trim()) {
+      errors.name = "Name is required";
+    }
+    
+    if (!formData.phone.trim()) {
+      errors.phone = "Phone number is required";
+    } else if (!validatePhone(formData.phone)) {
+      errors.phone = "Please enter a 10-digit phone number";
+    }
+    
+    if (formData.email.trim() && !validateEmail(formData.email)) {
+      errors.email = "Please enter a valid email address";
+    }
+    
+    if (errors.name || errors.phone || errors.email) {
+      setFormErrors(errors);
+      return;
+    }
+    
+    setIsSubmitting(true);
+
+    const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxDSoETsGNCiPqbGLHEDH8K1E9Ydtc6xqvO2neaTq3BqY5la0alVdVd_-VBvn04covU/exec';
+
+    const submitData = {
+      name: formData.name,
+      email: formData.email,
+      phoneNumber: formData.phone
+    };
+
+    try {
+      await fetch(GOOGLE_SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData)
+      });
+
+      // Clear form and close modal
+      setFormData({ name: "", phone: "", email: "" });
+      setFormErrors({ name: "", phone: "", email: "" });
+      setShowEnrollModal(false);
+
+      // Show success message
+      showToast('Registration successful! You will receive further details on WhatsApp.', 'success');
+
+    } catch (error) {
+      console.error('Error:', error);
+      showToast('An error occurred. Please try again.', 'error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Carousel state
@@ -65,14 +223,22 @@ export default function AIAgentMasterclass() {
   // Add countdown timer effect
   useEffect(() => {
     // Set the date we're counting down to (May 25, 2025 at 5:00 PM)
-    const countDownDate = new Date("May 25, 2025 17:00:00").getTime();
+    const countDownDate = new Date("May 31, 2025 17:00:00").getTime();
 
-    const updateCountdown = () => {
+    // Update the countdown every 1 second
+    const interval = setInterval(() => {
       // Get today's date and time
       const now = new Date().getTime();
 
       // Find the distance between now and the countdown date
       const distance = countDownDate - now;
+
+      // If the countdown is finished, clear the interval
+      if (distance < 0) {
+        clearInterval(interval);
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
 
       // Time calculations for days, hours, minutes and seconds
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -84,19 +250,23 @@ export default function AIAgentMasterclass() {
 
       // Update state with new values
       setTimeLeft({ days, hours, minutes, seconds });
+    }, 1000);
 
-      // If the countdown is finished, clear the interval
-      if (distance < 0) {
-        clearInterval(interval);
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      }
-    };
-
-    // Call once immediately
-    updateCountdown();
-
-    // Update the countdown every 1 second
-    const interval = setInterval(updateCountdown, 1000);
+    // Call once immediately to avoid delay
+    const now = new Date().getTime();
+    const distance = countDownDate - now;
+    
+    if (distance >= 0) {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      setTimeLeft({ days, hours, minutes, seconds });
+    } else {
+      setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    }
 
     // Clean up the interval on component unmount
     return () => clearInterval(interval);
@@ -149,7 +319,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>25th May, 2025</span>
+                <span>31st May, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -174,6 +344,7 @@ export default function AIAgentMasterclass() {
               <ShimmerButton
                 borderRadius="5px"
                 className="text-white text-sm sm:text-base font-semibold w-1/3 cursor-pointer mr-4 group"
+                onClick={handleEnrollClick}
               >
                 <span className="flex items-center">
                   Enroll Now
@@ -223,7 +394,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  25th May, 2025
+                  31st May, 2025
                 </span>
               </div>
 
@@ -316,7 +487,7 @@ export default function AIAgentMasterclass() {
                         height={20}
                       />
                     </div>
-                    <span className="text-gray-800">25th May, 2025</span>
+                    <span className="text-gray-800">31st May, 2025</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -764,7 +935,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">25th May, 2025</span>
+                  <span className="text-gray-800">31st May, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -820,6 +991,7 @@ export default function AIAgentMasterclass() {
               <ShimmerButton
                 borderRadius="5px"
                 className="text-white text-sm sm:text-base font-semibold w-full cursor-pointer mr-4 group"
+                onClick={handleEnrollClick}
               >
                 <span className="flex items-center">
                   Enroll Now
@@ -890,6 +1062,7 @@ export default function AIAgentMasterclass() {
           <ShimmerButton
             borderRadius="5px"
             className="text-white w-full text-sm font-semibold cursor-pointer group px-4 py-2"
+            onClick={handleEnrollClick}
           >
             <span className="flex items-center">
               Enroll Now
@@ -910,6 +1083,170 @@ export default function AIAgentMasterclass() {
           </ShimmerButton>
         </div>
       </div>
-    </div>
-  );
-}
+
+             {/* Enroll Modal */}
+       {showEnrollModal && (
+         <div 
+           className="fixed inset-0 backdrop-blur-sm bg-neutral-500 bg-opacity-30 flex items-center justify-center z-50 p-4"
+           onClick={handleCloseModal}
+         >
+           <div 
+             className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+             onClick={(e) => e.stopPropagation()}
+           >
+             {/* Modal Header */}
+             <div className="flex items-center justify-between p-6 border-b border-gray-200">
+               <h2 className="text-xl font-semibold text-gray-900">
+                 Enroll for the free Masterclass
+               </h2>
+               <button
+                 onClick={handleCloseModal}
+                 className="text-gray-400 hover:text-gray-600 transition-colors"
+               >
+                 <XIcon className="h-6 w-6 cursor-pointer" />
+               </button>
+             </div>
+
+             {/* Modal Body */}
+             <form onSubmit={handleSubmit} className="p-6">
+               <div className="space-y-4">
+                 <div>
+                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                     Full Name <span className="text-red-500">*</span>
+                   </label>
+                   <input
+                     type="text"
+                     id="name"
+                     name="name"
+                     value={formData.name}
+                     onChange={handleInputChange}
+                     required
+                     placeholder="Enter your full name"
+                     className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors ${
+                       formErrors.name 
+                         ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
+                         : 'border-gray-300 focus:ring-black focus:border-black'
+                     }`}
+                   />
+                   {formErrors.name && (
+                     <p className="mt-1 text-sm text-red-600">{formErrors.name}</p>
+                   )}
+                 </div>
+
+                 <div>
+                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                     WhatsApp Number <span className="text-red-500">*</span>
+                   </label>
+                   <input
+                     type="tel"
+                     id="phone"
+                     name="phone"
+                     value={formData.phone}
+                     onChange={handleInputChange}
+                     required
+                     placeholder="9876543210"
+                     maxLength={10}
+                     className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors ${
+                       formErrors.phone 
+                         ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
+                         : 'border-gray-300 focus:ring-black focus:border-black'
+                     }`}
+                   />
+                   {formErrors.phone && (
+                     <p className="mt-1 text-sm text-red-600">{formErrors.phone}</p>
+                   )}
+                 </div>
+
+                 <div>
+                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                     Email Address <span className="text-gray-400">(Optional)</span>
+                   </label>
+                   <input
+                     type="email"
+                     id="email"
+                     name="email"
+                     value={formData.email}
+                     onChange={handleInputChange}
+                     placeholder="your.email@example.com"
+                     className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors ${
+                       formErrors.email 
+                         ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
+                         : 'border-gray-300 focus:ring-black focus:border-black'
+                     }`}
+                   />
+                   {formErrors.email && (
+                     <p className="mt-1 text-sm text-red-600">{formErrors.email}</p>
+                   )}
+                 </div>
+               </div>
+
+               {/* Modal Footer */}
+               <div className="flex flex-col gap-3 mt-6">
+                 <button
+                   type="submit"
+                   disabled={isSubmitting || !isFormValid()}
+                   className="w-full bg-gray-950 hover:bg-black cursor-pointer text-white font-medium px-4 py-3 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                 >
+                   {isSubmitting ? (
+                     <span className="flex items-center justify-center">
+                       <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                       </svg>
+                       Enrolling...
+                     </span>
+                   ) : (
+                     "Enroll Now"
+                   )}
+                 </button>
+                 <button
+                   type="button"
+                   onClick={handleCloseModal}
+                   className="w-full bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-700 font-medium px-4 py-3 rounded-md transition-colors"
+                 >
+                   Cancel
+                 </button>
+               </div>
+             </form>
+                      </div>
+         </div>
+       )}
+
+       {/* Toast Notification */}
+       {toast.show && (
+         <div className={`fixed top-4 right-4 z-[60] max-w-sm w-full transform transition-all duration-300 ease-in-out ${
+           toast.show ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+         }`}>
+           <div className={`rounded-lg shadow-lg p-4 ${
+             toast.type === 'success' 
+               ? 'bg-green-500 text-white' 
+               : 'bg-red-500 text-white'
+           }`}>
+             <div className="flex items-center justify-between">
+               <div className="flex items-center">
+                 {toast.type === 'success' ? (
+                   <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                   </svg>
+                 ) : (
+                   <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                   </svg>
+                 )}
+                 <span className="text-sm font-medium">{toast.message}</span>
+               </div>
+               <button
+                 onClick={() => setToast(prev => ({ ...prev, show: false }))}
+                 className="ml-4 text-white hover:text-gray-200 transition-colors"
+               >
+                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                   <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                 </svg>
+               </button>
+             </div>
+           </div>
+         </div>
+       )}
+     </div>
+   );
+ }
