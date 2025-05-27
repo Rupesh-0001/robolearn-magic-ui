@@ -44,13 +44,13 @@ export const Stats: React.FC = () => {
       <div className="container mx-auto">
         <div className="flex flex-col sm:flex-row justify-around items-center gap-8 sm:gap-4 relative">
           <div className="w-full sm:w-auto px-4 sm:px-8">
-            <StatItem value={1000} symbol="+" label="Learners" />
+            <StatItem value={10000} symbol="+" label="Learners" />
           </div>
           {!isSmallScreen && (
             <div className="hidden sm:block h-20 md:h-28 w-px bg-gray-200 absolute" style={{ left: '33.33%' }}></div>
           )}
           <div className="w-full sm:w-auto px-4 sm:px-8">
-            <StatItem value={500} symbol="+" label="Industry Grade Projects" />
+            <StatItem value={7000} symbol="+" label="Industry Grade Projects" />
           </div>
           {!isSmallScreen && (
             <div className="hidden sm:block h-20 md:h-28 w-px bg-gray-200 absolute" style={{ left: '66.66%' }}></div>

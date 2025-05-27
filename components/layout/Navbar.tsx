@@ -17,10 +17,15 @@ const navItems = [
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const isSmallScreen = useMediaQuery("(max-width: 640px)");
   const isMediumScreen = useMediaQuery("(max-width: 768px)");
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isMediumScreen && isMenuOpen) {
@@ -52,6 +57,10 @@ export function Navbar() {
     }
   };
 
+  // Use default values during SSR and initial hydration
+  const logoWidth = mounted && isSmallScreen ? "100" : "150";
+  const logoHeight = mounted && isSmallScreen ? "100" : "150";
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-7xl 2xl:max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -60,8 +69,8 @@ export function Navbar() {
             <Link href="/" className="font-bold text-xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width={isSmallScreen ? "100" : "150"}
-                height={isSmallScreen ? "100" : "150"}
+                width={logoWidth}
+                height={logoHeight}
                 version="1"
                 viewBox="0 0 446 107"
               >
@@ -88,7 +97,7 @@ export function Navbar() {
                   href="/masterclasses"
                   className={cn(
                     "rounded border border-solid border-transparent transition-colors flex items-center justify-center bg-[#ff4164] text-white gap-2 hover:bg-[#ff1c46]/90 dark:hover:bg-[#ccc] font-medium",
-                    isSmallScreen ? "text-xs h-8 px-2" : "text-sm h-10 px-3"
+                    mounted && isSmallScreen ? "text-xs h-8 px-2" : "text-sm h-10 px-3"
                   )}
                 >
                   <svg
@@ -101,7 +110,7 @@ export function Navbar() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className={cn("h-5 w-5", isSmallScreen && "h-4 w-4")}
+                    className={cn("h-5 w-5", mounted && isSmallScreen && "h-4 w-4")}
                   >
                     <rect width="7" height="7" x="14" y="3" rx="1"></rect>
                     <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
@@ -174,7 +183,7 @@ export function Navbar() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className={cn("h-5 w-5", isSmallScreen && "h-4 w-4")}
+                className={cn("h-5 w-5", mounted && isSmallScreen && "h-4 w-4")}
               >
                 <rect width="7" height="7" x="14" y="3" rx="1"></rect>
                 <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>

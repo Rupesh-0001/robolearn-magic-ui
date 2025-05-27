@@ -94,7 +94,7 @@ export default function AutonomousCarMasterclass() {
                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">Autonomous Car Bootcamp</h1>
                     <div className="mb-8 sm:mb-12">
                         <Image 
-                            src="/autonomousCarMasterclassTemplate.jpeg"
+                            src="/autonomousCarMasterclassTemplate.png"
                             alt="Autonomous Car" 
                             className="rounded-lg shadow-lg w-full h-auto"
                             width={800}
@@ -270,46 +270,49 @@ export default function AutonomousCarMasterclass() {
 
                     <div className="my-8 rounded-lg">
                         <h2 className="text-xl sm:text-2xl font-semibold mb-4">About the Bootcamp</h2>
-                        <p className="text-base text-gray-700 leading-relaxed mb-1">
-                            This is a complete, structured program to help you build a production-grade self-driving car stack from scratch, step-by-step. With live projects, recorded lectures, and professional tools, you&apos;ll graduate with real skills and a full portfolio.
-                            {showFullDescription ? (
+                        <div className="text-base text-gray-700 leading-relaxed mb-1">
+                            <p className="mb-4">
+                                This is a complete, structured program to help you build a production-grade self-driving car stack from scratch, step-by-step. With live projects, recorded lectures, and professional tools, you&apos;ll graduate with real skills and a full portfolio.
+                                {!showFullDescription && <span> ...</span>}
+                            </p>
+                            {showFullDescription && (
                                 <>
-                                    <br /><br />
-                                    <strong className="text-lg font-semibold">Top Projects You Will Build:</strong>
-                                    <ul className="list-none mt-4 space-y-1">
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Lane Detection & Following (Level 1)</span></li>
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Traffic Light and Sign Handling (Level 2)</span></li>
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Lidar + Camera Obstacle Detection (Level 3)</span></li>
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Localization & SLAM System (Level 4)</span></li>
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Agent Prediction + Path Planning Stack (Level 5–6)</span></li>
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">MPC Control Simulator (Level 7)</span></li>
-                                        <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Tesla-Style End-to-End Neural Driving Stack (Level 8)</span></li>
-                                    </ul>
-                                    <br />
-                                    <strong className="text-lg font-semibold">Who Is This Bootcamp For:</strong>
-                                    <ul className="list-none mt-4 space-y-2">
-                                        <li className="flex items-center">
-                                            <span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>
-                                            <div className="text-sm sm:text-base"><span className="font-semibold">Students</span> - <span className="text-gray-600">Learn robotics, AI, and perception hands-on</span></div>
-                                        </li>
-                                        <li className="flex items-center">
-                                            <span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>
-                                            <div className="text-sm sm:text-base"><span className="font-semibold">Working Engineers</span> - <span className="text-gray-600">Upgrade to autonomy, AI-first planning, and ROS2 stacks</span></div>
-                                        </li>
-                                        <li className="flex items-center">
-                                            <span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>
-                                            <div className="text-sm sm:text-base"><span className="font-semibold">Career Changers</span> - <span className="text-gray-600">Build a real self-driving portfolio</span></div>
-                                        </li>
-                                        <li className="flex items-center">
-                                            <span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>
-                                            <div className="text-sm sm:text-base"><span className="font-semibold">Entrepreneurs</span> - <span className="text-gray-600">Understand what it takes to prototype FSD systems</span></div>
-                                        </li>
-                                    </ul>
+                                    <div className="mb-4">
+                                        <strong className="text-lg font-semibold">Top Projects You Will Build:</strong>
+                                        <ul className="list-none mt-4 space-y-1">
+                                            <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Lane Detection & Following (Level 1)</span></li>
+                                            <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Traffic Light and Sign Handling (Level 2)</span></li>
+                                            <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Lidar + Camera Obstacle Detection (Level 3)</span></li>
+                                            <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Localization & SLAM System (Level 4)</span></li>
+                                            <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Agent Prediction + Path Planning Stack (Level 5–6)</span></li>
+                                            <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">MPC Control Simulator (Level 7)</span></li>
+                                            <li className="flex items-center"><span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span><span className="text-sm sm:text-base">Tesla-Style End-to-End Neural Driving Stack (Level 8)</span></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <strong className="text-lg font-semibold">Who Is This Bootcamp For:</strong>
+                                        <ul className="list-none mt-4 space-y-2">
+                                            <li className="flex items-center">
+                                                <span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>
+                                                <div className="text-sm sm:text-base"><span className="font-semibold">Students</span> - <span className="text-gray-600">Learn robotics, AI, and perception hands-on</span></div>
+                                            </li>
+                                            <li className="flex items-center">
+                                                <span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>
+                                                <div className="text-sm sm:text-base"><span className="font-semibold">Working Engineers</span> - <span className="text-gray-600">Upgrade to autonomy, AI-first planning, and ROS2 stacks</span></div>
+                                            </li>
+                                            <li className="flex items-center">
+                                                <span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>
+                                                <div className="text-sm sm:text-base"><span className="font-semibold">Career Changers</span> - <span className="text-gray-600">Build a real self-driving portfolio</span></div>
+                                            </li>
+                                            <li className="flex items-center">
+                                                <span className="hidden sm:inline text-green-500 mr-2">✅</span><span className="sm:hidden text-black mr-2">•</span>
+                                                <div className="text-sm sm:text-base"><span className="font-semibold">Entrepreneurs</span> - <span className="text-gray-600">Understand what it takes to prototype FSD systems</span></div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </>
-                            ) : (
-                                <> ...</>
                             )}
-                        </p>
+                        </div>
                         <button 
                             onClick={toggleDescription} 
                             className="mt-1 text-sm sm:text-base text-[#3e48ce] rounded-md transition cursor-pointer"
@@ -330,7 +333,7 @@ export default function AutonomousCarMasterclass() {
                             </div>
                         <h3 className="text-lg sm:text-xl font-semibold mb-2">Harpreet Singh</h3>
                         <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2"><ClockIcon className="w-4 h-4 mr-2" /><strong>5+ Years Experience</strong></p>
-                        <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2"><UsersIcon className="w-4 h-4 mr-2" /><strong>35,466+ Learners</strong></p>
+                        <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2"><UsersIcon className="w-4 h-4 mr-2" /><strong>10,000+ Learners</strong></p>
                         <p className="text-sm sm:text-base text-gray-700 pt-1">
                         Lead FSD Engineer with experience across robotics startups, AI research, and simulation engineering. Harpreet brings a hands-on, project-first style to make advanced self-driving tech intuitive and fun to build.
                         </p>
