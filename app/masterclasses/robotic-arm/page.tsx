@@ -829,7 +829,7 @@ export default function RoboticArmMasterclass() {
                 With 20 years of hands-on experience in building industrial
                 robots and automation systems, Harpreet combines
                 first-principles problem solving with practical intuition. His
-                teaching style is "build-first, understand-through-application."
+                teaching style is &quot;build-first, understand-through-application.&quot;
               </p>
             </div>
           </div>
