@@ -13,24 +13,6 @@ import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 
 const courses = [
   {
-    name: "Drone Technology & Applications",
-    description:
-      "Design, build, and operate drones with a focus on flight control, autonomy, and practical uses.",
-    href: "/courses/drones",
-    cta: "Learn More",
-    className: "col-span-1 row-span-1",
-    imageClassName: "translate-y-[-50px] translate-x-[5%]",
-    hoverClassName: "group-hover:bg-red-500/10",
-    descriptionClassName: "max-w-2/3",
-    image: (
-      <Image
-        src={drone}
-        alt="Drone Technology & Applications"
-        className="max-h-96 scale-250 object-contain"
-      />
-    ),
-  },
-  {
     name: "AI Agents Mastery",
     description:
       "Learn to build intelligent AI agents that make decisions, automate tasks, and solve real-world problems.",
@@ -44,6 +26,24 @@ const courses = [
       <Image
         src={aiAgent}
         alt="AI Agents Mastery"
+        className="max-h-96 scale-250 object-contain"
+      />
+    ),
+  },
+  {
+    name: "Drone Technology & Applications",
+    description:
+      "Design, build, and operate drones with a focus on flight control, autonomy, and practical uses.",
+    href: "/courses/drones",
+    cta: "Learn More",
+    className: "col-span-1 row-span-1",
+    imageClassName: "translate-y-[-50px] translate-x-[5%]",
+    hoverClassName: "group-hover:bg-red-500/10",
+    descriptionClassName: "max-w-2/3",
+    image: (
+      <Image
+        src={drone}
+        alt="Drone Technology & Applications"
         className="max-h-96 scale-250 object-contain"
       />
     ),

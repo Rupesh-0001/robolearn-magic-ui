@@ -156,9 +156,10 @@ export default function AIAgentMasterclass() {
     setIsSubmitting(true);
 
     const GOOGLE_SHEET_URL =
-      "https://script.google.com/macros/s/AKfycbxDSoETsGNCiPqbGLHEDH8K1E9Ydtc6xqvO2neaTq3BqY5la0alVdVd_-VBvn04covU/exec";
+    "https://script.google.com/macros/s/AKfycbwVUTSMnXrQp5FBHPIsNLxy1dV4vLVR7VLJB9uI7INsJ5zt4ypMceFIR-jsxr3nYt3F/exec"
 
     const submitData = {
+      sheetName: "AutonomousCar",
       name: formData.name,
       email: formData.email,
       phoneNumber: formData.phone,
@@ -436,7 +437,35 @@ export default function AIAgentMasterclass() {
                     height={16}
                   />
                 </div>
-                <span className="text-gray-800 font-medium">5 pm to 6 pm</span>
+                <span className="text-gray-800 font-medium">7 pm to 9 pm</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <div className="text-gray-500 w-6 flex-shrink-0">
+                  <Image
+                    src="/beginner-icon.svg"
+                    alt="Beginner"
+                    className="w-4 h-4"
+                    width={16}
+                    height={16}
+                  />
+                </div>
+                <span className="text-gray-800 font-medium">
+                  Beginner Friendly
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <div className="text-gray-500 w-6 flex-shrink-0">
+                  <Image
+                    src="/people-icon.svg"
+                    alt="People"
+                    className="w-4 h-4"
+                    width={16}
+                    height={16}
+                  />
+                </div>
+                <span className="text-gray-800 font-medium">
+                  100+ participants
+                </span>
               </div>
             </div>
             <div className="flex items-center justify-center w-full mt-4">
@@ -812,10 +841,10 @@ export default function AIAgentMasterclass() {
               <p className="text-sm sm:text-base text-gray-500 md:flex items-center">
                 You can email us at&nbsp;
                 <a
-                  href="mailto:no-reply@robolearn.in"
+                  href="mailto:support@robolearn.in"
                   className="text-[#3e48ce] underline"
                 >
-                  no-reply@robolearn.in
+                  support@robolearn.in
                 </a>
                 &nbsp; or contact us on &nbsp;
                 <a
@@ -1213,7 +1242,8 @@ export default function AIAgentMasterclass() {
                 Thank you for joining
               </h2>
               <p className="text-gray-600 mb-8">
-                Join our WhatsApp community to know more about the masterclass and get notified when it&apos;s live.
+                Join our WhatsApp community to know more about the masterclass
+                and get notified when it&apos;s live.
               </p>
 
               {/* Buttons */}
