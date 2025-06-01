@@ -10,7 +10,7 @@ export default function CareersPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-20">
-        <div className="inline-block p-3 bg-primary/10 rounded-full mb-6">
+        <div className="inline-block p-3 bg-primary/10 rounded-full mb-6 mt-15">
           <Briefcase className="h-8 w-8 text-primary" />
         </div>
         <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
