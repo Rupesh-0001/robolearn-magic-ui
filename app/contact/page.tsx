@@ -14,16 +14,40 @@ export default function ContactPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Here you would typically handle the form submission
-        // For now, we'll just log the data
-        console.log('Form submitted:', formData);
-        // Reset form
-        setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            message: ''
-        });
+        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyNAc8UQfhJV5oYmLYmK_Xwg7gxolsbGqISL7fBAr_ZJQXT_qIVp0_Gc4p3Zjf7IMa-/exec';
+
+        try {
+            const response = await fetch(GOOGLE_SHEET_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Add this to bypass CORS
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            // Since we're using no-cors, we can't check response.ok
+            // The response will be opaque
+            if (!response.ok) {
+                throw new Error('Failed to submit form');
+            }
+
+            console.log('Form submitted:', formData);
+            
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                message: ''
+            });
+
+            // Show success message to user
+            alert('Message sent successfully!');
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
