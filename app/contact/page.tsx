@@ -14,7 +14,7 @@ export default function ContactPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz6mMOjN8P3JzCAGCMsrHB-q6TYx-caJJWT1T0gSUSau8niXwH7B3c3FlFZn-ZFcFR9/exec';
+        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwk1wgShB46cMDIiBCWcOjk8VAnFU28T8Jdkxpu0PpfpmSxyYYrNJepFaUjlD2n40FH/exec';
 
         try {
             const response = await fetch(GOOGLE_SHEET_URL, {
