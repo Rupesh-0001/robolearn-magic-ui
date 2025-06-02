@@ -161,10 +161,10 @@ export default function PrivacyPage() {
               <p className="text-sm sm:text-base text-gray-500 md:flex items-center">
                 You can email us at&nbsp;
                 <a
-                  href="mailto:no-reply@robolearn.in"
+                  href="mailto:support@robolearn.in"
                   className="text-[#3e48ce] underline"
                 >
-                  no-reply@robolearn.in
+                  support@robolearn.in
                 </a>
                 &nbsp; or contact us on &nbsp;
                 <a
