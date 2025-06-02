@@ -14,7 +14,7 @@ export function Footer() {
             <div className="mt-6 space-y-2">
               <p className="text-sm text-muted-foreground">
                 <strong>Address:</strong><br />
-                RoboLearn Technologies Pvt. Ltd.<br />
+                ROBOLEARNINDIA LLP<br />
                 B-29-1251/2c/581/1a St- 1 3-r, Ludhiana<br />
                 Gne College, Ludhiana, Ludhiana<br />
                 Punjab, India - 141006
@@ -50,7 +50,7 @@ export function Footer() {
         
         <div className="mt-12 pt-8 border-t border-border">
           <p className="text-center text-muted-foreground">
-            &copy; {new Date().getFullYear()} RoboLearn Technologies Pvt. Ltd. All rights reserved.
+            &copy; {new Date().getFullYear()} ROBOLEARNINDIA LLP All rights reserved.
           </p>
         </div>
       </div>

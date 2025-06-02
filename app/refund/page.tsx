@@ -221,7 +221,7 @@ export default function RefundPage() {
                 <strong>Phone:</strong> +91 9878555767 (Mon-Fri, 9 AM - 6 PM IST)
               </p>
               <p className="text-muted-foreground">
-                <strong>Address:</strong> RoboLearn Technologies Pvt. Ltd., B-29-1251/2c/581/1a St- 1 3-r, Ludhiana, Gne College, Ludhiana, Ludhiana, Punjab, India - 141006
+                <strong>Address:</strong> ROBOLEARNINDIA LLP, B-29-1251/2c/581/1a St- 1 3-r, Ludhiana, Gne College, Ludhiana, Ludhiana, Punjab, India - 141006
               </p>
             </div>
             <div className="mt-4 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">

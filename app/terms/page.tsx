@@ -29,7 +29,7 @@ export default function TermsPage() {
               <h2 className="text-2xl font-semibold text-primary">1. Acceptance of Terms</h2>
             </div>
             <p className="text-muted-foreground mb-4">
-              By accessing and using the RoboLearn platform, you accept and agree to be bound by the terms and provision of this agreement. These Terms & Conditions constitute a legally binding agreement between you and RoboLearn Technologies Pvt. Ltd.
+              By accessing and using the RoboLearn platform, you accept and agree to be bound by the terms and provision of this agreement. These Terms & Conditions constitute a legally binding agreement between you and ROBOLEARNINDIA LLP
             </p>
             <p className="text-muted-foreground">
               If you do not agree to abide by the above, please do not use this service.
@@ -139,7 +139,7 @@ export default function TermsPage() {
               <h2 className="text-2xl font-semibold text-primary">5. Intellectual Property</h2>
             </div>
             <p className="text-muted-foreground mb-4">
-              All content, including but not limited to text, graphics, videos, audio, software, and other materials available on the platform are the intellectual property of RoboLearn Technologies Pvt. Ltd. or its licensors.
+              All content, including but not limited to text, graphics, videos, audio, software, and other materials available on the platform are the intellectual property of ROBOLEARNINDIA LLP or its licensors.
             </p>
             <p className="text-muted-foreground">
               Students are granted a limited, non-exclusive, non-transferable license to access and use the course materials for personal educational purposes only.
@@ -157,7 +157,7 @@ export default function TermsPage() {
               <h2 className="text-2xl font-semibold text-primary">6. Limitation of Liability</h2>
             </div>
             <p className="text-muted-foreground mb-4">
-              RoboLearn Technologies Pvt. Ltd. shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the service.
+              ROBOLEARNINDIA LLP shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the service.
             </p>
             <p className="text-muted-foreground">
               Our total liability to you for any damages shall not exceed the amount paid by you for the course or service in question.
@@ -185,7 +185,7 @@ export default function TermsPage() {
                 <strong>Phone:</strong> +91 9878555767
               </p>
               <p className="text-muted-foreground">
-                <strong>Address:</strong> RoboLearn Technologies Pvt. Ltd., B-29-1251/2c/581/1a St- 1 3-r, Ludhiana, Gne College, Ludhiana, Ludhiana, Punjab, India - 141006
+                <strong>Address:</strong> ROBOLEARNINDIA LLP, B-29-1251/2c/581/1a St- 1 3-r, Ludhiana, Gne College, Ludhiana, Ludhiana, Punjab, India - 141006
               </p>
             </div>
           </div>
