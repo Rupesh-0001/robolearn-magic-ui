@@ -73,7 +73,13 @@ const ReviewCard = ({
       )}
     >
       <div className="flex flex-row items-center gap-2">
-        <Image className="rounded-full w-8 h-8" width={32} height={32} alt={`${name}'s avatar`} src={img} />
+        <Image 
+          className="rounded-full w-8 h-8 object-cover border-2 border-white shadow-sm transition-transform hover:scale-105" 
+          width={32} 
+          height={32} 
+          alt={`${name}'s avatar`} 
+          src={img} 
+        />
         <div className="flex flex-col">
           <figcaption className="text-sm font-medium dark:text-white">
             {name}
