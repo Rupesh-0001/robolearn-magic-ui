@@ -104,7 +104,7 @@ export default function RefundPage() {
               </li>
               <li className="flex items-center space-x-3">
                 <span className="h-1.5 w-1.5 bg-red-500 rounded-full"></span>
-                <span className="text-muted-foreground">Technical issues on student's end (internet, device problems)</span>
+                <span className="text-muted-foreground">Technical issues on student&apos;s end (internet, device problems)</span>
               </li>
               <li className="flex items-center space-x-3">
                 <span className="h-1.5 w-1.5 bg-red-500 rounded-full"></span>
