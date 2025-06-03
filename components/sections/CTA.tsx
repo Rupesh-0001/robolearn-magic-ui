@@ -29,7 +29,7 @@ export function CTA() {
             Get Started for Free
           </Link>
           <Link
-            href="https://wa.me/919878555767?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%project"
+            href="https://wa.me/919878555767?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20project"
             target="_blank"
             rel="noopener noreferrer"
             className={`rounded-full border border-solid border-primary-foreground/30 transition-colors flex items-center justify-center hover:bg-primary-foreground/10 font-medium ${
