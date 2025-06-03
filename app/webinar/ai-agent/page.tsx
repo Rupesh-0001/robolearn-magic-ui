@@ -482,6 +482,9 @@ export default function AIAgentWebinar() {
                       className="w-8 h-8 rounded-full border-2 border-white object-cover"
                     />
                   ))}
+                  <div className="w-8 h-8 rounded-full border-2 border-white bg-primary text-white text-xs font-semibold flex items-center justify-center">
+                    +50
+                  </div>
                 </div>
                 <span className="text-[#df4271]">Limited Seats</span>
               </div>
@@ -564,6 +567,9 @@ export default function AIAgentWebinar() {
                       className="w-8 h-8 rounded-full border-2 border-white object-cover"
                     />
                   ))}
+                  <div className="w-8 h-8 rounded-full border-2 border-white bg-primary text-white text-xs font-semibold flex items-center justify-center">
+                    +50
+                  </div>
                 </div>
                 <span className="text-[#df4271]">Limited Seats</span>
               </div>

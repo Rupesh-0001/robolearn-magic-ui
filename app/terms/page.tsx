@@ -179,7 +179,7 @@ export default function TermsPage() {
             </p>
             <div className="space-y-2">
               <p className="text-muted-foreground">
-                <strong>Email:</strong> legal@robolearn.in
+                <strong>Email:</strong> support@robolearn.in
               </p>
               <p className="text-muted-foreground">
                 <strong>Phone:</strong> +91 9878555767
