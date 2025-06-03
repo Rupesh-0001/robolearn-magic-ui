@@ -92,7 +92,7 @@ export default function AIAgentWebinar() {
 
   const handleEnrollClick = () => {
     const initializeRazorpay = () => {
-      const razorpayKey = "rzp_test_5UdmjF0dRfzPGw";
+      const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
 
       if (!razorpayKey) {
         console.error("Razorpay key is not defined");

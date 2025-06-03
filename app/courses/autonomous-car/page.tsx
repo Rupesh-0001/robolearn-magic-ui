@@ -871,7 +871,7 @@ export default function AutonomousCarMasterclass() {
               className="w-full bg-white-600 text-white py-2 px-4 rounded-lg hover:bg-white-700 transition duration-300 text-sm sm:text-base cursor-pointer"
               onClick={() => {
                 const initializeRazorpay = () => {
-                  const razorpayKey = "rzp_test_5UdmjF0dRfzPGw";
+                  const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
 
                   if (!razorpayKey) {
                     console.error("Razorpay key is not defined");
@@ -951,7 +951,7 @@ export default function AutonomousCarMasterclass() {
                 className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
                 onClick={() => {
                   const initializeRazorpay = () => {
-                    const razorpayKey = "rzp_test_5UdmjF0dRfzPGw";
+                    const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
 
                     if (!razorpayKey) {
                       console.error("Razorpay key is not defined");
