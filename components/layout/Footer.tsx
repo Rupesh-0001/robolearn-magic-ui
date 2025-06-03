@@ -31,7 +31,7 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Resources</h3>
             <ul className="space-y-2">
-              <li><Link href="#faqs" className="text-muted-foreground hover:text-foreground transition-colors">FAQs</Link></li>
+              <li><Link href="/faq" className="text-muted-foreground hover:text-foreground transition-colors duration-300 ease-in-out">FAQs</Link></li>
               <li><Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">Terms & Conditions</Link></li>
             </ul>
