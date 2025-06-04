@@ -1046,39 +1046,34 @@ export default function AIAgentWebinar() {
         </div>
       </div>
 
-      {/* Mobile Sticky Bottom Bar */}
-      <div className="fixed bottom-0 left-0 right-0 pb-3 md:hidden z-50 bg-white">
-        <div className="bg-[#fae3ea] text-[#df4271] px-3 py-1 flex justify-center items-center">
-          <span className="text-sm font-medium">
-            Webinar starts in {timeLeft.days > 0 ? `${timeLeft.days}d : ` : ""}
-            {String(timeLeft.hours).padStart(2, "0")}h :{" "}
-            {String(timeLeft.minutes).padStart(2, "0")}m :{" "}
-            {String(timeLeft.seconds).padStart(2, "0")}s
-          </span>
-        </div>
-        <div className="flex items-center justify-between bg-white border-t pt-3 px-3 border-gray-200 md:hidden z-50">
-          <ShimmerButton
-            borderRadius="5px"
-            className="text-white w-full text-sm font-semibold cursor-pointer group px-4 py-2"
-            onClick={handleEnrollClick}
-          >
-            <span className="flex items-center">
-              Buy Now
-              <svg
-                className="w-4 h-4 ml-1 transition-transform duration-200 ease-in-out group-hover:translate-x-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+      {/* Mobile price bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0">
+        <div className="bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+          <div className="h-6 bg-[#fae3ea] mb-3 flex items-center justify-center">
+            <div className="text-sm text-[#df4271]">
+              Offer ends in {timeLeft.days}d : {timeLeft.hours}h : {timeLeft.minutes}m : {timeLeft.seconds}s
+            </div>
+          </div>
+          <div className="flex p-2">
+            <div className="w-[40%] flex flex-col justify-center items-end pr-4">
+              <div className="flex items-center gap-2">
+                <span className="text-xl font-bold text-black-600">₹99</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-500 line-through">₹399</span>
+                <span className="text-xs text-black-600">75% off</span>
+              </div>
+            </div>
+            <div className="w-[70%]">
+              <ShimmerButton
+                borderRadius="8px"
+                className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
+                onClick={handleEnrollClick}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </span>
-          </ShimmerButton>
+                Buy Now
+              </ShimmerButton>
+            </div>
+          </div>
         </div>
       </div>
 
