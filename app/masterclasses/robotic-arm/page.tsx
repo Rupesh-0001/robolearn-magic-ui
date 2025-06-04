@@ -174,6 +174,11 @@ export default function RoboticArmMasterclass() {
         body: JSON.stringify(submitData),
       });
 
+      // Fire Meta Pixel Lead event
+      if (typeof window !== 'undefined' && 'fbq' in window && typeof window.fbq === 'function') {
+        (window.fbq as (event: 'track', eventName: string) => void)('track', 'Lead');
+      }
+
       // Clear form and close modal
       setFormData({ name: "", phone: "", email: "" });
       setFormErrors({ name: "", phone: "", email: "" });
