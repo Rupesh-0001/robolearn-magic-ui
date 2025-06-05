@@ -995,7 +995,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/JufGzl9ANPoL3sOnecaJEw"
+                  href="https://chat.whatsapp.com/KQPb4fX2TtxLYQy19RjpOT"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
