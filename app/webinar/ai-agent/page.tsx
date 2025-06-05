@@ -660,7 +660,7 @@ export default function AIAgentWebinar() {
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
               <p className="mb-4">
-                This <strong>free live webinar</strong> gives you real, hands-on experience with cutting-edge AI agent development. You won&apos;t just hear about agents - you&apos;ll build one from scratch using simple code and powerful logic.
+                This <strong>live webinar</strong> gives you real, hands-on experience with cutting-edge AI agent development. You won&apos;t just hear about agents - you&apos;ll build one from scratch using simple code and powerful logic.
               </p>
               <p className="mb-2">
                 <strong>You&apos;ll Build Live:</strong>

@@ -513,7 +513,7 @@ export default function RoboticArmWebinar() {
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
               <p className="mb-4">
-                This <strong>free live webinar</strong> gives you a real,
+                This <strong>live webinar</strong> gives you a real,
                 hands-on experience in modern robotics. You won&apos;t just
                 watch - you&apos;ll <strong>build a robotic arm</strong>{" "}
                 step-by-step, understand its math, and simulate its motion using

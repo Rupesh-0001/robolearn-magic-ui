@@ -513,7 +513,7 @@ export default function AIAgentMasterclass() {
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
               <p className="mb-4">
-                This is a <strong>free live webinar</strong> designed to give
+                This is a <strong>live webinar</strong> designed to give
                 you hands-on experience with real self-driving car engineering.
                 You&apos;ll not just learn theory — you&apos;ll build your first{" "}
                 <strong>lane detection + path planning system</strong> from
