@@ -557,8 +557,8 @@ export default function AutonomousCarMasterclass() {
                   </span>
                 </div>
                 <p className="text-gray-600">
-                  Ideal for software engineers, or
-                  roboticists looking to transition into autonomous vehicles.
+                  Ideal for software engineers, or roboticists looking to
+                  transition into autonomous vehicles.
                 </p>
               </div>
 
@@ -646,8 +646,8 @@ export default function AutonomousCarMasterclass() {
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Ideal for software engineers, or
-                    roboticists looking to transition into autonomous vehicles.
+                    Ideal for software engineers, or roboticists looking to
+                    transition into autonomous vehicles.
                   </p>
                 </div>
 
@@ -686,7 +686,7 @@ export default function AutonomousCarMasterclass() {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 my-8">
+          <div className="my-8">
             <div className="text-xl sm:text-2xl font-semibold mb-4 flex items-center gap-2">
               <Image
                 src="/instructor.svg"
@@ -696,23 +696,40 @@ export default function AutonomousCarMasterclass() {
               />{" "}
               Meet Your Instructor
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold mb-2">
-              Harpreet Singh
-            </h3>
-            <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2">
-              <ClockIcon className="w-4 h-4 mr-2" />
-              <strong>5+ Years Experience</strong>
-            </p>
-            <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2">
-              <UsersIcon className="w-4 h-4 mr-2" />
-              <strong>10,000+ Learners</strong>
-            </p>
-            <p className="text-sm sm:text-base text-gray-700 pt-1">
-              Lead FSD Engineer with experience across robotics startups, AI
-              research, and simulation engineering. Harpreet brings a hands-on,
-              project-first style to make advanced self-driving tech intuitive
-              and fun to build.
-            </p>
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 my-4">
+              <div className="md:flex md:gap-6">
+                <div className="flex-shrink-0 md:block flex flex-col items-center mb-6 md:mb-0">
+                  <Image
+                    src="/instructorImage.png"
+                    alt="Harpreet Singh"
+                    width={100}
+                    height={120}
+                    className="rounded-lg"
+                  />
+                </div>
+                <div className="md:flex md:flex-col">
+                  <div className="text-center md:text-left">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2">
+                      Harpreet Singh
+                    </h3>
+                    <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
+                      <ClockIcon className="w-4 h-4 mr-2" />
+                      <strong>5+ Years Experience</strong>
+                    </p>
+                    <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
+                      <UsersIcon className="w-4 h-4 mr-2" />
+                      <strong>10,000+ Learners</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm sm:text-base text-gray-700 pt-1">
+                Lead FSD Engineer with experience across robotics startups, AI
+                research, and simulation engineering. Harpreet brings a
+                hands-on, project-first style to make advanced self-driving tech
+                intuitive and fun to build.
+              </p>
+            </div>
           </div>
 
           <div>

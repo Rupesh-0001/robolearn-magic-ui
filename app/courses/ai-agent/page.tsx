@@ -215,7 +215,8 @@ export default function AIAgentBootcamp() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Build full AI agents with perception, memory, reasoning, and planning
+                  Build full AI agents with perception, memory, reasoning, and
+                  planning
                 </span>
               </li>
               <li className="flex items-start">
@@ -223,7 +224,8 @@ export default function AIAgentBootcamp() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Master the stack: embedding search, tool use, RAG, and LangGraph
+                  Master the stack: embedding search, tool use, RAG, and
+                  LangGraph
                 </span>
               </li>
               <li className="flex items-start">
@@ -231,7 +233,8 @@ export default function AIAgentBootcamp() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Learn to simulate autonomous agents that interact with APIs, documents, and humans
+                  Learn to simulate autonomous agents that interact with APIs,
+                  documents, and humans
                 </span>
               </li>
               <li className="flex items-start">
@@ -239,7 +242,8 @@ export default function AIAgentBootcamp() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Design your own Tesla-style AI-first planning system — but for general-purpose reasoning
+                  Design your own Tesla-style AI-first planning system — but for
+                  general-purpose reasoning
                 </span>
               </li>
             </ul>
@@ -425,7 +429,10 @@ export default function AIAgentBootcamp() {
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
               <p className="mb-4">
-                A complete, industry-level AI Agent Development Program — from zero to fully autonomous LLM-powered systems. You&apos;ll go from understanding basic logic to deploying agents that act independently using tools, memory, and reasoning.
+                A complete, industry-level AI Agent Development Program — from
+                zero to fully autonomous LLM-powered systems. You&apos;ll go
+                from understanding basic logic to deploying agents that act
+                independently using tools, memory, and reasoning.
                 {!showFullDescription && <span> ...</span>}
               </p>
               {showFullDescription && (
@@ -538,7 +545,8 @@ export default function AIAgentBootcamp() {
                   </span>
                 </div>
                 <p className="text-gray-600">
-                  Learn the most practical AI skills of 2025 and get ahead in the AI revolution.
+                  Learn the most practical AI skills of 2025 and get ahead in
+                  the AI revolution.
                 </p>
               </div>
 
@@ -556,7 +564,8 @@ export default function AIAgentBootcamp() {
                   </span>
                 </div>
                 <p className="text-gray-600">
-                  Get upskilled in LLM engineering and agentic systems to advance your career.
+                  Get upskilled in LLM engineering and agentic systems to
+                  advance your career.
                 </p>
               </div>
 
@@ -569,10 +578,13 @@ export default function AIAgentBootcamp() {
                     width={32}
                     height={32}
                   />
-                  <span className="text-lg font-bold ml-2">Career Switchers</span>
+                  <span className="text-lg font-bold ml-2">
+                    Career Switchers
+                  </span>
                 </div>
                 <p className="text-gray-600">
-                  Go from novice to job-ready in under 2 months with hands-on projects.
+                  Go from novice to job-ready in under 2 months with hands-on
+                  projects.
                 </p>
               </div>
             </div>
@@ -623,7 +635,8 @@ export default function AIAgentBootcamp() {
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Learn the most practical AI skills of 2025 and get ahead in the AI revolution.
+                    Learn the most practical AI skills of 2025 and get ahead in
+                    the AI revolution.
                   </p>
                 </div>
 
@@ -641,7 +654,8 @@ export default function AIAgentBootcamp() {
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Get upskilled in LLM engineering and agentic systems to advance your career.
+                    Get upskilled in LLM engineering and agentic systems to
+                    advance your career.
                   </p>
                 </div>
 
@@ -659,7 +673,8 @@ export default function AIAgentBootcamp() {
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Launch your own AI tool, app, or startup prototype with cutting-edge agent technology.
+                    Launch your own AI tool, app, or startup prototype with
+                    cutting-edge agent technology.
                   </p>
                 </div>
               </div>
@@ -679,7 +694,7 @@ export default function AIAgentBootcamp() {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 my-8">
+          <div className="bg-white my-8">
             <div className="text-xl sm:text-2xl font-semibold mb-4 flex items-center gap-2">
               <Image
                 src="/instructor.svg"
@@ -689,20 +704,41 @@ export default function AIAgentBootcamp() {
               />{" "}
               Meet Your Instructor
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold mb-2">
-              Harpreet Singh
-            </h3>
-            <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2">
-              <ClockIcon className="w-4 h-4 mr-2" />
-              <strong>AI & Robotics Instructor | Built 200+ AI Projects</strong>
-            </p>
-            <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2">
-              <UsersIcon className="w-4 h-4 mr-2" />
-              <strong>10,000+ Learners</strong>
-            </p>
-            <p className="text-sm sm:text-base text-gray-700 pt-1">
-              An experienced builder of AI agentic systems, Harpreet brings a code-first, framework-later philosophy that mirrors how top AI teams actually build. With expertise in LLM engineering and autonomous systems, he&apos;ll guide you through building production-ready AI agents.
-            </p>
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 my-4">
+              <div className="md:flex md:gap-6">
+                <div className="flex-shrink-0 md:block flex flex-col items-center mb-6 md:mb-0">
+                  <Image
+                    src="/instructorImage.png"
+                    alt="Harpreet Singh"
+                    width={100}
+                    height={120}
+                    className="rounded-lg"
+                  />
+                </div>
+                <div className="md:flex md:flex-col">
+                  <div className="text-center md:text-left">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2">
+                      Harpreet Singh
+                    </h3>
+                    <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
+                      <ClockIcon className="w-4 h-4 mr-2" />
+                      <strong>5+ Years Experience</strong>
+                    </p>
+                    <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
+                      <UsersIcon className="w-4 h-4 mr-2" />
+                      <strong>10,000+ Learners</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm sm:text-base text-gray-700 pt-1">
+                An experienced builder of AI agentic systems, Harpreet brings a
+                code-first, framework-later philosophy that mirrors how top AI
+                teams actually build. With expertise in LLM engineering and
+                autonomous systems, he&apos;ll guide you through building
+                production-ready AI agents.
+              </p>
+            </div>
           </div>
 
           <div>

@@ -215,7 +215,8 @@ export default function RoboticsEngineeringBootcamp() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Design and build complete robots from mechanical body to control panel
+                  Design and build complete robots from mechanical body to
+                  control panel
                 </span>
               </li>
               <li className="flex items-start">
@@ -239,7 +240,8 @@ export default function RoboticsEngineeringBootcamp() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Understand how to build industrial-grade robotics systems from scratch
+                  Understand how to build industrial-grade robotics systems from
+                  scratch
                 </span>
               </li>
             </ul>
@@ -425,7 +427,10 @@ export default function RoboticsEngineeringBootcamp() {
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
               <p className="mb-4">
-                This is a complete, project-first bootcamp where you&apos;ll build real robotic systems from the ground up. By the end, you&apos;ll know how to go from CAD design to embedded firmware to real-world robot motion.
+                This is a complete, project-first bootcamp where you&apos;ll
+                build real robotic systems from the ground up. By the end,
+                you&apos;ll know how to go from CAD design to embedded firmware
+                to real-world robot motion.
                 {!showFullDescription && <span> ...</span>}
               </p>
               {showFullDescription && (
@@ -495,7 +500,8 @@ export default function RoboticsEngineeringBootcamp() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          Full Robot Panel with Microcontroller + Drivers (Level 7)
+                          Full Robot Panel with Microcontroller + Drivers (Level
+                          7)
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -504,7 +510,8 @@ export default function RoboticsEngineeringBootcamp() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          Qt GUI-Controlled Robotic Arm with Inverse Kinematics (Level 8)
+                          Qt GUI-Controlled Robotic Arm with Inverse Kinematics
+                          (Level 8)
                         </span>
                       </li>
                     </ul>
@@ -538,7 +545,8 @@ export default function RoboticsEngineeringBootcamp() {
                   </span>
                 </div>
                 <p className="text-gray-600">
-                  Learn robotics from real-world problems and get ahead in the automation revolution.
+                  Learn robotics from real-world problems and get ahead in the
+                  automation revolution.
                 </p>
               </div>
 
@@ -556,7 +564,8 @@ export default function RoboticsEngineeringBootcamp() {
                   </span>
                 </div>
                 <p className="text-gray-600">
-                  Get industry-grade practical knowledge in robotics and automation systems.
+                  Get industry-grade practical knowledge in robotics and
+                  automation systems.
                 </p>
               </div>
 
@@ -569,10 +578,13 @@ export default function RoboticsEngineeringBootcamp() {
                     width={32}
                     height={32}
                   />
-                  <span className="text-lg font-bold ml-2">Career Switchers</span>
+                  <span className="text-lg font-bold ml-2">
+                    Career Switchers
+                  </span>
                 </div>
                 <p className="text-gray-600">
-                  Go from 0 to job-ready robotics developer in under 2 months with hands-on projects.
+                  Go from 0 to job-ready robotics developer in under 2 months
+                  with hands-on projects.
                 </p>
               </div>
             </div>
@@ -623,7 +635,8 @@ export default function RoboticsEngineeringBootcamp() {
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Learn robotics from real-world problems and get ahead in the automation revolution.
+                    Learn robotics from real-world problems and get ahead in the
+                    automation revolution.
                   </p>
                 </div>
 
@@ -641,7 +654,8 @@ export default function RoboticsEngineeringBootcamp() {
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Get industry-grade practical knowledge in robotics and automation systems.
+                    Get industry-grade practical knowledge in robotics and
+                    automation systems.
                   </p>
                 </div>
 
@@ -659,7 +673,8 @@ export default function RoboticsEngineeringBootcamp() {
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Build and deploy working robots from scratch with cutting-edge robotics technology.
+                    Build and deploy working robots from scratch with
+                    cutting-edge robotics technology.
                   </p>
                 </div>
               </div>
@@ -689,20 +704,42 @@ export default function RoboticsEngineeringBootcamp() {
               />{" "}
               Meet Your Instructor
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold mb-2">
-              Harpreet Singh
-            </h3>
-            <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2">
-              <ClockIcon className="w-4 h-4 mr-2" />
-              <strong>Veteran Robotics Instructor | 200+ Projects Built</strong>
-            </p>
-            <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2">
-              <UsersIcon className="w-4 h-4 mr-2" />
-              <strong>10,000+ Learners</strong>
-            </p>
-            <p className="text-sm sm:text-base text-gray-700 pt-1">
-              Harpreet brings deep industrial experience and builds each concept by solving real problems — so learners understand why each component or theory exists, not just how to use it. With expertise in robotics engineering and automation systems, he&apos;ll guide you through building production-ready robotic systems.
-            </p>
+            <div className="my-4">
+              <div className="md:flex md:gap-6">
+                <div className="flex-shrink-0 md:block flex flex-col items-center mb-6 md:mb-0">
+                  <Image
+                    src="/instructorImage.png"
+                    alt="Harpreet Singh"
+                    width={100}
+                    height={120}
+                    className="rounded-lg"
+                  />
+                </div>
+                <div className="md:flex md:flex-col">
+                  <div className="text-center md:text-left">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2">
+                      Harpreet Singh
+                    </h3>
+                    <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
+                      <ClockIcon className="w-4 h-4 mr-2" />
+                      <strong>5+ Years Experience</strong>
+                    </p>
+                    <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
+                      <UsersIcon className="w-4 h-4 mr-2" />
+                      <strong>10,000+ Learners</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm sm:text-base text-gray-700 pt-1">
+                Harpreet brings deep industrial experience and builds each
+                concept by solving real problems — so learners understand why
+                each component or theory exists, not just how to use it. With
+                expertise in robotics engineering and automation systems,
+                he&apos;ll guide you through building production-ready robotic
+                systems.
+              </p>
+            </div>
           </div>
 
           <div>

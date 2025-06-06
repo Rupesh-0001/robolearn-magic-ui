@@ -156,7 +156,7 @@ export default function AIAgentMasterclass() {
     setIsSubmitting(true);
 
     const GOOGLE_SHEET_URL =
-    "https://script.google.com/macros/s/AKfycbwVUTSMnXrQp5FBHPIsNLxy1dV4vLVR7VLJB9uI7INsJ5zt4ypMceFIR-jsxr3nYt3F/exec"
+      "https://script.google.com/macros/s/AKfycbwVUTSMnXrQp5FBHPIsNLxy1dV4vLVR7VLJB9uI7INsJ5zt4ypMceFIR-jsxr3nYt3F/exec";
 
     const submitData = {
       sheetName: "AutonomousCar",
@@ -176,8 +176,15 @@ export default function AIAgentMasterclass() {
       });
 
       // Fire Meta Pixel Lead event
-      if (typeof window !== 'undefined' && 'fbq' in window && typeof window.fbq === 'function') {
-        (window.fbq as (event: 'track', eventName: string) => void)('track', 'Lead');
+      if (
+        typeof window !== "undefined" &&
+        "fbq" in window &&
+        typeof window.fbq === "function"
+      ) {
+        (window.fbq as (event: "track", eventName: string) => void)(
+          "track",
+          "Lead"
+        );
       }
 
       // Clear form and close modal
@@ -826,17 +833,32 @@ export default function AIAgentMasterclass() {
               Meet Your Instructor
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 my-4">
-              <h3 className="text-lg sm:text-xl font-semibold mb-2">
-                Harpreet Singh
-              </h3>
-              <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2">
-                <ClockIcon className="w-4 h-4 mr-2" />
-                <strong>5+ Years Experience</strong>
-              </p>
-              <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2">
-                <UsersIcon className="w-4 h-4 mr-2" />
-                <strong>10,000+ Learners</strong>
-              </p>
+              <div className="md:flex md:gap-6">
+                <div className="flex-shrink-0 md:block flex flex-col items-center mb-6 md:mb-0">
+                  <Image
+                    src="/instructorImage.png"
+                    alt="Harpreet Singh"
+                    width={100}
+                    height={120}
+                    className="rounded-lg"
+                  />
+                </div>
+                <div className="md:flex md:flex-col">
+                  <div className="text-center md:text-left">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2">
+                      Harpreet Singh
+                    </h3>
+                    <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
+                      <ClockIcon className="w-4 h-4 mr-2" />
+                      <strong>5+ Years Experience</strong>
+                    </p>
+                    <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
+                      <UsersIcon className="w-4 h-4 mr-2" />
+                      <strong>10,000+ Learners</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
               <p className="text-sm sm:text-base text-gray-700 pt-1">
                 FSD & Robotics Engineer with expertise in AI-first planning,
                 computer vision, and simulation. Harpreet has taught

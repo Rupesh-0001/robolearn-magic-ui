@@ -215,7 +215,8 @@ export default function RoboticsMasterclass() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Build complete robotic systems from perception to manipulation using ROS2, Gazebo, and Python
+                  Build complete robotic systems from perception to manipulation
+                  using ROS2, Gazebo, and Python
                 </span>
               </li>
               <li className="flex items-start">
@@ -223,7 +224,8 @@ export default function RoboticsMasterclass() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Master computer vision, SLAM, and navigation algorithms for mobile robots
+                  Master computer vision, SLAM, and navigation algorithms for
+                  mobile robots
                 </span>
               </li>
               <li className="flex items-start">
@@ -231,7 +233,8 @@ export default function RoboticsMasterclass() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Implement robotic arm control, inverse kinematics, and manipulation planning
+                  Implement robotic arm control, inverse kinematics, and
+                  manipulation planning
                 </span>
               </li>
               <li className="flex items-start">
@@ -239,7 +242,8 @@ export default function RoboticsMasterclass() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Design AI-powered robots with deep learning for object recognition and decision making
+                  Design AI-powered robots with deep learning for object
+                  recognition and decision making
                 </span>
               </li>
             </ul>
@@ -425,9 +429,11 @@ export default function RoboticsMasterclass() {
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
               <p className="mb-4">
-                This is a comprehensive, hands-on program to help you build advanced robotic systems from the ground up. 
-                With real-world projects, expert mentorship, and industry-standard tools, you&apos;ll develop the skills 
-                needed for a career in robotics engineering.
+                This is a comprehensive, hands-on program to help you build
+                advanced robotic systems from the ground up. With real-world
+                projects, expert mentorship, and industry-standard tools,
+                you&apos;ll develop the skills needed for a career in robotics
+                engineering.
                 {!showFullDescription && <span> ...</span>}
               </p>
               {showFullDescription && (
@@ -531,8 +537,8 @@ export default function RoboticsMasterclass() {
                   </span>
                 </div>
                 <p className="text-gray-600">
-                  Perfect for students in mechanical, electrical, or computer science 
-                  engineering who want hands-on robotics experience.
+                  Perfect for students in mechanical, electrical, or computer
+                  science engineering who want hands-on robotics experience.
                 </p>
               </div>
 
@@ -550,7 +556,7 @@ export default function RoboticsMasterclass() {
                   </span>
                 </div>
                 <p className="text-gray-600">
-                  Ideal for developers looking to transition into robotics and 
+                  Ideal for developers looking to transition into robotics and
                   automation engineering roles.
                 </p>
               </div>
@@ -564,10 +570,12 @@ export default function RoboticsMasterclass() {
                     width={32}
                     height={32}
                   />
-                  <span className="text-lg font-bold ml-2">Robotics Enthusiasts</span>
+                  <span className="text-lg font-bold ml-2">
+                    Robotics Enthusiasts
+                  </span>
                 </div>
                 <p className="text-gray-600">
-                  Build your first robot from scratch. No prior robotics 
+                  Build your first robot from scratch. No prior robotics
                   experience needed - just passion for technology.
                 </p>
               </div>
@@ -619,8 +627,8 @@ export default function RoboticsMasterclass() {
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Perfect for students in mechanical, electrical, or computer science 
-                    engineering who want hands-on robotics experience.
+                    Perfect for students in mechanical, electrical, or computer
+                    science engineering who want hands-on robotics experience.
                   </p>
                 </div>
 
@@ -638,7 +646,7 @@ export default function RoboticsMasterclass() {
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Ideal for developers looking to transition into robotics and 
+                    Ideal for developers looking to transition into robotics and
                     automation engineering roles.
                   </p>
                 </div>
@@ -657,8 +665,8 @@ export default function RoboticsMasterclass() {
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    For professionals in manufacturing, automation, or tech looking 
-                    to understand robotics applications in industry.
+                    For professionals in manufacturing, automation, or tech
+                    looking to understand robotics applications in industry.
                   </p>
                 </div>
               </div>
@@ -688,23 +696,41 @@ export default function RoboticsMasterclass() {
               />{" "}
               Meet Your Instructor
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold mb-2">
-              Harpreet Singh
-            </h3>
-            <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2">
-              <ClockIcon className="w-4 h-4 mr-2" />
-              <strong>7+ Years Experience</strong>
-            </p>
-            <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center pl-2">
-              <UsersIcon className="w-4 h-4 mr-2" />
-              <strong>15,000+ Learners</strong>
-            </p>
-            <p className="text-sm sm:text-base text-gray-700 pt-1">
-              Senior Robotics Engineer with extensive experience in autonomous systems, 
-              robotic manipulation, and AI integration. Harpreet has worked on industrial 
-              automation projects and brings real-world expertise to make complex robotics 
-              concepts accessible and practical.
-            </p>
+            <div className="my-4">
+              <div className="md:flex md:gap-6">
+                <div className="flex-shrink-0 md:block flex flex-col items-center mb-6 md:mb-0">
+                  <Image
+                    src="/instructorImage.png"
+                    alt="Harpreet Singh"
+                    width={100}
+                    height={120}
+                    className="rounded-lg"
+                  />
+                </div>
+                <div className="md:flex md:flex-col">
+                  <div className="text-center md:text-left">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2">
+                      Harpreet Singh
+                    </h3>
+                    <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
+                      <ClockIcon className="w-4 h-4 mr-2" />
+                      <strong>5+ Years Experience</strong>
+                    </p>
+                    <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
+                      <UsersIcon className="w-4 h-4 mr-2" />
+                      <strong>10,000+ Learners</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm sm:text-base text-gray-700 pt-1">
+                Senior Robotics Engineer with extensive experience in autonomous
+                systems, robotic manipulation, and AI integration. Harpreet has
+                worked on industrial automation projects and brings real-world
+                expertise to make complex robotics concepts accessible and
+                practical.
+              </p>
+            </div>
           </div>
 
           <div>
