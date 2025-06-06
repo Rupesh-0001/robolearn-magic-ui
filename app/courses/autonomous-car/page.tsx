@@ -724,10 +724,7 @@ export default function AutonomousCarMasterclass() {
                 </div>
               </div>
               <p className="text-sm sm:text-base text-gray-700 pt-1">
-                Lead FSD Engineer with experience across robotics startups, AI
-                research, and simulation engineering. Harpreet brings a
-                hands-on, project-first style to make advanced self-driving tech
-                intuitive and fun to build.
+                <strong>Harpreet Singh</strong> is a <strong>Full Self-Driving (FSD) & Robotics Engineer</strong> with <strong>5+ years of expertise</strong> in AI-driven autonomy, specializing in motion planning, computer vision, and simulation, who has <strong>mentored 10,000+ students</strong> globally while founding <strong>two award-winning Robotics/AI startups</strong> recognized by <strong>Startup India and Punjab Government</strong>, combining deep technical knowledge in <strong>AI decision-making and sensor fusion</strong> with a passion for advancing intelligent systems through engineering, education and entrepreneurship.
               </p>
             </div>
           </div>

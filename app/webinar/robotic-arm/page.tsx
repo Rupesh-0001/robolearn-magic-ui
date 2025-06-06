@@ -760,11 +760,7 @@ export default function RoboticArmWebinar() {
                 </div>
               </div>
               <p className="text-sm sm:text-base text-gray-700 pt-1">
-                With 20 years of hands-on experience in building industrial
-                robots and automation systems, Harpreet combines
-                first-principles problem solving with practical intuition. His
-                teaching style is &quot;build-first,
-                understand-through-application.&quot;
+                <strong>Harpreet Singh</strong> is a <strong>Full Self-Driving (FSD) & Robotics Engineer</strong> with <strong>5+ years of expertise</strong> in AI-driven autonomy, specializing in motion planning, computer vision, and simulation, who has <strong>mentored 10,000+ students</strong> globally while founding <strong>two award-winning Robotics/AI startups</strong> recognized by <strong>Startup India and Punjab Government</strong>, combining deep technical knowledge in <strong>AI decision-making and sensor fusion</strong> with a passion for advancing intelligent systems through engineering, education and entrepreneurship.
               </p>
             </div>
           </div>

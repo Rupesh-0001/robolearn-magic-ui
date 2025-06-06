@@ -752,10 +752,8 @@ export default function AIAgentMasterclass() {
                   </div>
                 </div>
               </div>
-              <p className="text-sm sm:text-base text-gray-700 mt-4 text-left">
-                FSD & Robotics Engineer with expertise in AI-first planning,
-                computer vision, and simulation. Harpreet has taught
-                self-driving concepts globally through project-based learning.
+              <p className="text-sm sm:text-base text-gray-700 pt-1">
+                <strong>Harpreet Singh</strong> is a <strong>Full Self-Driving (FSD) & Robotics Engineer</strong> with <strong>5+ years of expertise</strong> in AI-driven autonomy, specializing in motion planning, computer vision, and simulation, who has <strong>mentored 10,000+ students</strong> globally while founding <strong>two award-winning Robotics/AI startups</strong> recognized by <strong>Startup India and Punjab Government</strong>, combining deep technical knowledge in <strong>AI decision-making and sensor fusion</strong> with a passion for advancing intelligent systems through engineering, education and entrepreneurship.
               </p>
             </div>
           </div>
