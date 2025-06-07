@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
 
-interface RazorpayOrderOptions {
+interface OrderCreateOptions {
   amount: number;
   currency: string;
   offers?: string[];
-  payment: {
+  payment?: {
     capture: string;
     capture_options: {
       automatic_expiry_period: number;
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     });
 
     // Base options
-    const options: RazorpayOrderOptions = {
+    const options: OrderCreateOptions = {
       amount: amount * 100, // Convert to paise
       currency: "INR",
       payment: {
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
       options.offers = [offer];
     }
 
-    const order = await razorpay.orders.create(options);
+    const order = await razorpay.orders.create(options as unknown as Parameters<typeof razorpay.orders.create>[0]);
     
     return NextResponse.json({ 
       success: true,
