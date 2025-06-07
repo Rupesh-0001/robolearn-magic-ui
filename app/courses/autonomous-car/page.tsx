@@ -154,22 +154,22 @@ export default function AutonomousCarMasterclass() {
             AUTONOMOUS CAR COURSE
           </span>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">
-            Autonomous Car Bootcamp
+            Autonomous System Revolution Program
           </h1>
           <div className="mb-8 sm:mb-12">
             <Image
-              src="/autonomousCarMasterclassTemplate.png"
+              src="/CarCourse.jpg"
               alt="Autonomous Car"
               className="rounded-lg shadow-lg w-full h-auto"
               width={800}
               height={450}
             />
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-8 sm:mb-12 mt-4 sm:mt-6 lg:hidden block">
-            Autonomous Car Bootcamp
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mt-2 lg:hidden block">
+            Autonomous System Revolution Program
           </h1>
 
-          <div className="lg:hidden my-8">
+          <div className="lg:hidden mb-8 mt-4">
             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
               <h2 className="text-xl sm:text-2xl font-semibold mb-4">
                 Course Details

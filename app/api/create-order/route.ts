@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import Razorpay from 'razorpay';
 
 interface RazorpayOrderOptions {
   amount: number;
@@ -27,7 +28,7 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
 
-    const razorpay = new (require('razorpay'))({
+    const razorpay = new Razorpay({
       key_id: 'rzp_live_esTSJZdYt8HwVK',
       key_secret: '5DtigqfFsWAUOOeBhE2kIfoK',
     });
@@ -50,7 +51,6 @@ export async function POST(request: Request) {
       options.offers = [offer];
     }
 
-    console.log("options", options);
     const order = await razorpay.orders.create(options);
     
     return NextResponse.json({ 
