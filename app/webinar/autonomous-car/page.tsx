@@ -36,66 +36,88 @@ export default function AIAgentMasterclass() {
     }, 4000);
   };
 
-  const handleBuyClick = () => {
-    const initializeRazorpay = () => {
-      const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
+  const handleBuyClick = async () => {
+    try {
+      // First create order
+      const orderResponse = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: 99,
+        }),
+      });
+      const { order } = await orderResponse.json();
 
-      if (!razorpayKey) {
-        console.error("Razorpay key is not defined");
-        return;
+      if (!order) {
+        throw new Error('Failed to create order');
       }
 
-      const options = {
-        key: razorpayKey,
-        amount: 9900, // ₹99 in paise
-        currency: "INR",
-        name: "Autonomous Car Masterclass",
-        description: "Purchase of Autonomous Car Masterclass",
-        handler: function (response: {
-          razorpay_payment_id: string;
-          razorpay_order_id: string;
-          razorpay_signature: string;
-        }) {
-          console.log(response);
-          // Show thank you modal after successful payment
-          setShowThankYouModal(true);
-          // Show success message
-          showToast(
-            "Payment successful! Join our WhatsApp community for further updates.",
-            "success"
-          );
+      const initializeRazorpay = () => {
+        const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
 
-          // Fire Meta Pixel Lead event
-          if (typeof window !== 'undefined' && 'fbq' in window && typeof window.fbq === 'function') {
-            (window.fbq as (event: 'track', eventName: string) => void)('track', 'Lead');
-          }
-        },
-        prefill: {
-          name: "",
-          email: "",
-          contact: "",
-        },
-        theme: {
-          color: "#000000",
-        },
+        if (!razorpayKey) {
+          console.error("Razorpay key is not defined");
+          return;
+        }
+
+        const options = {
+          key: razorpayKey,
+          amount: order.amount,
+          currency: "INR",
+          name: "Autonomous Car Masterclass",
+          description: "Purchase of Autonomous Car Masterclass",
+          order_id: order.id,
+          handler: function (response: {
+            razorpay_payment_id: string;
+            razorpay_order_id: string;
+            razorpay_signature: string;
+          }) {
+            console.log(response);
+            // Show thank you modal after successful payment
+            setShowThankYouModal(true);
+            // Show success message
+            showToast(
+              "Payment successful! Join our WhatsApp community for further updates.",
+              "success"
+            );
+
+            // Fire Meta Pixel Lead event
+            if (typeof window !== 'undefined' && 'fbq' in window && typeof window.fbq === 'function') {
+              (window.fbq as (event: 'track', eventName: string) => void)('track', 'Lead');
+            }
+          },
+          prefill: {
+            name: "",
+            email: "",
+            contact: "",
+          },
+          theme: {
+            color: "#000000",
+          },
+        };
+
+        try {
+          const rzp = new window.Razorpay(options);
+          rzp.open();
+        } catch (error) {
+          console.error("Error initializing Razorpay:", error);
+        }
       };
 
-      try {
-        const rzp = new window.Razorpay(options);
-        rzp.open();
-      } catch (error) {
-        console.error("Error initializing Razorpay:", error);
+      if (typeof window !== "undefined" && "Razorpay" in window) {
+        initializeRazorpay();
+      } else {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.async = true;
+        script.onload = initializeRazorpay;
+        document.body.appendChild(script);
       }
-    };
-
-    if (typeof window !== "undefined" && "Razorpay" in window) {
-      initializeRazorpay();
-    } else {
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      script.async = true;
-      script.onload = initializeRazorpay;
-      document.body.appendChild(script);
+    } catch (error) {
+      console.error("Error purchasing masterclass:", error);
+      showToast("Failed to process payment. Please try again.", "error");
     }
   };
 

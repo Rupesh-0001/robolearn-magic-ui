@@ -29,6 +29,7 @@ interface RazorpayOptions {
   currency: string;
   name: string;
   description: string;
+  offers: string[];
   handler: (response: {
     razorpay_payment_id: string;
     razorpay_order_id: string;
@@ -97,7 +98,7 @@ export default function AutonomousCarMasterclass() {
     }
   };
   useEffect(() => {
-    const endDate = new Date("2025-06-15T16:00:00"); // May 19, 4 PM
+    const endDate = new Date("2025-06-09T11:59:59");
 
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -113,6 +114,9 @@ export default function AutonomousCarMasterclass() {
         );
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
         setTimeLeft({ days, hours, minutes, seconds });
+      }
+      else{
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
       }
     };
 
@@ -883,87 +887,25 @@ export default function AutonomousCarMasterclass() {
             </div>
             <ShimmerButton
               className="w-full bg-white-600 text-white py-2 px-4 rounded-lg hover:bg-white-700 transition duration-300 text-sm sm:text-base cursor-pointer"
-              onClick={() => {
-                const initializeRazorpay = () => {
-                  const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
+              onClick={async () => {
+                try {
+                  // First create order
+                  const orderResponse = await fetch('/api/create-order', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      amount: 4999,
+                      offer: "offer_QeSWgKACqnW3CP" // Optional - can be removed if no offer
+                    }),
+                  });
+                  const { order } = await orderResponse.json();
 
-                  if (!razorpayKey) {
-                    console.error("Razorpay key is not defined");
-                    return;
+                  if (!order) {
+                    throw new Error('Failed to create order');
                   }
 
-                  const options = {
-                    key: razorpayKey,
-                    amount: 499900,
-                    currency: "INR",
-                    name: "Autonomous Car Course",
-                    description: "Purchase of Autonomous Car Course",
-                    handler: function (response: {
-                      razorpay_payment_id: string;
-                      razorpay_order_id: string;
-                      razorpay_signature: string;
-                    }) {
-                      console.log(response);
-                    },
-                    prefill: {
-                      name: "",
-                      email: "",
-                      contact: "",
-                    },
-                    theme: {
-                      color: "#000000",
-                    },
-                  };
-
-                  try {
-                    const rzp = new window.Razorpay(options);
-                    rzp.open();
-                  } catch (error) {
-                    console.error("Error initializing Razorpay:", error);
-                  }
-                };
-
-                if (typeof window !== "undefined" && "Razorpay" in window) {
-                  initializeRazorpay();
-                } else {
-                  const script = document.createElement("script");
-                  script.src = "https://checkout.razorpay.com/v1/checkout.js";
-                  script.async = true;
-                  script.onload = initializeRazorpay;
-                  document.body.appendChild(script);
-                }
-              }}
-            >
-              Buy Now
-            </ShimmerButton>
-          </div>
-        </div>
-      </div>
-
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-20">
-        <div className="bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-          <div className="h-6 bg-[#fae3ea] mb-3 flex items-center justify-center">
-            <div className="text-sm text-[#df4271]">
-              Offer ends in {formatTimeLeft()}
-            </div>
-          </div>
-          <div className="flex p-2">
-            <div className="w-[40%] flex flex-col justify-center items-end pr-4">
-              <div className="flex items-center gap-2">
-                <span className="text-xl font-bold text-black-600">₹4,999</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500 line-through">
-                  ₹9,999
-                </span>
-                <span className="text-xs text-black-600">50% off</span>
-              </div>
-            </div>
-            <div className="w-[70%]">
-              <ShimmerButton
-                borderRadius="8px"
-                className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
-                onClick={() => {
                   const initializeRazorpay = () => {
                     const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
 
@@ -974,10 +916,11 @@ export default function AutonomousCarMasterclass() {
 
                     const options = {
                       key: razorpayKey,
-                      amount: 499900,
+                      amount: order.amount,
                       currency: "INR",
                       name: "Autonomous Car Course",
                       description: "Purchase of Autonomous Car Course",
+                      order_id: order.id,
                       handler: function (response: {
                         razorpay_payment_id: string;
                         razorpay_order_id: string;
@@ -1011,6 +954,111 @@ export default function AutonomousCarMasterclass() {
                     script.async = true;
                     script.onload = initializeRazorpay;
                     document.body.appendChild(script);
+                  }
+                } catch (error) {
+                  console.error("Error purchasing course:", error);
+                }
+              }}
+            >
+              Buy Now
+            </ShimmerButton>
+          </div>
+        </div>
+      </div>
+
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-20">
+        <div className="bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+          <div className="h-6 bg-[#fae3ea] mb-3 flex items-center justify-center">
+            <div className="text-sm text-[#df4271]">
+              Offer ends in {formatTimeLeft()}
+            </div>
+          </div>
+          <div className="flex p-2">
+            <div className="w-[40%] flex flex-col justify-center items-end pr-4">
+              <div className="flex items-center gap-2">
+                <span className="text-xl font-bold text-black-600">₹4,999</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-500 line-through">
+                  ₹9,999
+                </span>
+                <span className="text-xs text-black-600">50% off</span>
+              </div>
+            </div>
+            <div className="w-[70%]">
+              <ShimmerButton
+                borderRadius="8px"
+                className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
+                onClick={async () => {
+                  try {
+                    // First create order
+                    const orderResponse = await fetch('/api/create-order', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        amount: 4999,
+                        offer: "offer_QeSWgKACqnW3CP" // Optional - can be removed if no offer
+                      }),
+                    });
+                    const { order } = await orderResponse.json();
+
+                    if (!order) {
+                      throw new Error('Failed to create order');
+                    }
+
+                    const initializeRazorpay = () => {
+                      const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
+
+                      if (!razorpayKey) {
+                        console.error("Razorpay key is not defined");
+                        return;
+                      }
+
+                      const options = {
+                        key: razorpayKey,
+                        amount: order.amount,
+                        currency: "INR",
+                        name: "Autonomous Car Course",
+                        description: "Purchase of Autonomous Car Course",
+                        order_id: order.id,
+                        handler: function (response: {
+                          razorpay_payment_id: string;
+                          razorpay_order_id: string;
+                          razorpay_signature: string;
+                        }) {
+                          console.log(response);
+                        },
+                        prefill: {
+                          name: "",
+                          email: "",
+                          contact: "",
+                        },
+                        theme: {
+                          color: "#000000",
+                        },
+                      };
+
+                      try {
+                        const rzp = new window.Razorpay(options);
+                        rzp.open();
+                      } catch (error) {
+                        console.error("Error initializing Razorpay:", error);
+                      }
+                    };
+
+                    if (typeof window !== "undefined" && "Razorpay" in window) {
+                      initializeRazorpay();
+                    } else {
+                      const script = document.createElement("script");
+                      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+                      script.async = true;
+                      script.onload = initializeRazorpay;
+                      document.body.appendChild(script);
+                    }
+                  } catch (error) {
+                    console.error("Error purchasing course:", error);
                   }
                 }}
               >
