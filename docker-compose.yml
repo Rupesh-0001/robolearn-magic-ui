@@ -8,7 +8,7 @@ services:
       - NODE_ENV=development  # Set the environment to development
     volumes:
       - .:/app  # Mounts the current directory to /app in the container (useful for development)
-      - /app/node_modules  # This creates an anonymous volume for node_modules
+      - /app/.next  # Keep .next build cache in container to avoid conflicts
     networks:
       - robolearn-network
 

@@ -20,12 +20,14 @@ export default function AIAgentMasterclass() {
     name: "",
     phone: "",
     email: "",
+    age: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState({
     name: "",
     phone: "",
     email: "",
+    age: "",
   });
   const [toast, setToast] = useState<{
     show: boolean;
@@ -54,8 +56,8 @@ export default function AIAgentMasterclass() {
 
   const handleCloseModal = () => {
     setShowEnrollModal(false);
-    setFormData({ name: "", phone: "", email: "" });
-    setFormErrors({ name: "", phone: "", email: "" });
+    setFormData({ name: "", phone: "", email: "", age: "" });
+    setFormErrors({ name: "", phone: "", email: "", age: "" });
   };
 
   const handleCloseThankYouModal = () => {
@@ -65,6 +67,11 @@ export default function AIAgentMasterclass() {
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  const validateAge = (age: string) => {
+    const ageRegex = /^\d{1,2}$/;
+    return ageRegex.test(age);
   };
 
   const validatePhone = (phone: string) => {
@@ -91,6 +98,10 @@ export default function AIAgentMasterclass() {
     if (name === "name") {
       if (!value.trim()) {
         setFormErrors((prev) => ({ ...prev, name: "Name is required" }));
+      }
+    } else if (name === "age") {
+      if (!value.trim()) {
+        setFormErrors((prev) => ({ ...prev, age: "Age is required" }));
       }
     } else if (name === "phone") {
       const cleanPhone = value.replace(/\D/g, ""); // Remove non-digits
@@ -124,6 +135,8 @@ export default function AIAgentMasterclass() {
       !formErrors.name &&
       !formErrors.phone &&
       !formErrors.email &&
+      !formErrors.age &&
+      validateAge(formData.age) &&
       validatePhone(formData.phone)
     );
   };
@@ -132,10 +145,16 @@ export default function AIAgentMasterclass() {
     e.preventDefault();
 
     // Final validation
-    const errors = { name: "", phone: "", email: "" };
+    const errors = { name: "", phone: "", email: "", age: "" };
 
     if (!formData.name.trim()) {
       errors.name = "Name is required";
+    }
+
+    if (!formData.age.trim()) {
+      errors.age = "Age is required";
+    } else if (!validateAge(formData.age)) {
+      errors.age = "Please enter a valid age";
     }
 
     if (!formData.phone.trim()) {
@@ -148,7 +167,7 @@ export default function AIAgentMasterclass() {
       errors.email = "Please enter a valid email address";
     }
 
-    if (errors.name || errors.phone || errors.email) {
+    if (errors.name || errors.phone || errors.email || errors.age) {
       setFormErrors(errors);
       return;
     }
@@ -156,12 +175,13 @@ export default function AIAgentMasterclass() {
     setIsSubmitting(true);
 
     const GOOGLE_SHEET_URL =
-      "https://script.google.com/macros/s/AKfycbwVUTSMnXrQp5FBHPIsNLxy1dV4vLVR7VLJB9uI7INsJ5zt4ypMceFIR-jsxr3nYt3F/exec";
+      "https://script.google.com/macros/s/AKfycbwEPe_hAlxMjOyYkOKvjBnPuCNGfADXcDFpFN1OUB3UtFWbgZgfjqpnzpNpdvWv1i34/exec";
 
     const submitData = {
       sheetName: "AutonomousCar",
       name: formData.name,
       email: formData.email,
+      age: formData.age,
       phoneNumber: formData.phone,
     };
 
@@ -188,8 +208,8 @@ export default function AIAgentMasterclass() {
       }
 
       // Clear form and close modal
-      setFormData({ name: "", phone: "", email: "" });
-      setFormErrors({ name: "", phone: "", email: "" });
+      setFormData({ name: "", phone: "", email: "", age: "" });
+      setFormErrors({ name: "", phone: "", email: "", age: "" });
       setShowEnrollModal(false);
 
       // Show thank you modal after a brief delay
@@ -257,8 +277,7 @@ export default function AIAgentMasterclass() {
 
   // Add countdown timer effect
   useEffect(() => {
-    // Set the date we're counting down to (May 25, 2025 at 5:00 PM)
-    const countDownDate = new Date("June 8, 2025 17:00:00").getTime();
+    const countDownDate = new Date("June 15, 2025 17:00:00").getTime();
 
     // Update the countdown every 1 second
     const interval = setInterval(() => {
@@ -355,7 +374,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>8th June, 2025</span>
+                <span>15th June, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -438,7 +457,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  8th June, 2025
+                  15th June, 2025
                 </span>
               </div>
 
@@ -567,7 +586,7 @@ export default function AIAgentMasterclass() {
                         height={20}
                       />
                     </div>
-                    <span className="text-gray-800">8th June, 2025</span>
+                    <span className="text-gray-800">15th June, 2025</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -920,7 +939,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">8th June, 2025</span>
+                  <span className="text-gray-800">15th June, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1125,6 +1144,34 @@ export default function AIAgentMasterclass() {
 
                 <div>
                   <label
+                    htmlFor="age"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Age <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="age"
+                    name="age"
+                    value={formData.age}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="Enter your age"
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors ${
+                      formErrors.age
+                        ? "border-red-300 focus:ring-red-500 focus:border-red-500"
+                        : "border-gray-300 focus:ring-black focus:border-black"
+                    }`}
+                  />
+                  {formErrors.age && (
+                    <p className="mt-1 text-sm text-red-600">
+                      {formErrors.age}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
                     htmlFor="phone"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
@@ -1280,7 +1327,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/JufGzl9ANPoL3sOnecaJEw"
+                  href="https://chat.whatsapp.com/BdZmxnMhYQ39S3Z3jKNddR"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
