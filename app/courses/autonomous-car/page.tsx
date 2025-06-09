@@ -872,8 +872,8 @@ export default function AutonomousCarMasterclass() {
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                      amount: 4999,
-                      offer: "offer_QeSWgKACqnW3CP" // Optional - can be removed if no offer
+                      amount: 4999
+                      
                     }),
                   });
                   const { order } = await orderResponse.json();
@@ -975,8 +975,7 @@ export default function AutonomousCarMasterclass() {
                         'Content-Type': 'application/json',
                       },
                       body: JSON.stringify({
-                        amount: 4999,
-                        offer: "offer_QeSWgKACqnW3CP" // Optional - can be removed if no offer
+                        amount: 4999
                       }),
                     });
                     const { order } = await orderResponse.json();
