@@ -812,7 +812,7 @@ export default function AutonomousCarMasterclass() {
                 <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                   <UsersIcon className="w-3.5 h-3.5 text-gray-700" />
                 </div>
-                <strong>296&nbsp;</strong> Learners enrolled
+                <strong>312&nbsp;</strong> Learners enrolled
               </li>
               <li className="flex items-center text-sm sm:text-base">
                 <div className="bg-gray-100 rounded-full p-1.5 mr-3">
