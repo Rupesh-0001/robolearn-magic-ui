@@ -277,7 +277,7 @@ export default function AIAgentMasterclass() {
 
   // Add countdown timer effect
   useEffect(() => {
-    const countDownDate = new Date("June 15, 2025 19:00:00").getTime();
+    const countDownDate = new Date("June 18, 2025 19:00:00").getTime();
     // Update the countdown every 1 second
     const interval = setInterval(() => {
       // Get today's date and time
@@ -373,7 +373,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>15th June, 2025</span>
+                <span>18th June, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -456,7 +456,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  15th June, 2025
+                  18th June, 2025
                 </span>
               </div>
 
@@ -585,7 +585,7 @@ export default function AIAgentMasterclass() {
                         height={20}
                       />
                     </div>
-                    <span className="text-gray-800">15th June, 2025</span>
+                    <span className="text-gray-800">18th June, 2025</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -938,7 +938,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">15th June, 2025</span>
+                  <span className="text-gray-800">18th June, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1326,7 +1326,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/BdZmxnMhYQ39S3Z3jKNddR"
+                  href="https://chat.whatsapp.com/GFwWxhzMHaZHCtfinE08w2"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
