@@ -45,7 +45,7 @@ export default function AIAgentMasterclass() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          amount: 99,
+          amount: 9,
         }),
       });
       const { order } = await orderResponse.json();
@@ -173,7 +173,7 @@ export default function AIAgentMasterclass() {
   // Add countdown timer effect
   useEffect(() => {
     // Set the date we're counting down to (May 25, 2025 at 5:00 PM)
-    const countDownDate = new Date("June 8, 2025 17:00:00").getTime();
+    const countDownDate = new Date("June 18, 2025 17:00:00").getTime();
 
     // Update the countdown every 1 second
     const interval = setInterval(() => {
@@ -270,7 +270,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>8th June, 2025</span>
+                <span>18th June, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -286,9 +286,9 @@ export default function AIAgentMasterclass() {
             </div>
 
             <div className="flex items-center gap-2 mb-6">
-              <span className="text-2xl font-bold">₹99</span>
-              <span className="text-gray-500 line-through">₹399</span>
-              <span className="text-gray-500">(75% OFF)</span>
+              <span className="text-2xl font-bold">₹9</span>
+              <span className="text-gray-500 line-through">₹99</span>
+              <span className="text-gray-500">(90% OFF)</span>
             </div>
 
             <div className="flex items-center">
@@ -353,7 +353,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  8th June, 2025
+                  18th June, 2025
                 </span>
               </div>
 
@@ -482,7 +482,7 @@ export default function AIAgentMasterclass() {
                         height={20}
                       />
                     </div>
-                    <span className="text-gray-800">8th June, 2025</span>
+                    <span className="text-gray-800">18th June, 2025</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -835,7 +835,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">8th June, 2025</span>
+                  <span className="text-gray-800">18th June, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -882,9 +882,9 @@ export default function AIAgentMasterclass() {
 
               {/* Price */}
               <div className="flex space-x-2 pt-2">
-                <span className="text-xl font-bold text-gray-800">₹99</span>
-                <span className="line-through text-gray-500">₹399</span>
-                <span className="text-gray-500 text-sm">(75% OFF)</span>
+                <span className="text-xl font-bold text-gray-800">₹9</span>
+                <span className="line-through text-gray-500">₹99</span>
+                <span className="text-gray-500 text-sm">(90% OFF)</span>
               </div>
 
               {/* Buy Button */}
@@ -959,11 +959,11 @@ export default function AIAgentMasterclass() {
           <div className="flex p-2">
             <div className="w-[40%] flex flex-col justify-center items-end pr-4">
               <div className="flex items-center gap-2">
-                <span className="text-xl font-bold text-black-600">₹99</span>
+                <span className="text-xl font-bold text-black-600">₹9</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500 line-through">₹399</span>
-                <span className="text-xs text-black-600">75% off</span>
+                <span className="text-sm text-gray-500 line-through">₹99</span>
+                <span className="text-xs text-black-600">90% off</span>
               </div>
             </div>
             <div className="w-[70%]">
@@ -1030,7 +1030,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/KQPb4fX2TtxLYQy19RjpOT"
+                  href="https://chat.whatsapp.com/GFwWxhzMHaZHCtfinE08w2"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
