@@ -68,7 +68,7 @@ export default function RoboticsEngineeringBootcamp() {
     }
   };
   useEffect(() => {
-    const endDate = new Date("2025-06-15T16:00:00"); // May 19, 4 PM
+    const endDate = new Date("2025-06-16T11:59:59"); // May 19, 4 PM
 
     const calculateTimeLeft = () => {
       const now = new Date();

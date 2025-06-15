@@ -277,8 +277,7 @@ export default function AIAgentMasterclass() {
 
   // Add countdown timer effect
   useEffect(() => {
-    const countDownDate = new Date("June 15, 2025 17:00:00").getTime();
-
+    const countDownDate = new Date("June 15, 2025 19:00:00").getTime();
     // Update the countdown every 1 second
     const interval = setInterval(() => {
       // Get today's date and time
