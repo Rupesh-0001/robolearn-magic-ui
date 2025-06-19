@@ -16,7 +16,7 @@ export function Footer() {
                 <strong>Address:</strong><br />
                 ROBOLEARNINDIA LLP<br />
                 B-29-1251/2c/581/1a St- 1 3-r, Ludhiana<br />
-                Gne College, Ludhiana, Ludhiana<br />
+                GNE College, Ludhiana, Ludhiana<br />
                 Punjab, India - 141006
               </p>
               <p className="text-sm text-muted-foreground">
