@@ -1198,7 +1198,7 @@ export default function AIAgentMasterclass() {
                   )}
                 </div>
 
-                <div>
+                {/* <div>
                   <label
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-700 mb-1"
@@ -1224,7 +1224,7 @@ export default function AIAgentMasterclass() {
                       {formErrors.email}
                     </p>
                   )}
-                </div>
+                </div> */}
               </div>
 
               {/* Modal Footer */}
