@@ -47,8 +47,8 @@ export default function ExplorePage() {
                 </h2>
                 <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Er Harpreet Singh</p>
                 <div className="flex items-center mt-auto">
-                  <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">Free</span>
-                  <span className="ml-2 line-through text-gray-400 text-sm">₹399</span>
+                  <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">₹9</span>
+                  <span className="ml-2 line-through text-gray-400 text-sm">₹99</span>
                 </div>
               </div>
             </div>
@@ -73,8 +73,8 @@ export default function ExplorePage() {
                 </h2>
                 <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Er Harpreet Singh</p>
                 <div className="flex items-center mt-auto">
-                  <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">Free</span>
-                  <span className="ml-2 line-through text-gray-400 text-sm">₹399</span>
+                  <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">₹9</span>
+                  <span className="ml-2 line-through text-gray-400 text-sm">₹99</span>
                 </div>
               </div>
             </div>
@@ -99,8 +99,8 @@ export default function ExplorePage() {
                 </h2>
                 <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Er Harpreet Singh</p>
                 <div className="flex items-center mt-auto">
-                  <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">Free</span>
-                  <span className="ml-2 line-through text-gray-400 text-sm">₹399</span>
+                  <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">₹9</span>
+                  <span className="ml-2 line-through text-gray-400 text-sm">₹99</span>
                 </div>
               </div>
             </div>
