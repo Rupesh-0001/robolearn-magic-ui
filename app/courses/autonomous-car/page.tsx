@@ -873,7 +873,7 @@ export default function AutonomousCarMasterclass() {
                     },
                     body: JSON.stringify({
                       amount: 3999,
-                      offer: "offer_QhmFGPFGKvpeWF"
+                      offer: "offer_QkJLdojOO1yNIo"
                       
                     }),
                   });
@@ -977,7 +977,7 @@ export default function AutonomousCarMasterclass() {
                       },
                       body: JSON.stringify({
                         amount: 3999,
-                        offer: "offer_QhmFGPFGKvpeWF"
+                        offer: "offer_QkJLdojOO1yNIo"
                       }),
                     });
                     const { order } = await orderResponse.json();
