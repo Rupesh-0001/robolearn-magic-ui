@@ -975,7 +975,7 @@ export default function AutonomousCarMasterclass() {
                       headers: {
                         'Content-Type': 'application/json', 
                       },
-                      body: JSON.stringify({
+                      body: JSON.stringify({ 
                         amount: 3999,
                         offer: "offer_QkJLdojOO1yNIo"
                       }),
