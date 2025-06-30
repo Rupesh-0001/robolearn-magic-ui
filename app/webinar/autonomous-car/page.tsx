@@ -70,7 +70,7 @@ export default function AIAgentMasterclass() {
   };
 
   const validateAge = (age: string) => {
-    const ageRegex = /^\d{1,2}$/;
+    const ageRegex = /^\d{1,4}$/;
     return ageRegex.test(age);
   };
 
@@ -101,7 +101,7 @@ export default function AIAgentMasterclass() {
       }
     } else if (name === "age") {
       if (!value.trim()) {
-        setFormErrors((prev) => ({ ...prev, age: "Age is required" }));
+        setFormErrors((prev) => ({ ...prev, age: "Graduation year is required" }));
       }
     } else if (name === "phone") {
       const cleanPhone = value.replace(/\D/g, ""); // Remove non-digits
@@ -154,7 +154,7 @@ export default function AIAgentMasterclass() {
     if (!formData.age.trim()) {
       errors.age = "Age is required";
     } else if (!validateAge(formData.age)) {
-      errors.age = "Please enter a valid age";
+      errors.age = "Please enter a valid year";
     }
 
     if (!formData.phone.trim()) {
@@ -277,7 +277,7 @@ export default function AIAgentMasterclass() {
 
   // Add countdown timer effect
   useEffect(() => {
-    const countDownDate = new Date("June 29, 2025 19:00:00").getTime();
+    const countDownDate = new Date("July 02, 2025 19:00:00").getTime();
     // Update the countdown every 1 second
     const interval = setInterval(() => {
       // Get today's date and time
@@ -373,7 +373,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>29th June, 2025</span>
+                <span>2nd July, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -456,7 +456,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  29th June, 2025
+                  2nd July, 2025
                 </span>
               </div>
 
@@ -585,7 +585,7 @@ export default function AIAgentMasterclass() {
                         height={20}
                       />
                     </div>
-                    <span className="text-gray-800">29th June, 2025</span>
+                    <span className="text-gray-800">2nd July, 2025</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -938,7 +938,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">29th June, 2025</span>
+                  <span className="text-gray-800">2nd July, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1146,7 +1146,7 @@ export default function AIAgentMasterclass() {
                     htmlFor="age"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Age <span className="text-red-500">*</span>
+                    Gradutation Year <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -1155,7 +1155,7 @@ export default function AIAgentMasterclass() {
                     value={formData.age}
                     onChange={handleInputChange}
                     required
-                    placeholder="Enter your age"
+                    placeholder="Enter your graduation year"
                     className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors ${
                       formErrors.age
                         ? "border-red-300 focus:ring-red-500 focus:border-red-500"
@@ -1198,7 +1198,7 @@ export default function AIAgentMasterclass() {
                   )}
                 </div>
 
-                {/* <div>
+                <div>
                   <label
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-700 mb-1"
@@ -1224,7 +1224,7 @@ export default function AIAgentMasterclass() {
                       {formErrors.email}
                     </p>
                   )}
-                </div> */}
+                </div>
               </div>
 
               {/* Modal Footer */}
@@ -1326,7 +1326,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/ECVTK3FB3Ki8rol98YbmmC"
+                  href="https://chat.whatsapp.com/JjWO0w0JeXt7ZG6MT0UgXj"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"

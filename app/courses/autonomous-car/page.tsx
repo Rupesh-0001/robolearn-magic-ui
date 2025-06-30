@@ -872,9 +872,7 @@ export default function AutonomousCarMasterclass() {
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                      amount: 3999,
-                      offer: "offer_QkJLdojOO1yNIo"
-                      
+                      amount: 3999                      
                     }),
                   });
                   const { order } = await orderResponse.json();
@@ -976,8 +974,7 @@ export default function AutonomousCarMasterclass() {
                         'Content-Type': 'application/json', 
                       },
                       body: JSON.stringify({ 
-                        amount: 3999,
-                        offer: "offer_QkJLdojOO1yNIo"
+                        amount: 3999
                       }),
                     });
                     const { order } = await orderResponse.json();
