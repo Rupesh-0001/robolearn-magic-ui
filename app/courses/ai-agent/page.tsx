@@ -68,7 +68,7 @@ export default function AIAgentBootcamp() {
     }
   };
   useEffect(() => {
-    const endDate = new Date("2025-06-16T11:59:59"); // May 19, 4 PM
+    const endDate = new Date("2025-07-21T11:59:59");
 
     const calculateTimeLeft = () => {
       const now = new Date();
