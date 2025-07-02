@@ -185,7 +185,7 @@ export default function TermsPage() {
                 <strong>Phone:</strong> +91 9878555767
               </p>
               <p className="text-muted-foreground">
-                <strong>Address:</strong> ROBOLEARNINDIA LLP, B-29-1251/2c/581/1a St- 1 3-r, Ludhiana, Gne College, Ludhiana, Ludhiana, Punjab, India - 141006
+                <strong>Address:</strong> ROBOLEARNINDIA LLP, B-29-1251/2c/581/1a St- 1 3-r, Ludhiana, GNE College, Ludhiana, Ludhiana, Punjab, India - 141006
               </p>
             </div>
           </div>

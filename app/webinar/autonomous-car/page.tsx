@@ -14,7 +14,21 @@ import Image from "next/image";
 
 export default function AIAgentMasterclass() {
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const [showEnrollModal, setShowEnrollModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    age: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formErrors, setFormErrors] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    age: "",
+  });
   const [toast, setToast] = useState<{
     show: boolean;
     message: string;
@@ -36,93 +50,184 @@ export default function AIAgentMasterclass() {
     }, 4000);
   };
 
-  const handleBuyClick = async () => {
-    try {
-      // First create order
-      const orderResponse = await fetch('/api/create-order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          amount: 9,
-        }),
-      });
-      const { order } = await orderResponse.json();
+  const handleEnrollClick = () => {
+    setShowEnrollModal(true);
+  };
 
-      if (!order) {
-        throw new Error('Failed to create order');
-      }
-
-      const initializeRazorpay = () => {
-        const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
-
-        if (!razorpayKey) {
-          console.error("Razorpay key is not defined");
-          return;
-        }
-
-        const options = {
-          key: razorpayKey,
-          amount: order.amount,
-          currency: "INR",
-          name: "Autonomous Car Masterclass",
-          description: "Purchase of Autonomous Car Masterclass",
-          order_id: order.id,
-          handler: function (response: {
-            razorpay_payment_id: string;
-            razorpay_order_id: string;
-            razorpay_signature: string;
-          }) {
-            console.log(response);
-            // Show thank you modal after successful payment
-            setShowThankYouModal(true);
-            // Show success message
-            showToast(
-              "Payment successful! Join our WhatsApp community for further updates.",
-              "success"
-            );
-
-            // Fire Meta Pixel Lead event
-            if (typeof window !== 'undefined' && 'fbq' in window && typeof window.fbq === 'function') {
-              (window.fbq as (event: 'track', eventName: string) => void)('track', 'Lead');
-            }
-          },
-          prefill: {
-            name: "",
-            email: "",
-            contact: "",
-          },
-          theme: {
-            color: "#000000",
-          },
-        };
-
-        try {
-          const rzp = new window.Razorpay(options);
-          rzp.open();
-        } catch (error) {
-          console.error("Error initializing Razorpay:", error);
-        }
-      };
-
-      if (typeof window !== "undefined" && "Razorpay" in window) {
-        initializeRazorpay();
-      } else {
-        const script = document.createElement("script");
-        script.src = "https://checkout.razorpay.com/v1/checkout.js";
-        script.async = true;
-        script.onload = initializeRazorpay;
-        document.body.appendChild(script);
-      }
-    } catch (error) {
-      console.error("Error purchasing masterclass:", error);
-      showToast("Failed to process payment. Please try again.", "error");
-    }
+  const handleCloseModal = () => {
+    setShowEnrollModal(false);
+    setFormData({ name: "", phone: "", email: "", age: "" });
+    setFormErrors({ name: "", phone: "", email: "", age: "" });
   };
 
   const handleCloseThankYouModal = () => {
     setShowThankYouModal(false);
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateAge = (age: string) => {
+    const ageRegex = /^\d{1,4}$/;
+    return ageRegex.test(age);
+  };
+
+  const validatePhone = (phone: string) => {
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(phone);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    // Update form data
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // Clear previous errors and validate
+    setFormErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+
+    // Real-time validation
+    if (name === "name") {
+      if (!value.trim()) {
+        setFormErrors((prev) => ({ ...prev, name: "Name is required" }));
+      }
+    } else if (name === "age") {
+      if (!value.trim()) {
+        setFormErrors((prev) => ({ ...prev, age: "Graduation year is required" }));
+      }
+    } else if (name === "phone") {
+      const cleanPhone = value.replace(/\D/g, ""); // Remove non-digits
+      setFormData((prev) => ({ ...prev, phone: cleanPhone }));
+
+      if (!cleanPhone) {
+        setFormErrors((prev) => ({
+          ...prev,
+          phone: "Phone number is required",
+        }));
+      } else if (!validatePhone(cleanPhone)) {
+        setFormErrors((prev) => ({
+          ...prev,
+          phone: "Please enter a 10-digit phone number",
+        }));
+      }
+    } else if (name === "email" && value.trim()) {
+      if (!validateEmail(value)) {
+        setFormErrors((prev) => ({
+          ...prev,
+          email: "Please enter a valid email address",
+        }));
+      }
+    }
+  };
+
+  const isFormValid = () => {
+    return (
+      formData.name.trim() !== "" &&
+      formData.phone.trim() !== "" &&
+      !formErrors.name &&
+      !formErrors.phone &&
+      !formErrors.email &&
+      !formErrors.age &&
+      validateAge(formData.age) &&
+      validatePhone(formData.phone)
+    );
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Final validation
+    const errors = { name: "", phone: "", email: "", age: "" };
+
+    if (!formData.name.trim()) {
+      errors.name = "Name is required";
+    }
+
+    if (!formData.age.trim()) {
+      errors.age = "Age is required";
+    } else if (!validateAge(formData.age)) {
+      errors.age = "Please enter a valid year";
+    }
+
+    if (!formData.phone.trim()) {
+      errors.phone = "Phone number is required";
+    } else if (!validatePhone(formData.phone)) {
+      errors.phone = "Please enter a 10-digit phone number";
+    }
+
+    if (formData.email.trim() && !validateEmail(formData.email)) {
+      errors.email = "Please enter a valid email address";
+    }
+
+    if (errors.name || errors.phone || errors.email || errors.age) {
+      setFormErrors(errors);
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const GOOGLE_SHEET_URL =
+      "https://script.google.com/macros/s/AKfycbwEPe_hAlxMjOyYkOKvjBnPuCNGfADXcDFpFN1OUB3UtFWbgZgfjqpnzpNpdvWv1i34/exec";
+
+    const submitData = {
+      sheetName: "AutonomousCar",
+      name: formData.name,
+      email: formData.email,
+      age: formData.age,
+      phoneNumber: formData.phone,
+    };
+
+    try {
+      await fetch(GOOGLE_SHEET_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(submitData),
+      });
+
+      // Fire Meta Pixel Lead event
+      if (
+        typeof window !== "undefined" &&
+        "fbq" in window &&
+        typeof window.fbq === "function"
+      ) {
+        (window.fbq as (event: "track", eventName: string) => void)(
+          "track",
+          "Lead"
+        );
+      }
+
+      // Clear form and close modal
+      setFormData({ name: "", phone: "", email: "", age: "" });
+      setFormErrors({ name: "", phone: "", email: "", age: "" });
+      setShowEnrollModal(false);
+
+      // Show thank you modal after a brief delay
+      setTimeout(() => {
+        setShowThankYouModal(true);
+      }, 300);
+
+      // Show success message
+      showToast(
+        "Registration successful! You will receive further details on WhatsApp.",
+        "success"
+      );
+    } catch (error) {
+      console.error("Error:", error);
+      showToast("An error occurred. Please try again.", "error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Carousel state
@@ -172,9 +277,7 @@ export default function AIAgentMasterclass() {
 
   // Add countdown timer effect
   useEffect(() => {
-    // Set the date we're counting down to (May 25, 2025 at 5:00 PM)
-    const countDownDate = new Date("June 18, 2025 17:00:00").getTime();
-
+    const countDownDate = new Date("July 02, 2025 19:00:00").getTime();
     // Update the countdown every 1 second
     const interval = setInterval(() => {
       // Get today's date and time
@@ -270,7 +373,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>18th June, 2025</span>
+                <span>2nd July, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -286,19 +389,19 @@ export default function AIAgentMasterclass() {
             </div>
 
             <div className="flex items-center gap-2 mb-6">
-              <span className="text-2xl font-bold">₹9</span>
-              <span className="text-gray-500 line-through">₹99</span>
-              <span className="text-gray-500">(90% OFF)</span>
+              <span className="text-2xl font-bold">FREE</span>
+              <span className="text-gray-500 line-through">₹399</span>
+              <span className="text-gray-500">(100% OFF)</span>
             </div>
 
             <div className="flex items-center">
               <ShimmerButton
                 borderRadius="5px"
                 className="text-white text-sm sm:text-base font-semibold w-1/3 cursor-pointer mr-4 group"
-                onClick={handleBuyClick}
+                onClick={handleEnrollClick}
               >
                 <span className="flex items-center">
-                  Buy Now
+                  Enroll Now
                   <svg
                     className="w-4 h-4 ml-1 transition-transform duration-200 ease-in-out group-hover:translate-x-1"
                     fill="none"
@@ -353,7 +456,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  18th June, 2025
+                  2nd July, 2025
                 </span>
               </div>
 
@@ -482,7 +585,7 @@ export default function AIAgentMasterclass() {
                         height={20}
                       />
                     </div>
-                    <span className="text-gray-800">18th June, 2025</span>
+                    <span className="text-gray-800">2nd July, 2025</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -511,7 +614,7 @@ export default function AIAgentMasterclass() {
                     <span className="text-gray-800">Hindi, English</span>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  {/* <div className="flex items-center gap-2">
                     <div className="text-gray-500 w-6 flex-shrink-0">
                       <Image
                         src="/certificate-icon.svg"
@@ -524,7 +627,7 @@ export default function AIAgentMasterclass() {
                     <span className="text-gray-800">
                       Certificate of Participation
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -535,7 +638,7 @@ export default function AIAgentMasterclass() {
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
               <p className="mb-4">
-                This is a <strong>live webinar</strong> designed to give
+                This is a <strong>free live webinar</strong> designed to give
                 you hands-on experience with real self-driving car engineering.
                 You&apos;ll not just learn theory — you&apos;ll build your first{" "}
                 <strong>lane detection + path planning system</strong> from
@@ -835,7 +938,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">18th June, 2025</span>
+                  <span className="text-gray-800">2nd July, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -864,7 +967,7 @@ export default function AIAgentMasterclass() {
                   <span className="text-gray-800">Hindi, English</span>
                 </div>
 
-                <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                   <div className="text-gray-500 w-6 flex-shrink-0">
                     <Image
                       src="/certificate-icon.svg"
@@ -877,24 +980,24 @@ export default function AIAgentMasterclass() {
                   <span className="text-gray-800">
                     Certificate of Participation
                   </span>
-                </div>
+                </div> */}
               </div>
 
               {/* Price */}
               <div className="flex space-x-2 pt-2">
-                <span className="text-xl font-bold text-gray-800">₹9</span>
+                <span className="text-xl font-bold text-gray-800">FREE</span>
                 <span className="line-through text-gray-500">₹99</span>
-                <span className="text-gray-500 text-sm">(90% OFF)</span>
+                <span className="text-gray-500 text-sm">(100% OFF)</span>
               </div>
 
-              {/* Buy Button */}
+              {/* Enroll Button */}
               <ShimmerButton
                 borderRadius="5px"
                 className="text-white text-sm sm:text-base font-semibold w-full cursor-pointer mr-4 group"
-                onClick={handleBuyClick}
+                onClick={handleEnrollClick}
               >
                 <span className="flex items-center">
-                  Buy Now
+                  Enroll Now
                   <svg
                     className="w-4 h-4 ml-1 transition-transform duration-200 ease-in-out group-hover:translate-x-1"
                     fill="none"
@@ -948,36 +1051,229 @@ export default function AIAgentMasterclass() {
         </div>
       </div>
 
-      {/* Mobile price bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-20">
-        <div className="bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-          <div className="h-6 bg-[#fae3ea] mb-3 flex items-center justify-center">
-            <div className="text-sm text-[#df4271]">
-              Offer ends in {timeLeft.days}d : {timeLeft.hours}h : {timeLeft.minutes}m : {timeLeft.seconds}s
-            </div>
-          </div>
-          <div className="flex p-2">
-            <div className="w-[40%] flex flex-col justify-center items-end pr-4">
-              <div className="flex items-center gap-2">
-                <span className="text-xl font-bold text-black-600">₹9</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500 line-through">₹99</span>
-                <span className="text-xs text-black-600">90% off</span>
-              </div>
-            </div>
-            <div className="w-[70%]">
-              <ShimmerButton
-                borderRadius="8px"
-                className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
-                onClick={handleBuyClick}
+      {/* Mobile Sticky Bottom Bar */}
+      <div className="fixed bottom-0 left-0 right-0 pb-3 md:hidden z-50 bg-white">
+        <div className="bg-[#fae3ea] text-[#df4271] px-3 py-1 flex justify-center items-center">
+          <span className="text-sm font-medium">
+            Webinar starts in {timeLeft.days > 0 ? `${timeLeft.days}d : ` : ""}
+            {String(timeLeft.hours).padStart(2, "0")}h :{" "}
+            {String(timeLeft.minutes).padStart(2, "0")}m :{" "}
+            {String(timeLeft.seconds).padStart(2, "0")}s
+          </span>
+        </div>
+        <div className="flex items-center justify-between bg-white border-t pt-3 px-3 border-gray-200 md:hidden z-50">
+          <ShimmerButton
+            borderRadius="5px"
+            className="text-white w-full text-sm font-semibold cursor-pointer group px-4 py-2"
+            onClick={handleEnrollClick}
+          >
+            <span className="flex items-center">
+              Enroll Now
+              <svg
+                className="w-4 h-4 ml-1 transition-transform duration-200 ease-in-out group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                Buy Now
-              </ShimmerButton>
-            </div>
-          </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </span>
+          </ShimmerButton>
         </div>
       </div>
+
+      {/* Enroll Modal */}
+      {showEnrollModal && (
+        <div
+          className="fixed inset-0 backdrop-blur-sm bg-neutral-500 bg-opacity-30 flex items-center justify-center z-50 p-4"
+          onClick={handleCloseModal}
+        >
+          <div
+            className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Enroll for the free Masterclass
+              </h2>
+              <button
+                onClick={handleCloseModal}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <XIcon className="h-6 w-6 cursor-pointer" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <form onSubmit={handleSubmit} className="p-6">
+              <div className="space-y-4">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="Enter your full name"
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors ${
+                      formErrors.name
+                        ? "border-red-300 focus:ring-red-500 focus:border-red-500"
+                        : "border-gray-300 focus:ring-black focus:border-black"
+                    }`}
+                  />
+                  {formErrors.name && (
+                    <p className="mt-1 text-sm text-red-600">
+                      {formErrors.name}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="age"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Gradutation Year <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="age"
+                    name="age"
+                    value={formData.age}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="Enter your graduation year"
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors ${
+                      formErrors.age
+                        ? "border-red-300 focus:ring-red-500 focus:border-red-500"
+                        : "border-gray-300 focus:ring-black focus:border-black"
+                    }`}
+                  />
+                  {formErrors.age && (
+                    <p className="mt-1 text-sm text-red-600">
+                      {formErrors.age}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    WhatsApp Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="9876543210"
+                    maxLength={10}
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors ${
+                      formErrors.phone
+                        ? "border-red-300 focus:ring-red-500 focus:border-red-500"
+                        : "border-gray-300 focus:ring-black focus:border-black"
+                    }`}
+                  />
+                  {formErrors.phone && (
+                    <p className="mt-1 text-sm text-red-600">
+                      {formErrors.phone}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Email Address{" "}
+                    <span className="text-gray-400">(Optional)</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="your.email@example.com"
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors ${
+                      formErrors.email
+                        ? "border-red-300 focus:ring-red-500 focus:border-red-500"
+                        : "border-gray-300 focus:ring-black focus:border-black"
+                    }`}
+                  />
+                  {formErrors.email && (
+                    <p className="mt-1 text-sm text-red-600">
+                      {formErrors.email}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="flex flex-col gap-3 mt-6">
+                <button
+                  type="submit"
+                  disabled={isSubmitting || !isFormValid()}
+                  className="w-full bg-gray-950 hover:bg-black cursor-pointer text-white font-medium px-4 py-3 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center">
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Enrolling...
+                    </span>
+                  ) : (
+                    "Enroll Now"
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCloseModal}
+                  className="w-full bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-700 font-medium px-4 py-3 rounded-md transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Thank You Modal */}
       {showThankYouModal && (
@@ -1020,7 +1316,7 @@ export default function AIAgentMasterclass() {
 
               {/* Thank You Message */}
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                Payment Successful!
+                Thank you for joining
               </h2>
               <p className="text-gray-600 mb-8">
                 Join our WhatsApp community to know more about the masterclass
@@ -1030,7 +1326,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/GFwWxhzMHaZHCtfinE08w2"
+                  href="https://chat.whatsapp.com/JjWO0w0JeXt7ZG6MT0UgXj"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"

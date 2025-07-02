@@ -11,6 +11,7 @@ export default function ExplorePage() {
         <div className="my-4 sm:my-6">
           <span className="text-2xl sm:text-3xl md:text-4xl font-bold">Upcoming Masterclasses</span>
         </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {masterclasses.map((course) => (
             <Link
@@ -42,7 +43,9 @@ export default function ExplorePage() {
                       </>
                     ) : (
                       <>
-                        <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">{course.currentPrice}</span>
+                        <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">
+                          {course.currentPrice}
+                        </span>
                         <span className="ml-2 line-through text-gray-400 text-sm">{course.originalPrice}</span>
                       </>
                     )}

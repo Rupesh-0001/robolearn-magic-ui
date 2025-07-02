@@ -13,8 +13,9 @@ import {
   BarChart3 as LevelIcon,
   Clock3 as DurationIcon,
   Languages as LanguageIcon,
-  Calendar as AccessIcon,
+  GraduationCap as StudentIcon,
   Award as CertificateIcon,
+  X as XIcon,
 } from "lucide-react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";
@@ -25,9 +26,10 @@ import Image from "next/image";
 
 import '../../../types/razorpay';
 
-export default function RoboticsEngineeringBootcamp() {
+export default function AutonomousCarMasterclass() {
   const [openLecture, setOpenLecture] = useState<string | null>(null);
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -68,7 +70,7 @@ export default function RoboticsEngineeringBootcamp() {
     }
   };
   useEffect(() => {
-    const endDate = new Date("2025-07-21T11:59:59"); // May 19, 4 PM
+    const endDate = new Date("2025-06-29T23:59:59");
 
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -85,6 +87,9 @@ export default function RoboticsEngineeringBootcamp() {
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
         setTimeLeft({ days, hours, minutes, seconds });
       }
+      else{
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
     };
 
     calculateTimeLeft();
@@ -99,6 +104,10 @@ export default function RoboticsEngineeringBootcamp() {
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
+  };
+
+  const handleCloseThankYouModal = () => {
+    setShowThankYouModal(false);
   };
 
   const formatTimeLeft = () => {
@@ -118,25 +127,25 @@ export default function RoboticsEngineeringBootcamp() {
       <div className="flex flex-col lg:flex-row gap-11">
         <div className="w-full lg:w-7/10">
           <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit rounded font-semibold">
-            ROBOTICS ENGINEERING BOOTCAMP
+            AUTONOMOUS CAR COURSE
           </span>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">
-            Build Real Robots from Scratch
+            Autonomous System Revolution Program
           </h1>
           <div className="mb-8 sm:mb-12">
             <Image
-              src="/robotMasterClass.png"
-              alt="Robotics Engineering Bootcamp"
+              src="/CarCourse.jpg"
+              alt="Autonomous Car"
               className="rounded-lg shadow-lg w-full h-auto"
               width={800}
               height={450}
             />
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-8 sm:mb-12 mt-4 sm:mt-6 lg:hidden block">
-            Build Real Robots from Scratch
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mt-2 lg:hidden block">
+            Autonomous System Revolution Program
           </h1>
 
-          <div className="lg:hidden my-8">
+          <div className="lg:hidden mb-8 mt-4">
             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
               <h2 className="text-xl sm:text-2xl font-semibold mb-4">
                 Course Details
@@ -146,13 +155,13 @@ export default function RoboticsEngineeringBootcamp() {
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                     <LevelIcon className="w-3 h-3 text-gray-700" />
                   </div>
-                  <span>Beginner to Advanced</span>
+                  <span>Advanced Level</span>
                 </li>
                 <li className="flex items-center text-sm sm:text-base">
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                     <DurationIcon className="w-3 h-3 text-gray-700" />
                   </div>
-                  <span>8 Weeks Self-paced</span>
+                  <span>1.5 Months Mentorship</span>
                 </li>
                 <li className="flex items-center text-sm sm:text-base">
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3">
@@ -162,15 +171,15 @@ export default function RoboticsEngineeringBootcamp() {
                 </li>
                 <li className="flex items-center text-sm sm:text-base">
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3">
-                    <AccessIcon className="w-3 h-3 text-gray-700" />
+                    <StudentIcon className="w-3 h-3 text-gray-700" />
                   </div>
-                  <span>Lifetime Access</span>
+                  <span>Specially for students</span>
                 </li>
                 <li className="flex items-center text-sm sm:text-base">
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                     <CertificateIcon className="w-3 h-3 text-gray-700" />
                   </div>
-                  <span>Industry-recognized Certificate</span>
+                  <span>Certificate of Completion</span>
                 </li>
               </ul>
             </div>
@@ -186,8 +195,8 @@ export default function RoboticsEngineeringBootcamp() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Design and build complete robots from mechanical body to
-                  control panel
+                  How to build a full perception-planning-control loop using
+                  real-world tools like ROS2, Carla, and Python
                 </span>
               </li>
               <li className="flex items-start">
@@ -195,7 +204,8 @@ export default function RoboticsEngineeringBootcamp() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Implement PLC logic, kinematics, control theory, and GUIs
+                  Apply sensor fusion, object detection, and path planning using
+                  state-of-the-art AI and robotics techniques
                 </span>
               </li>
               <li className="flex items-start">
@@ -203,7 +213,8 @@ export default function RoboticsEngineeringBootcamp() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Program microcontrollers and simulate full robotic systems
+                  Master vehicle control systems using PID and MPC to simulate
+                  real actuation
                 </span>
               </li>
               <li className="flex items-start">
@@ -211,8 +222,8 @@ export default function RoboticsEngineeringBootcamp() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Understand how to build industrial-grade robotics systems from
-                  scratch
+                  Design Tesla-style neural pipelines with BEV + Transformer
+                  models for AI-first FSD systems
                 </span>
               </li>
             </ul>
@@ -236,7 +247,7 @@ export default function RoboticsEngineeringBootcamp() {
                     onClick={() => toggleLecture("intro")}
                   >
                     <span className="text-sm sm:text-base">
-                      1. Electrical Panels & PLC Fundamentals
+                      1. Introduction to Autonomous Vehicles
                     </span>
                     {openLecture === "intro" ? (
                       <ChevronUpIcon className="h-5 w-5" />
@@ -252,15 +263,15 @@ export default function RoboticsEngineeringBootcamp() {
                     <ul className="list-disc pl-5 text-sm sm:text-base">
                       <li className="flex items-center py-1">
                         <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Relay-based logic machines and control circuits
+                        Overview
                       </li>
                       <li className="flex items-center py-1">
                         <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        PLC programming and sensor integration
+                        Key components and systems
                       </li>
                       <li className="flex items-center py-1">
                         <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        VFD motor control systems
+                        Current state of the industry
                       </li>
                     </ul>
                   </div>
@@ -270,16 +281,16 @@ export default function RoboticsEngineeringBootcamp() {
                 >
                   <button
                     className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
-                      openLecture === "tools" ? "text-blue-600" : ""
+                      openLecture === "perception" ? "text-blue-600" : ""
                     } cursor-pointer rounded-md ${
-                      openLecture === "tools" ? "bg-blue-100" : ""
+                      openLecture === "perception" ? "bg-blue-100" : ""
                     }`}
-                    onClick={() => toggleLecture("tools")}
+                    onClick={() => toggleLecture("perception")}
                   >
                     <span className="text-sm sm:text-base">
-                      2. HMI & Automation Systems
+                      2. Perception and Computer Vision
                     </span>
-                    {openLecture === "tools" ? (
+                    {openLecture === "perception" ? (
                       <ChevronUpIcon className="h-5 w-5" />
                     ) : (
                       <ChevronDownIcon className="h-5 w-5" />
@@ -287,21 +298,21 @@ export default function RoboticsEngineeringBootcamp() {
                   </button>
                   <div
                     className={`px-4 py-2 ${
-                      openLecture === "tools" ? "" : "hidden"
+                      openLecture === "perception" ? "" : "hidden"
                     }`}
                   >
                     <ul className="list-disc pl-5 text-sm sm:text-base">
                       <li className="flex items-center py-1">
                         <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Panel wiring and HMI interface design
+                        Sensor fusion techniques
                       </li>
                       <li className="flex items-center py-1">
                         <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Conveyor systems and automation lines
+                        Object detection and tracking
                       </li>
                       <li className="flex items-center py-1">
                         <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Industrial communication protocols
+                        Lane detection algorithms
                       </li>
                     </ul>
                   </div>
@@ -311,16 +322,16 @@ export default function RoboticsEngineeringBootcamp() {
                 >
                   <button
                     className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
-                      openLecture === "memory" ? "text-blue-600" : ""
+                      openLecture === "planning" ? "text-blue-600" : ""
                     } cursor-pointer rounded-md ${
-                      openLecture === "memory" ? "bg-blue-100" : ""
+                      openLecture === "planning" ? "bg-blue-100" : ""
                     }`}
-                    onClick={() => toggleLecture("memory")}
+                    onClick={() => toggleLecture("planning")}
                   >
                     <span className="text-sm sm:text-base">
-                      3. Robotic Arm Design & Kinematics
+                      3. Path Planning and Decision Making
                     </span>
-                    {openLecture === "memory" ? (
+                    {openLecture === "planning" ? (
                       <ChevronUpIcon className="h-5 w-5" />
                     ) : (
                       <ChevronDownIcon className="h-5 w-5" />
@@ -328,21 +339,21 @@ export default function RoboticsEngineeringBootcamp() {
                   </button>
                   <div
                     className={`px-4 py-2 ${
-                      openLecture === "memory" ? "" : "hidden"
+                      openLecture === "planning" ? "" : "hidden"
                     }`}
                   >
                     <ul className="list-disc pl-5 text-sm sm:text-base">
                       <li className="flex items-center py-1">
                         <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        3-DOF and 6-DOF robotic arm simulation
+                        Route planning algorithms
                       </li>
                       <li className="flex items-center py-1">
                         <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Forward and inverse kinematics programming
+                        Behavior prediction
                       </li>
                       <li className="flex items-center py-1">
                         <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        CAD design and mechanical assembly
+                        Decision-making frameworks
                       </li>
                     </ul>
                   </div>
@@ -352,16 +363,16 @@ export default function RoboticsEngineeringBootcamp() {
                 >
                   <button
                     className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
-                      openLecture === "advanced" ? "text-blue-600" : ""
+                      openLecture === "control" ? "text-blue-600" : ""
                     } cursor-pointer rounded-md ${
-                      openLecture === "advanced" ? "bg-blue-100" : ""
+                      openLecture === "control" ? "bg-blue-100" : ""
                     }`}
-                    onClick={() => toggleLecture("advanced")}
+                    onClick={() => toggleLecture("control")}
                   >
                     <span className="text-sm sm:text-base">
-                      4. Embedded Control & GUI Development
+                      4. Vehicle Control Systems
                     </span>
-                    {openLecture === "advanced" ? (
+                    {openLecture === "control" ? (
                       <ChevronUpIcon className="h-5 w-5" />
                     ) : (
                       <ChevronDownIcon className="h-5 w-5" />
@@ -369,21 +380,21 @@ export default function RoboticsEngineeringBootcamp() {
                   </button>
                   <div
                     className={`px-4 py-2 ${
-                      openLecture === "advanced" ? "" : "hidden"
+                      openLecture === "control" ? "" : "hidden"
                     }`}
                   >
                     <ul className="list-disc pl-5 text-sm sm:text-base">
                       <li className="flex items-center py-1">
                         <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Microcontroller programming with ESP32
+                        PID controllers
                       </li>
                       <li className="flex items-center py-1">
                         <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Qt GUI development for robot control
+                        Model Predictive Control (MPC)
                       </li>
                       <li className="flex items-center py-1">
                         <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Full robot panel integration and deployment
+                        Actuator control and simulation
                       </li>
                     </ul>
                   </div>
@@ -398,17 +409,18 @@ export default function RoboticsEngineeringBootcamp() {
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
               <p className="mb-4">
-                This is a complete, project-first bootcamp where you&apos;ll
-                build real robotic systems from the ground up. By the end,
-                you&apos;ll know how to go from CAD design to embedded firmware
-                to real-world robot motion.
+                This is a complete, structured program to help you build a
+                production-grade self-driving car stack from scratch,
+                step-by-step. With live projects, recorded lectures, and
+                professional tools, you&apos;ll graduate with real skills and a
+                full portfolio.
                 {!showFullDescription && <span> ...</span>}
               </p>
               {showFullDescription && (
                 <>
                   <div className="mb-4">
                     <strong className="text-lg font-semibold">
-                      Top Projects You&apos;ll Build:
+                      Top Projects You Will Build:
                     </strong>
                     <ul className="list-none mt-4 space-y-1">
                       <li className="flex items-center">
@@ -417,7 +429,7 @@ export default function RoboticsEngineeringBootcamp() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          Relay-Based Logic Machine (Level 1)
+                          Lane Detection & Following (Level 1)
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -426,7 +438,7 @@ export default function RoboticsEngineeringBootcamp() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          Sensor-Controlled PLC Conveyor (Level 2)
+                          Traffic Light and Sign Handling (Level 2)
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -435,7 +447,7 @@ export default function RoboticsEngineeringBootcamp() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          Panel-Wired VFD Motor System (Level 3)
+                          Lidar + Camera Obstacle Detection (Level 3)
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -444,7 +456,7 @@ export default function RoboticsEngineeringBootcamp() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          HMI-Integrated Automation Line (Level 4)
+                          Localization & SLAM System (Level 4)
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -453,7 +465,7 @@ export default function RoboticsEngineeringBootcamp() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          3-DOF Robotic Arm Simulator (Level 5)
+                          Agent Prediction + Path Planning Stack (Level 5–6)
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -462,7 +474,7 @@ export default function RoboticsEngineeringBootcamp() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          6-DOF Robotic Arm (CAD + Control) (Level 6)
+                          MPC Control Simulator (Level 7)
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -471,18 +483,7 @@ export default function RoboticsEngineeringBootcamp() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          Full Robot Panel with Microcontroller + Drivers (Level
-                          7)
-                        </span>
-                      </li>
-                      <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
-                          ✅
-                        </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          Qt GUI-Controlled Robotic Arm with Inverse Kinematics
-                          (Level 8)
+                          Tesla-Style End-to-End Neural Driving Stack (Level 8)
                         </span>
                       </li>
                     </ul>
@@ -507,17 +508,18 @@ export default function RoboticsEngineeringBootcamp() {
                 <div className="flex items-center mb-2">
                   <Image
                     src="/college-student.svg"
-                    alt="Students"
+                    alt="College Student"
                     width={32}
                     height={32}
                   />
                   <span className="text-lg font-semibold ml-2">
-                    Students & Engineers
+                    College Students
                   </span>
                 </div>
                 <p className="text-gray-600">
-                  Learn robotics from real-world problems and get ahead in the
-                  automation revolution.
+                  Perfect if you&apos;re studying engineering, computer science
+                  or robotics and want hands-on experience with autonomous
+                  systems.
                 </p>
               </div>
 
@@ -526,17 +528,17 @@ export default function RoboticsEngineeringBootcamp() {
                 <div className="flex items-center mb-2">
                   <Image
                     src="/working-engineer.svg"
-                    alt="Working Professionals"
+                    alt="Working Engineer"
                     width={32}
                     height={32}
                   />
                   <span className="text-lg font-bold ml-2">
-                    Working Professionals
+                    Working Engineers
                   </span>
                 </div>
                 <p className="text-gray-600">
-                  Get industry-grade practical knowledge in robotics and
-                  automation systems.
+                  Ideal for software engineers, or roboticists looking to
+                  transition into autonomous vehicles.
                 </p>
               </div>
 
@@ -545,17 +547,15 @@ export default function RoboticsEngineeringBootcamp() {
                 <div className="flex items-center mb-2">
                   <Image
                     src="/startup-founder.svg"
-                    alt="Career Switchers"
+                    alt="Startup Founder"
                     width={32}
                     height={32}
                   />
-                  <span className="text-lg font-bold ml-2">
-                    Career Switchers
-                  </span>
+                  <span className="text-lg font-bold ml-2">Tech Hobbyists</span>
                 </div>
                 <p className="text-gray-600">
-                  Go from 0 to job-ready robotics developer in under 2 months
-                  with hands-on projects.
+                  Build your first autonomous car logic from scratch. No prior
+                  experience needed.
                 </p>
               </div>
             </div>
@@ -597,17 +597,18 @@ export default function RoboticsEngineeringBootcamp() {
                   <div className="flex items-center mb-2">
                     <Image
                       src="/college-student.svg"
-                      alt="Students"
+                      alt="College Student"
                       width={32}
                       height={32}
                     />
                     <span className="text-lg font-semibold ml-2">
-                      Students & Engineers
+                      College Students
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Learn robotics from real-world problems and get ahead in the
-                    automation revolution.
+                    Perfect if you&apos;re studying engineering, computer
+                    science or robotics and want hands-on experience with
+                    autonomous systems.
                   </p>
                 </div>
 
@@ -616,17 +617,17 @@ export default function RoboticsEngineeringBootcamp() {
                   <div className="flex items-center mb-2">
                     <Image
                       src="/working-engineer.svg"
-                      alt="Working Professionals"
+                      alt="Working Engineer"
                       width={32}
                       height={32}
                     />
                     <span className="text-lg font-bold ml-2">
-                      Working Professionals
+                      Working Engineers
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Get industry-grade practical knowledge in robotics and
-                    automation systems.
+                    Ideal for software engineers, or roboticists looking to
+                    transition into autonomous vehicles.
                   </p>
                 </div>
 
@@ -635,17 +636,17 @@ export default function RoboticsEngineeringBootcamp() {
                   <div className="flex items-center mb-2">
                     <Image
                       src="/startup-founder.svg"
-                      alt="Makers & Hackers"
+                      alt="Startup Founder"
                       width={32}
                       height={32}
                     />
                     <span className="text-lg font-bold ml-2">
-                      Makers & Hackers
+                      Founders & Innovators
                     </span>
                   </div>
                   <p className="text-gray-600">
-                    Build and deploy working robots from scratch with
-                    cutting-edge robotics technology.
+                    For founders and product managers looking to understand the
+                    technical foundations of autonomous systems.
                   </p>
                 </div>
               </div>
@@ -665,7 +666,7 @@ export default function RoboticsEngineeringBootcamp() {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 my-8">
+          <div className="my-8">
             <div className="text-xl sm:text-2xl font-semibold mb-4 flex items-center gap-2">
               <Image
                 src="/instructor.svg"
@@ -675,7 +676,7 @@ export default function RoboticsEngineeringBootcamp() {
               />{" "}
               Meet Your Instructor
             </div>
-            <div className="my-4">
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 my-4">
               <div className="md:flex md:gap-6">
                 <div className="flex-shrink-0 md:block flex flex-col items-center mb-6 md:mb-0">
                   <Image
@@ -714,39 +715,6 @@ export default function RoboticsEngineeringBootcamp() {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               <Link
-                href="/courses/autonomous-car"
-                className="flex border border-gray-200 rounded-lg flex-col hover:shadow-lg hover:scale-103 hover:shadow-black-600 transition-shadow duration-300"
-              >
-                <div className="relative">
-                  <Image
-                    src="/autonomousCarMasterclassTemplate.png"
-                    alt="Autonomous Car Bootcamp"
-                    className="w-full object-cover rounded-t-lg"
-                    width={400}
-                    height={250}
-                  />
-                </div>
-                <div className="mt-3 px-3 pb-2 flex justify-between items-center">
-                  <div>
-                    <p className="font-semibold text-sm sm:text-base">
-                      Autonomous Car Bootcamp
-                    </p>
-                    <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                      296 learners • by Harpreet Singh
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xs sm:text-sm text-gray-600 font-semibold">
-                      ₹4,999
-                    </p>
-                    <p className="text-xs text-[#df4271]">
-                      <span className="line-through text-gray-700">₹9,999</span>{" "}
-                      Save 50%
-                    </p>
-                  </div>
-                </div>
-              </Link>
-              <Link
                 href="/courses/ai-agent"
                 className="flex border border-gray-200 rounded-lg flex-col hover:shadow-lg hover:scale-103 hover:shadow-black-600 transition-shadow duration-300"
               >
@@ -758,6 +726,9 @@ export default function RoboticsEngineeringBootcamp() {
                     width={400}
                     height={250}
                   />
+                  {/* <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                                        Popular
+                                    </div> */}
                 </div>
                 <div className="mt-3 px-3 pb-2 flex justify-between items-center">
                   <div>
@@ -779,7 +750,54 @@ export default function RoboticsEngineeringBootcamp() {
                   </div>
                 </div>
               </Link>
+              <Link
+                href="/courses/robotic-arm"
+                className="flex border border-gray-200 rounded-lg flex-col hover:shadow-lg hover:scale-103 hover:shadow-black-600 transition-shadow duration-300"
+              >
+                <div className="relative">
+                  <Image
+                    src="/robotMasterClass.png"
+                    alt="Robotic Arm Bootcamp"
+                    className="w-full object-cover rounded-t-lg"
+                    width={400}
+                    height={250}
+                  />
+                  {/* <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+                                        New
+                                    </div> */}
+                </div>
+                <div className="mt-3 px-3 pb-2 flex justify-between items-center">
+                  <div>
+                    <p className="font-semibold text-sm sm:text-base">
+                      Robotic Arm Bootcamp
+                    </p>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                      275 learners • by Harpreet Singh
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs sm:text-sm text-gray-600 font-semibold">
+                      ₹4,999
+                    </p>
+                    <p className="text-xs text-[#df4271]">
+                      <span className="line-through text-gray-700">₹9,999</span>{" "}
+                      Save 50%
+                    </p>
+                  </div>
+                </div>
+              </Link>
             </div>
+            {/* <div className="mt-8 text-center">
+                            <Link 
+                                href="/courses" 
+                                className="inline-flex items-center text-blue-600 hover:text-blue-800"
+                            >
+                                View All Courses
+                                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </Link>
+                        </div> */}
           </div>
         </div>
 
@@ -794,19 +812,19 @@ export default function RoboticsEngineeringBootcamp() {
                 <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                   <UsersIcon className="w-3.5 h-3.5 text-gray-700" />
                 </div>
-                <strong>275&nbsp;</strong> Learners enrolled
+                <strong>312&nbsp;</strong> Learners enrolled
               </li>
               <li className="flex items-center text-sm sm:text-base">
                 <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                   <LevelIcon className="w-3.5 h-3.5 text-gray-700" />
                 </div>
-                Beginner to Advanced
+                Advanced Level
               </li>
               <li className="flex items-center text-sm sm:text-base">
                 <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                   <DurationIcon className="w-3.5 h-3.5 text-gray-700" />
                 </div>
-                8 Weeks Self-paced
+                1.5 Months Mentorship
               </li>
               <li className="flex items-center text-sm sm:text-base">
                 <div className="bg-gray-100 rounded-full p-1.5 mr-3">
@@ -816,27 +834,27 @@ export default function RoboticsEngineeringBootcamp() {
               </li>
               <li className="flex items-center text-sm sm:text-base">
                 <div className="bg-gray-100 rounded-full p-1.5 mr-3">
-                  <AccessIcon className="w-3.5 h-3.5 text-gray-700" />
+                  <StudentIcon className="w-3.5 h-3.5 text-gray-700" />
                 </div>
-                Lifetime Access
+                Specially for students
               </li>
               <li className="flex items-center text-sm sm:text-base">
                 <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                   <CertificateIcon className="w-3.5 h-3.5 text-gray-700" />
                 </div>
-                Industry-recognized Certificate
+                Certificate of Completion
               </li>
             </ul>
             <div className="mb-2">
               <span className="text-xl sm:text-2xl font-bold text-black-600">
-                ₹4,999
+                ₹1,999
               </span>
               <span className="text-sm sm:text-xl text-gray-500 line-through ml-2">
-                ₹9,999
+                ₹5,999
               </span>
               <span className="text-sm sm:text-base text-black-600 ml-2">
                 {" "}
-                SAVE 50%
+                SAVE 66%
               </span>
             </div>
             <div className="text-sm mb-4">
@@ -845,87 +863,24 @@ export default function RoboticsEngineeringBootcamp() {
             </div>
             <ShimmerButton
               className="w-full bg-white-600 text-white py-2 px-4 rounded-lg hover:bg-white-700 transition duration-300 text-sm sm:text-base cursor-pointer"
-              onClick={() => {
-                const initializeRazorpay = () => {
-                  const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
+              onClick={async () => {
+                try {
+                  // First create order
+                  const orderResponse = await fetch('/api/create-order', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      amount: 1999                      
+                    }),
+                  });
+                  const { order } = await orderResponse.json();
 
-                  if (!razorpayKey) {
-                    console.error("Razorpay key is not defined");
-                    return;
+                  if (!order) {
+                    throw new Error('Failed to create order');
                   }
 
-                  const options = {
-                    key: razorpayKey,
-                    amount: 499900,
-                    currency: "INR",
-                    name: "Robotics Engineering Bootcamp",
-                    description: "Purchase of Robotics Engineering Bootcamp",
-                    handler: function (response: {
-                      razorpay_payment_id: string;
-                      razorpay_order_id: string;
-                      razorpay_signature: string;
-                    }) {
-                      console.log(response);
-                    },
-                    prefill: {
-                      name: "",
-                      email: "",
-                      contact: "",
-                    },
-                    theme: {
-                      color: "#000000",
-                    },
-                  };
-
-                  try {
-                    const rzp = new window.Razorpay(options);
-                    rzp.open();
-                  } catch (error) {
-                    console.error("Error initializing Razorpay:", error);
-                  }
-                };
-
-                if (typeof window !== "undefined" && "Razorpay" in window) {
-                  initializeRazorpay();
-                } else {
-                  const script = document.createElement("script");
-                  script.src = "https://checkout.razorpay.com/v1/checkout.js";
-                  script.async = true;
-                  script.onload = initializeRazorpay;
-                  document.body.appendChild(script);
-                }
-              }}
-            >
-              Buy Now
-            </ShimmerButton>
-          </div>
-        </div>
-      </div>
-
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-20">
-        <div className="bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-          <div className="h-6 bg-[#fae3ea] mb-3 flex items-center justify-center">
-            <div className="text-sm text-[#df4271]">
-              Offer ends in {formatTimeLeft()}
-            </div>
-          </div>
-          <div className="flex p-2">
-            <div className="w-[40%] flex flex-col justify-center items-end pr-4">
-              <div className="flex items-center gap-2">
-                <span className="text-xl font-bold text-black-600">₹4,999</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500 line-through">
-                  ₹9,999
-                </span>
-                <span className="text-xs text-black-600">50% off</span>
-              </div>
-            </div>
-            <div className="w-[70%]">
-              <ShimmerButton
-                borderRadius="8px"
-                className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
-                onClick={() => {
                   const initializeRazorpay = () => {
                     const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
 
@@ -936,16 +891,18 @@ export default function RoboticsEngineeringBootcamp() {
 
                     const options = {
                       key: razorpayKey,
-                      amount: 499900,
+                      amount: order.amount,
                       currency: "INR",
-                      name: "Robotics Engineering Bootcamp",
-                      description: "Purchase of Robotics Engineering Bootcamp",
+                      name: "Autonomous Car Course",
+                      description: "Purchase of Autonomous Car Course",
+                      order_id: order.id,
                       handler: function (response: {
                         razorpay_payment_id: string;
                         razorpay_order_id: string;
                         razorpay_signature: string;
                       }) {
                         console.log(response);
+                        setShowThankYouModal(true);
                       },
                       prefill: {
                         name: "",
@@ -974,6 +931,111 @@ export default function RoboticsEngineeringBootcamp() {
                     script.onload = initializeRazorpay;
                     document.body.appendChild(script);
                   }
+                } catch (error) {
+                  console.error("Error purchasing course:", error);
+                }
+              }}
+            >
+              Buy Now
+            </ShimmerButton>
+          </div>
+        </div>
+      </div>
+
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-20">
+        <div className="bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+          <div className="h-6 bg-[#fae3ea] mb-3 flex items-center justify-center">
+            <div className="text-sm text-[#df4271]">
+              Offer ends in {formatTimeLeft()}
+            </div>
+          </div>
+          <div className="flex p-2">
+            <div className="w-[40%] flex flex-col justify-center items-end pr-4">
+              <div className="flex items-center gap-2">
+                <span className="text-xl font-bold text-black-600">₹1,999</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-500 line-through">
+                  ₹5,999
+                </span>
+                <span className="text-xs text-black-600">66% off</span>
+              </div>
+            </div>
+            <div className="w-[70%]">
+              <ShimmerButton
+                borderRadius="8px"
+                className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
+                onClick={async () => {
+                  try {
+                    // First create order
+                    const orderResponse = await fetch('/api/create-order', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json', 
+                      },
+                      body: JSON.stringify({ 
+                        amount: 1999
+                      }),
+                    });
+                    const { order } = await orderResponse.json();
+
+                    if (!order) {
+                      throw new Error('Failed to create order');
+                    }
+
+                    const initializeRazorpay = () => {
+                      const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
+
+                      if (!razorpayKey) {
+                        console.error("Razorpay key is not defined");
+                        return;
+                      }
+
+                      const options = {
+                        key: razorpayKey,
+                        amount: order.amount,
+                        currency: "INR",
+                        name: "Autonomous Car Course",
+                        description: "Purchase of Autonomous Car Course",
+                        order_id: order.id,
+                        handler: function (response: {
+                          razorpay_payment_id: string;
+                          razorpay_order_id: string;
+                          razorpay_signature: string;
+                        }) {
+                          console.log(response);
+                          setShowThankYouModal(true);
+                        },
+                        prefill: {
+                          name: "",
+                          email: "",
+                          contact: "",
+                        },
+                        theme: {
+                          color: "#000000",
+                        },
+                      };
+
+                      try {
+                        const rzp = new window.Razorpay(options);
+                        rzp.open();
+                      } catch (error) {
+                        console.error("Error initializing Razorpay:", error);
+                      }
+                    };
+
+                    if (typeof window !== "undefined" && "Razorpay" in window) {
+                      initializeRazorpay();
+                    } else {
+                      const script = document.createElement("script");
+                      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+                      script.async = true;
+                      script.onload = initializeRazorpay;
+                      document.body.appendChild(script);
+                    }
+                  } catch (error) {
+                    console.error("Error purchasing course:", error);
+                  }
                 }}
               >
                 Buy Now
@@ -982,6 +1044,77 @@ export default function RoboticsEngineeringBootcamp() {
           </div>
         </div>
       </div>
+
+      {showThankYouModal && (
+        <div
+          className="fixed inset-0 backdrop-blur-sm bg-neutral-500 bg-opacity-30 flex items-center justify-center z-50 p-4"
+          onClick={handleCloseThankYouModal}
+        >
+          <div
+            className="bg-white rounded-lg shadow-xl max-w-md w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header with Close Button */}
+            <div className="flex justify-end p-4 pb-0">
+              <button
+                onClick={handleCloseThankYouModal}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <XIcon className="h-6 w-6 cursor-pointer" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="px-8 pb-8 text-center">
+              {/* Success Icon */}
+              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-6">
+                <svg
+                  className="h-8 w-8 text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+
+              {/* Thank You Message */}
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Thank you for joining
+              </h2>
+              <p className="text-gray-600 mb-8">
+                Join our WhatsApp community to know more about the masterclass
+                and get notified when it&apos;s live.
+              </p>
+
+              {/* Buttons */}
+              <div className="space-y-3">
+                <a
+                  href="https://chat.whatsapp.com/HZvLlYGPa6OAVkZ4PDVj3o"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-5 h-5 mr-2"
+                  >
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
+                  Join WhatsApp Community
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

@@ -70,7 +70,7 @@ export default function AutonomousCarMasterclass() {
     }
   };
   useEffect(() => {
-    const endDate = new Date("2025-06-19T14:00:00");
+    const endDate = new Date("2025-07-02T14:00:00");
 
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -872,9 +872,7 @@ export default function AutonomousCarMasterclass() {
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                      amount: 3999,
-                      offer: "offer_QhmFGPFGKvpeWF"
-                      
+                      amount: 3999                      
                     }),
                   });
                   const { order } = await orderResponse.json();
@@ -973,11 +971,10 @@ export default function AutonomousCarMasterclass() {
                     const orderResponse = await fetch('/api/create-order', {
                       method: 'POST',
                       headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json', 
                       },
-                      body: JSON.stringify({
-                        amount: 3999,
-                        offer: "offer_QhmFGPFGKvpeWF"
+                      body: JSON.stringify({ 
+                        amount: 3999
                       }),
                     });
                     const { order } = await orderResponse.json();
