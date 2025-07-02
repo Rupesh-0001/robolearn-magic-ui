@@ -70,7 +70,7 @@ export default function AutonomousCarMasterclass() {
     }
   };
   useEffect(() => {
-    const endDate = new Date("2025-07-02T23:59:59");
+    const endDate = new Date("2025-07-03T11:59:59");
 
     const calculateTimeLeft = () => {
       const now = new Date();
