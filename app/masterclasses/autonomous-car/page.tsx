@@ -11,8 +11,63 @@ import {
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import autonomousCarData from './autonomous-car.json';
 
-export default function AIAgentMasterclass() {
+interface Instructor {
+  name: string;
+  image: string;
+  bio: string;
+  experience: string;
+  learners: string;
+}
+
+interface WhoIsThisFor {
+  title: string;
+  icon: string;
+  description: string;
+}
+
+interface About {
+  description: string;
+  buildLive: string[];
+}
+
+interface Contact {
+  email: string;
+  phone: string;
+  whatsapp: string;
+  whatsappCommunity: string;
+}
+
+interface MasterclassData {
+  id: string;
+  title: string;
+  subtitle: string;
+  date: string;
+  time: string;
+  countdownDate: string;
+  instructor: Instructor;
+  image: string;
+  isFree: boolean;
+  currentPrice: string;
+  originalPrice: string;
+  discount: string;
+  seats: number;
+  participants: number;
+  limitedSeats: boolean;
+  languages: string[];
+  certificate: boolean;
+  highlights: string[];
+  whatYouWillLearn: string[];
+  about: About;
+  whoIsThisFor: WhoIsThisFor[];
+  contact: Contact;
+  avatars: string[];
+}
+
+export default function AutonomousCarMasterclass() {
+  const [data, setData] = useState<MasterclassData | null>(null);
+  const [loading, setLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [showEnrollModal, setShowEnrollModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
@@ -238,9 +293,9 @@ export default function AIAgentMasterclass() {
   // Add countdown state
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
-    hours: 10,
-    minutes: 56,
-    seconds: 8,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   });
 
   // Check if scroll buttons should be visible
@@ -275,55 +330,39 @@ export default function AIAgentMasterclass() {
     }
   };
 
+  useEffect(() => {
+    setData(autonomousCarData);
+    setLoading(false);
+  }, []);
+
   // Add countdown timer effect
   useEffect(() => {
-    const countDownDate = new Date("July 02, 2025 19:00:00").getTime();
-    // Update the countdown every 1 second
+    if (!data) return;
+    const countDownDate = new Date(data.countdownDate).getTime();
     const interval = setInterval(() => {
-      // Get today's date and time
       const now = new Date().getTime();
-
-      // Find the distance between now and the countdown date
       const distance = countDownDate - now;
-
-      // If the countdown is finished, clear the interval
       if (distance < 0) {
         clearInterval(interval);
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
         return;
       }
-
-      // Time calculations for days, hours, minutes and seconds
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      // Update state with new values
       setTimeLeft({ days, hours, minutes, seconds });
     }, 1000);
-
-    // Call once immediately to avoid delay
-    const now = new Date().getTime();
-    const distance = countDownDate - now;
-
-    if (distance >= 0) {
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      setTimeLeft({ days, hours, minutes, seconds });
-    } else {
-      setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-    }
-
-    // Clean up the interval on component unmount
     return () => clearInterval(interval);
-  }, []);
+  }, [data]);
+
+  if (loading || !data) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <span className="text-lg font-semibold">Loading...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 pt-16 mt-6 2xl:pb-8 pb-10">
@@ -335,7 +374,7 @@ export default function AIAgentMasterclass() {
           {/* Left side - Image */}
           <div className="w-full lg:w-1/3 rounded-lg relative bg-[#f8f9fa] mr-4">
             <Image
-              src="/autonomousCarMasterclassTemplate.png"
+              src={data.image}
               alt="Autonomous Car Masterclass"
               className="w-full h-auto object-contain rounded-lg"
               width={500}
@@ -360,8 +399,7 @@ export default function AIAgentMasterclass() {
           {/* Right side - Content */}
           <div className="w-full md:block hidden lg:w-3/5 p-8 rounded-lg shadow-lg border border-gray-200 overflow-hidden">
             <h1 className="text-2xl font-bold mb-4">
-              Build Your First Self-Driving Car Module (Lane Detection & Path
-              Planning in Python)
+              {data.title}
             </h1>
 
             <div className="flex items-center gap-4 mb-6 bg-gray-100 w-fit rounded p-2">
@@ -373,7 +411,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>2nd July, 2025</span>
+                <span>{data.date}</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -384,7 +422,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>7:00 pm to 9:00 pm</span>
+                <span>{data.time}</span>
               </div>
             </div>
 
@@ -419,11 +457,11 @@ export default function AIAgentMasterclass() {
               </ShimmerButton>
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
-                  {[1, 2, 3, 4].map((i) => (
+                  {data.avatars.map((avatar) => (
                     <Image
-                      key={i}
-                      src={`/indianPerson${i}.jpg`}
-                      alt={`Person ${i}`}
+                      key={avatar}
+                      src={avatar}
+                      alt={`Person`}
                       width={64}
                       height={64}
                       quality={100}
@@ -456,7 +494,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  2nd July, 2025
+                  {data.date}
                 </span>
               </div>
 
@@ -470,7 +508,7 @@ export default function AIAgentMasterclass() {
                     height={16}
                   />
                 </div>
-                <span className="text-gray-800 font-medium">7 pm to 9 pm</span>
+                <span className="text-gray-800 font-medium">{data.time}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <div className="text-gray-500 w-6 flex-shrink-0">
@@ -497,18 +535,18 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  100+ participants
+                  {data.participants}+ participants
                 </span>
               </div>
             </div>
             <div className="flex items-center justify-center w-full mt-4">
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
-                  {[1, 2, 3, 4].map((i) => (
+                  {data.avatars.map((avatar) => (
                     <Image
-                      key={i}
-                      src={`/indianPerson${i}.jpg`}
-                      alt={`Person ${i}`}
+                      key={avatar}
+                      src={avatar}
+                      alt={`Person`}
                       width={64}
                       height={64}
                       quality={100}
@@ -528,42 +566,16 @@ export default function AIAgentMasterclass() {
               What You&apos;ll Learn
             </h2>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <li className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
-                <span className="mr-3 mt-1 rounded-full">
-                  <CheckIcon className="h-4 w-4 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  How to build a lane detection system from scratch using only
-                  raw Python + NumPy
-                </span>
-              </li>
-              <li className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
-                <span className="mr-3 mt-1 rounded-full">
-                  <CheckIcon className="h-4 w-4 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Fundamentals of computer vision and image processing
-                  techniques used in FSD systems
-                </span>
-              </li>
-              <li className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
-                <span className="mr-3 mt-1 rounded-full">
-                  <CheckIcon className="h-4 w-4 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Principles of trajectory generation and basic path planning
-                  for vehicle movement
-                </span>
-              </li>
-              <li className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
-                <span className="mr-3 mt-1 rounded-full">
-                  <CheckIcon className="h-4 w-4 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Introduction to deep learning approaches used in Tesla-style
-                  perception pipelines
-                </span>
-              </li>
+              {data.whatYouWillLearn.map((item) => (
+                <li key={item} className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
+                  <span className="mr-3 mt-1 rounded-full">
+                    <CheckIcon className="h-4 w-4 text-black" />
+                  </span>
+                  <span className="text-sm sm:text-base">
+                    {item}
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="block md:hidden">
@@ -585,7 +597,7 @@ export default function AIAgentMasterclass() {
                         height={20}
                       />
                     </div>
-                    <span className="text-gray-800">2nd July, 2025</span>
+                    <span className="text-gray-800">{data.date}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -598,7 +610,7 @@ export default function AIAgentMasterclass() {
                         height={20}
                       />
                     </div>
-                    <span className="text-gray-800">7:00 pm to 9:00 pm</span>
+                    <span className="text-gray-800">{data.time}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -611,7 +623,7 @@ export default function AIAgentMasterclass() {
                         height={20}
                       />
                     </div>
-                    <span className="text-gray-800">Hindi, English</span>
+                    <span className="text-gray-800">{data.languages.join(", ")}</span>
                   </div>
 
                   {/* <div className="flex items-center gap-2">
@@ -648,23 +660,12 @@ export default function AIAgentMasterclass() {
                 <strong>You&apos;ll Build Live:</strong>
               </p>
               <ul className="list-disc list-inside space-y-1 ml-4">
-                <li>
-                  A lane detection module using OpenCV-style operations (without
-                  using OpenCV!)
-                  {!showFullDescription && <span> ...</span>}
-                </li>
-                {showFullDescription && (
-                  <>
-                    <li>A polynomial curve-based path planner</li>
-                    <li>
-                      A working simulation to test your lane-following logic
-                    </li>
-                    <li>
-                      Insights into how neural networks eventually enhance this
-                      base system
-                    </li>
-                  </>
-                )}
+                {data.about.buildLive.map((item) => (
+                  <li key={item}>
+                    {item}
+                    {!showFullDescription && <span> ...</span>}
+                  </li>
+                ))}
               </ul>
             </div>
             <button
@@ -726,7 +727,9 @@ export default function AIAgentMasterclass() {
                     width={32}
                     height={32}
                   />
-                  <span className="text-lg font-bold ml-2">Tech Hobbyists</span>
+                  <span className="text-lg font-bold ml-2">
+                    Tech Hobbyists
+                  </span>
                 </div>
                 <p className="text-gray-600">
                   Build your first autonomous car logic from scratch. No prior
@@ -854,8 +857,8 @@ export default function AIAgentMasterclass() {
               <div className="md:flex md:gap-6">
                 <div className="flex-shrink-0 md:block flex flex-col items-center mb-6 md:mb-0">
                   <Image
-                    src="/instructorImage.png"
-                    alt="Harpreet Singh"
+                    src={data.instructor.image}
+                    alt={data.instructor.name}
                     width={100}
                     height={120}
                     className="rounded-lg"
@@ -864,21 +867,21 @@ export default function AIAgentMasterclass() {
                 <div className="md:flex md:flex-col">
                   <div className="text-center md:text-left">
                     <h3 className="text-lg sm:text-xl font-semibold mb-2">
-                      Harpreet Singh
+                      {data.instructor.name}
                     </h3>
                     <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
                       <ClockIcon className="w-4 h-4 mr-2" />
-                      <strong>5+ Years Experience</strong>
+                      <strong>{data.instructor.experience}</strong>
                     </p>
                     <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
                       <UsersIcon className="w-4 h-4 mr-2" />
-                      <strong>10,000+ Learners</strong>
+                      <strong>{data.instructor.learners}</strong>
                     </p>
                   </div>
                 </div>
               </div>
               <p className="text-sm sm:text-base text-gray-700 pt-1">
-                <strong>Harpreet Singh</strong> is a <strong>Full Self-Driving (FSD) & Robotics Engineer</strong> with <strong>5+ years of expertise</strong> in AI-driven autonomy, specializing in motion planning, computer vision, and simulation, who has <strong>mentored 10,000+ students</strong> globally while founding <strong>two award-winning Robotics/AI startups</strong> recognized by <strong>Startup India and Punjab Government</strong>, combining deep technical knowledge in <strong>AI decision-making and sensor fusion</strong> with a passion for advancing intelligent systems through engineering, education and entrepreneurship.
+                {data.instructor.bio}
               </p>
             </div>
           </div>
@@ -890,21 +893,21 @@ export default function AIAgentMasterclass() {
               <p className="text-sm sm:text-base text-gray-500 md:flex items-center">
                 You can email us at&nbsp;
                 <a
-                  href="mailto:support@robolearn.in"
+                  href={`mailto:${data.contact.email}`}
                   className="text-[#3e48ce] underline"
                 >
-                  support@robolearn.in
+                  {data.contact.email}
                 </a>
                 &nbsp; or contact us on &nbsp;
                 <a
-                  href="tel:+919878555767"
+                  href={`tel:${data.contact.phone}`}
                   className="text-[#3e48ce] underline"
                 >
-                  +91 987 855 5767
+                  {data.contact.phone}
                 </a>
               </p>
               <a
-                href="https://wa.me/919878555767?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Autonomous%20Car%20Masterclass"
+                href={`https://wa.me/${data.contact.whatsapp}?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Autonomous%20Car%20Masterclass`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center mt-4 px-6 py-3 bg-white hover:bg-gray-900 text-gray-900 border border-gray-900 hover:text-white font-medium rounded-lg transition-colors"
@@ -938,7 +941,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">2nd July, 2025</span>
+                  <span className="text-gray-800">{data.date}</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -951,7 +954,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">7:00 pm to 9:00 pm</span>
+                  <span className="text-gray-800">{data.time}</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -964,7 +967,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">Hindi, English</span>
+                  <span className="text-gray-800">{data.languages.join(", ")}</span>
                 </div>
 
                 {/* <div className="flex items-center gap-2">
@@ -1326,7 +1329,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/JjWO0w0JeXt7ZG6MT0UgXj"
+                  href={data.contact.whatsappCommunity}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"

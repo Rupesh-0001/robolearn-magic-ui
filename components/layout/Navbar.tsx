@@ -58,15 +58,15 @@ export function Navbar() {
   };
 
   // Use default values during SSR and initial hydration
-  const logoWidth = mounted && isSmallScreen ? "100" : "150";
-  const logoHeight = mounted && isSmallScreen ? "100" : "150";
+  const logoWidth = "152";
+  const logoHeight = "66.5";
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="max-w-7xl 2xl:max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl 2xl:max-w-[100rem] mx-auto px-3 sm:px-5 lg:px-7">
         <div className="flex items-center justify-between h-16 overflow-hidden">
           <div className="flex-shrink-0">
-            <Link href="/" className="font-bold text-xl">
+            <Link href="/" className="font-bold text-[2rem]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={logoWidth}
@@ -82,12 +82,12 @@ export function Navbar() {
           {/* Desktop Navigation */}
           {isHomePage && (
             <div className="hidden lg:block">
-              <div className="ml-10 flex items-center space-x-4">
+              <div className="ml-8 flex items-center space-x-[1.092rem]">
                 {navItems.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                    className="px-2.5 py-1.5 rounded-md text-[0.92rem] font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
                     onClick={(e) => scrollToSection(e, item.href)}
                   >
                     {item.name}
@@ -97,13 +97,13 @@ export function Navbar() {
                   href="/masterclasses"
                   className={cn(
                     "rounded border border-solid border-transparent transition-colors flex items-center justify-center bg-[#ff4164] text-white gap-2 hover:bg-[#ff1c46]/90 dark:hover:bg-[#ccc] font-medium",
-                    mounted && isSmallScreen ? "text-xs h-8 px-2" : "text-sm h-10 px-3"
+                    mounted && isSmallScreen ? "text-[0.995rem] h-8 px-3" : "text-[0.832rem] h-10 px-4"
                   )}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
+                    width="20"
+                    height="20"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -115,7 +115,7 @@ export function Navbar() {
                     <rect width="7" height="7" x="14" y="3" rx="1"></rect>
                     <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
                   </svg>
-                  Explore Free Masterclass
+                  <span className="leading-none">Explore Free Masterclass</span>
                 </Link>
               </div>
             </div>
@@ -154,12 +154,12 @@ export function Navbar() {
           )}
           id="mobile-menu"
         >
-          <div className="px-2 pt-2 flex flex-col items-center pb-3 space-y-1 sm:px-3">
+          <div className="px-2.5 pt-2 flex flex-col items-center pb-3 space-y-1.5 sm:px-4">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent hover:text-accent-foreground"
+                className="block px-2.5 py-1.5 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground"
                 onClick={(e) => scrollToSection(e, item.href)}
               >
                 {item.name}
@@ -169,14 +169,14 @@ export function Navbar() {
             <Link
               href="/masterclasses"
               className={cn(
-                "px-3 py-2 mt-2 rounded border w-fit border-solid border-transparent transition-colors font-medium text-base bg-[#ff4164] text-white flex gap-2 hover:bg-[#ff1c46]/90"
+                "px-2.5 py-1.5 mt-2 rounded border w-fit border-solid border-transparent transition-colors font-medium text-[0.832rem] bg-[#ff4164] text-white flex gap-2 hover:bg-[#ff1c46]/90"
               )}
               onClick={() => setIsMenuOpen(false)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -188,7 +188,7 @@ export function Navbar() {
                 <rect width="7" height="7" x="14" y="3" rx="1"></rect>
                 <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
               </svg>
-              Explore
+              <span className="leading-none">Explore</span>
             </Link>
           </div>
         </div>
