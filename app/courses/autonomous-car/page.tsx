@@ -16,10 +16,13 @@ import {
   Calendar as AccessIcon,
   Award as CertificateIcon,
   X as XIcon,
+  Play as PlayIcon,
+  Lock as LockIcon,
 } from "lucide-react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -27,9 +30,13 @@ import Image from "next/image";
 import '../../../types/razorpay';
 
 export default function AutonomousCarMasterclass() {
+  const { user, loading } = useAuth();
   const [openLecture, setOpenLecture] = useState<string | null>(null);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [enrollmentLoading, setEnrollmentLoading] = useState(true);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -55,6 +62,36 @@ export default function AutonomousCarMasterclass() {
     window.addEventListener("resize", checkScrollButtons);
     return () => window.removeEventListener("resize", checkScrollButtons);
   }, []);
+
+  // Check enrollment status
+  useEffect(() => {
+    const checkEnrollment = async () => {
+      if (!user) {
+        setIsEnrolled(false);
+        setEnrollmentLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/auth/enrollment?course=Autonomous Car');
+        if (response.ok) {
+          const data = await response.json();
+          setIsEnrolled(data.isEnrolled);
+        } else {
+          setIsEnrolled(false);
+        }
+      } catch (error) {
+        console.error('Error checking enrollment:', error);
+        setIsEnrolled(false);
+      } finally {
+        setEnrollmentLoading(false);
+      }
+    };
+
+    if (!loading) {
+      checkEnrollment();
+    }
+  }, [user, loading]);
   const scroll = (direction: "left" | "right") => {
     if (carouselRef.current) {
       const { clientWidth } = carouselRef.current;
@@ -70,7 +107,7 @@ export default function AutonomousCarMasterclass() {
     }
   };
   useEffect(() => {
-    const endDate = new Date("2025-06-23T14:00:00");
+    const endDate = new Date("2025-07-02T14:00:00");
 
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -110,6 +147,31 @@ export default function AutonomousCarMasterclass() {
     setShowThankYouModal(false);
   };
 
+  const handleCloseVideoModal = () => {
+    setShowVideoModal(false);
+    // Remove hash fragment when closing modal
+    if (typeof window !== 'undefined') {
+      window.history.pushState(null, '', window.location.pathname);
+    }
+  };
+
+  // Handle ESC key to close video modal
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && showVideoModal) {
+        setShowVideoModal(false);
+      }
+    };
+
+    if (showVideoModal) {
+      document.addEventListener('keydown', handleEscKey);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+    };
+  }, [showVideoModal]);
+
   const formatTimeLeft = () => {
     let timeString = "";
     if (timeLeft.days > 0)
@@ -126,9 +188,17 @@ export default function AutonomousCarMasterclass() {
     <main className="container mx-auto px-4 pt-16 mt-6 2xl:pb-8 pb-24">
       <div className="flex flex-col lg:flex-row gap-11">
         <div className="w-full lg:w-7/10">
+          <div className="flex items-center gap-3 mb-4">
           <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit rounded font-semibold">
             AUTONOMOUS CAR COURSE
           </span>
+            {!enrollmentLoading && isEnrolled && (
+              <span className="bg-green-100 text-green-700 px-3 py-1 text-sm rounded font-semibold flex items-center gap-1">
+                <CheckIcon className="h-4 w-4" />
+                Enrolled
+              </span>
+            )}
+          </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">
             Autonomous System Revolution Program
           </h1>
@@ -230,9 +300,16 @@ export default function AutonomousCarMasterclass() {
           </div>
 
           <div className="my-8">
-            <h2 className="text-xl sm:text-2xl font-semibold mb-4">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl sm:text-2xl font-semibold">
               Course Overview
             </h2>
+              {!enrollmentLoading && isEnrolled && (
+                <span className="text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full border border-green-200">
+                  ✓ You have access to all lessons
+                </span>
+              )}
+            </div>
             <div className="p-3">
               <div className="space-y-4">
                 <div
@@ -262,8 +339,28 @@ export default function AutonomousCarMasterclass() {
                   >
                     <ul className="list-disc pl-5 text-sm sm:text-base">
                       <li className="flex items-center py-1">
+                        {isEnrolled ? (
+                          <div className="flex items-center">
+                            <PlayIcon className="h-4 w-4 mr-2 text-green-600" />
+                            <span 
+                              className="cursor-pointer hover:text-blue-600 hover:underline transition-colors text-green-600 font-medium"
+                              onClick={() => {
+                                setShowVideoModal(true);
+                                // Update URL with hash fragment
+                                if (typeof window !== 'undefined') {
+                                  window.history.pushState(null, '', '#overview');
+                                }
+                              }}
+                            >
+                              Overview (Click to Watch)
+                            </span>
+                          </div>
+                        ) : (
+                          <>
                         <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Overview
+                            <span>Overview</span>
+                          </>
+                        )}
                       </li>
                       <li className="flex items-center py-1">
                         <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
@@ -872,9 +969,7 @@ export default function AutonomousCarMasterclass() {
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                      amount: 3999,
-                      offer: "offer_QkJLdojOO1yNIo"
-                      
+                      amount: 3999                      
                     }),
                   });
                   const { order } = await orderResponse.json();
@@ -976,8 +1071,7 @@ export default function AutonomousCarMasterclass() {
                         'Content-Type': 'application/json', 
                       },
                       body: JSON.stringify({ 
-                        amount: 3999,
-                        offer: "offer_QkJLdojOO1yNIo"
+                        amount: 3999
                       }),
                     });
                     const { order } = await orderResponse.json();
@@ -1114,6 +1208,40 @@ export default function AutonomousCarMasterclass() {
                   Join WhatsApp Community
                 </a>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showVideoModal && (
+        <div
+          className="fixed inset-0 bg-black z-50"
+          onClick={handleCloseVideoModal}
+        >
+          <div
+            className="w-full h-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button on left */}
+            <div className="absolute top-6 right-0 p-4 z-10">
+              <button
+                onClick={handleCloseVideoModal}
+                className="text-black hover:text-gray-300 transition-colors bg-black bg-opacity-60 rounded-full p-3 shadow-lg"
+                title="Close video"
+              >
+                <XIcon className="h-6 w-6 cursor-pointer" />
+              </button>
+            </div>
+
+
+            {/* Video Content */}
+            <div className="w-full h-full">
+              <iframe
+                src="https://zoom.us/rec/component-page?eagerLoadZvaPages=sidemenu.billing.plan_management&accessLevel=meeting&action=viewdetailpage&sharelevel=meeting&useWhichPasswd=meeting&requestFrom=pwdCheck&clusterId=aw1&componentName=need-password&meetingId=-WUyMAGwEKy5FxmgGZaB-xmVKW9xGHpooz831ZGWleEq4L_H-ybX_lD89Q2no9Kv.-8Xd5WdDPZ8owZM-&originRequestUrl=https%3A%2F%2Fzoom.us%2Frec%2Fshare%2FKRqa27KCPxP16aG6cVndFRHsXUH2m3XclJpt4NeGqvkjzXoVTxVjyGkQy9GCYTjP.heAdvEZER4518Kx8&utm_source=autonomous_car_course&passcode=n8.M5%3D%231"
+                className="w-full h-full border-0"
+                allowFullScreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              />
             </div>
           </div>
         </div>

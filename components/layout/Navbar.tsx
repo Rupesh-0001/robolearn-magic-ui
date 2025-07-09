@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Menu, X, User, LogOut, BookOpen, HelpCircle, Monitor } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
+import AuthModal from "@/components/ui/AuthModal";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -22,9 +24,17 @@ export function Navbar() {
   const isMediumScreen = useMediaQuery("(max-width: 768px)");
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+  const { user, logout, loading } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
+    if (typeof window !== 'undefined' && window.localStorage.getItem('openAuthModal') === 'true') {
+      setShowAuthModal(true);
+      window.localStorage.removeItem('openAuthModal');
+    }
   }, []);
 
   useEffect(() => {
@@ -62,9 +72,9 @@ export function Navbar() {
   const logoHeight = mounted && isSmallScreen ? "100" : "150";
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="max-w-7xl 2xl:max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 overflow-hidden">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border overflow-visible">
+      <div className="max-w-7xl 2xl:max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8 overflow-visible">
+        <div className="flex items-center justify-between h-16 overflow-visible">
           <div className="flex-shrink-0">
             <Link href="/" className="font-bold text-xl">
               <svg
@@ -120,6 +130,64 @@ export function Navbar() {
               </div>
             </div>
           )}
+
+          {/* Auth Buttons */}
+          <div className="flex items-center space-x-2">
+            {!loading && (
+              <>
+                {user ? (
+                  <div
+                    className="relative"
+                    ref={dropdownRef}
+                    onMouseEnter={() => setDropdownOpen(true)}
+                    onMouseLeave={() => setDropdownOpen(false)}
+                  >
+                    <button
+                      className="w-9 h-9 rounded-full bg-gray-800 text-white flex items-center justify-center text-lg font-bold border-2 border-gray-300 cursor-pointer select-none transition-colors"
+                      aria-label="User menu"
+                      onClick={() => { if (isSmallScreen) setDropdownOpen((open) => !open); }}
+                    >
+                      {user.name?.charAt(0).toUpperCase() || "U"}
+                    </button>
+                    {dropdownOpen && (
+                      <div
+                        className="absolute right-0 top-full w-44 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-[9999]"
+                      >
+                        <Link href="/profile" className="flex items-center gap-2 px-6 py-3 my-1 text-base text-gray-700 hover:bg-black hover:text-white cursor-pointer transition-colors" onClick={() => setDropdownOpen(false)}>
+                          <BookOpen className="w-5 h-5" /> My Courses
+                        </Link>
+                        {/* <Link href="/profile/my-profile" className="flex items-center gap-2 px-6 py-3 my-1 text-base text-gray-700 hover:bg-black hover:text-white cursor-pointer transition-colors" onClick={() => setDropdownOpen(false)}>
+                          <User className="w-5 h-5" /> My Profile
+                        </Link> */}
+                        <Link href="/faq" className="flex items-center gap-2 px-6 py-3 my-1 text-base text-gray-700 hover:bg-black hover:text-white cursor-pointer transition-colors" onClick={() => setDropdownOpen(false)}>
+                          <HelpCircle className="w-5 h-5" /> Help
+                        </Link>
+                        {user.role === 'admin' && (
+                          <Link href="/admin" className="flex items-center gap-2 px-6 py-3 my-1 text-base text-gray-700 hover:bg-black hover:text-white cursor-pointer transition-colors" onClick={() => setDropdownOpen(false)}>
+                            <Monitor className="w-5 h-5" /> Dashboard
+                          </Link>
+                        )}
+                        <button
+                          onClick={() => { logout(); setDropdownOpen(false); }}
+                          className="flex items-center gap-2 w-full text-left px-6 py-3 my-1 text-base text-red-600 hover:bg-black hover:text-white cursor-pointer transition-colors"
+                        >
+                          <LogOut className="w-5 h-5" /> Logout
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setShowAuthModal(true)}
+                    className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                  >
+                    <User className="h-4 w-4" />
+                    <span className="hidden sm:inline">Login</span>
+                  </button>
+                )}
+              </>
+            )}
+          </div>
 
           {/* Mobile and Medium screen menu button */}
           {isHomePage && (
@@ -190,9 +258,51 @@ export function Navbar() {
               </svg>
               Explore
             </Link>
+
+            {/* Mobile Auth Buttons */}
+            {!loading && (
+              <div className="pt-4 border-t border-gray-200">
+                {user ? (
+                  <div className="space-y-2">
+                    <div className="text-sm text-gray-600 text-center">
+                      Welcome, {user.name}
+                    </div>
+                    {user.role === 'admin' && (
+                      <Link
+                        href="/admin"
+                        className="w-full flex items-center justify-center px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-md transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Admin Dashboard
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsMenuOpen(false);
+                      }}
+                      className="w-full flex items-center justify-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="w-full flex items-center justify-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <User className="h-4 w-4" />
+                    <span>Login</span>
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
+      <AuthModal open={showAuthModal} onClose={() => setShowAuthModal(false)} />
     </nav>
   );
 }

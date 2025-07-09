@@ -258,7 +258,7 @@ export default function AIAgentMasterclass() {
   // Add countdown timer effect
   useEffect(() => {
     // Set the date we're counting down to (placeholder date since actual date is TBD)
-    const countDownDate = new Date("June 15, 2025 11:00:00").getTime();
+    const countDownDate = new Date("July 20, 2025 11:00:00").getTime();
 
     // Update the countdown every 1 second
     const interval = setInterval(() => {
@@ -354,7 +354,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>15th June, 2025</span>
+                <span>20th July, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -437,7 +437,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  15th June, 2025
+                  20th July, 2025
                 </span>
               </div>
 
@@ -566,7 +566,7 @@ export default function AIAgentMasterclass() {
                         height={20}
                       />
                     </div>
-                    <span className="text-gray-800">15th June, 2025</span>
+                    <span className="text-gray-800">20th July, 2025</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -917,7 +917,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">15th June 2025</span>
+                  <span className="text-gray-800">20th July 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
