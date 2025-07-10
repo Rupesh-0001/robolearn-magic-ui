@@ -71,7 +71,7 @@ export default function AIAgentMasterclass() {
   };
 
   const validateAge = (age: string) => {
-    const ageRegex = /^\d{1,4}$/;
+    const ageRegex = /^\d{1,3}$/;
     return ageRegex.test(age);
   };
 
@@ -104,7 +104,7 @@ export default function AIAgentMasterclass() {
       if (!value.trim()) {
         setFormErrors((prev) => ({ ...prev, age: "Age is required" }));
       } else if (!validateAge(value)) {
-        setFormErrors((prev) => ({ ...prev, age: "Please enter a valid year" }));
+        setFormErrors((prev) => ({ ...prev, age: "Please enter a valid age." }));
       }
     } else if (name === "phone") {
       const cleanPhone = value.replace(/\D/g, ""); // Remove non-digits
@@ -157,7 +157,7 @@ export default function AIAgentMasterclass() {
     if (!formData.age.trim()) {
       errors.age = "Age is required";
     } else if (!validateAge(formData.age)) {
-      errors.age = "Please enter a valid year";
+      errors.age = "Please enter a valid age.";
     }
 
     if (!formData.phone.trim()) {
