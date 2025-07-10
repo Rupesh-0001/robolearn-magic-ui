@@ -11,6 +11,7 @@ import {
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import aiAgentData from './ai-agent.json';
 
 interface Instructor {
   name: string;
@@ -65,8 +66,8 @@ interface AiAgentData {
 }
 
 export default function AIAgentMasterclass() {
-  const [data, setData] = useState<AiAgentData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<AiAgentData | null>(aiAgentData);
+  const [loading, setLoading] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [showEnrollModal, setShowEnrollModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
@@ -308,15 +309,6 @@ export default function AIAgentMasterclass() {
       setTimeout(checkScrollButtons, 400);
     }
   };
-
-  useEffect(() => {
-    fetch("/masterclasses/ai-agent/ai-agent.json")
-      .then((res) => res.json())
-      .then((json) => {
-        setData(json);
-        setLoading(false);
-      });
-  }, []);
 
   // Add countdown timer effect
   useEffect(() => {

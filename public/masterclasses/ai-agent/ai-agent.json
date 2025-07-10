@@ -1,0 +1,75 @@
+{
+  "id": "ai-agent",
+  "title": "Build Your First AI Agent (Tool-Using & Reasoning Agent in Python)",
+  "subtitle": "Build Your First AI Agent From Scratch",
+  "date": "20th July, 2025",
+  "time": "11:00 AM to 1:00 PM IST",
+  "countdownDate": "2025-07-20T11:00:00+05:30",
+  "instructor": {
+    "name": "Harpreet Singh",
+    "image": "/instructorImage.png",
+    "bio": "Harpreet Singh is a Full Self-Driving (FSD) & Robotics Engineer with 5+ years of expertise in AI-driven autonomy, specializing in motion planning, computer vision, and simulation, who has mentored 10,000+ students globally while founding two award-winning Robotics/AI startups recognized by Startup India and Punjab Government, combining deep technical knowledge in AI decision-making and sensor fusion with a passion for advancing intelligent systems through engineering, education and entrepreneurship.",
+    "experience": "5+ Years Experience",
+    "learners": "10,000+ Learners"
+  },
+  "image": "/AIMasterClass.png",
+  "isFree": true,
+  "currentPrice": "FREE",
+  "originalPrice": "₹399",
+  "discount": "100% OFF",
+  "seats": 100,
+  "participants": 100,
+  "limitedSeats": true,
+  "languages": ["Hindi", "English"],
+  "certificate": true,
+  "highlights": [
+    "Live Masterclass",
+    "Certificate of Participation",
+    "Beginner Friendly",
+    "100+ participants"
+  ],
+  "whatYouWillLearn": [
+    "How to Build Your First AI Agent using raw Python - no frameworks!",
+    "Core principles of agent architecture: memory, reasoning, and tool-use",
+    "Fundamentals of retrieval-augmented generation (RAG) and semantic search",
+    "A behind-the-scenes look at modern LLM-based agent systems like AutoGPT, LangChain, and CrewAI"
+  ],
+  "about": {
+    "description": "This free live webinar gives you real, hands-on experience with cutting-edge AI agent development. You won't just hear about agents - you'll build one from scratch using simple code and powerful logic.",
+    "buildLive": [
+      "A basic tool-using agent that fetches weather or math results",
+      "A memory-powered system that can recall and reason over past inputs",
+      "A simple semantic search function using vector similarity",
+      "A command-line chatbot with early steps of autonomy"
+    ]
+  },
+  "whoIsThisFor": [
+    {
+      "title": "College Students",
+      "icon": "/college-student.svg",
+      "description": "Start building real AI systems, not just theory. Perfect for engineering, computer science, or AI/ML students."
+    },
+    {
+      "title": "Developers",
+      "icon": "/working-engineer.svg",
+      "description": "Learn how agents, tools, and LLMs work together. Ideal for software engineers looking to build AI-powered applications."
+    },
+    {
+      "title": "Career Changers & Founders",
+      "icon": "/startup-founder.svg",
+      "description": "Break into the red-hot field of autonomous AI systems. Prototype and launch your own AI agents."
+    }
+  ],
+  "contact": {
+    "email": "support@robolearn.in",
+    "phone": "+91 987 855 5767",
+    "whatsapp": "https://wa.me/919878555767?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20AI%20Agent%20Masterclass",
+    "whatsappCommunity": "https://chat.whatsapp.com/Jpqsq0a40GtBsikNysXsDD"
+  },
+  "avatars": [
+    "/indianPerson1.jpg",
+    "/indianPerson2.jpg",
+    "/indianPerson3.jpg",
+    "/indianPerson4.jpg"
+  ]
+} 

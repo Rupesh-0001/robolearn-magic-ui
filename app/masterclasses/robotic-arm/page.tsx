@@ -11,6 +11,7 @@ import {
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import roboticArmData from './robotic-arm.json';
 
 interface Instructor {
   name: string;
@@ -88,8 +89,8 @@ export default function RoboticArmMasterclass() {
     message: "",
     type: "success",
   });
-  const [data, setData] = useState<MasterclassData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<MasterclassData | null>(roboticArmData);
+  const [loading, setLoading] = useState(false);
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
@@ -358,15 +359,6 @@ export default function RoboticArmMasterclass() {
 
     // Clean up the interval on component unmount
     return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    fetch('/masterclasses/robotic-arm/robotic-arm.json')
-      .then((res) => res.json())
-      .then((json) => {
-        setData(json);
-        setLoading(false);
-      });
   }, []);
 
   return (
