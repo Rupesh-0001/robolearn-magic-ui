@@ -332,7 +332,7 @@ export default function AIAgentMasterclass() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
-      let utmMedium = params.get("utm_medium");
+      const utmMedium = params.get("utm_medium");
 
       // Check if we already have a saved source
       let savedSource = localStorage.getItem("original_utm_medium");
