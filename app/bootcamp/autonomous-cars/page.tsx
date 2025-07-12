@@ -70,7 +70,7 @@ export default function AutonomousCarMasterclass() {
     }
   };
   useEffect(() => {
-    const endDate = new Date("2025-07-03T11:59:59");
+    const endDate = new Date("2025-07-13T23:59:59");
 
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -872,7 +872,7 @@ export default function AutonomousCarMasterclass() {
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                      amount: 1999                      
+                      amount: 1999                  
                     }),
                   });
                   const { order } = await orderResponse.json();
@@ -1095,7 +1095,7 @@ export default function AutonomousCarMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/HZvLlYGPa6OAVkZ4PDVj3o"
+                  href="https://chat.whatsapp.com/Cmi9CaqJToy3mOnqTdqxha?"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
