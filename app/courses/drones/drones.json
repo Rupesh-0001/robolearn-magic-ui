@@ -1,0 +1,91 @@
+{
+  "id": "drones",
+  "title": "Advanced Robotics Bootcamp",
+  "subtitle": "ROBOTICS COURSE",
+  "image": "/robotMasterClass.png",
+  "level": "Advanced Level",
+  "duration": "2 Months Mentorship",
+  "languages": ["Hindi", "English"],
+  "access": "Lifetime Access",
+  "certificate": "Certificate of Completion",
+  "learners": 275,
+  "currentPrice": 4999,
+  "originalPrice": 9999,
+  "discount": "50% off",
+  "offerEnds": "2025-07-21T11:59:59",
+  "details": [
+    "Build complete robotic systems from perception to manipulation using ROS2, Gazebo, and Python",
+    "Master computer vision, SLAM, and navigation algorithms for mobile robots",
+    "Implement robotic arm control, inverse kinematics, and manipulation planning",
+    "Design AI-powered robots with deep learning for object recognition and decision making"
+  ],
+  "overview": [
+    {
+      "id": "intro",
+      "title": "Introduction to Robotics",
+      "points": [
+        "Robotics fundamentals and applications",
+        "Hardware components and sensors",
+        "ROS2 ecosystem and architecture"
+      ]
+    },
+    {
+      "id": "perception",
+      "title": "Perception & Computer Vision",
+      "points": [
+        "Camera calibration and stereo vision",
+        "Object detection and tracking",
+        "LiDAR processing and point clouds"
+      ]
+    },
+    {
+      "id": "navigation",
+      "title": "Navigation & SLAM",
+      "points": [
+        "Simultaneous Localization and Mapping",
+        "Path planning algorithms",
+        "Obstacle avoidance and navigation"
+      ]
+    },
+    {
+      "id": "manipulation",
+      "title": "Manipulation & Control",
+      "points": [
+        "Forward and inverse kinematics",
+        "Motion planning and control",
+        "Grasping and manipulation strategies"
+      ]
+    }
+  ],
+  "about": "This is a comprehensive, hands-on program to help you build advanced robotic systems from the ground up. With real-world projects, expert mentorship, and industry-standard tools, you'll develop the skills needed for a career in robotics engineering.",
+  "projects": [
+    "Mobile Robot with SLAM Navigation",
+    "6-DOF Robotic Arm with Pick & Place",
+    "Computer Vision Object Recognition System",
+    "Autonomous Drone with Path Planning"
+  ],
+  "whoIsThisFor": [
+    {
+      "title": "Engineering Students",
+      "icon": "/college-student.svg",
+      "description": "Perfect for students in mechanical, electrical, or computer science engineering who want hands-on robotics experience."
+    },
+    {
+      "title": "Software Engineers",
+      "icon": "/working-engineer.svg",
+      "description": "Ideal for developers looking to transition into robotics and automation engineering roles."
+    },
+    {
+      "title": "Robotics Enthusiasts",
+      "icon": "/startup-founder.svg",
+      "description": "Build your first robot from scratch. No prior robotics experience needed - just passion for technology."
+    }
+  ],
+  "instructor": {
+    "name": "Harpreet Singh",
+    "image": "/instructorImage.png",
+    "bio": "Harpreet Singh is a Full Self-Driving (FSD) & Robotics Engineer with 5+ years of expertise in AI-driven autonomy, specializing in motion planning, computer vision, and simulation, who has mentored 10,000+ students globally while founding two award-winning Robotics/AI startups recognized by Startup India and Punjab Government, combining deep technical knowledge in AI decision-making and sensor fusion with a passion for advancing intelligent systems through engineering, education and entrepreneurship.",
+    "experience": "5+ Years Experience",
+    "learners": "10,000+ Learners"
+  }
+} 

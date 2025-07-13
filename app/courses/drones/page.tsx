@@ -24,6 +24,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import '../../../types/razorpay';
+import dronesData from './drones.json';
 
 export default function RoboticsMasterclass() {
   const [openLecture, setOpenLecture] = useState<string | null>(null);
@@ -118,22 +119,22 @@ export default function RoboticsMasterclass() {
       <div className="flex flex-col lg:flex-row gap-11">
         <div className="w-full lg:w-7/10">
           <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit rounded font-semibold">
-            ROBOTICS COURSE
+            {dronesData.subtitle}
           </span>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">
-            Advanced Robotics Bootcamp
+            {dronesData.title}
           </h1>
           <div className="mb-8 sm:mb-12">
             <Image
-              src="/robotMasterClass.png"
-              alt="Robotics"
+              src={dronesData.image}
+              alt={dronesData.title}
               className="rounded-lg shadow-lg w-full h-auto"
               width={800}
               height={450}
             />
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-8 sm:mb-12 mt-4 sm:mt-6 lg:hidden block">
-            Advanced Robotics Bootcamp
+            {dronesData.title}
           </h1>
 
           <div className="lg:hidden my-8">
@@ -146,31 +147,31 @@ export default function RoboticsMasterclass() {
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                     <LevelIcon className="w-3 h-3 text-gray-700" />
                   </div>
-                  <span>Advanced Level</span>
+                  <span>{dronesData.level}</span>
                 </li>
                 <li className="flex items-center text-sm sm:text-base">
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                     <DurationIcon className="w-3 h-3 text-gray-700" />
                   </div>
-                  <span>2 Months Mentorship</span>
+                  <span>{dronesData.duration}</span>
                 </li>
                 <li className="flex items-center text-sm sm:text-base">
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                     <LanguageIcon className="w-3 h-3 text-gray-700" />
                   </div>
-                  <span>Hindi, English</span>
+                  <span>{dronesData.languages.join(", ")}</span>
                 </li>
                 <li className="flex items-center text-sm sm:text-base">
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                     <AccessIcon className="w-3 h-3 text-gray-700" />
                   </div>
-                  <span>Lifetime Access</span>
+                  <span>{dronesData.access}</span>
                 </li>
                 <li className="flex items-center text-sm sm:text-base">
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3">
                     <CertificateIcon className="w-3 h-3 text-gray-700" />
                   </div>
-                  <span>Certificate of Completion</span>
+                  <span>{dronesData.certificate}</span>
                 </li>
               </ul>
             </div>
@@ -181,42 +182,14 @@ export default function RoboticsMasterclass() {
               What You&apos;ll Learn
             </h2>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <li className="flex items-start">
-                <span className="mr-3 mt-1 bg-blue-200 rounded-full p-1">
-                  <CheckIcon className="h-3 w-3 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Build complete robotic systems from perception to manipulation
-                  using ROS2, Gazebo, and Python
-                </span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 mt-1 bg-blue-200 rounded-full p-1">
-                  <CheckIcon className="h-3 w-3 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Master computer vision, SLAM, and navigation algorithms for
-                  mobile robots
-                </span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 mt-1 bg-blue-200 rounded-full p-1">
-                  <CheckIcon className="h-3 w-3 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Implement robotic arm control, inverse kinematics, and
-                  manipulation planning
-                </span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 mt-1 bg-blue-200 rounded-full p-1">
-                  <CheckIcon className="h-3 w-3 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Design AI-powered robots with deep learning for object
-                  recognition and decision making
-                </span>
-              </li>
+              {dronesData.details.map((item, idx) => (
+                <li className="flex items-start" key={idx}>
+                  <span className="mr-3 mt-1 bg-blue-200 rounded-full p-1">
+                    <CheckIcon className="h-3 w-3 text-black" />
+                  </span>
+                  <span className="text-sm sm:text-base">{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -226,170 +199,28 @@ export default function RoboticsMasterclass() {
             </h2>
             <div className="p-3">
               <div className="space-y-4">
-                <div
-                  className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}
-                >
-                  <button
-                    className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
-                      openLecture === "intro" ? "text-blue-600" : ""
-                    } cursor-pointer rounded-md ${
-                      openLecture === "intro" ? "bg-blue-100" : ""
-                    }`}
-                    onClick={() => toggleLecture("intro")}
-                  >
-                    <span className="text-sm sm:text-base">
-                      1. Introduction to Robotics
-                    </span>
-                    {openLecture === "intro" ? (
-                      <ChevronUpIcon className="h-5 w-5" />
-                    ) : (
-                      <ChevronDownIcon className="h-5 w-5" />
-                    )}
-                  </button>
-                  <div
-                    className={`px-4 py-2 ${
-                      openLecture === "intro" ? "" : "hidden"
-                    }`}
-                  >
-                    <ul className="list-disc pl-5 text-sm sm:text-base">
-                      <li className="flex items-center py-1">
-                        <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Robotics fundamentals and applications
-                      </li>
-                      <li className="flex items-center py-1">
-                        <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Hardware components and sensors
-                      </li>
-                      <li className="flex items-center py-1">
-                        <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        ROS2 ecosystem and architecture
-                      </li>
-                    </ul>
+                {dronesData.overview.map((section) => (
+                  <div key={section.id} className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}>
+                    <button
+                      className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center cursor-pointer rounded-md`}
+                      onClick={() => toggleLecture(section.id)}
+                    >
+                      <span className="text-sm sm:text-base">{section.title}</span>
+                      {openLecture === section.id ? (
+                        <ChevronUpIcon className="h-5 w-5" />
+                      ) : (
+                        <ChevronDownIcon className="h-5 w-5" />
+                      )}
+                    </button>
+                    <div className={`px-4 py-2 ${openLecture === section.id ? "" : "hidden"}`}>
+                      <ul className="list-disc pl-5 text-sm sm:text-base">
+                        {section.points.map((point, i) => (
+                          <li className="flex items-center py-1" key={i}>{point}</li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                </div>
-                <div
-                  className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}
-                >
-                  <button
-                    className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
-                      openLecture === "perception" ? "text-blue-600" : ""
-                    } cursor-pointer rounded-md ${
-                      openLecture === "perception" ? "bg-blue-100" : ""
-                    }`}
-                    onClick={() => toggleLecture("perception")}
-                  >
-                    <span className="text-sm sm:text-base">
-                      2. Robot Perception and Vision
-                    </span>
-                    {openLecture === "perception" ? (
-                      <ChevronUpIcon className="h-5 w-5" />
-                    ) : (
-                      <ChevronDownIcon className="h-5 w-5" />
-                    )}
-                  </button>
-                  <div
-                    className={`px-4 py-2 ${
-                      openLecture === "perception" ? "" : "hidden"
-                    }`}
-                  >
-                    <ul className="list-disc pl-5 text-sm sm:text-base">
-                      <li className="flex items-center py-1">
-                        <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Camera calibration and stereo vision
-                      </li>
-                      <li className="flex items-center py-1">
-                        <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Object detection and tracking
-                      </li>
-                      <li className="flex items-center py-1">
-                        <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        LiDAR processing and point clouds
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div
-                  className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}
-                >
-                  <button
-                    className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
-                      openLecture === "navigation" ? "text-blue-600" : ""
-                    } cursor-pointer rounded-md ${
-                      openLecture === "navigation" ? "bg-blue-100" : ""
-                    }`}
-                    onClick={() => toggleLecture("navigation")}
-                  >
-                    <span className="text-sm sm:text-base">
-                      3. Navigation and SLAM
-                    </span>
-                    {openLecture === "navigation" ? (
-                      <ChevronUpIcon className="h-5 w-5" />
-                    ) : (
-                      <ChevronDownIcon className="h-5 w-5" />
-                    )}
-                  </button>
-                  <div
-                    className={`px-4 py-2 ${
-                      openLecture === "navigation" ? "" : "hidden"
-                    }`}
-                  >
-                    <ul className="list-disc pl-5 text-sm sm:text-base">
-                      <li className="flex items-center py-1">
-                        <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Simultaneous Localization and Mapping
-                      </li>
-                      <li className="flex items-center py-1">
-                        <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Path planning algorithms
-                      </li>
-                      <li className="flex items-center py-1">
-                        <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Obstacle avoidance and navigation
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div
-                  className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}
-                >
-                  <button
-                    className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
-                      openLecture === "manipulation" ? "text-blue-600" : ""
-                    } cursor-pointer rounded-md ${
-                      openLecture === "manipulation" ? "bg-blue-100" : ""
-                    }`}
-                    onClick={() => toggleLecture("manipulation")}
-                  >
-                    <span className="text-sm sm:text-base">
-                      4. Robotic Manipulation
-                    </span>
-                    {openLecture === "manipulation" ? (
-                      <ChevronUpIcon className="h-5 w-5" />
-                    ) : (
-                      <ChevronDownIcon className="h-5 w-5" />
-                    )}
-                  </button>
-                  <div
-                    className={`px-4 py-2 ${
-                      openLecture === "manipulation" ? "" : "hidden"
-                    }`}
-                  >
-                    <ul className="list-disc pl-5 text-sm sm:text-base">
-                      <li className="flex items-center py-1">
-                        <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Forward and inverse kinematics
-                      </li>
-                      <li className="flex items-center py-1">
-                        <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Motion planning and control
-                      </li>
-                      <li className="flex items-center py-1">
-                        <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Grasping and manipulation strategies
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -399,86 +230,19 @@ export default function RoboticsMasterclass() {
               About the Bootcamp
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
-              <p className="mb-4">
-                This is a comprehensive, hands-on program to help you build
-                advanced robotic systems from the ground up. With real-world
-                projects, expert mentorship, and industry-standard tools,
-                you&apos;ll develop the skills needed for a career in robotics
-                engineering.
-                {!showFullDescription && <span> ...</span>}
-              </p>
+              <p className="mb-4">{dronesData.about}{!showFullDescription && <span> ...</span>}</p>
               {showFullDescription && (
                 <>
-                  <div className="mb-4">
-                    <strong className="text-lg font-semibold">
-                      Top Projects You Will Build:
-                    </strong>
-                    <ul className="list-none mt-4 space-y-1">
-                      <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
-                          ✅
-                        </span>
+                  <strong className="text-lg font-semibold">Top Projects You'll Build:</strong>
+                  <ul className="list-none mt-4 space-y-1">
+                    {dronesData.projects.map((project, idx) => (
+                      <li className="flex items-center" key={idx}>
+                        <span className="hidden sm:inline text-green-500 mr-2">✅</span>
                         <span className="sm:hidden text-black mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          Mobile Robot with SLAM Navigation
-                        </span>
+                        <span className="text-sm sm:text-base">{project}</span>
                       </li>
-                      <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
-                          ✅
-                        </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          6-DOF Robotic Arm with Pick & Place
-                        </span>
-                      </li>
-                      <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
-                          ✅
-                        </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          Computer Vision Object Recognition System
-                        </span>
-                      </li>
-                      <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
-                          ✅
-                        </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          Autonomous Drone with Path Planning
-                        </span>
-                      </li>
-                      <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
-                          ✅
-                        </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          Multi-Robot Coordination System
-                        </span>
-                      </li>
-                      <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
-                          ✅
-                        </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          AI-Powered Service Robot
-                        </span>
-                      </li>
-                      <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
-                          ✅
-                        </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          Industrial Automation System
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
+                    ))}
+                  </ul>
                 </>
               )}
             </div>
