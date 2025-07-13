@@ -11,6 +11,59 @@ import {
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import roboticArmData from './robotic-arm.json';
+
+interface Instructor {
+  name: string;
+  image: string;
+  bio: string;
+  experience: string;
+  learners: string;
+}
+
+interface WhoIsThisFor {
+  title: string;
+  icon: string;
+  description: string;
+}
+
+interface About {
+  description: string;
+  buildLive: string[];
+}
+
+interface Contact {
+  email: string;
+  phone: string;
+  whatsapp: string;
+  whatsappCommunity: string;
+}
+
+interface MasterclassData {
+  id: string;
+  title: string;
+  subtitle: string;
+  date: string;
+  time: string;
+  countdownDate: string;
+  instructor: Instructor;
+  image: string;
+  isFree: boolean;
+  currentPrice: string;
+  originalPrice: string;
+  discount: string;
+  seats: number;
+  participants: number;
+  limitedSeats: boolean;
+  languages: string[];
+  certificate: boolean;
+  highlights: string[];
+  whatYouWillLearn: string[];
+  about: About;
+  whoIsThisFor: WhoIsThisFor[];
+  contact: Contact;
+  avatars: string[];
+}
 
 export default function RoboticArmMasterclass() {
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -36,6 +89,8 @@ export default function RoboticArmMasterclass() {
     message: "",
     type: "success",
   });
+  const [data, setData] = useState<MasterclassData | null>(roboticArmData);
+  const [loading, setLoading] = useState(false);
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
@@ -341,7 +396,7 @@ export default function RoboticArmMasterclass() {
           {/* Right side - Content */}
           <div className="w-full md:block hidden lg:w-3/5 p-8 rounded-lg shadow-lg border border-gray-200 overflow-hidden">
             <h1 className="text-2xl font-bold mb-4">
-              Build Your First Robotic Arm (Simulation + Kinematics with Python)
+              {data?.title}
             </h1>
 
             <div className="flex items-center gap-4 mb-6 bg-gray-100 w-fit rounded p-2">
@@ -353,7 +408,7 @@ export default function RoboticArmMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>20th July, 2025</span>
+                <span>{loading || !data ? "--" : data.date}</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -364,14 +419,14 @@ export default function RoboticArmMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>7:00 PM to 9:00 PM IST</span>
+                <span>{loading || !data ? "--" : data.time}</span>
               </div>
             </div>
 
             <div className="flex items-center gap-2 mb-6">
-              <span className="text-2xl font-bold">FREE</span>
-              <span className="text-gray-500 line-through">₹399</span>
-              <span className="text-gray-500">(100% OFF)</span>
+              <span className="text-2xl font-bold">{loading || !data ? "--" : (data.isFree ? "FREE" : `₹${data.currentPrice}`)}</span>
+              <span className="text-gray-500 line-through">{loading || !data ? "--" : `₹${data.originalPrice}`}</span>
+              <span className="text-gray-500">{loading || !data ? "" : `(${data.discount} OFF)`}</span>
             </div>
 
             <div className="flex items-center">
@@ -399,11 +454,13 @@ export default function RoboticArmMasterclass() {
               </ShimmerButton>
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
-                  {[1, 2, 3, 4].map((i) => (
+                  {loading || !data ? [1,2,3,4].map((i) => (
+                    <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-gray-200" />
+                  )) : data.avatars.slice(0,4).map((avatar, i) => (
                     <Image
                       key={i}
-                      src={`/indianPerson${i}.jpg`}
-                      alt={`Person ${i}`}
+                      src={avatar}
+                      alt={`Person ${i+1}`}
                       width={64}
                       height={64}
                       quality={100}
@@ -411,10 +468,10 @@ export default function RoboticArmMasterclass() {
                     />
                   ))}
                   <div className="w-8 h-8 rounded-full border-2 border-white bg-primary text-white text-xs font-semibold flex items-center justify-center">
-                    +50
+                    +{loading || !data ? "--" : data.participants - 4}
                   </div>
                 </div>
-                <span className="text-[#df4271]">Limited Seats</span>
+                <span className="text-[#df4271]">{loading || !data ? "--" : (data.limitedSeats ? "Limited Seats" : "Seats Available")}</span>
               </div>
             </div>
           </div>
@@ -508,41 +565,19 @@ export default function RoboticArmMasterclass() {
               What You&apos;ll Learn
             </h2>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <li className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
-                <span className="mr-3 mt-1 rounded-full">
-                  <CheckIcon className="h-4 w-4 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  How to build and simulate your first robotic arm - from
-                  scratch
-                </span>
-              </li>
-              <li className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
-                <span className="mr-3 mt-1 rounded-full">
-                  <CheckIcon className="h-4 w-4 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Core principles of robot architecture: joints, links, motion
-                  control
-                </span>
-              </li>
-              <li className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
-                <span className="mr-3 mt-1 rounded-full">
-                  <CheckIcon className="h-4 w-4 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Fundamentals of forward & inverse kinematics
-                </span>
-              </li>
-              <li className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
-                <span className="mr-3 mt-1 rounded-full">
-                  <CheckIcon className="h-4 w-4 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  A behind-the-scenes look at real-world robotic control systems
-                  in industry
-                </span>
-              </li>
+              {(loading || !data ? [
+                "Loading...",
+                "Loading...",
+                "Loading...",
+                "Loading..."
+              ] : (data?.whatYouWillLearn ?? [])).map((item, idx) => (
+                <li key={idx} className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
+                  <span className="mr-3 mt-1 rounded-full">
+                    <CheckIcon className="h-4 w-4 text-black" />
+                  </span>
+                  <span className="text-sm sm:text-base">{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="block md:hidden">
@@ -619,39 +654,15 @@ export default function RoboticArmMasterclass() {
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
               <p className="mb-4">
-                This <strong>free live webinar</strong> gives you a real,
-                hands-on experience in modern robotics. You won&apos;t just
-                watch - you&apos;ll <strong>build a robotic arm</strong>{" "}
-                step-by-step, understand its math, and simulate its motion using
-                Python and open-source tools.
+                {loading || !data ? "Loading..." : data.about.description}
               </p>
               <p className="mb-2">
                 <strong>🚀 You&apos;ll Build Live:</strong>
               </p>
               <ul className="list-disc list-inside space-y-1 ml-4">
-                <li>
-                  🔩 A 3-DOF robotic arm (links + joints)
-                  {!showFullDescription && <span> ...</span>}
-                </li>
-                {showFullDescription && (
-                  <>
-                    <li>
-                      📐 A working forward kinematics system to compute
-                      end-effector position
-                    </li>
-                    <li>
-                      🔄 An inverse kinematics module to reach target points
-                    </li>
-                    <li>
-                      🧪 Live robotic arm simulation using open-source tools
-                      like PyBullet or CoppeliaSim
-                    </li>
-                    <li>
-                      🎮 Command-line interface to control joint angles and
-                      target points
-                    </li>
-                  </>
-                )}
+                {(loading || !data ? ["Loading..."] : (data?.about?.buildLive ?? [])).map((item, idx) => (
+                  <li key={idx}>{item}{!showFullDescription && idx === 0 && ((data?.about?.buildLive?.length ?? 0) > 1) && <span> ...</span>}</li>
+                ))}
               </ul>
             </div>
             <button
@@ -835,8 +846,8 @@ export default function RoboticArmMasterclass() {
               <div className="md:flex md:gap-6">
                 <div className="flex-shrink-0 md:block flex flex-col items-center mb-6 md:mb-0">
                   <Image
-                    src="/instructorImage.png"
-                    alt="Harpreet Singh"
+                    src={loading || !data ? "/instructorImage.png" : data.instructor.image}
+                    alt={loading || !data ? "Instructor" : data.instructor.name}
                     width={100}
                     height={120}
                     className="rounded-lg"
@@ -845,21 +856,21 @@ export default function RoboticArmMasterclass() {
                 <div className="md:flex md:flex-col">
                   <div className="text-center md:text-left">
                     <h3 className="text-lg sm:text-xl font-semibold mb-2">
-                      Harpreet Singh
+                      {loading || !data ? "Loading..." : data.instructor.name}
                     </h3>
                     <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
                       <ClockIcon className="w-4 h-4 mr-2" />
-                      <strong>5+ Years Experience</strong>
+                      <strong>{loading || !data ? "--" : data.instructor.experience}</strong>
                     </p>
                     <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
                       <UsersIcon className="w-4 h-4 mr-2" />
-                      <strong>10,000+ Learners</strong>
+                      <strong>{loading || !data ? "--" : data.instructor.learners}</strong>
                     </p>
                   </div>
                 </div>
               </div>
               <p className="text-sm sm:text-base text-gray-700 pt-1">
-                <strong>Harpreet Singh</strong> is a <strong>Full Self-Driving (FSD) & Robotics Engineer</strong> with <strong>5+ years of expertise</strong> in AI-driven autonomy, specializing in motion planning, computer vision, and simulation, who has <strong>mentored 10,000+ students</strong> globally while founding <strong>two award-winning Robotics/AI startups</strong> recognized by <strong>Startup India and Punjab Government</strong>, combining deep technical knowledge in <strong>AI decision-making and sensor fusion</strong> with a passion for advancing intelligent systems through engineering, education and entrepreneurship.
+                {loading || !data ? "Loading..." : data.instructor.bio}
               </p>
             </div>
           </div>

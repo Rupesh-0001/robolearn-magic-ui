@@ -1,0 +1,85 @@
+{
+  "id": "ai-agent",
+  "title": "Build a Full Agentic System",
+  "subtitle": "AI AGENT BOOTCAMP",
+  "image": "/AIMasterClass.png",
+  "level": "Beginner to Advanced",
+  "duration": "8 Weeks Self-paced",
+  "languages": ["Hindi", "English"],
+  "access": "Lifetime Access",
+  "certificate": "Industry-recognized Certificate",
+  "learners": 127,
+  "currentPrice": 4999,
+  "originalPrice": 9999,
+  "discount": "50% off",
+  "offerEnds": "2025-07-21T11:59:59",
+  "details": [
+    "Build full AI agents with perception, memory, reasoning, and planning",
+    "Master the stack: embedding search, tool use, RAG, and LangGraph",
+    "Learn to simulate autonomous agents that interact with APIs, documents, and humans",
+    "Design your own Tesla-style AI-first planning system — but for general-purpose reasoning"
+  ],
+  "overview": [
+    {
+      "id": "intro",
+      "title": "Introduction to AI Agents",
+      "points": [
+        "Agent fundamentals and architecture",
+        "Reflex agents and rule engines",
+        "Setting up development environment"
+      ]
+    },
+    {
+      "id": "tools",
+      "title": "Tool-Using Agents",
+      "points": [
+        "CLI agent development",
+        "Function calling and tool integration",
+        "API interactions and data processing"
+      ]
+    },
+    {
+      "id": "memory",
+      "title": "Memory-Augmented Agents",
+      "points": [
+        "Embedding search and FAISS",
+        "RAG (Retrieval Augmented Generation)",
+        "Memory-augmented assistants"
+      ]
+    }
+  ],
+  "about": "A complete, industry-level AI Agent Development Program — from zero to fully autonomous LLM-powered systems. You'll go from understanding basic logic to deploying agents that act independently using tools, memory, and reasoning.",
+  "projects": [
+    "Reflex Agent + Rule Engine (Level 1)",
+    "Tool-Using CLI Agent (Level 2)",
+    "Embedding Search + Retrieval Bot (Level 3)",
+    "Memory-Augmented Assistant (Level 4)",
+    "LangChain Agent with Multi-Step Planning (Level 5)",
+    "LangGraph with Multi-Agent Roles (Level 6)",
+    "API-Enhanced Reasoning Agent (Level 7)"
+  ],
+  "whoIsThisFor": [
+    {
+      "title": "Students & New Engineers",
+      "icon": "/college-student.svg",
+      "description": "Learn the most practical AI skills of 2025 and get ahead in the AI revolution."
+    },
+    {
+      "title": "Working Professionals",
+      "icon": "/working-engineer.svg",
+      "description": "Get upskilled in LLM engineering and agentic systems to advance your career."
+    },
+    {
+      "title": "Career Switchers",
+      "icon": "/startup-founder.svg",
+      "description": "Go from novice to job-ready in under 2 months with hands-on projects."
+    }
+  ],
+  "instructor": {
+    "name": "Harpreet Singh",
+    "image": "/instructorImage.png",
+    "bio": "Harpreet Singh is a Full Self-Driving (FSD) & Robotics Engineer with 5+ years of expertise in AI-driven autonomy, specializing in motion planning, computer vision, and simulation, who has mentored 10,000+ students globally while founding two award-winning Robotics/AI startups recognized by Startup India and Punjab Government, combining deep technical knowledge in AI decision-making and sensor fusion with a passion for advancing intelligent systems through engineering, education and entrepreneurship.",
+    "experience": "5+ Years Experience",
+    "learners": "10,000+ Learners"
+  }
+} 

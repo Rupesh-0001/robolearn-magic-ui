@@ -1,0 +1,67 @@
+{
+  "id": "autonomous-car",
+  "title": "Autonomous System Revolution Program",
+  "subtitle": "AUTONOMOUS CAR COURSE",
+  "image": "/CarCourse.jpg",
+  "level": "Advanced Level",
+  "duration": "1.5 Months Mentorship",
+  "languages": ["Hindi", "English"],
+  "access": "Lifetime Access",
+  "certificate": "Certificate of Completion",
+  "learners": 312,
+  "currentPrice": 4999,
+  "originalPrice": 9999,
+  "discount": "50% off",
+  "offerEnds": "2025-07-13T23:59:59",
+  "details": [
+    "How to build a full perception-planning-control loop using real-world tools like ROS2, Carla, and Python",
+    "Apply sensor fusion, object detection, and path planning using state-of-the-art AI and robotics techniques",
+    "Master vehicle control systems using PID and MPC to simulate real actuation",
+    "Design Tesla-style neural pipelines with BEV + Transformer models for AI-first FSD systems"
+  ],
+  "overview": [
+    {
+      "id": "intro",
+      "title": "Introduction to Autonomous Vehicles",
+      "points": [
+        "Overview",
+        "Key components and systems",
+        "Current state of the industry"
+      ]
+    }
+  ],
+  "about": "This is a complete, structured program to help you build a production-grade self-driving car stack from scratch, step-by-step. With live projects, recorded lectures, and professional tools, you'll graduate with real skills and a full portfolio.",
+  "projects": [
+    "Lane Detection & Following (Level 1)",
+    "Traffic Light and Sign Handling (Level 2)",
+    "Lidar + Camera Obstacle Detection (Level 3)",
+    "Localization & SLAM System (Level 4)",
+    "Agent Prediction + Path Planning Stack (Level 5–6)",
+    "MPC Control Simulator (Level 7)",
+    "Tesla-Style End-to-End Neural Driving Stack (Level 8)"
+  ],
+  "whoIsThisFor": [
+    {
+      "title": "College Students",
+      "icon": "/college-student.svg",
+      "description": "Perfect if you're studying engineering, computer science or robotics and want hands-on experience with autonomous systems."
+    },
+    {
+      "title": "Working Engineers",
+      "icon": "/working-engineer.svg",
+      "description": "Ideal for software engineers, or roboticists looking to transition into autonomous vehicles."
+    },
+    {
+      "title": "Tech Hobbyists",
+      "icon": "/startup-founder.svg",
+      "description": "Build your first autonomous car logic from scratch. No prior experience needed."
+    }
+  ],
+  "instructor": {
+    "name": "Harpreet Singh",
+    "image": "/instructorImage.png",
+    "bio": "Harpreet Singh is a Full Self-Driving (FSD) & Robotics Engineer with 5+ years of expertise in AI-driven autonomy, specializing in motion planning, computer vision, and simulation, who has mentored 10,000+ students globally while founding two award-winning Robotics/AI startups recognized by Startup India and Punjab Government, combining deep technical knowledge in AI decision-making and sensor fusion with a passion for advancing intelligent systems through engineering, education and entrepreneurship.",
+    "experience": "5+ Years Experience",
+    "learners": "10,000+ Learners"
+  }
+} 

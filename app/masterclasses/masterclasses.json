@@ -1,0 +1,32 @@
+ [
+  {
+    "id": "autonomous-car",
+    "title": "Building Your Own Autonomous Car",
+    "date": "29 June 2025 • 7:00pm",
+    "instructor": "Er Harpreet Singh",
+    "image": "/autonomousCarMasterclassTemplate.png",
+    "isFree": false,
+    "currentPrice": "₹9",
+    "originalPrice": "₹99"
+  },
+  {
+    "id": "ai-agent",
+    "title": "Build Your First AI Agent From Scratch",
+    "date": "Coming Soon",
+    "instructor": "Er Harpreet Singh",
+    "image": "/AIMasterClass.png",
+    "isFree": false,
+    "currentPrice": "₹9",
+    "originalPrice": "₹99"
+  },
+  {
+    "id": "robotic-arm",
+    "title": "Build Your First Robotic Arm",
+    "date": "Coming Soon",
+    "instructor": "Er Harpreet Singh",
+    "image": "/robotMasterClass.png",
+    "isFree": false,
+    "currentPrice": "₹9",
+    "originalPrice": "₹99"
+  }
+]

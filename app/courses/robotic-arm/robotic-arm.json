@@ -1,0 +1,86 @@
+{
+  "id": "robotic-arm",
+  "title": "Build Real Robots from Scratch",
+  "subtitle": "ROBOTICS ENGINEERING BOOTCAMP",
+  "image": "/robotMasterClass.png",
+  "level": "Beginner to Advanced",
+  "duration": "8 Weeks Self-paced",
+  "languages": ["Hindi", "English"],
+  "access": "Lifetime Access",
+  "certificate": "Industry-recognized Certificate",
+  "learners": 275,
+  "currentPrice": 4999,
+  "originalPrice": 9999,
+  "discount": "50% off",
+  "offerEnds": "2025-07-21T11:59:59",
+  "details": [
+    "Design and build complete robots from mechanical body to control panel",
+    "Implement PLC logic, kinematics, control theory, and GUIs",
+    "Program microcontrollers and simulate full robotic systems",
+    "Understand how to build industrial-grade robotics systems from scratch"
+  ],
+  "overview": [
+    {
+      "id": "intro",
+      "title": "Electrical Panels & PLC Fundamentals",
+      "points": [
+        "Relay-based logic machines and control circuits",
+        "PLC programming and sensor integration",
+        "VFD motor control systems"
+      ]
+    },
+    {
+      "id": "memory",
+      "title": "Robotic Arm Simulation & Kinematics",
+      "points": [
+        "3-DOF and 6-DOF robotic arm simulation",
+        "Forward and inverse kinematics programming",
+        "CAD design and mechanical assembly"
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced Robotics & Integration",
+      "points": [
+        "Microcontroller programming with ESP32",
+        "Qt GUI development for robot control",
+        "Full robot panel integration and deployment"
+      ]
+    }
+  ],
+  "about": "This is a complete, project-first bootcamp where you'll build real robotic systems from the ground up. By the end, you'll know how to go from CAD design to embedded firmware to real-world robot motion.",
+  "projects": [
+    "Relay-Based Logic Machine (Level 1)",
+    "Sensor-Controlled PLC Conveyor (Level 2)",
+    "Panel-Wired VFD Motor System (Level 3)",
+    "HMI-Integrated Automation Line (Level 4)",
+    "3-DOF Robotic Arm Simulator (Level 5)",
+    "6-DOF Robotic Arm (CAD + Control) (Level 6)",
+    "Full Robot Panel with Microcontroller + Drivers (Level 7)",
+    "Qt GUI-Controlled Robotic Arm with Inverse Kinematics (Level 8)"
+  ],
+  "whoIsThisFor": [
+    {
+      "title": "Students & Engineers",
+      "icon": "/college-student.svg",
+      "description": "Learn robotics from real-world problems and get ahead in the automation revolution."
+    },
+    {
+      "title": "Working Professionals",
+      "icon": "/working-engineer.svg",
+      "description": "Get industry-grade practical knowledge in robotics and automation systems."
+    },
+    {
+      "title": "Makers & Hackers",
+      "icon": "/startup-founder.svg",
+      "description": "Build and deploy working robots from scratch with cutting-edge robotics technology."
+    }
+  ],
+  "instructor": {
+    "name": "Harpreet Singh",
+    "image": "/instructorImage.png",
+    "bio": "Harpreet Singh is a Full Self-Driving (FSD) & Robotics Engineer with 5+ years of expertise in AI-driven autonomy, specializing in motion planning, computer vision, and simulation, who has mentored 10,000+ students globally while founding two award-winning Robotics/AI startups recognized by Startup India and Punjab Government, combining deep technical knowledge in AI decision-making and sensor fusion with a passion for advancing intelligent systems through engineering, education and entrepreneurship.",
+    "experience": "5+ Years Experience",
+    "learners": "10,000+ Learners"
+  }
+} 
