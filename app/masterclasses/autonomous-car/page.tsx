@@ -8,12 +8,11 @@ import {
   Users as UsersIcon,
   X as XIcon,
 } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+
 import Image from "next/image";
 
 export default function AIAgentMasterclass() {
-  const [showFullDescription, setShowFullDescription] = useState(false);
   const [showEnrollModal, setShowEnrollModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -40,9 +39,7 @@ export default function AIAgentMasterclass() {
     type: "success",
   });
 
-  const toggleDescription = () => {
-    setShowFullDescription(!showFullDescription);
-  };
+
 
   const showToast = (message: string, type: "success" | "error") => {
     setToast({ show: true, message, type });
@@ -233,54 +230,27 @@ export default function AIAgentMasterclass() {
     }
   };
 
-  // Carousel state
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
   // Add countdown state
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
-    hours: 10,
-    minutes: 56,
-    seconds: 8,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   });
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Check if scroll buttons should be visible
-  const checkScrollButtons = () => {
-    if (carouselRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10); // 10px buffer
-    }
-  };
 
-  // Initialize scroll check
+
+  // Set mounted flag
   useEffect(() => {
-    checkScrollButtons();
-    window.addEventListener("resize", checkScrollButtons);
-    return () => window.removeEventListener("resize", checkScrollButtons);
+    setIsMounted(true);
   }, []);
-
-  // Handle carousel scrolling
-  const scroll = (direction: "left" | "right") => {
-    if (carouselRef.current) {
-      const { clientWidth } = carouselRef.current;
-      const scrollAmount = clientWidth * 0.8; // Scroll by 80% of viewport width
-
-      carouselRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-
-      // Update button visibility after scrolling
-      setTimeout(checkScrollButtons, 400);
-    }
-  };
 
   // Add countdown timer effect
   useEffect(() => {
-    const countDownDate = new Date("July 13, 2025 19:00:00").getTime();
+    if (!isMounted) return;
+
+    const countDownDate = new Date("July 20, 2025 19:00:00").getTime();
     // Update the countdown every 1 second
     const interval = setInterval(() => {
       // Get today's date and time
@@ -326,7 +296,7 @@ export default function AIAgentMasterclass() {
 
     // Clean up the interval on component unmount
     return () => clearInterval(interval);
-  }, []);
+  }, [isMounted]);
 
   // On mount, check for utm_medium in URL
   useEffect(() => {
@@ -380,9 +350,13 @@ export default function AIAgentMasterclass() {
                 height={16}
               />
               <span className="text-sm md:text-base">
-                {timeLeft.days > 0
-                  ? `Starts in ${timeLeft.days} Days : ${timeLeft.hours} Hours : ${timeLeft.minutes} Min : ${timeLeft.seconds} Sec`
-                  : `Starts in ${timeLeft.hours} Hours : ${timeLeft.minutes} Min : ${timeLeft.seconds} Sec`}
+                {isMounted ? (
+                  timeLeft.days > 0
+                    ? `Starts in ${timeLeft.days} Days : ${timeLeft.hours} Hours : ${timeLeft.minutes} Min : ${timeLeft.seconds} Sec`
+                    : `Starts in ${timeLeft.hours} Hours : ${timeLeft.minutes} Min : ${timeLeft.seconds} Sec`
+                ) : (
+                  "Loading countdown..."
+                )}
               </span>
             </div>
           </div>
@@ -403,7 +377,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>13th July, 2025</span>
+                <span>20th July, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -419,7 +393,7 @@ export default function AIAgentMasterclass() {
             </div>
 
             <div className="flex items-center gap-2 mb-6">
-              <span className="text-2xl font-bold">FREE</span>
+              <span className="text-2xl font-bold text-green-600">FREE</span>
               <span className="text-gray-500 line-through">₹399</span>
               <span className="text-gray-500">(100% OFF)</span>
             </div>
@@ -486,7 +460,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  13th July, 2025
+                  20th July, 2025
                 </span>
               </div>
 
@@ -553,323 +527,190 @@ export default function AIAgentMasterclass() {
               </div>
             </div>
           </div>
+          {/* What You'll Learn Section */}
           <div className="bg-white my-12">
             <h2 className="text-xl pb-4 sm:text-2xl font-semibold">
               What You&apos;ll Learn
             </h2>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <li className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
-                <span className="mr-3 mt-1 rounded-full">
-                  <CheckIcon className="h-4 w-4 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  How to build a lane detection system from scratch using only
-                  raw Python + NumPy
-                </span>
-              </li>
-              <li className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
-                <span className="mr-3 mt-1 rounded-full">
-                  <CheckIcon className="h-4 w-4 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Fundamentals of computer vision and image processing
-                  techniques used in FSD systems
-                </span>
-              </li>
-              <li className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
-                <span className="mr-3 mt-1 rounded-full">
-                  <CheckIcon className="h-4 w-4 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Principles of trajectory generation and basic path planning
-                  for vehicle movement
-                </span>
-              </li>
-              <li className="flex items-center bg-gray-100 rounded-lg px-4 py-3">
-                <span className="mr-3 mt-1 rounded-full">
-                  <CheckIcon className="h-4 w-4 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Introduction to deep learning approaches used in Tesla-style
-                  perception pipelines
-                </span>
-              </li>
-            </ul>
-          </div>
-          <div className="block md:hidden">
-            <h2 className="text-xl pb-4 sm:text-2xl font-semibold">
-              Key Highlight:
-            </h2>
-            <div className="bg-white shadow-md rounded-lg p-6 border border-gray-100 transition-all duration-300 relative overflow-hidden">
-              <ShineBorder className="w-full h-full absolute" />
-              <div className="space-y-4 relative z-10">
-                {/* Date and Details */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="text-gray-500 w-6 flex-shrink-0">
-                      <Image
-                        src="/calendar-icon.svg"
-                        alt="Calendar"
-                        className="w-5 h-5"
-                        width={20}
-                        height={20}
-                      />
-                    </div>
-                    <span className="text-gray-800">13th July, 2025</span>
-                  </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckIcon className="h-4 w-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    How to build a lane detection system from scratch using only raw Python + NumPy
+                  </p>
+                </div>
+              </div>
 
-                  <div className="flex items-center gap-2">
-                    <div className="text-gray-500 w-6 flex-shrink-0">
-                      <Image
-                        src="/clock-icon.svg"
-                        alt="Clock"
-                        className="w-5 h-5"
-                        width={20}
-                        height={20}
-                      />
-                    </div>
-                    <span className="text-gray-800">7:00 pm to 9:00 pm</span>
-                  </div>
+              <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-100">
+                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckIcon className="h-4 w-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Fundamentals of computer vision and image processing techniques used in FSD systems
+                  </p>
+                </div>
+              </div>
 
-                  <div className="flex items-center gap-2">
-                    <div className="text-gray-500 w-6 flex-shrink-0">
-                      <Image
-                        src="/globe-icon.svg"
-                        alt="Globe"
-                        className="w-5 h-5"
-                        width={20}
-                        height={20}
-                      />
-                    </div>
-                    <span className="text-gray-800">Hindi, English</span>
-                  </div>
+              <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-purple-50 to-violet-50 rounded-lg border border-purple-100">
+                <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckIcon className="h-4 w-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Principles of trajectory generation and basic path planning for vehicle movement
+                  </p>
+                </div>
+              </div>
 
-                  {/* <div className="flex items-center gap-2">
-                    <div className="text-gray-500 w-6 flex-shrink-0">
-                      <Image
-                        src="/certificate-icon.svg"
-                        alt="Certificate"
-                        className="w-5 h-5"
-                        width={20}
-                        height={20}
-                      />
-                    </div>
-                    <span className="text-gray-800">
-                      Certificate of Participation
-                    </span>
-                  </div> */}
+              <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-orange-50 to-amber-50 rounded-lg border border-orange-100">
+                <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckIcon className="h-4 w-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Introduction to deep learning approaches used in Tesla-style perception pipelines
+                  </p>
                 </div>
               </div>
             </div>
           </div>
+          
+          {/* Benefits Section */}
+          <div className="my-12">
+            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-6 flex items-center gap-2">
+                <span className="whitespace-nowrap">Benefits You Get</span>
+                <span className="text-sm sm:text-base text-gray-600 font-normal">(Worth ₹2000+)</span>
+              </h2>
+              <div className="space-y-4">
+                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
+                  <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Autonomous Mastery Guide</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Comprehensive guide with all the algorithms, tools, and techniques used in self-driving cars. 
+                      Your quick reference for autonomous vehicle development.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-purple-50 to-violet-50 rounded-lg border border-purple-100">
+                  <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Certificate of Completion</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Get a professional certificate showcasing your autonomous vehicle development skills. 
+                      Perfect for your portfolio and LinkedIn profile.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-100">
+                  <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Real-World Case Studies</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Explore real-world AV case studies—see how Tesla, Waymo, and Cruise tackled challenges, 
+                      failures, and breakthroughs in autonomous driving. Extract key lessons for your own projects.
+                    </p>
+                  </div>
+                </div>
+
+              
+              </div>
+            </div>
+          </div>
+
+         
+
+          {/* Who Should Attend Section */}
+          <div className="my-12">
+            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md">
+              <h2 className="text-xl sm:text-2xl font-bold mb-6 flex items-center gap-2">
+                Who Should Attend
+              </h2>
+              <div className="space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-sm">1</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-gray-700 leading-relaxed">Students and professionals interested in autonomous vehicle technology and computer vision.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-green-400 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-sm">2</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-gray-700 leading-relaxed">Python developers looking to expand their skills into robotics and AI applications.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-purple-400 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-sm">3</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-gray-700 leading-relaxed">Anyone curious about how self-driving cars work and want hands-on experience.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-sm">4</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-gray-700 leading-relaxed">Professionals wanting to understand the fundamentals of autonomous vehicle perception.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* About the Masterclass Section */}
           <div className="my-12 rounded-lg">
             <h2 className="text-xl sm:text-2xl font-semibold mb-2">
               About the Masterclass
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
               <p className="mb-4">
-                This is a <strong>free live webinar</strong> designed to give
-                you hands-on experience with real self-driving car engineering.
-                You&apos;ll not just learn theory — you&apos;ll build your first{" "}
-                <strong>lane detection + path planning system</strong> from
-                scratch using nothing but Python.
+                This is a <strong>free live webinar</strong> designed to give you hands-on experience with real self-driving car engineering. You&apos;ll not just learn theory — you&apos;ll build your first <strong>lane detection + path planning system</strong> from scratch using nothing but Python.
               </p>
-              <p className="mb-2">
-                <strong>You&apos;ll Build Live:</strong>
+              
+              <p className="mb-4">
+                <strong>Transform Your Understanding:</strong> Go beyond theory and actually build working components of an autonomous vehicle. Learn computer vision techniques that power Tesla, Waymo, and other leading autonomous systems.
               </p>
-              <ul className="list-disc list-inside space-y-1 ml-4">
-                <li>
-                  A lane detection module using OpenCV-style operations (without
-                  using OpenCV!)
-                  {!showFullDescription && <span> ...</span>}
-                </li>
-                {showFullDescription && (
-                  <>
-                    <li>A polynomial curve-based path planner</li>
-                    <li>
-                      A working simulation to test your lane-following logic
-                    </li>
-                    <li>
-                      Insights into how neural networks eventually enhance this
-                      base system
-                    </li>
-                  </>
-                )}
-              </ul>
-            </div>
-            <button
-              onClick={toggleDescription}
-              className="text-base text-[#3e48ce] rounded-md transition cursor-pointer"
-            >
-              {showFullDescription ? "Show Less" : "Show More"}
-            </button>
-          </div>
-          <div className="my-12">
-            <h2 className="text-xl sm:text-2xl font-semibold md:mb-6 mb-3">
-              Who Is This Masterclass For
-            </h2>
-            <div className="block md:hidden">
-              <div className="w-full my-3 flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-4 bg-gray-100">
-                <div className="flex items-center mb-2">
-                  <Image
-                    src="/college-student.svg"
-                    alt="College Student"
-                    width={32}
-                    height={32}
-                  />
-                  <span className="text-lg font-semibold ml-2">
-                    College Students
-                  </span>
-                </div>
-                <p className="text-gray-600">
-                  Perfect if you&apos;re studying engineering, computer science
-                  or robotics and want hands-on experience with autonomous
-                  systems.
-                </p>
-              </div>
 
-              {/* Carousel Card 2 */}
-              <div className="w-full my-3 flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-6 bg-gray-100">
-                <div className="flex items-center mb-2">
-                  <Image
-                    src="/working-engineer.svg"
-                    alt="Working Engineer"
-                    width={32}
-                    height={32}
-                  />
-                  <span className="text-lg font-bold ml-2">
-                    Working Engineers & Developers
-                  </span>
-                </div>
-                <p className="text-gray-600">
-                  Ideal for software engineers, mechanical engineers, or
-                  roboticists looking to transition into autonomous vehicles.
-                </p>
-              </div>
+              <p className="mb-4">
+                <strong>Real-World Application:</strong> Understand how lane detection, path planning, and perception systems work in actual self-driving cars. Get insights into the algorithms that make autonomous driving possible.
+              </p>
 
-              {/* Carousel Card 3 */}
-              <div className="w-full my-3 flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-6 bg-gray-100">
-                <div className="flex items-center mb-2">
-                  <Image
-                    src="/startup-founder.svg"
-                    alt="Startup Founder"
-                    width={32}
-                    height={32}
-                  />
-                  <span className="text-lg font-bold ml-2">Tech Hobbyists</span>
-                </div>
-                <p className="text-gray-600">
-                  Build your first autonomous car logic from scratch. No prior
-                  experience needed.
-                </p>
-              </div>
-            </div>
+              <p className="mb-4">
+                <strong>No Advanced Math Required:</strong> We&apos;ll focus on practical implementation using Python and NumPy. You&apos;ll learn the concepts through hands-on coding rather than complex mathematical formulas.
+              </p>
 
-            {/* Carousel Container */}
-            <div className="relative hidden md:block">
-              {/* Left Arrow Button */}
-              <button
-                onClick={() => scroll("left")}
-                className={`absolute left-0 top-1/2 cursor-pointer ml-2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-all ${
-                  canScrollLeft
-                    ? "opacity-100"
-                    : "opacity-0 pointer-events-none"
-                }`}
-                aria-label="Scroll left"
-              >
-                <ChevronLeft className="h-6 w-6 text-gray-700" />
-              </button>
-
-              {/* Carousel */}
-              <div
-                ref={carouselRef}
-                className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4"
-                style={{
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none",
-                  WebkitOverflowScrolling: "touch",
-                }}
-                onScroll={checkScrollButtons}
-              >
-                <style jsx>{`
-                  div::-webkit-scrollbar {
-                    display: none;
-                  }
-                `}</style>
-
-                {/* Carousel Card 1 */}
-                <div className="min-w-[calc(40%-1rem)] w-[calc(40%-0.5rem)] flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-4 bg-gray-100">
-                  <div className="flex items-center mb-2">
-                    <Image
-                      src="/college-student.svg"
-                      alt="College Student"
-                      width={32}
-                      height={32}
-                    />
-                    <span className="text-lg font-semibold ml-2">
-                      College Students
-                    </span>
-                  </div>
-                  <p className="text-gray-600">
-                    Perfect if you&apos;re studying engineering, computer
-                    science or robotics and want hands-on experience with
-                    autonomous systems.
-                  </p>
-                </div>
-
-                {/* Carousel Card 2 */}
-                <div className="min-w-[calc(40%-1rem)] w-[calc(40%-0.5rem)] flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-6 bg-gray-100">
-                  <div className="flex items-center mb-2">
-                    <Image
-                      src="/working-engineer.svg"
-                      alt="Working Engineer"
-                      width={32}
-                      height={32}
-                    />
-                    <span className="text-lg font-bold ml-2">
-                      Working Engineers & Developers
-                    </span>
-                  </div>
-                  <p className="text-gray-600">
-                    Ideal for software engineers, mechanical engineers, or
-                    roboticists looking to transition into autonomous vehicles.
-                  </p>
-                </div>
-
-                {/* Carousel Card 3 */}
-                <div className="min-w-[calc(40%-1rem)] w-[calc(40%-0.5rem)] flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-6 bg-gray-100">
-                  <div className="flex items-center mb-2">
-                    <Image
-                      src="/startup-founder.svg"
-                      alt="Startup Founder"
-                      width={32}
-                      height={32}
-                    />
-                    <span className="text-lg font-bold ml-2">
-                      Startup Founders & Innovators
-                    </span>
-                  </div>
-                  <p className="text-gray-600">
-                    For founders and product managers looking to understand the
-                    technical foundations of autonomous systems.
-                  </p>
-                </div>
-              </div>
-
-              {/* Right Arrow Button */}
-              <button
-                onClick={() => scroll("right")}
-                className={`absolute right-0 top-1/2 cursor-pointer mr-2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-all ${
-                  canScrollRight
-                    ? "opacity-100"
-                    : "opacity-0 pointer-events-none"
-                }`}
-                aria-label="Scroll right"
-              >
-                <ChevronRight className="h-6 w-6 text-gray-700" />
-              </button>
+             
             </div>
           </div>
+        
           <div className="my-12">
             <div className="text-xl sm:text-2xl font-semibold mb-4 flex items-center gap-2">
               <Image
@@ -968,7 +809,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">13th July, 2025</span>
+                  <span className="text-gray-800">20th July, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1014,11 +855,33 @@ export default function AIAgentMasterclass() {
               </div>
 
               {/* Price */}
-              <div className="flex space-x-2 pt-2">
+              {/* <div className="flex space-x-2 pt-2">
                 <span className="text-xl font-bold text-gray-800">FREE</span>
-                <span className="line-through text-gray-500">₹99</span>
+                <span className="line-through text-gray-500">₹999</span>
                 <span className="text-gray-500 text-sm">(100% OFF)</span>
-              </div>
+              </div> */}
+
+
+<div className="space-y-2">
+                  <div>
+                      <span className="text-md font-bold font-medium">Enroll Now</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600 font-medium">Original Price:</span>
+                      <span className="text-sm text-gray-500 line-through">₹399</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600 font-medium">Discount:</span>
+                      <span className="text-sm text-green-600 font-semibold bg-green-100 px-2 py-1 rounded-full">100% OFF</span>
+                    </div>
+                    <div className="border-t border-gray-200 pt-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-md font-medium font-bold">Final Price:</span>
+                        <span className="text-2xl font-bold text-green-600">FREE</span>
+                      </div>
+                    </div>
+                    
+                  </div>
 
               {/* Enroll Button */}
               <ShimmerButton
@@ -1052,25 +915,25 @@ export default function AIAgentMasterclass() {
                 <div className="flex justify-between">
                   <div className="text-center">
                     <div className="bg-gray-100 rounded-lg w-14 h-14 flex items-center justify-center text-xl font-bold text-gray-800 shadow-inner transition-all duration-300 hover:bg-gray-200">
-                      {String(timeLeft.days).padStart(2, "0")}
+                      {isMounted ? String(timeLeft.days).padStart(2, "0") : "00"}
                     </div>
                     <p className="text-xs text-gray-500 mt-1">Days</p>
                   </div>
                   <div className="text-center">
                     <div className="bg-gray-100 rounded-lg w-14 h-14 flex items-center justify-center text-xl font-bold text-gray-800 shadow-inner transition-all duration-300 hover:bg-gray-200">
-                      {String(timeLeft.hours).padStart(2, "0")}
+                      {isMounted ? String(timeLeft.hours).padStart(2, "0") : "00"}
                     </div>
                     <p className="text-xs text-gray-500 mt-1">Hours</p>
                   </div>
                   <div className="text-center">
                     <div className="bg-gray-100 rounded-lg w-14 h-14 flex items-center justify-center text-xl font-bold text-gray-800 shadow-inner transition-all duration-300 hover:bg-gray-200">
-                      {String(timeLeft.minutes).padStart(2, "0")}
+                      {isMounted ? String(timeLeft.minutes).padStart(2, "0") : "00"}
                     </div>
                     <p className="text-xs text-gray-500 mt-1">Min</p>
                   </div>
                   <div className="text-center">
                     <div className="bg-gray-100 rounded-lg w-14 h-14 flex items-center justify-center text-xl font-bold text-gray-800 shadow-inner transition-all duration-300 hover:bg-gray-200">
-                      {String(timeLeft.seconds).padStart(2, "0")}
+                      {isMounted ? String(timeLeft.seconds).padStart(2, "0") : "00"}
                     </div>
                     <p className="text-xs text-gray-500 mt-1">Sec</p>
                   </div>
@@ -1085,13 +948,19 @@ export default function AIAgentMasterclass() {
       <div className="fixed bottom-0 left-0 right-0 pb-3 md:hidden z-50 bg-white">
         <div className="bg-[#fae3ea] text-[#df4271] px-3 py-1 flex justify-center items-center">
           <span className="text-sm font-medium">
-            Webinar starts in {timeLeft.days > 0 ? `${timeLeft.days}d : ` : ""}
-            {String(timeLeft.hours).padStart(2, "0")}h :{" "}
-            {String(timeLeft.minutes).padStart(2, "0")}m :{" "}
-            {String(timeLeft.seconds).padStart(2, "0")}s
+            {isMounted ? (
+              <>
+                Webinar starts in {timeLeft.days > 0 ? `${timeLeft.days}d : ` : ""}
+                {String(timeLeft.hours).padStart(2, "0")}h :{" "}
+                {String(timeLeft.minutes).padStart(2, "0")}m :{" "}
+                {String(timeLeft.seconds).padStart(2, "0")}s
+              </>
+            ) : (
+              "Loading countdown..."
+            )}
           </span>
         </div>
-        <div className="flex items-center justify-between bg-white border-t pt-3 px-3 border-gray-200 md:hidden z-50">
+        {/* <div className="flex items-center justify-between bg-white border-t pt-3 px-3 border-gray-200 md:hidden z-50">
           <ShimmerButton
             borderRadius="5px"
             className="text-white w-full text-sm font-semibold cursor-pointer group px-4 py-2"
@@ -1114,7 +983,44 @@ export default function AIAgentMasterclass() {
               </svg>
             </span>
           </ShimmerButton>
-        </div>
+        </div> */}
+
+<div className="flex p-2">
+            <div className="w-[40%] flex flex-col justify-center items-end pr-4">
+              <div className="flex items-center gap-2">
+                <span className="text-xl font-bold text-green-500">FREE</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-500 line-through">
+                  ₹399
+                </span>
+                <span className="text-xs text-green-500 bg-green-100 px-2 py-1 rounded-full">100% off</span>
+              </div>
+            </div>
+            <div className="w-[70%]">
+              <ShimmerButton
+                borderRadius="8px"
+                className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
+                onClick={() => {
+                  handleEnrollClick();
+                }}>
+                Enroll Now
+                <svg
+                    className="w-4 h-4 ml-1 transition-transform duration-200 ease-in-out group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+              </ShimmerButton>
+            </div>
+          </div>
       </div>
 
       {/* Enroll Modal */}
@@ -1367,7 +1273,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/EwePtsh7zMoAwa9x2ARDF4?"
+                  href="https://chat.whatsapp.com/KRVcrZLK7ky37EmfgPJVKP?"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"

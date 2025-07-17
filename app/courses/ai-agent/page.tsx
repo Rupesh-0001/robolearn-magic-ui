@@ -665,7 +665,7 @@ export default function AIAgentBootcamp() {
             </div>
           </div>
 
-          <div className="bg-white my-8">
+          {/* <div className="bg-white my-8">
             <div className="text-xl sm:text-2xl font-semibold mb-4 flex items-center gap-2">
               <Image
                 src="/instructor.svg"
@@ -704,6 +704,49 @@ export default function AIAgentBootcamp() {
               </div>
               <p className="text-sm sm:text-base text-gray-700 pt-1">
                 <strong>Harpreet Singh</strong> is a <strong>Full Self-Driving (FSD) & Robotics Engineer</strong> with <strong>5+ years of expertise</strong> in AI-driven autonomy, specializing in motion planning, computer vision, and simulation, who has <strong>mentored 10,000+ students</strong> globally while founding <strong>two award-winning Robotics/AI startups</strong> recognized by <strong>Startup India and Punjab Government</strong>, combining deep technical knowledge in <strong>AI decision-making and sensor fusion</strong> with a passion for advancing intelligent systems through engineering, education and entrepreneurship.
+              </p>
+            </div>
+          </div> */}
+
+<div className="my-12">
+            <div className="text-xl sm:text-2xl font-semibold mb-4 flex items-center gap-2">
+              <Image
+                src="/instructor.svg"
+                alt="Instructor"
+                width={32}
+                height={32}
+              />{" "}
+              Meet Your Instructor
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 my-4">
+              <div className="md:flex md:gap-6">
+                <div className="flex-shrink-0 md:block flex flex-col items-center mb-6 md:mb-0">
+                  <Image
+                    src="/rupesh.jpg"
+                    alt="Harpreet Singh"
+                    width={100}
+                    height={120}
+                    className="rounded-lg"
+                  />
+                </div>
+                <div className="md:flex md:flex-col">
+                  <div className="text-center md:text-left">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2">
+                      Rupesh Ahuja
+                    </h3>
+                    <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
+                      <ClockIcon className="w-4 h-4 mr-2" />
+                      <strong>4+ Years Experience</strong>
+                    </p>
+                    <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
+                      <UsersIcon className="w-4 h-4 mr-2" />
+                      <strong>5,000+ Learners</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm sm:text-base text-gray-700 pt-1">
+              With <span className="font-semibold text-black-700">4+ years</span> of industry expertise and <span className="font-semibold text-black-700">5000+ learners</span> conducted, Rupesh Ahuja is a seasoned <span className="font-semibold text-black-700">AI and career growth specialist</span>. His practical, no-fluff approach helps professionals harness AI tools to boost productivity, skills, and earnings. Join his masterclass to learn from an experienced mentor who delivers real, actionable results.
               </p>
             </div>
           </div>
