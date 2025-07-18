@@ -47,7 +47,7 @@ export default function ExplorePage() {
                 <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
                     Future Proofing Your Career Using AI Tools
                 </h2>
-                <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Er Rupesh Ahuja</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Rupesh Ahuja</p>
                 <div className="flex items-center mt-auto">
                   <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">₹9</span>
                   <span className="ml-2 line-through text-gray-400 text-sm">₹399</span>
@@ -76,7 +76,7 @@ export default function ExplorePage() {
                 <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
                   Building Your Own Autonomous Car
                 </h2>
-                <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Er Harpreet Singh</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Harpreet Singh</p>
                 <div className="flex items-center mt-auto">
                   <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">FREE</span>
                   <span className="ml-2 line-through text-gray-400 text-sm">₹399</span>
@@ -102,7 +102,7 @@ export default function ExplorePage() {
                 <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
                   Build Your First AI Agent From Scratch
                 </h2>
-                <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Er Harpreet Singh</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Harpreet Singh</p>
                 <div className="flex items-center mt-auto">
                   <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">FREE</span>
                   <span className="ml-2 line-through text-gray-400 text-sm">₹99</span>
@@ -130,7 +130,7 @@ export default function ExplorePage() {
                 <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
                   Build Your First Robotic Arm
                 </h2>
-                <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Er Harpreet Singh</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Harpreet Singh</p>
                 <div className="flex items-center mt-auto">
                   <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">FREE</span>
                   <span className="ml-2 line-through text-gray-400 text-sm">₹99</span>
