@@ -722,8 +722,8 @@ export default function AIAgentBootcamp() {
               <div className="md:flex md:gap-6">
                 <div className="flex-shrink-0 md:block flex flex-col items-center mb-6 md:mb-0">
                   <Image
-                    src="/rupesh.jpg"
-                    alt="Harpreet Singh"
+                    src="/Rupesh.jpg"
+                    alt="Rupesh Ahuja"
                     width={100}
                     height={120}
                     className="rounded-lg"
