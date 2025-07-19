@@ -182,7 +182,7 @@ export default function TermsPage() {
                 <strong>Email:</strong> support@robolearn.in
               </p>
               <p className="text-muted-foreground">
-                <strong>Phone:</strong> +91 9878555767
+                <strong>Phone:</strong> +91 7696433339
               </p>
               <p className="text-muted-foreground">
                 <strong>Address:</strong> ROBOLEARNINDIA LLP, B-29-1251/2c/581/1a St- 1 3-r, Ludhiana, GNE College, Ludhiana, Ludhiana, Punjab, India - 141006

@@ -20,7 +20,7 @@ export function Footer() {
                 Punjab, India - 141006
               </p>
               <p className="text-sm text-muted-foreground">
-                <strong>Contact:</strong> +91 9878555767
+                <strong>Contact:</strong> +91 7696433339
               </p>
               <p className="text-sm text-muted-foreground">
                 <strong>Email:</strong> support@robolearn.in
