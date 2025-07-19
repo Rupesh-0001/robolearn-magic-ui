@@ -285,7 +285,7 @@ export default function ContactPage() {
                             {/* Buttons */}
                             <div className="space-y-3">
                                 <a
-                                    href="https://wa.me/919878555767?text=Hi%2C%20I%20just%20submitted%20a%20contact%20form%20on%20your%20website%20and%20would%20like%20to%20connect%20for%20immediate%20assistance"
+                                    href="https://wa.me/917696433339?text=Hi%2C%20I%20just%20submitted%20a%20contact%20form%20on%20your%20website%20and%20would%20like%20to%20connect%20for%20immediate%20assistance"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"

@@ -178,7 +178,7 @@ export default function FAQPage() {
               Contact Us
             </a>
             <a
-              href="https://wa.me/919878555767?text=Hi%2C%20I%20have%20a%20question%20about%20your%20courses"
+              href="https://wa.me/917696433339?text=Hi%2C%20I%20have%20a%20question%20about%20your%20courses"
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
