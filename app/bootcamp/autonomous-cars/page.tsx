@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
   ChevronUp as ChevronUpIcon,
   ChevronDown as ChevronDownIcon,
@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -28,8 +27,9 @@ import '../../../types/razorpay';
 
 export default function AutonomousCarMasterclass() {
   const [openLecture, setOpenLecture] = useState<string | null>(null);
-  const [showFullDescription, setShowFullDescription] = useState(false);
+
   const [showThankYouModal, setShowThankYouModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -37,38 +37,7 @@ export default function AutonomousCarMasterclass() {
     seconds: 0,
   });
 
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  const checkScrollButtons = () => {
-    if (carouselRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10); // 10px buffer
-    }
-  };
-
-  // Initialize scroll check
-  useEffect(() => {
-    checkScrollButtons();
-    window.addEventListener("resize", checkScrollButtons);
-    return () => window.removeEventListener("resize", checkScrollButtons);
-  }, []);
-  const scroll = (direction: "left" | "right") => {
-    if (carouselRef.current) {
-      const { clientWidth } = carouselRef.current;
-      const scrollAmount = clientWidth * 0.8; // Scroll by 80% of viewport width
-
-      carouselRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-
-      // Update button visibility after scrolling
-      setTimeout(checkScrollButtons, 400);
-    }
-  };
   useEffect(() => {
     const endDate = new Date("2025-07-20T23:59:59");
 
@@ -102,9 +71,7 @@ export default function AutonomousCarMasterclass() {
     setOpenLecture(openLecture === lectureId ? null : lectureId);
   };
 
-  const toggleDescription = () => {
-    setShowFullDescription(!showFullDescription);
-  };
+
 
   const handleCloseThankYouModal = () => {
     setShowThankYouModal(false);
@@ -123,9 +90,9 @@ export default function AutonomousCarMasterclass() {
   };
 
   return (
-    <main className="container mx-auto px-4 pt-16 mt-6 2xl:pb-8 pb-24">
-      <div className="flex flex-col lg:flex-row gap-11">
-        <div className="w-full lg:w-7/10">
+    <main className="container mx-auto px-4 sm:px-6 pt-16 mt-6 2xl:pb-8 pb-32 lg:pb-24" style={{ overflowX: 'hidden', minHeight: '100vh' }}>
+      <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-11 lg:items-start lg:min-h-screen">
+        <div className="w-full lg:w-7/10" style={{ minHeight: '100vh' }}>
           <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit rounded font-semibold">
             AUTONOMOUS CAR COURSE
           </span>
@@ -146,37 +113,37 @@ export default function AutonomousCarMasterclass() {
           </h1>
 
           <div className="lg:hidden mb-8 mt-4">
-            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-              <h2 className="text-xl sm:text-2xl font-semibold mb-4">
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md border border-gray-200">
+              <h2 className="text-lg sm:text-xl font-semibold mb-4">
                 Course Details
               </h2>
-              <ul className="space-y-4">
-                <li className="flex items-center text-sm sm:text-base">
-                  <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+              <ul className="space-y-3 sm:space-y-4">
+                <li className="flex items-center text-xs sm:text-sm lg:text-base">
+                  <div className="bg-gray-100 rounded-full p-1.5 mr-3 flex-shrink-0">
                     <LevelIcon className="w-3 h-3 text-gray-700" />
                   </div>
                   <span>Advanced Level</span>
                 </li>
-                <li className="flex items-center text-sm sm:text-base">
-                  <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                <li className="flex items-center text-xs sm:text-sm lg:text-base">
+                  <div className="bg-gray-100 rounded-full p-1.5 mr-3 flex-shrink-0">
                     <DurationIcon className="w-3 h-3 text-gray-700" />
                   </div>
                   <span>1.5 Months Mentorship</span>
                 </li>
-                <li className="flex items-center text-sm sm:text-base">
-                  <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                <li className="flex items-center text-xs sm:text-sm lg:text-base">
+                  <div className="bg-gray-100 rounded-full p-1.5 mr-3 flex-shrink-0">
                     <LanguageIcon className="w-3 h-3 text-gray-700" />
                   </div>
                   <span>Hindi, English</span>
                 </li>
-                <li className="flex items-center text-sm sm:text-base">
-                  <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                <li className="flex items-center text-xs sm:text-sm lg:text-base">
+                  <div className="bg-gray-100 rounded-full p-1.5 mr-3 flex-shrink-0">
                     <StudentIcon className="w-3 h-3 text-gray-700" />
                   </div>
                   <span>Specially for students</span>
                 </li>
-                <li className="flex items-center text-sm sm:text-base">
-                  <div className="bg-gray-100 rounded-full p-1.5 mr-3">
+                <li className="flex items-center text-xs sm:text-sm lg:text-base">
+                  <div className="bg-gray-100 rounded-full p-1.5 mr-3 flex-shrink-0">
                     <CertificateIcon className="w-3 h-3 text-gray-700" />
                   </div>
                   <span>Certificate of Completion</span>
@@ -185,48 +152,221 @@ export default function AutonomousCarMasterclass() {
             </div>
           </div>
 
-          <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200 my-8">
-            <h2 className="text-xl pb-4 sm:text-2xl font-semibold mb-2">
+          <div className="bg-white my-8 sm:my-12">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-4 sm:mb-6">
               What You&apos;ll Learn
             </h2>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <li className="flex items-start">
-                <span className="mr-3 mt-1 bg-blue-200 rounded-full p-1">
-                  <CheckIcon className="h-3 w-3 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  How to build a full perception-planning-control loop using
-                  real-world tools like ROS2, Carla, and Python
-                </span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 mt-1 bg-blue-200 rounded-full p-1">
-                  <CheckIcon className="h-3 w-3 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Apply sensor fusion, object detection, and path planning using
-                  state-of-the-art AI and robotics techniques
-                </span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 mt-1 bg-blue-200 rounded-full p-1">
-                  <CheckIcon className="h-3 w-3 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Master vehicle control systems using PID and MPC to simulate
-                  real actuation
-                </span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 mt-1 bg-blue-200 rounded-full p-1">
-                  <CheckIcon className="h-3 w-3 text-black" />
-                </span>
-                <span className="text-sm sm:text-base">
-                  Design Tesla-style neural pipelines with BEV + Transformer
-                  models for AI-first FSD systems
-                </span>
-              </li>
-            </ul>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckIcon className="h-4 w-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    How to build a full perception-planning-control loop using real-world tools like ROS2, Carla, and Python
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-100">
+                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckIcon className="h-4 w-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Apply sensor fusion, object detection, and path planning using state-of-the-art AI and robotics techniques
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-purple-50 to-violet-50 rounded-lg border border-purple-100">
+                <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckIcon className="h-4 w-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Master vehicle control systems using PID and MPC to simulate real actuation
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-orange-50 to-amber-50 rounded-lg border border-orange-100">
+                <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckIcon className="h-4 w-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Design Tesla-style neural pipelines with BEV + Transformer models for AI-first FSD systems
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Benefits Section */}
+          <div className="my-8 sm:my-12">
+            <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 shadow-md">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
+                <span className="whitespace-nowrap">Exclusive Bonuses You Get</span>
+                <span className="text-sm sm:text-base text-gray-600 font-normal">(Worth ₹11,999+)</span>
+              </h2>
+              <div className="space-y-4">
+                {/* <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
+                  <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Complete Code Repository</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Access to our private GitHub repository with all 8 project implementations, 
+                      including Tesla-style neural networks, Carla simulations, and ROS2 packages. 
+                      Ready-to-run code worth ₹5,000.
+                    </p>
+                  </div>
+                </div> */}
+
+                {/* <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-purple-50 to-violet-50 rounded-lg border border-purple-100">
+                  <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">1-on-1 Mentorship Sessions</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Two personalized 30-minute sessions with Harpreet Singh to review your projects, 
+                      career guidance, and technical troubleshooting. Direct access to industry expert worth ₹3,000.
+                    </p>
+                  </div>
+                </div> */}
+
+                {/* <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-100">
+                  <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Industry Case Studies Package</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Exclusive access to 50+ real-world autonomous vehicle case studies from Tesla, Waymo, 
+                      Cruise, and other leading companies. Learn from actual implementations and failures worth ₹2,500.
+                    </p>
+                  </div>
+                </div> */}
+
+                {/* <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-orange-50 to-amber-50 rounded-lg border border-orange-100">
+                  <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 10v4a3 3 0 01-3 3H4a3 3 0 01-3-3v-4a5 5 0 0110 0c0 .34.024.673.07 1H12.93z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Job Placement Support</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Resume review, interview preparation, and direct referrals to our network of 
+                      50+ autonomous vehicle companies. Career guidance package worth ₹2,000.
+                    </p>
+                  </div>
+                </div> */}
+
+                
+
+                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg border border-teal-100">
+                  <div className="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">AI Interview Companion</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Interactive AI tool where you can practice interviews by selecting topics and difficulty levels. 
+                      Get realistic interview questions and instant feedback to ace your AV job interviews worth ₹2,000.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-lg border border-emerald-100">
+                  <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                      <path fillRule="evenodd" d="M4 5a2 2 0 012-2 2 2 0 012 2v1a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Expert Resource File</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Comprehensive cheat sheet with all autonomous vehicle topics described precisely by industry experts. 
+                      Perfect for last-minute study and quick reference during interviews worth ₹1,500.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-pink-50 to-rose-50 rounded-lg border border-pink-100">
+                  <div className="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Exclusive Industry Expert Session</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      One-on-one session with top autonomous vehicle industry experts. Get insider insights and career guidance worth ₹3,500.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-lg border border-yellow-100">
+                  <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 10v4a3 3 0 01-3 3H4a3 3 0 01-3-3v-4a5 5 0 0110 0c0 .34.024.673.07 1H12.93z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">1:1 Interview Training</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Personalized interview preparation with mock interviews, technical questions, 
+                      and feedback from autonomous vehicle hiring managers worth ₹3,000.
+                    </p>
+                  </div>
+                </div>
+
+
+                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-red-50 to-pink-50 rounded-lg border border-red-100">
+                  <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/>
+                      <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Lifetime Community Access</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Join our exclusive WhatsApp community with 500+ autonomous vehicle engineers. 
+                      Get instant help, share projects, and network with industry professionals worth ₹1,000.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-indigo-50 to-blue-50 rounded-lg border border-indigo-100">
+                  <div className="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Certificate of Excellence</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Professional certificate endorsed by industry experts, perfect for LinkedIn 
+                      and portfolio. Includes project showcase and skills verification worth ₹999.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="my-8">
@@ -403,8 +543,70 @@ export default function AutonomousCarMasterclass() {
             </div>
           </div>
 
-          <div className="my-8 rounded-lg">
-            <h2 className="text-xl sm:text-2xl font-semibold mb-4">
+          {/* Why Choose This Bootcamp Section */}
+          <div className="my-12">
+            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md">
+              <h2 className="text-xl sm:text-2xl font-bold mb-6 flex items-center gap-2">
+                Why Choose This Bootcamp
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-sm">1</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-2">Industry-Standard Tools</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Learn with the same tools used by Tesla, Waymo, and Cruise - ROS2, Carla simulator, 
+                      and Python. Get hands-on experience with real autonomous vehicle development.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-sm">2</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-2">Project-Based Learning</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Build 8 real projects from lane detection to Tesla-style neural networks. 
+                      Each project builds on the previous one, creating a complete autonomous system.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-sm">3</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-2">Expert Mentorship</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Learn directly from Harpreet Singh, who has mentored 10,000+ students and 
+                      founded award-winning robotics startups. Get personalized guidance and career advice.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-sm">4</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-2">Career Ready Skills</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Graduate with a complete portfolio, industry connections, and the skills needed 
+                      to land jobs in autonomous vehicle companies or start your own robotics venture.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="my-8 sm:my-12 rounded-lg">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-4 sm:mb-6">
               About the Bootcamp
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
@@ -414,10 +616,7 @@ export default function AutonomousCarMasterclass() {
                 step-by-step. With live projects, recorded lectures, and
                 professional tools, you&apos;ll graduate with real skills and a
                 full portfolio.
-                {!showFullDescription && <span> ...</span>}
               </p>
-              {showFullDescription && (
-                <>
                   <div className="mb-4">
                     <strong className="text-lg font-semibold">
                       Top Projects You Will Build:
@@ -427,252 +626,160 @@ export default function AutonomousCarMasterclass() {
                         <span className="hidden sm:inline text-green-500 mr-2">
                           ✅
                         </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
+                    <span className="sm:hidden text-green-500 mr-2">•</span>
                         <span className="text-sm sm:text-base">
                           Lane Detection & Following (Level 1)
                         </span>
                       </li>
                       <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
+                    <span className="hidden sm:inline text-blue-500 mr-2">
                           ✅
                         </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
+                    <span className="sm:hidden text-blue-500 mr-2">•</span>
                         <span className="text-sm sm:text-base">
                           Traffic Light and Sign Handling (Level 2)
                         </span>
                       </li>
                       <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
+                    <span className="hidden sm:inline text-purple-500 mr-2">
                           ✅
                         </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
+                    <span className="sm:hidden text-purple-500 mr-2">•</span>
                         <span className="text-sm sm:text-base">
                           Lidar + Camera Obstacle Detection (Level 3)
                         </span>
                       </li>
                       <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
+                    <span className="hidden sm:inline text-orange-500 mr-2">
                           ✅
                         </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
+                    <span className="sm:hidden text-orange-500 mr-2">•</span>
                         <span className="text-sm sm:text-base">
                           Localization & SLAM System (Level 4)
                         </span>
                       </li>
                       <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
+                    <span className="hidden sm:inline text-red-500 mr-2">
                           ✅
                         </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
+                    <span className="sm:hidden text-red-500 mr-2">•</span>
                         <span className="text-sm sm:text-base">
                           Agent Prediction + Path Planning Stack (Level 5–6)
                         </span>
                       </li>
                       <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
+                    <span className="hidden sm:inline text-indigo-500 mr-2">
                           ✅
                         </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
+                    <span className="sm:hidden text-indigo-500 mr-2">•</span>
                         <span className="text-sm sm:text-base">
                           MPC Control Simulator (Level 7)
                         </span>
                       </li>
                       <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
+                    <span className="hidden sm:inline text-pink-500 mr-2">
                           ✅
                         </span>
-                        <span className="sm:hidden text-black mr-2">•</span>
+                    <span className="sm:hidden text-pink-500 mr-2">•</span>
                         <span className="text-sm sm:text-base">
                           Tesla-Style End-to-End Neural Driving Stack (Level 8)
                         </span>
                       </li>
                     </ul>
                   </div>
-                </>
-              )}
             </div>
-            <button
-              onClick={toggleDescription}
-              className="mt-1 text-sm sm:text-base text-[#3e48ce] rounded-md transition cursor-pointer"
-            >
-              {showFullDescription ? "Show Less" : "Show More"}
-            </button>
           </div>
 
-          <div className="my-12">
-            <h2 className="text-xl sm:text-2xl font-semibold md:mb-6 mb-3">
+          <div className="my-8 sm:my-12">
+            <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 border border-blue-200 rounded-xl p-4 sm:p-6 shadow-lg">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 text-center text-gray-800">
               Who Is This Bootcamp For
             </h2>
-            <div className="block md:hidden">
-              <div className="w-full my-3 flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-4 bg-gray-100">
-                <div className="flex items-center mb-2">
-                  <Image
-                    src="/college-student.svg"
-                    alt="College Student"
-                    width={32}
-                    height={32}
-                  />
-                  <span className="text-lg font-semibold ml-2">
-                    College Students
-                  </span>
-                </div>
-                <p className="text-gray-600">
-                  Perfect if you&apos;re studying engineering, computer science
-                  or robotics and want hands-on experience with autonomous
-                  systems.
-                </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <div className="bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg p-4 border border-blue-300 shadow-md hover:shadow-lg transition-shadow duration-300">
+                  <h3 className="font-bold text-gray-800 mb-3 text-sm sm:text-base">🎓 Students & Learners</h3>
+                  <ul className="space-y-2 text-xs sm:text-sm text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-600 mt-1 font-bold">•</span>
+                      <span>Computer Science & Engineering students</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-600 mt-1 font-bold">•</span>
+                      <span>Robotics & AI enthusiasts</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-600 mt-1 font-bold">•</span>
+                      <span>Tech hobbyists with no prior experience</span>
+                    </li>
+                  </ul>
               </div>
 
-              {/* Carousel Card 2 */}
-              <div className="w-full my-3 flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-6 bg-gray-100">
-                <div className="flex items-center mb-2">
-                  <Image
-                    src="/working-engineer.svg"
-                    alt="Working Engineer"
-                    width={32}
-                    height={32}
-                  />
-                  <span className="text-lg font-bold ml-2">
-                    Working Engineers
-                  </span>
-                </div>
-                <p className="text-gray-600">
-                  Ideal for software engineers, or roboticists looking to
-                  transition into autonomous vehicles.
-                </p>
-              </div>
-
-              {/* Carousel Card 3 */}
-              <div className="w-full my-3 flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-6 bg-gray-100">
-                <div className="flex items-center mb-2">
-                  <Image
-                    src="/startup-founder.svg"
-                    alt="Startup Founder"
-                    width={32}
-                    height={32}
-                  />
-                  <span className="text-lg font-bold ml-2">Tech Hobbyists</span>
-                </div>
-                <p className="text-gray-600">
-                  Build your first autonomous car logic from scratch. No prior
-                  experience needed.
-                </p>
-              </div>
+                <div className="bg-gradient-to-br from-green-100 to-green-200 rounded-lg p-4 border border-green-300 shadow-md hover:shadow-lg transition-shadow duration-300">
+                  <h3 className="font-bold text-gray-800 mb-3 text-sm sm:text-base">💼 Working Professionals</h3>
+                  <ul className="space-y-2 text-xs sm:text-sm text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-600 mt-1 font-bold">•</span>
+                      <span>Software Engineers & Developers</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-600 mt-1 font-bold">•</span>
+                      <span>AI & Robotics professionals</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-600 mt-1 font-bold">•</span>
+                      <span>Career changers to AV industry</span>
+                    </li>
+                  </ul>
             </div>
 
-            {/* Carousel Container */}
-            <div className="relative hidden md:block">
-              {/* Left Arrow Button */}
-              <button
-                onClick={() => scroll("left")}
-                className={`absolute left-0 top-1/2 cursor-pointer ml-2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-all ${
-                  canScrollLeft
-                    ? "opacity-100"
-                    : "opacity-0 pointer-events-none"
-                }`}
-                aria-label="Scroll left"
-              >
-                <ChevronLeft className="h-6 w-6 text-gray-700" />
-              </button>
-
-              {/* Carousel */}
-              <div
-                ref={carouselRef}
-                className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4"
-                style={{
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none",
-                  WebkitOverflowScrolling: "touch",
-                }}
-                onScroll={checkScrollButtons}
-              >
-                <style jsx>{`
-                  div::-webkit-scrollbar {
-                    display: none;
-                  }
-                `}</style>
-
-                {/* Carousel Card 1 */}
-                <div className="min-w-[calc(40%-1rem)] w-[calc(40%-0.5rem)] flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-4 bg-gray-100">
-                  <div className="flex items-center mb-2">
-                    <Image
-                      src="/college-student.svg"
-                      alt="College Student"
-                      width={32}
-                      height={32}
-                    />
-                    <span className="text-lg font-semibold ml-2">
-                      College Students
-                    </span>
-                  </div>
-                  <p className="text-gray-600">
-                    Perfect if you&apos;re studying engineering, computer
-                    science or robotics and want hands-on experience with
-                    autonomous systems.
-                  </p>
+                <div className="bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg p-4 border border-purple-300 shadow-md hover:shadow-lg transition-shadow duration-300">
+                  <h3 className="font-bold text-gray-800 mb-3 text-sm sm:text-base">🚀 Entrepreneurs & Innovators</h3>
+                  <ul className="space-y-2 text-xs sm:text-sm text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-600 mt-1 font-bold">•</span>
+                      <span>Startup founders & product managers</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-600 mt-1 font-bold">•</span>
+                      <span>Researchers & academics</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-600 mt-1 font-bold">•</span>
+                      <span>Anyone building the future of mobility</span>
+                    </li>
+                  </ul>
                 </div>
 
-                {/* Carousel Card 2 */}
-                <div className="min-w-[calc(40%-1rem)] w-[calc(40%-0.5rem)] flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-6 bg-gray-100">
-                  <div className="flex items-center mb-2">
-                    <Image
-                      src="/working-engineer.svg"
-                      alt="Working Engineer"
-                      width={32}
-                      height={32}
-                    />
-                    <span className="text-lg font-bold ml-2">
-                      Working Engineers
-                    </span>
+                <div className="bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg p-4 border border-orange-300 shadow-md hover:shadow-lg transition-shadow duration-300">
+                  <h3 className="font-bold text-gray-800 mb-3 text-sm sm:text-base">🎯 Perfect For</h3>
+                  <ul className="space-y-2 text-xs sm:text-sm text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-orange-600 mt-1 font-bold">•</span>
+                      <span>Building real autonomous systems</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-orange-600 mt-1 font-bold">•</span>
+                      <span>Getting industry-ready skills</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-orange-600 mt-1 font-bold">•</span>
+                      <span>Advancing your career in AV</span>
+                    </li>
+                  </ul>
                   </div>
-                  <p className="text-gray-600">
-                    Ideal for software engineers, or roboticists looking to
-                    transition into autonomous vehicles.
-                  </p>
                 </div>
-
-                {/* Carousel Card 3 */}
-                <div className="min-w-[calc(40%-1rem)] w-[calc(40%-0.5rem)] flex-shrink-0 snap-start rounded-xl border border-gray-200 shadow-sm p-6 bg-gray-100">
-                  <div className="flex items-center mb-2">
-                    <Image
-                      src="/startup-founder.svg"
-                      alt="Startup Founder"
-                      width={32}
-                      height={32}
-                    />
-                    <span className="text-lg font-bold ml-2">
-                      Founders & Innovators
-                    </span>
-                  </div>
-                  <p className="text-gray-600">
-                    For founders and product managers looking to understand the
-                    technical foundations of autonomous systems.
-                  </p>
-                </div>
-              </div>
-
-              {/* Right Arrow Button */}
-              <button
-                onClick={() => scroll("right")}
-                className={`absolute right-0 top-1/2 cursor-pointer mr-2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-all ${
-                  canScrollRight
-                    ? "opacity-100"
-                    : "opacity-0 pointer-events-none"
-                }`}
-                aria-label="Scroll right"
-              >
-                <ChevronRight className="h-6 w-6 text-gray-700" />
-              </button>
             </div>
           </div>
 
           <div className="my-8">
-            <div className="text-xl sm:text-2xl font-semibold mb-4 flex items-center gap-2">
+            <div className="text-lg sm:text-xl lg:text-2xl font-semibold mb-4 sm:mb-6 flex items-center gap-2">
               <Image
                 src="/instructor.svg"
                 alt="Instructor"
-                width={32}
-                height={32}
+                width={24}
+                height={24}
+                className="w-6 h-6 sm:w-8 sm:h-8"
               />{" "}
               Meet Your Instructor
             </div>
@@ -845,25 +952,30 @@ export default function AutonomousCarMasterclass() {
                 Certificate of Completion
               </li>
             </ul>
-            <div className="mb-2">
-              <span className="text-xl sm:text-2xl font-bold text-black-600">
+            <div className="mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-2xl sm:text-3xl font-bold text-green-600">
                 ₹1,999
               </span>
-              <span className="text-sm sm:text-xl text-gray-500 line-through ml-2">
+                <span className="text-sm sm:text-lg text-gray-500 line-through">
                 ₹5,999
               </span>
-              <span className="text-sm sm:text-base text-black-600 ml-2">
-                {" "}
-                SAVE 66%
+                <span className="text-xs sm:text-sm bg-green-100 text-green-600 px-2 py-1 rounded-full font-semibold">
+                  SAVE 67%
               </span>
             </div>
-            <div className="text-sm mb-4">
+              <div className="text-xs sm:text-sm text-gray-600 mb-2">
+                <span className="text-black">+ ₹11,999 worth of bonuses included</span>
+              </div>
+              <div className="text-sm">
               <span className="text-black">Offer ends in</span>{" "}
-              <span className="text-[#df4271]">{formatTimeLeft()}</span>
+                <span className="text-[#df4271] font-semibold">{formatTimeLeft()}</span>
+              </div>
             </div>
             <ShimmerButton
               className="w-full bg-white-600 text-white py-2 px-4 rounded-lg hover:bg-white-700 transition duration-300 text-sm sm:text-base cursor-pointer"
               onClick={async () => {
+                setIsLoading(true);
                 try {
                   // First create order
                   const orderResponse = await fetch('/api/create-order', {
@@ -903,6 +1015,7 @@ export default function AutonomousCarMasterclass() {
                       }) {
                         console.log(response);
                         setShowThankYouModal(true);
+                        setIsLoading(false);
                       },
                       prefill: {
                         name: "",
@@ -917,8 +1030,10 @@ export default function AutonomousCarMasterclass() {
                     try {
                       const rzp = new window.Razorpay(options);
                       rzp.open();
+                      setIsLoading(false);
                     } catch (error) {
                       console.error("Error initializing Razorpay:", error);
+                      setIsLoading(false);
                     }
                   };
 
@@ -933,39 +1048,51 @@ export default function AutonomousCarMasterclass() {
                   }
                 } catch (error) {
                   console.error("Error purchasing course:", error);
+                  setIsLoading(false);
                 }
               }}
             >
-              Buy Now
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  Processing...
+                </div>
+              ) : (
+                "Buy Now"
+              )}
             </ShimmerButton>
           </div>
         </div>
       </div>
 
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-20">
-        <div className="bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-20 w-full">
+        <div className="bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] w-full">
           <div className="h-6 bg-[#fae3ea] mb-3 flex items-center justify-center">
-            <div className="text-sm text-[#df4271]">
+            <div className="text-sm text-[#df4271] px-2">
               Offer ends in {formatTimeLeft()}
             </div>
           </div>
-          <div className="flex p-2">
-            <div className="w-[40%] flex flex-col justify-center items-end pr-4">
-              <div className="flex items-center gap-2">
-                <span className="text-xl font-bold text-black-600">₹1,999</span>
+          <div className="flex p-2 w-full">
+            <div className="w-[40%] flex flex-col justify-center items-end pr-2 sm:pr-4">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <span className="text-lg sm:text-xl font-bold text-black-600">₹1,999</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500 line-through">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <span className="text-xs sm:text-sm text-gray-500 line-through">
                   ₹5,999
                 </span>
-                <span className="text-xs text-black-600">66% off</span>
+                <span className="text-xs text-green-600 bg-green-100 px-1 rounded">90% off</span>
               </div>
+              {/* <div className="text-xs text-gray-600 mt-1">
+                + ₹11,999 bonuses
+              </div> */}
             </div>
-            <div className="w-[70%]">
+            <div className="w-[60%] sm:w-[70%]">
               <ShimmerButton
                 borderRadius="8px"
                 className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
                 onClick={async () => {
+                  setIsLoading(true);
                   try {
                     // First create order
                     const orderResponse = await fetch('/api/create-order', {
@@ -1005,6 +1132,7 @@ export default function AutonomousCarMasterclass() {
                         }) {
                           console.log(response);
                           setShowThankYouModal(true);
+                          setIsLoading(false);
                         },
                         prefill: {
                           name: "",
@@ -1019,8 +1147,10 @@ export default function AutonomousCarMasterclass() {
                       try {
                         const rzp = new window.Razorpay(options);
                         rzp.open();
+                        setIsLoading(false);
                       } catch (error) {
                         console.error("Error initializing Razorpay:", error);
+                        setIsLoading(false);
                       }
                     };
 
@@ -1035,10 +1165,18 @@ export default function AutonomousCarMasterclass() {
                     }
                   } catch (error) {
                     console.error("Error purchasing course:", error);
+                    setIsLoading(false);
                   }
                 }}
               >
-                Buy Now
+                {isLoading ? (
+                  <div className="flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    Processing...
+                  </div>
+                ) : (
+                  "Buy Now"
+                )}
               </ShimmerButton>
             </div>
           </div>
