@@ -75,8 +75,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         method: 'POST',
       });
       setUser(null);
+      // Force a page refresh to clear any server-side state
+      window.location.href = '/';
     } catch (error) {
       console.error('Logout failed:', error);
+      // Even if the API call fails, redirect to home page
+      window.location.href = '/';
     }
   };
 

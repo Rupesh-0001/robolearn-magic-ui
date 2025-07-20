@@ -1,5 +1,6 @@
 import VideoModal from '../../components/ui/VideoModal';
 import { cookies, headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import Image from 'next/image';
 import ProfilePageClient from '../../components/profile/ProfilePageClient';
 
@@ -33,7 +34,7 @@ async function fetchWithAuth(url: string) {
 }
 
 const courseImages: Record<string, string> = {
-  'Autonomous Car': '/autonomousCar.png',
+  'Autonomous Car': '/CarCourse.png',
   // Add more course name to image mappings here
 };
 
@@ -44,8 +45,14 @@ export default async function ProfilePage() {
   const baseUrl = `${protocol}://${host}`;
 
   const userData = await fetchWithAuth(`${baseUrl}/api/auth/me`);
+  
+  // If no user is authenticated, redirect to login
+  if (!userData?.user) {
+    redirect('/login');
+  }
+
   const courses: Course[] = (await fetchWithAuth(`${baseUrl}/api/auth/my-courses`)) || [];
-  const user: User | null = userData?.user || null;
+  const user: User = userData.user;
 
   return <ProfilePageClient user={user} courses={courses} courseImages={courseImages} />;
 } 

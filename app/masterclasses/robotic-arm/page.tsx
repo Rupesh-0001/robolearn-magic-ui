@@ -174,6 +174,8 @@ export default function RoboticArmMasterclass() {
         body: JSON.stringify(submitData),
       });
 
+
+
       // Fire Meta Pixel Lead event
       if (
         typeof window !== "undefined" &&

@@ -143,11 +143,12 @@ export function Navbar() {
                     onMouseLeave={() => setDropdownOpen(false)}
                   >
                     <button
-                      className="w-9 h-9 rounded-full bg-gray-800 text-white flex items-center justify-center text-lg font-bold border-2 border-gray-300 cursor-pointer select-none transition-colors"
+                      className="w-12 h-12 rounded-full bg-gradient-to-br from-[#df4271] via-[#ff4164] to-[#df4271] text-white flex items-center justify-center text-lg font-bold border-2 border-white/30 shadow-lg hover:shadow-xl cursor-pointer select-none transition-all duration-300 hover:scale-105 hover:from-[#c41b4e] hover:to-[#df4271] relative overflow-hidden group"
                       aria-label="User menu"
                       onClick={() => { if (isSmallScreen) setDropdownOpen((open) => !open); }}
                     >
-                      {user.name?.charAt(0).toUpperCase() || "U"}
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <span className="relative z-10 drop-shadow-sm">{user.name?.charAt(0).toUpperCase() || "U"}</span>
                     </button>
                     {dropdownOpen && (
                       <div
