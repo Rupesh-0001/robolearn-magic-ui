@@ -90,8 +90,8 @@ export default function AutonomousCarMasterclass() {
   };
 
   return (
-    <main className="container mx-auto px-4 sm:px-6 pt-16 mt-6 2xl:pb-8 pb-32 lg:pb-24" style={{ overflowX: 'hidden', minHeight: '100vh' }}>
-      <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-11 lg:items-start lg:min-h-screen">
+    <main className="container mx-auto px-4 pt-16 mt-6 2xl:pb-8 pb-24">
+      <div className="flex flex-col lg:flex-row gap-11">
         <div className="w-full lg:w-7/10" style={{ minHeight: '100vh' }}>
           <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit rounded font-semibold">
             AUTONOMOUS CAR COURSE
