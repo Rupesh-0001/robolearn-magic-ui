@@ -39,7 +39,7 @@ export default function AutonomousCarMasterclass() {
 
 
   useEffect(() => {
-    const endDate = new Date("2025-07-20T23:59:59");
+    const endDate = new Date("2025-07-22T23:59:59");
 
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -1081,7 +1081,7 @@ export default function AutonomousCarMasterclass() {
                 <span className="text-xs sm:text-sm text-gray-500 line-through">
                   ₹5,999
                 </span>
-                <span className="text-xs text-green-600 bg-green-100 px-1 rounded">90% off</span>
+                <span className="text-xs text-green-600 bg-green-100 px-1 rounded">67% off</span>
               </div>
               {/* <div className="text-xs text-gray-600 mt-1">
                 + ₹11,999 bonuses
