@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Stats } from "@/components/sections/Stats";
 import { TypewriterText } from "@/components/ui/TypewriterText";
+import { ShimmerButton } from "@/components/magicui/shimmer-button";
 
 export function Hero() {
   return (
@@ -26,26 +27,30 @@ export function Hero() {
       </div>
 
       <div className="flex justify-center mt-8 sm:mt-12">
-        <Link
-          href="/masterclasses"
-          className="rounded border border-solid border-transparent transition-colors flex items-center justify-center bg-[#ff4164] text-background gap-2 hover:bg-[#ff1c46]/90 dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-5 w-5 sm:h-6 sm:w-6"
+        <Link href="/masterclasses">
+          <ShimmerButton
+            className="flex items-center justify-center gap-2 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
+            background="rgba(255, 65, 100, 1)"
+            shimmerColor="#ffffff"
+            borderRadius="8px"
           >
-            <rect width="7" height="7" x="14" y="3" rx="1"></rect>
-            <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
-          </svg>
-          Explore Free Masterclass
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-5 w-5 sm:h-6 sm:w-6"
+            >
+              <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+              <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
+            </svg>
+            Explore Free Masterclass
+          </ShimmerButton>
         </Link>
       </div>
 
