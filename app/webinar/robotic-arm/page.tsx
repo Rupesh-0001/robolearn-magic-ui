@@ -779,14 +779,14 @@ export default function RoboticArmWebinar() {
                 </a>
                 &nbsp; or contact us on &nbsp;
                 <a
-                  href="tel:+919878555767"
+                  href="tel:+917696433339"
                   className="text-[#3e48ce] underline"
                 >
                   +91 987 855 5767
                 </a>
               </p>
               <a
-                href="https://wa.me/919878555767?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Robotic%20Arm%20Masterclass"
+                href="https://wa.me/917696433339?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Robotic%20Arm%20Masterclass"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center mt-4 px-6 py-3 bg-white hover:bg-gray-900 text-gray-900 border border-gray-900 hover:text-white font-medium rounded-lg transition-colors"

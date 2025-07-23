@@ -19,8 +19,8 @@ export function Footer() {
                 GNE College, Ludhiana, Ludhiana<br />
                 Punjab, India - 141006
               </p>
-              <p className="text-[13.8px] text-muted-foreground">
-                <strong>Contact:</strong> +91 9878555767
+              <p className="text-sm text-muted-foreground">
+                <strong>Contact:</strong> +91 7696433339
               </p>
               <p className="text-[13.8px] text-muted-foreground">
                 <strong>Email:</strong> support@robolearn.in

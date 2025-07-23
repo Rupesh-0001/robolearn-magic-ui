@@ -236,7 +236,7 @@ export default function RefundPage() {
                 <strong>Subject Line:</strong> Refund Inquiry - [Your Order ID]
               </p>
               <p className="text-muted-foreground">
-                <strong>Phone:</strong> +91 9878555767 (Mon-Fri, 9 AM - 6 PM IST)
+                <strong>Phone:</strong> +91 7696433339 (Mon-Fri, 9 AM - 6 PM IST)
               </p>
               <p className="text-muted-foreground">
                 <strong>Address:</strong> ROBOLEARNINDIA LLP, B-29-1251/2c/581/1a St- 1 3-r, Ludhiana, GNE College, Ludhiana, Ludhiana, Punjab, India - 141006
