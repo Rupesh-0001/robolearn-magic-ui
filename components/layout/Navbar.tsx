@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { usePathname } from "next/navigation";
+import { ShimmerButton } from "@/components/magicui/shimmer-button";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -93,29 +94,33 @@ export function Navbar() {
                     {item.name}
                   </Link>
                 ))}
-                <Link
-                  href="/masterclasses"
-                  className={cn(
-                    "rounded border border-solid border-transparent transition-colors flex items-center justify-center bg-[#ff4164] text-white gap-2 hover:bg-[#ff1c46]/90 dark:hover:bg-[#ccc] font-medium",
-                    mounted && isSmallScreen ? "text-xs h-8 px-2" : "text-sm h-10 px-3"
-                  )}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className={cn("h-5 w-5", mounted && isSmallScreen && "h-4 w-4")}
+                <Link href="/masterclasses">
+                  <ShimmerButton
+                    className={cn(
+                      "flex items-center justify-center gap-2 font-medium",
+                      mounted && isSmallScreen ? "text-xs h-8 px-2" : "text-sm h-10 px-3"
+                    )}
+                    background="rgba(255, 65, 100, 1)"
+                    shimmerColor="#ffffff"
+                    borderRadius="8px"
                   >
-                    <rect width="7" height="7" x="14" y="3" rx="1"></rect>
-                    <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
-                  </svg>
-                  Explore Free Masterclass
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={cn("h-5 w-5", mounted && isSmallScreen && "h-4 w-4")}
+                    >
+                      <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+                      <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
+                    </svg>
+                    Explore Free Masterclass
+                  </ShimmerButton>
                 </Link>
               </div>
             </div>
@@ -166,29 +171,30 @@ export function Navbar() {
               </Link>
             ))}
 
-            <Link
-              href="/masterclasses"
-              className={cn(
-                "px-3 py-2 mt-2 rounded border w-fit border-solid border-transparent transition-colors font-medium text-base bg-[#ff4164] text-white flex gap-2 hover:bg-[#ff1c46]/90"
-              )}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className={cn("h-5 w-5", mounted && isSmallScreen && "h-4 w-4")}
+            <Link href="/masterclasses" onClick={() => setIsMenuOpen(false)}>
+              <ShimmerButton
+                className="mt-2 w-fit font-medium text-base flex gap-2"
+                background="rgba(255, 65, 100, 1)"
+                shimmerColor="#ffffff"
+                borderRadius="8px"
               >
-                <rect width="7" height="7" x="14" y="3" rx="1"></rect>
-                <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
-              </svg>
-              Explore
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={cn("h-5 w-5", mounted && isSmallScreen && "h-4 w-4")}
+                >
+                  <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+                  <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
+                </svg>
+                Explore
+              </ShimmerButton>
             </Link>
           </div>
         </div>
