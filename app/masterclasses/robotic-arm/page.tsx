@@ -355,7 +355,7 @@ export default function RoboticArmMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>20th July, 2025</span>
+                <span>Coming Soon</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -438,7 +438,7 @@ export default function RoboticArmMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  20th July, 2025
+                  Coming Soon
                 </span>
               </div>
 
@@ -566,7 +566,7 @@ export default function RoboticArmMasterclass() {
                         height={20}
                       />
                     </div>
-                    <span className="text-gray-800">20th July, 2025</span>
+                    <span className="text-gray-800">Coming Soon</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -921,7 +921,7 @@ export default function RoboticArmMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">20th July 2025</span>
+                  <span className="text-gray-800">Coming Soon</span>
                 </div>
 
                 <div className="flex items-center gap-2">

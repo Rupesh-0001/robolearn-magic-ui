@@ -25,7 +25,7 @@ import Image from "next/image";
 
 import '../../../types/razorpay';
 
-export default function RoboticsMasterclass() {
+export default function DroneProgrammingBootcamp() {
   const [openLecture, setOpenLecture] = useState<string | null>(null);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
@@ -118,22 +118,22 @@ export default function RoboticsMasterclass() {
       <div className="flex flex-col lg:flex-row gap-11">
         <div className="w-full lg:w-7/10">
           <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit rounded font-semibold">
-            ROBOTICS COURSE
+            DRONE PROGRAMMING COURSE
           </span>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">
-            Advanced Robotics Bootcamp
+            Drone Programming & ArduPilot Bootcamp
           </h1>
           <div className="mb-8 sm:mb-12">
             <Image
-              src="/robotMasterClass.png"
-              alt="Robotics"
+              src="/droneMasterClass.png"
+              alt="Drone Programming"
               className="rounded-lg shadow-lg w-full h-auto"
               width={800}
               height={450}
             />
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-8 sm:mb-12 mt-4 sm:mt-6 lg:hidden block">
-            Advanced Robotics Bootcamp
+            Drone Programming & ArduPilot Bootcamp
           </h1>
 
           <div className="lg:hidden my-8">
@@ -178,7 +178,7 @@ export default function RoboticsMasterclass() {
 
           <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200 my-8">
             <h2 className="text-xl pb-4 sm:text-2xl font-semibold mb-2">
-              What You&apos;ll Learn
+              What You Will Learn (4 Key Outcomes)
             </h2>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <li className="flex items-start">
@@ -186,8 +186,8 @@ export default function RoboticsMasterclass() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Build complete robotic systems from perception to manipulation
-                  using ROS2, Gazebo, and Python
+                  <strong>Master ArduPilot Simulation and Communication</strong><br/>
+                  Learn how to install, configure, and simulate ArduPilot environments with MAVProxy, SITL, and MAVLink protocols using Python.
                 </span>
               </li>
               <li className="flex items-start">
@@ -195,8 +195,8 @@ export default function RoboticsMasterclass() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Master computer vision, SLAM, and navigation algorithms for
-                  mobile robots
+                  <strong>Create Intelligent Drone Missions</strong><br/>
+                  Build and deploy autonomous drone missions using Python scripting with DroneKit and PyMAVLink, from basic takeoff to multi-location missions.
                 </span>
               </li>
               <li className="flex items-start">
@@ -204,8 +204,8 @@ export default function RoboticsMasterclass() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Implement robotic arm control, inverse kinematics, and
-                  manipulation planning
+                  <strong>Real-Time Telemetry and Vehicle Control</strong><br/>
+                  Gain hands-on experience in reading real-time telemetry data, sending commands, and monitoring vehicle states.
                 </span>
               </li>
               <li className="flex items-start">
@@ -213,8 +213,8 @@ export default function RoboticsMasterclass() {
                   <CheckIcon className="h-3 w-3 text-black" />
                 </span>
                 <span className="text-sm sm:text-base">
-                  Design AI-powered robots with deep learning for object
-                  recognition and decision making
+                  <strong>Autopilot Customization with LUA Scripting</strong><br/>
+                  Understand onboard scripting using LUA to add intelligence, automation, and custom behavior to drones directly on the autopilot system.
                 </span>
               </li>
             </ul>
@@ -231,16 +231,16 @@ export default function RoboticsMasterclass() {
                 >
                   <button
                     className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
-                      openLecture === "intro" ? "text-blue-600" : ""
+                      openLecture === "setup" ? "text-blue-600" : ""
                     } cursor-pointer rounded-md ${
-                      openLecture === "intro" ? "bg-blue-100" : ""
+                      openLecture === "setup" ? "bg-blue-100" : ""
                     }`}
-                    onClick={() => toggleLecture("intro")}
+                    onClick={() => toggleLecture("setup")}
                   >
                     <span className="text-sm sm:text-base">
-                      1. Introduction to Robotics
+                      1. Quickstart & Setup (Windows & Linux)
                     </span>
-                    {openLecture === "intro" ? (
+                    {openLecture === "setup" ? (
                       <ChevronUpIcon className="h-5 w-5" />
                     ) : (
                       <ChevronDownIcon className="h-5 w-5" />
@@ -248,21 +248,21 @@ export default function RoboticsMasterclass() {
                   </button>
                   <div
                     className={`px-4 py-2 ${
-                      openLecture === "intro" ? "" : "hidden"
+                      openLecture === "setup" ? "" : "hidden"
                     }`}
                   >
                     <ul className="list-disc pl-5 text-sm sm:text-base">
                       <li className="flex items-center py-1">
                         <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Robotics fundamentals and applications
+                        Install ArduPilot, MAVProxy, and SITL
                       </li>
                       <li className="flex items-center py-1">
                         <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Hardware components and sensors
+                        Build and launch a working simulation environment
                       </li>
                       <li className="flex items-center py-1">
                         <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        ROS2 ecosystem and architecture
+                        Set up development environment on your system
                       </li>
                     </ul>
                   </div>
@@ -272,16 +272,16 @@ export default function RoboticsMasterclass() {
                 >
                   <button
                     className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
-                      openLecture === "perception" ? "text-blue-600" : ""
+                      openLecture === "simulation" ? "text-blue-600" : ""
                     } cursor-pointer rounded-md ${
-                      openLecture === "perception" ? "bg-blue-100" : ""
+                      openLecture === "simulation" ? "bg-blue-100" : ""
                     }`}
-                    onClick={() => toggleLecture("perception")}
+                    onClick={() => toggleLecture("simulation")}
                   >
                     <span className="text-sm sm:text-base">
-                      2. Robot Perception and Vision
+                      2. Simulation Environment
                     </span>
-                    {openLecture === "perception" ? (
+                    {openLecture === "simulation" ? (
                       <ChevronUpIcon className="h-5 w-5" />
                     ) : (
                       <ChevronDownIcon className="h-5 w-5" />
@@ -289,21 +289,21 @@ export default function RoboticsMasterclass() {
                   </button>
                   <div
                     className={`px-4 py-2 ${
-                      openLecture === "perception" ? "" : "hidden"
+                      openLecture === "simulation" ? "" : "hidden"
                     }`}
                   >
                     <ul className="list-disc pl-5 text-sm sm:text-base">
                       <li className="flex items-center py-1">
                         <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Camera calibration and stereo vision
+                        Launch and manage simulation sessions using shell scripts
                       </li>
                       <li className="flex items-center py-1">
                         <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Object detection and tracking
+                        Automate the launch process and understand the role of proxies
                       </li>
                       <li className="flex items-center py-1">
                         <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        LiDAR processing and point clouds
+                        Configure simulation parameters and environments
                       </li>
                     </ul>
                   </div>
@@ -313,16 +313,16 @@ export default function RoboticsMasterclass() {
                 >
                   <button
                     className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
-                      openLecture === "navigation" ? "text-blue-600" : ""
+                      openLecture === "mavproxy" ? "text-blue-600" : ""
                     } cursor-pointer rounded-md ${
-                      openLecture === "navigation" ? "bg-blue-100" : ""
+                      openLecture === "mavproxy" ? "bg-blue-100" : ""
                     }`}
-                    onClick={() => toggleLecture("navigation")}
+                    onClick={() => toggleLecture("mavproxy")}
                   >
                     <span className="text-sm sm:text-base">
-                      3. Navigation and SLAM
+                      3. MAVProxy Command Line GCS
                     </span>
-                    {openLecture === "navigation" ? (
+                    {openLecture === "mavproxy" ? (
                       <ChevronUpIcon className="h-5 w-5" />
                     ) : (
                       <ChevronDownIcon className="h-5 w-5" />
@@ -330,21 +330,21 @@ export default function RoboticsMasterclass() {
                   </button>
                   <div
                     className={`px-4 py-2 ${
-                      openLecture === "navigation" ? "" : "hidden"
+                      openLecture === "mavproxy" ? "" : "hidden"
                     }`}
                   >
                     <ul className="list-disc pl-5 text-sm sm:text-base">
                       <li className="flex items-center py-1">
                         <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Simultaneous Localization and Mapping
+                        Learn MAVProxy modules like map, horizon, graph, fence, relay, servo
                       </li>
                       <li className="flex items-center py-1">
                         <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Path planning algorithms
+                        Control drone operations and monitor status via CLI
                       </li>
                       <li className="flex items-center py-1">
                         <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Obstacle avoidance and navigation
+                        Master command-line ground control station operations
                       </li>
                     </ul>
                   </div>
@@ -354,16 +354,16 @@ export default function RoboticsMasterclass() {
                 >
                   <button
                     className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
-                      openLecture === "manipulation" ? "text-blue-600" : ""
+                      openLecture === "operations" ? "text-blue-600" : ""
                     } cursor-pointer rounded-md ${
-                      openLecture === "manipulation" ? "bg-blue-100" : ""
+                      openLecture === "operations" ? "bg-blue-100" : ""
                     }`}
-                    onClick={() => toggleLecture("manipulation")}
+                    onClick={() => toggleLecture("operations")}
                   >
                     <span className="text-sm sm:text-base">
-                      4. Robotic Manipulation
+                      4. Basic Drone Operations
                     </span>
-                    {openLecture === "manipulation" ? (
+                    {openLecture === "operations" ? (
                       <ChevronUpIcon className="h-5 w-5" />
                     ) : (
                       <ChevronDownIcon className="h-5 w-5" />
@@ -371,21 +371,308 @@ export default function RoboticsMasterclass() {
                   </button>
                   <div
                     className={`px-4 py-2 ${
-                      openLecture === "manipulation" ? "" : "hidden"
+                      openLecture === "operations" ? "" : "hidden"
                     }`}
                   >
                     <ul className="list-disc pl-5 text-sm sm:text-base">
                       <li className="flex items-center py-1">
                         <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Forward and inverse kinematics
+                        Arm/disarm, set flight modes, takeoff, land, and navigate
                       </li>
                       <li className="flex items-center py-1">
                         <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Motion planning and control
+                        Full vehicle lifecycle control from boot to mission completion
                       </li>
                       <li className="flex items-center py-1">
                         <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
-                        Grasping and manipulation strategies
+                        Understand flight modes and safety protocols
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div
+                  className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}
+                >
+                  <button
+                    className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
+                      openLecture === "mission" ? "text-blue-600" : ""
+                    } cursor-pointer rounded-md ${
+                      openLecture === "mission" ? "bg-blue-100" : ""
+                    }`}
+                    onClick={() => toggleLecture("mission")}
+                  >
+                    <span className="text-sm sm:text-base">
+                      5. Mission Planning
+                    </span>
+                    {openLecture === "mission" ? (
+                      <ChevronUpIcon className="h-5 w-5" />
+                    ) : (
+                      <ChevronDownIcon className="h-5 w-5" />
+                    )}
+                  </button>
+                  <div
+                    className={`px-4 py-2 ${
+                      openLecture === "mission" ? "" : "hidden"
+                    }`}
+                  >
+                    <ul className="list-disc pl-5 text-sm sm:text-base">
+                      <li className="flex items-center py-1">
+                        <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Send missions, edit missions, clear and update mission waypoints
+                      </li>
+                      <li className="flex items-center py-1">
+                        <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Execute custom autonomous flight plans and monitor execution
+                      </li>
+                      <li className="flex items-center py-1">
+                        <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Create complex mission profiles and waypoint sequences
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div
+                  className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}
+                >
+                  <button
+                    className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
+                      openLecture === "fencing" ? "text-blue-600" : ""
+                    } cursor-pointer rounded-md ${
+                      openLecture === "fencing" ? "bg-blue-100" : ""
+                    }`}
+                    onClick={() => toggleLecture("fencing")}
+                  >
+                    <span className="text-sm sm:text-base">
+                      6. Fencing and Rally Points
+                    </span>
+                    {openLecture === "fencing" ? (
+                      <ChevronUpIcon className="h-5 w-5" />
+                    ) : (
+                      <ChevronDownIcon className="h-5 w-5" />
+                    )}
+                  </button>
+                  <div
+                    className={`px-4 py-2 ${
+                      openLecture === "fencing" ? "" : "hidden"
+                    }`}
+                  >
+                    <ul className="list-disc pl-5 text-sm sm:text-base">
+                      <li className="flex items-center py-1">
+                        <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Create, send, and test geofencing and rally points
+                      </li>
+                      <li className="flex items-center py-1">
+                        <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Improve safety and return logic during missions
+                      </li>
+                      <li className="flex items-center py-1">
+                        <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Implement boundary control and emergency procedures
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div
+                  className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}
+                >
+                  <button
+                    className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
+                      openLecture === "mavlink" ? "text-blue-600" : ""
+                    } cursor-pointer rounded-md ${
+                      openLecture === "mavlink" ? "bg-blue-100" : ""
+                    }`}
+                    onClick={() => toggleLecture("mavlink")}
+                  >
+                    <span className="text-sm sm:text-base">
+                      7. MAVLink Communication Basics
+                    </span>
+                    {openLecture === "mavlink" ? (
+                      <ChevronUpIcon className="h-5 w-5" />
+                    ) : (
+                      <ChevronDownIcon className="h-5 w-5" />
+                    )}
+                  </button>
+                  <div
+                    className={`px-4 py-2 ${
+                      openLecture === "mavlink" ? "" : "hidden"
+                    }`}
+                  >
+                    <ul className="list-disc pl-5 text-sm sm:text-base">
+                      <li className="flex items-center py-1">
+                        <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Understand message types, stream requests, telemetry data parsing
+                      </li>
+                      <li className="flex items-center py-1">
+                        <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Build telemetry and control pipelines using PyMAVLink
+                      </li>
+                      <li className="flex items-center py-1">
+                        <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Master MAVLink protocol for drone communication
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div
+                  className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}
+                >
+                  <button
+                    className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
+                      openLecture === "python" ? "text-blue-600" : ""
+                    } cursor-pointer rounded-md ${
+                      openLecture === "python" ? "bg-blue-100" : ""
+                    }`}
+                    onClick={() => toggleLecture("python")}
+                  >
+                    <span className="text-sm sm:text-base">
+                      8. Python Programming with DroneKit & PyMAVLink
+                    </span>
+                    {openLecture === "python" ? (
+                      <ChevronUpIcon className="h-5 w-5" />
+                    ) : (
+                      <ChevronDownIcon className="h-5 w-5" />
+                    )}
+                  </button>
+                  <div
+                    className={`px-4 py-2 ${
+                      openLecture === "python" ? "" : "hidden"
+                    }`}
+                  >
+                    <ul className="list-disc pl-5 text-sm sm:text-base">
+                      <li className="flex items-center py-1">
+                        <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Write Python scripts to control and monitor drones
+                      </li>
+                      <li className="flex items-center py-1">
+                        <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Full automation and integration into software systems
+                      </li>
+                      <li className="flex items-center py-1">
+                        <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Develop custom drone control applications
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div
+                  className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}
+                >
+                  <button
+                    className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
+                      openLecture === "parameters" ? "text-blue-600" : ""
+                    } cursor-pointer rounded-md ${
+                      openLecture === "parameters" ? "bg-blue-100" : ""
+                    }`}
+                    onClick={() => toggleLecture("parameters")}
+                  >
+                    <span className="text-sm sm:text-base">
+                      9. Reading and Writing Parameters
+                    </span>
+                    {openLecture === "parameters" ? (
+                      <ChevronUpIcon className="h-5 w-5" />
+                    ) : (
+                      <ChevronDownIcon className="h-5 w-5" />
+                    )}
+                  </button>
+                  <div
+                    className={`px-4 py-2 ${
+                      openLecture === "parameters" ? "" : "hidden"
+                    }`}
+                  >
+                    <ul className="list-disc pl-5 text-sm sm:text-base">
+                      <li className="flex items-center py-1">
+                        <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Use scripts to get/set flight speed, battery, yaw, RC inputs
+                      </li>
+                      <li className="flex items-center py-1">
+                        <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Dynamic runtime control and diagnostics of drone systems
+                      </li>
+                      <li className="flex items-center py-1">
+                        <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Configure and monitor autopilot parameters
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div
+                  className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}
+                >
+                  <button
+                    className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
+                      openLecture === "lua" ? "text-blue-600" : ""
+                    } cursor-pointer rounded-md ${
+                      openLecture === "lua" ? "bg-blue-100" : ""
+                    }`}
+                    onClick={() => toggleLecture("lua")}
+                  >
+                    <span className="text-sm sm:text-base">
+                      10. LUA Scripting (Autopilot Onboard)
+                    </span>
+                    {openLecture === "lua" ? (
+                      <ChevronUpIcon className="h-5 w-5" />
+                    ) : (
+                      <ChevronDownIcon className="h-5 w-5" />
+                    )}
+                  </button>
+                  <div
+                    className={`px-4 py-2 ${
+                      openLecture === "lua" ? "" : "hidden"
+                    }`}
+                  >
+                    <ul className="list-disc pl-5 text-sm sm:text-base">
+                      <li className="flex items-center py-1">
+                        <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Learn Lua scripting basics, write onboard logic, respond to conditions
+                      </li>
+                      <li className="flex items-center py-1">
+                        <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Embed custom logic into autopilot for advanced behavior
+                      </li>
+                      <li className="flex items-center py-1">
+                        <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Create intelligent onboard automation systems
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div
+                  className={`border rounded-lg p-1 shadow-md hover:bg-gray-50 transition-colors duration-200`}
+                >
+                  <button
+                    className={`w-full text-left px-4 py-2 font-semibold focus:outline-none flex justify-between items-center ${
+                      openLecture === "companion" ? "text-blue-600" : ""
+                    } cursor-pointer rounded-md ${
+                      openLecture === "companion" ? "bg-blue-100" : ""
+                    }`}
+                    onClick={() => toggleLecture("companion")}
+                  >
+                    <span className="text-sm sm:text-base">
+                      11. Companion Computer Integration
+                    </span>
+                    {openLecture === "companion" ? (
+                      <ChevronUpIcon className="h-5 w-5" />
+                    ) : (
+                      <ChevronDownIcon className="h-5 w-5" />
+                    )}
+                  </button>
+                  <div
+                    className={`px-4 py-2 ${
+                      openLecture === "companion" ? "" : "hidden"
+                    }`}
+                  >
+                    <ul className="list-disc pl-5 text-sm sm:text-base">
+                      <li className="flex items-center py-1">
+                        <RocketLaunchIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Send messages between onboard computer and GCS
+                      </li>
+                      <li className="flex items-center py-1">
+                        <CpuIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Enable smart onboard computation and interaction
+                      </li>
+                      <li className="flex items-center py-1">
+                        <ChartBarIcon className="h-4 w-4 mr-2 text-grey-700" />
+                        Integrate advanced computing capabilities with autopilot
                       </li>
                     </ul>
                   </div>
@@ -400,18 +687,20 @@ export default function RoboticsMasterclass() {
             </h2>
             <div className="text-base text-gray-700 leading-relaxed mb-1">
               <p className="mb-4">
-                This is a comprehensive, hands-on program to help you build
-                advanced robotic systems from the ground up. With real-world
-                projects, expert mentorship, and industry-standard tools,
-                you&apos;ll develop the skills needed for a career in robotics
-                engineering.
+                <strong>Drone Programming & ArduPilot Bootcamp</strong> is an advanced, hands-on training program
+                designed for learners who want to build intelligent drones and autonomous systems using
+                the ArduPilot autopilot software stack. This bootcamp combines simulation setup, Python
+                programming, MAVLink protocol mastery, and real-time telemetry interaction to prepare
+                you for drone R&D, robotics engineering, or defense UAV development. From writing
+                mission scripts to embedding LUA onboard logic, you&apos;ll go from zero to expert in
+                autonomous drone systems.
                 {!showFullDescription && <span> ...</span>}
               </p>
               {showFullDescription && (
                 <>
                   <div className="mb-4">
                     <strong className="text-lg font-semibold">
-                      Top Projects You Will Build:
+                      Key Learning Outcomes:
                     </strong>
                     <ul className="list-none mt-4 space-y-1">
                       <li className="flex items-center">
@@ -420,7 +709,7 @@ export default function RoboticsMasterclass() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          Mobile Robot with SLAM Navigation
+                          Master ArduPilot simulation and MAVLink communication protocols
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -429,7 +718,7 @@ export default function RoboticsMasterclass() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          6-DOF Robotic Arm with Pick & Place
+                          Build autonomous drone missions with Python and DroneKit
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -438,7 +727,7 @@ export default function RoboticsMasterclass() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          Computer Vision Object Recognition System
+                          Implement real-time telemetry and vehicle control systems
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -447,7 +736,7 @@ export default function RoboticsMasterclass() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          Autonomous Drone with Path Planning
+                          Create custom LUA scripts for autopilot intelligence
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -456,7 +745,7 @@ export default function RoboticsMasterclass() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          Multi-Robot Coordination System
+                          Develop companion computer integration for advanced capabilities
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -465,7 +754,7 @@ export default function RoboticsMasterclass() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          AI-Powered Service Robot
+                          Master mission planning and geofencing for safety
                         </span>
                       </li>
                       <li className="flex items-center">
@@ -474,7 +763,7 @@ export default function RoboticsMasterclass() {
                         </span>
                         <span className="sm:hidden text-black mr-2">•</span>
                         <span className="text-sm sm:text-base">
-                          Industrial Automation System
+                          Build complete autonomous drone systems from simulation to deployment
                         </span>
                       </li>
                     </ul>
@@ -867,8 +1156,8 @@ export default function RoboticsMasterclass() {
                     key: razorpayKey,
                     amount: 499900,
                     currency: "INR",
-                    name: "Advanced Robotics Course",
-                    description: "Purchase of Advanced Robotics Course",
+                    name: "Drone Programming & ArduPilot Course",
+                    description: "Purchase of Drone Programming & ArduPilot Course",
                     handler: function (response: {
                       razorpay_payment_id: string;
                       razorpay_order_id: string;
@@ -947,8 +1236,8 @@ export default function RoboticsMasterclass() {
                       key: razorpayKey,
                       amount: 499900,
                       currency: "INR",
-                      name: "Advanced Robotics Course",
-                      description: "Purchase of Advanced Robotics Course",
+                      name: "Drone Programming & ArduPilot Course",
+                      description: "Purchase of Drone Programming & ArduPilot Course",
                       handler: function (response: {
                         razorpay_payment_id: string;
                         razorpay_order_id: string;
