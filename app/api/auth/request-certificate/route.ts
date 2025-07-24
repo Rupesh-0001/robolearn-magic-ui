@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     // Insert certificate request
     await sql`
       INSERT INTO certificate_requests (student_id, course_name)
-      VALUES (${parseInt(studentId)}, ${course_name})
+      VALUES (${studentId}, ${course_name})
     `;
     return NextResponse.json({ success: true, message: 'Certificate request submitted.' });
   } catch (error) {

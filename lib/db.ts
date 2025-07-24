@@ -67,11 +67,11 @@ export interface BatchQueryResult {
 export async function initDatabase() {
   try {
     // Insert default students if they don't exist
-    const existingStudents = await sql<StudentQueryResult[]>`
+    const existingStudents = await sql`
       SELECT email FROM students WHERE email IN ('student@example.com', 'admin@example.com')
     `;
 
-    const existingEmails = existingStudents.map((student: StudentQueryResult) => student.email);
+    const existingEmails = existingStudents.map((student: Record<string, unknown>) => student.email as string);
 
     if (!existingEmails.includes('student@example.com')) {
       await sql`
@@ -88,11 +88,11 @@ export async function initDatabase() {
     }
 
     // Insert some sample batches
-    const existingBatches = await sql<BatchQueryResult[]>`
+    const existingBatches = await sql`
       SELECT course_name FROM batches WHERE course_name IN ('Autonomous Car Course', 'AI Agent Course')
     `;
 
-    const existingBatchNames = existingBatches.map((batch: BatchQueryResult) => batch.course_name);
+    const existingBatchNames = existingBatches.map((batch: Record<string, unknown>) => batch.course_name as string);
 
     if (!existingBatchNames.includes('Autonomous Car Course')) {
       await sql`

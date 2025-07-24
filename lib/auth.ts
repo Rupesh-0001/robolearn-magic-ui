@@ -9,6 +9,9 @@ export interface AuthToken {
   exp: number;
 }
 
+// Re-export User type from db.ts
+export type { User } from './db';
+
 // Generate JWT token
 export function generateToken(user: User): string {
   return jwt.sign({ user }, JWT_SECRET, { expiresIn: '7d' });
@@ -54,7 +57,7 @@ export async function authenticateUser(email: string, password: string): Promise
     }
 
     return null;
-  } catch {
+  } catch (error) {
     console.error('Error authenticating user:', error);
     return null;
   }
