@@ -58,7 +58,7 @@ export default function ExplorePage() {
 
 
           
-          <Link href="/masterclasses/autonomous-car" className="block transition-transform hover:scale-[1.02]">
+          <Link href="/masterclasses/autonomous-car?utm_medium=landing" className="block transition-transform hover:scale-[1.02]">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow h-full flex flex-col">
               <div className="h-56 md:h-64 bg-gray-200 relative">
                 <Image

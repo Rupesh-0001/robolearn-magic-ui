@@ -195,6 +195,27 @@ export default function AIAgentMasterclass() {
         body: JSON.stringify(submitData),
       });
 
+      // Send onboarding email
+      if (formData.email) {
+        try {
+          await fetch('/api/send-onboarding-email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: formData.name,
+              email: formData.email,
+              course: 'Autonomous Car Masterclass',
+              phone: formData.phone,
+            }),
+          });
+        } catch (emailError) {
+          console.error('Error sending onboarding email:', emailError);
+          // Don't fail the entire enrollment if email fails
+        }
+      }
+
       // Fire Meta Pixel Lead event
       if (
         typeof window !== "undefined" &&
@@ -219,7 +240,7 @@ export default function AIAgentMasterclass() {
 
       // Show success message
       showToast(
-        "Registration successful! You will receive further details on WhatsApp.",
+        "Registration successful! Check your email for onboarding details and WhatsApp group link.",
         "success"
       );
     } catch (error) {
@@ -1091,7 +1112,7 @@ export default function AIAgentMasterclass() {
                     value={formData.age}
                     onChange={handleInputChange}
                     required
-                    placeholder="Enter your age"
+                    placeholder="Enter your graduation year"
                     className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors ${
                       formErrors.age
                         ? "border-red-300 focus:ring-red-500 focus:border-red-500"

@@ -22,7 +22,6 @@ export default function AIAgentMasterclass() {
     age: "",
   });
   const [source, setSource] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState({
     name: "",
     phone: "",
@@ -172,62 +171,97 @@ export default function AIAgentMasterclass() {
       return;
     }
 
-    setIsSubmitting(true);
-
-    const GOOGLE_SHEET_URL =
-      "https://script.google.com/macros/s/AKfycby55nPUlX_xBUrVlNi8JyvuEUNomDzvIto-R4Dj4z1KM-mAnDarBkJlZxCHC2z7SdF_/exec";
     const submitData = {
-      sheetName: "AutonomousCar",
       name: formData.name,
       email: formData.email,
       age: formData.age,
       phoneNumber: formData.phone,
-      source: source,
+      utm: source, // Use the same source (utm_medium) for the utm column
     };
 
-    try {
-      await fetch(GOOGLE_SHEET_URL, {
+    const GOOGLE_SHEET_URL =
+      "https://script.google.com/macros/s/AKfycby55nPUlX_xBUrVlNi8JyvuEUNomDzvIto-R4Dj4z1KM-mAnDarBkJlZxCHC2z7SdF_/exec";
+
+    // Try database first (fire and forget)
+    fetch('/api/leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(submitData),
+    }).catch(() => {
+      // If database fails, fall back to Google Sheets
+      console.log('Database insertion failed, falling back to Google Sheets');
+      
+      const googleSheetData = {
+        sheetName: "AutonomousCar",
+        name: formData.name,
+        email: formData.email,
+        age: formData.age,
+        phoneNumber: formData.phone,
+        source: source,
+      };
+
+      fetch(GOOGLE_SHEET_URL, {
         method: "POST",
         mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(submitData),
+        body: JSON.stringify(googleSheetData),
       });
+    });
 
-      // Fire Meta Pixel Lead event
-      if (
-        typeof window !== "undefined" &&
-        "fbq" in window &&
-        typeof window.fbq === "function"
-      ) {
-        (window.fbq as (event: "track", eventName: string) => void)(
-          "track",
-          "Lead"
-        );
-      }
-
-      // Clear form and close modal
-      setFormData({ name: "", phone: "", email: "", age: "" });
-      setFormErrors({ name: "", phone: "", email: "", age: "" });
-      setShowEnrollModal(false);
-
-      // Show thank you modal after a brief delay
-      setTimeout(() => {
-        setShowThankYouModal(true);
-      }, 300);
-
-      // Show success message
-      showToast(
-        "Registration successful! You will receive further details on WhatsApp.",
-        "success"
-      );
-    } catch (error) {
-      console.error("Error:", error);
-      showToast("An error occurred. Please try again.", "error");
-    } finally {
-      setIsSubmitting(false);
+    // Send onboarding email (fire and forget)
+    if (formData.email) {
+      fetch('/api/send-onboarding-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          course: 'Autonomous Car Masterclass',
+          phone: formData.phone,
+        }),
+      }).catch((emailError) => {
+        console.error('Error sending onboarding email:', emailError);
+      });
     }
+
+    // Fire Meta Pixel Lead event
+    if (
+      typeof window !== "undefined" &&
+      "fbq" in window &&
+      typeof window.fbq === "function"
+    ) {
+      (window.fbq as (event: "track", eventName: string) => void)(
+        "track",
+        "Lead"
+      );
+    }
+
+    // Clear form and close modal immediately
+    setFormData({ name: "", phone: "", email: "", age: "" });
+    setFormErrors({ name: "", phone: "", email: "", age: "" });
+    setShowEnrollModal(false);
+
+    // Show thank you modal after a brief delay
+    setTimeout(() => {
+      setShowThankYouModal(true);
+      
+      // Auto-open WhatsApp after 500ms if user hasn't clicked
+      setTimeout(() => {
+        window.open('https://chat.whatsapp.com/JRDFia7p0ts1NVIsuVPidX?', '_blank');
+      }, 500);
+    }, 300);
+
+    // Show success message
+    showToast(
+      "Registration successful! Check your email for onboarding details and WhatsApp group link.",
+      "success"
+    );
   };
 
   // Add countdown state
@@ -305,23 +339,26 @@ export default function AIAgentMasterclass() {
       const utmMedium = params.get("utm_medium");
 
       // Check if we already have a saved source
-      let savedSource = localStorage.getItem("original_utm_medium");
+      let savedSource = sessionStorage.getItem("original_utm_medium");
 
       if (!savedSource && utmMedium) {
-        // Save the first UTM to localStorage
-        localStorage.setItem("original_utm_medium", utmMedium);
+        // Save the UTM to sessionStorage (this is the original source)
+        sessionStorage.setItem("original_utm_medium", utmMedium);
         savedSource = utmMedium;
       }
 
       // Use the saved source for form submission
       if (savedSource) setSource(savedSource);
 
-      // Update the URL to utm_medium=share (or add if not present)
-      params.set("utm_medium", "share");
-      const newUrl =
-        window.location.pathname +
-        (params.toString() ? "?" + params.toString() : "");
-      window.history.replaceState({}, "", newUrl);
+      // Only update URL if utm_medium is not already "share"
+      // This prevents infinite loops and only adds "share" when needed
+      if (utmMedium !== "share") {
+        params.set("utm_medium", "share");
+        const newUrl =
+          window.location.pathname +
+          (params.toString() ? "?" + params.toString() : "");
+        window.history.replaceState({}, "", newUrl);
+      }
     }
   }, []);
 
@@ -1178,36 +1215,10 @@ export default function AIAgentMasterclass() {
                   </p>
                 <button
                   type="submit"
-                  disabled={isSubmitting || !isFormValid()}
+                  disabled={!isFormValid()}
                   className="w-full bg-gray-950 hover:bg-black cursor-pointer text-white font-medium px-4 py-3 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? (
-                    <span className="flex items-center justify-center">
-                      <svg
-                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Enrolling...
-                    </span>
-                  ) : (
-                    "Enroll Now"
-                  )}
+                  Enroll Now
                 </button>
                 <button
                   type="button"

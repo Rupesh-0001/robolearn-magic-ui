@@ -9,6 +9,7 @@ services:
     volumes:
       - .:/app  # Mounts the current directory to /app in the container (useful for development)
       - /app/.next  # Keep .next build cache in container to avoid conflicts
+      - /app/node_modules  # Keep node_modules in container to avoid conflicts
     networks:
       - robolearn-network
 
