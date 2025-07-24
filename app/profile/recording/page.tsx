@@ -1,9 +1,9 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { X as XIcon } from 'lucide-react';
 
-export default function RecordingPage() {
+function RecordingPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const lessonIdx = searchParams.get('lesson');
@@ -70,5 +70,13 @@ export default function RecordingPage() {
         />
       </div>
     </div>
+  );
+}
+
+export default function RecordingPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center h-screen text-xl text-white">Loading...</div>}>
+      <RecordingPageContent />
+    </Suspense>
   );
 } 
