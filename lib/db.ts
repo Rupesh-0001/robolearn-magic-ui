@@ -21,7 +21,15 @@ export interface Batch {
   batch_id: number;
   course_name: string;
   course_start_date: Date;
-  lessons: any; // JSONB field
+  lessons: Lesson[]; // JSONB field - array of lessons
+}
+
+export interface Lesson {
+  id: string;
+  title: string;
+  description?: string;
+  videoUrl?: string;
+  duration?: number;
 }
 
 export interface Enrollment {
@@ -46,15 +54,24 @@ export interface UserWithPassword extends User {
   password: string;
 }
 
+// Database query result types
+export interface StudentQueryResult {
+  email: string;
+}
+
+export interface BatchQueryResult {
+  course_name: string;
+}
+
 // Initialize database with default data
 export async function initDatabase() {
   try {
     // Insert default students if they don't exist
-    const existingStudents = await sql`
+    const existingStudents = await sql<StudentQueryResult[]>`
       SELECT email FROM students WHERE email IN ('student@example.com', 'admin@example.com')
     `;
 
-    const existingEmails = existingStudents.map((student: any) => student.email);
+    const existingEmails = existingStudents.map((student: StudentQueryResult) => student.email);
 
     if (!existingEmails.includes('student@example.com')) {
       await sql`
@@ -71,11 +88,11 @@ export async function initDatabase() {
     }
 
     // Insert some sample batches
-    const existingBatches = await sql`
+    const existingBatches = await sql<BatchQueryResult[]>`
       SELECT course_name FROM batches WHERE course_name IN ('Autonomous Car Course', 'AI Agent Course')
     `;
 
-    const existingBatchNames = existingBatches.map((batch: any) => batch.course_name);
+    const existingBatchNames = existingBatches.map((batch: BatchQueryResult) => batch.course_name);
 
     if (!existingBatchNames.includes('Autonomous Car Course')) {
       await sql`

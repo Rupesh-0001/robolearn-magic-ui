@@ -1,7 +1,7 @@
-import VideoModal from '../../components/ui/VideoModal';
+// import VideoModal from '../../components/ui/VideoModal';
 import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import Image from 'next/image';
+// import Image from 'next/image';
 import ProfilePageClient from '../../components/profile/ProfilePageClient';
 
 interface Lesson {

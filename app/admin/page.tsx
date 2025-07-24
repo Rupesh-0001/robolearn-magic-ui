@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
-import { sql } from '@/lib/db';
+// import { sql } from '@/lib/db';
 
 interface Student {
   student_id: number;
@@ -49,15 +49,15 @@ export default function AdminDashboard() {
   const [certReqLoading, setCertReqLoading] = useState(false);
   const [certReqError, setCertReqError] = useState('');
   const [activeTab, setActiveTab] = useState<'students' | 'batches' | 'enrollments' | 'certificates'>('students');
-  const [showCreateUserModal, setShowCreateUserModal] = useState(false);
-  const [newUser, setNewUser] = useState({
-    name: '',
-    email: '',
-    phone_number: '',
-    password: '',
-    role: 'student' as 'student' | 'admin'
-  });
-  const [isCreating, setIsCreating] = useState(false);
+  // const [showCreateUserModal, setShowCreateUserModal] = useState(false);
+  // const [newUser, setNewUser] = useState({
+  //   name: '',
+  //   email: '',
+  //   phone_number: '',
+  //   password: '',
+  //   role: 'student' as 'student' | 'admin'
+  // });
+  // const [isCreating, setIsCreating] = useState(false);
   const [rowLoading, setRowLoading] = useState<{ [id: number]: boolean }>({});
 
   useEffect(() => {
@@ -106,7 +106,7 @@ export default function AdminDashboard() {
         setCertReqError('Failed to fetch certificate requests');
       }
       setCertReqLoading(false);
-    } catch (error) {
+    } catch {
       setCertReqError('Failed to fetch certificate requests');
       setCertReqLoading(false);
     }
@@ -127,7 +127,7 @@ export default function AdminDashboard() {
       if (res.ok) {
         await fetchData();
       }
-    } catch (e) {}
+    } catch {}
     setRowLoading((prev) => ({ ...prev, [id]: false }));
   };
 

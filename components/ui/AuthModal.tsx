@@ -69,7 +69,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
       } else {
         setError(data.error || "Registration failed");
       }
-    } catch (error) {
+    } catch {
       setError("Registration failed. Please try again.");
     }
     setLoading(false);

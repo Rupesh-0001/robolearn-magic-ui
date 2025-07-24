@@ -1,5 +1,5 @@
 'use client';
-import { User as UserIcon, Calendar as CalendarIcon, BookOpen, GraduationCap, ChevronDown, ChevronUp, ExternalLink, X as XIcon, UserCircle2, Play, Clock, Award, Sparkles, ArrowRight } from 'lucide-react';
+import { User as UserIcon, Calendar as CalendarIcon, BookOpen, GraduationCap, UserCircle2, Clock, Award, Sparkles, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 import { useRouter } from 'next/navigation';

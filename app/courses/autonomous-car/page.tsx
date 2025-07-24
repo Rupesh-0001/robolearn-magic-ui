@@ -17,7 +17,6 @@ import {
   Award as CertificateIcon,
   X as XIcon,
   Play as PlayIcon,
-  Lock as LockIcon,
 } from "lucide-react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";

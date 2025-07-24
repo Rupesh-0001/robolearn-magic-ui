@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { sql, User, UserWithPassword, StudentWithPassword } from './db';
+import { sql, User, StudentWithPassword } from './db';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
@@ -18,7 +18,7 @@ export function generateToken(user: User): string {
 export function verifyToken(token: string): AuthToken | null {
   try {
     return jwt.verify(token, JWT_SECRET) as AuthToken;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -54,7 +54,7 @@ export async function authenticateUser(email: string, password: string): Promise
     }
 
     return null;
-  } catch (error) {
+  } catch {
     console.error('Error authenticating user:', error);
     return null;
   }
@@ -117,7 +117,7 @@ export async function createUser(email: string, password: string, name: string, 
 }
 
 // Update student
-export async function updateUser(id: string, updates: Partial<User>): Promise<User | null> {
+export async function updateUser(id: string): Promise<User | null> {
   try {
     // For now, just return the user as is since we're using a simple structure
     return getUserById(id);

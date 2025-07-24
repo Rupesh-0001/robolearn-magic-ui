@@ -25,7 +25,7 @@ export default function LoginPage() {
       window.localStorage.setItem('openAuthModal', 'true');
       router.replace('/');
     }
-  }, []);
+  }, [router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,7 +78,7 @@ export default function LoginPage() {
       } else {
         setError(data.error || 'Registration failed');
       }
-    } catch (error) {
+    } catch {
       setError('Registration failed. Please try again.');
     }
 

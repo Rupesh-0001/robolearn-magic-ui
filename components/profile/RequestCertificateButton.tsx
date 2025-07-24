@@ -21,7 +21,7 @@ export default function RequestCertificateButton({ courseName, enabled }: { cour
       } else {
         setError(data.error || 'Failed to submit request.');
       }
-    } catch (e) {
+    } catch {
       setError('Failed to submit request.');
     } finally {
       setLoading(false);

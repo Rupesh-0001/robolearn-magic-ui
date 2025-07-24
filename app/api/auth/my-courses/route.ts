@@ -2,6 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/auth';
 import { sql } from '@/lib/db';
 
+interface Lesson {
+  lesson_name: string;
+  recording_url: string;
+}
+
+interface CourseRow {
+  course_name: string;
+  course_start_date: string;
+  lessons: string | Lesson[];
+}
+
 export async function GET(request: NextRequest) {
   try {
     // Get token from cookie
@@ -27,7 +38,7 @@ export async function GET(request: NextRequest) {
     `;
 
     // Format the response
-    const courses = results.map((row: any) => ({
+    const courses = results.map((row: CourseRow) => ({
       course_name: row.course_name,
       course_start_date: row.course_start_date,
       lessons: Array.isArray(row.lessons)

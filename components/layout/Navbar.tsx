@@ -137,8 +137,8 @@ export function Navbar() {
           )}
 
           {/* Auth Buttons */}
-          <div className="flex items-center space-x-2">
-            {!loading && (
+          <div className="flex items-center space-x-2 hidden">
+             {!loading && (
               <>
                 {user ? (
                   <div
@@ -162,9 +162,7 @@ export function Navbar() {
                         <Link href="/profile" className="flex items-center gap-2 px-6 py-3 my-1 text-base text-gray-700 hover:bg-black hover:text-white cursor-pointer transition-colors" onClick={() => setDropdownOpen(false)}>
                           <BookOpen className="w-5 h-5" /> My Courses
                         </Link>
-                        {/* <Link href="/profile/my-profile" className="flex items-center gap-2 px-6 py-3 my-1 text-base text-gray-700 hover:bg-black hover:text-white cursor-pointer transition-colors" onClick={() => setDropdownOpen(false)}>
-                          <User className="w-5 h-5" /> My Profile
-                        </Link> */}
+
                         <Link href="/faq" className="flex items-center gap-2 px-6 py-3 my-1 text-base text-gray-700 hover:bg-black hover:text-white cursor-pointer transition-colors" onClick={() => setDropdownOpen(false)}>
                           <HelpCircle className="w-5 h-5" /> Help
                         </Link>
@@ -192,7 +190,7 @@ export function Navbar() {
                   </button>
                 )}
               </>
-            )}
+            )} 
           </div>
 
           {/* Mobile and Medium screen menu button */}
@@ -268,7 +266,7 @@ export function Navbar() {
 
             {/* Mobile Auth Buttons */}
             {!loading && (
-              <div className="pt-4 border-t border-gray-200">
+              <div className="pt-4 border-t border-gray-200 hidden">
                 {user ? (
                   <div className="space-y-2">
                     <div className="text-sm text-gray-600 text-center">

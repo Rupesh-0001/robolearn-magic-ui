@@ -31,7 +31,7 @@ export default function RecordingPage() {
         }
         const data = await res.json();
         setLesson({ name: data.name, url: data.url });
-      } catch (e) {
+      } catch {
         setError('Failed to load recording.');
       } finally {
         setLoading(false);

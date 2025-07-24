@@ -33,7 +33,7 @@ export default function MyProfilePage() {
       } else {
         setError(data.error || "Failed to update password.");
       }
-    } catch (err) {
+    } catch {
       setError("Failed to update password. Please try again.");
     }
     setLoading(false);
