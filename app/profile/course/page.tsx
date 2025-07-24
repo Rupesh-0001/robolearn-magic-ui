@@ -25,8 +25,8 @@ async function fetchWithAuth(url: string) {
   return res.json();
 }
 
-export default async function CourseDetailPage({ searchParams }: { searchParams: { course: string } }) {
-  const courseName = searchParams.course;
+export default async function CourseDetailPage({ searchParams }: { searchParams: Promise<{ course: string }> }) {
+  const { course: courseName } = await searchParams;
   if (!courseName) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
