@@ -38,9 +38,9 @@ export async function GET(request: NextRequest) {
     `;
 
     // Format the response
-    const courses = results.map((row: CourseRow) => ({
-      course_name: row.course_name,
-      course_start_date: row.course_start_date,
+    const courses = results.map((row: Record<string, any>) => ({
+      course_name: row.course_name as string,
+      course_start_date: row.course_start_date as string,
       lessons: Array.isArray(row.lessons)
         ? row.lessons
         : typeof row.lessons === 'string'
