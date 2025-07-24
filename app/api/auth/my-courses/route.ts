@@ -7,12 +7,6 @@ interface Lesson {
   recording_url: string;
 }
 
-interface CourseRow {
-  course_name: string;
-  course_start_date: string;
-  lessons: string | Lesson[];
-}
-
 export async function GET(request: NextRequest) {
   try {
     // Get token from cookie
@@ -37,10 +31,10 @@ export async function GET(request: NextRequest) {
       WHERE e.student_id = ${parseInt(studentId)}
     `;
 
-    // Format the response
-    const courses = results.map((row: Record<string, any>) => ({
-      course_name: row.course_name as string,
-      course_start_date: row.course_start_date as string,
+    // Format the response with proper typing
+    const courses = results.map((row: { course_name: string; course_start_date: string; lessons: string | Lesson[] }) => ({
+      course_name: row.course_name,
+      course_start_date: row.course_start_date,
       lessons: Array.isArray(row.lessons)
         ? row.lessons
         : typeof row.lessons === 'string'
