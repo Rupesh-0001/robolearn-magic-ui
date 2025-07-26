@@ -1,20 +1,20 @@
- [
+[
+  {
+    "id": "future-proofing-masterclass",
+    "title": "Future-Proofing Masterclass",
+    "date": "20th July, 2025 • 5:00pm",
+    "instructor": "Rupesh Ahuja",
+    "image": "/future_profing.jpg",
+    "isFree": false,
+    "currentPrice": "₹9",
+    "originalPrice": "₹399"
+  },
   {
     "id": "autonomous-car",
     "title": "Building Your Own Autonomous Car",
     "date": "29 June 2025 • 7:00pm",
     "instructor": "Er Harpreet Singh",
     "image": "/autonomousCarMasterclassTemplate.png",
-    "isFree": false,
-    "currentPrice": "₹9",
-    "originalPrice": "₹99"
-  },
-  {
-    "id": "ai-agent",
-    "title": "Build Your First AI Agent From Scratch",
-    "date": "Coming Soon",
-    "instructor": "Er Harpreet Singh",
-    "image": "/AIMasterClass.png",
     "isFree": false,
     "currentPrice": "₹9",
     "originalPrice": "₹99"

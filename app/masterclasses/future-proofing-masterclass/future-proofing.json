@@ -1,0 +1,87 @@
+{
+  "tag": "Live Masterclass",
+  "title": "Future-Proof Your Career: Master the Skills That Will Dominate the Future",
+  "image": "/future_profing.jpg",
+  "dateTime": "2025-07-27T17:00:00",
+  "displayDate": "27th July, 2025",
+  "displayTime": "05:00 pm to 06:30 pm",
+  "price": {
+    "original": 399,
+    "discounted": 9,
+    "discountPercentage": 97
+  },
+  "languages": ["Hindi", "English"],
+  "level": "All Levels",
+  "participants": "50+",
+  "whatYouWillLearn": [
+    {
+      "title": "AI Tools Mastery",
+      "description": "Best AI Tools for Professionals – ChatGPT, Gemini, Claude, Perplexity, and more",
+      "icon": "idea"
+    },
+    {
+      "title": "Productivity Boost",
+      "description": "AI for Productivity – Automate emails, reports, presentations & meetings",
+      "icon": "bolt"
+    },
+    {
+      "title": "Career Growth",
+      "description": "AI for Career Growth – Optimize resumes, cover letters & LinkedIn with AI",
+      "icon": "briefcase"
+    },
+    {
+      "title": "High-Income Skills",
+      "description": "AI for High-Income Skills – Coding, marketing, sales, content & design",
+      "icon": "cash"
+    }
+  ],
+  "whoShouldAttend": [
+    "Employees looking to enhance productivity and advance their careers with AI skills.",
+    "Recent graduates preparing for the AI-driven job market and future opportunities.",
+    "Individuals looking to transition into AI-powered roles with high earning potential.",
+    "Business owners wanting to leverage AI for business growth and efficiency."
+  ],
+  "bonuses": {
+    "totalValue": "6000+",
+    "items": [
+      {
+        "title": "AI Tools Cheatsheet",
+        "description": "Comprehensive guide showing which AI tool is best for which specific purpose.",
+        "icon": "check"
+      },
+      {
+        "title": "Free AI Tools Guide",
+        "description": "Learn how to use powerful AI tools completely free.",
+        "icon": "copy"
+      },
+      {
+        "title": "Custom GPTs Access",
+        "description": "Access to specialized Custom GPTs that help you learn and prepare for interviews.",
+        "icon": "users"
+      },
+      {
+        "title": "Career Growth Roadmap",
+        "description": "AI-powered personalized career strategy that maps your journey to your dream position.",
+        "icon": "list"
+      }
+    ]
+  },
+  "about": [
+    "In today's fast-changing job market, <strong>AI skills are no longer optional</strong>—they're essential. This masterclass will teach you how to leverage AI tools like <strong>ChatGPT, Gemini, Claude</strong>, and more to future-proof your career.",
+    "<strong>Transform Your Daily Work:</strong> Learn how to use AI to write emails in seconds, create professional presentations, analyze data without Excel formulas, and draft reports. Stop spending hours on repetitive tasks and start focusing on what really matters.",
+    "<strong>No Technical Knowledge Required:</strong> You don't need to be a programmer or tech expert. We'll teach you simple, practical ways to use AI that anyone can understand and apply immediately."
+  ],
+  "instructor": {
+    "name": "Rupesh Ahuja",
+    "image": "/Rupesh.jpg",
+    "experience": "4+ Years Experience",
+    "learners": "5,000+ Learners",
+    "bio": "With <span class=\"font-semibold text-black-700\">4+ years</span> of industry expertise and <span class=\"font-semibold text-black-700\">100+ webinars</span> conducted, Rupesh Ahuja is a seasoned <span class=\"font-semibold text-black-700\">AI and career growth specialist</span> who delivers real, actionable results."
+  },
+  "razorpay": {
+    "key": "rzp_live_esTSJZdYt8HwVK",
+    "name": "Future-Proofing Masterclass",
+    "description": "Purchase of Future-Proofing Masterclass"
+  },
+  "communityLink": "https://chat.whatsapp.com/HoB203LKpun5HNd624oyri?"
+}
