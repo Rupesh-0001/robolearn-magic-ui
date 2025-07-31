@@ -253,7 +253,7 @@ export default function AIAgentMasterclass() {
       
       // Auto-open WhatsApp after 500ms if user hasn't clicked
       setTimeout(() => {
-        window.open('https://chat.whatsapp.com/JRDFia7p0ts1NVIsuVPidX?', '_blank');
+        window.open('https://chat.whatsapp.com/HqfjeReZh9BDA7PEpxkXUm?', '_blank');
       }, 500);
     }, 300);
 
