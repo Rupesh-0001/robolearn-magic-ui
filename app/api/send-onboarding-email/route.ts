@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, course, phone } = await request.json();
+    const { name, email, course, phone, grp_link } = await request.json();
 
     if (!name || !email || !course) {
       return NextResponse.json(
@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
           <div class="whatsapp-hero">
             <h2>📱 Join Our WhatsApp Community NOW!</h2>
             <p>Get instant access to exclusive content, real-time support, and connect with fellow learners!</p>
-            <a href="https://chat.whatsapp.com/HqfjeReZh9BDA7PEpxkXUm?" class="whatsapp-button">
+            <a href=${grp_link} class="whatsapp-button">
               🚀 Join WhatsApp Group
             </a>
             <p><small>This is your primary communication channel for course updates and support.</small></p>

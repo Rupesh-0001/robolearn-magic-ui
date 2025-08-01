@@ -22,7 +22,6 @@ export default function AIAgentMasterclass() {
     age: "",
   });
   const [source, setSource] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState({
     name: "",
     phone: "",
@@ -172,83 +171,98 @@ export default function AIAgentMasterclass() {
       return;
     }
 
-    setIsSubmitting(true);
-
-    const GOOGLE_SHEET_URL =
-      "https://script.google.com/macros/s/AKfycby55nPUlX_xBUrVlNi8JyvuEUNomDzvIto-R4Dj4z1KM-mAnDarBkJlZxCHC2z7SdF_/exec";
     const submitData = {
-      sheetName: "AutonomousCar",
       name: formData.name,
       email: formData.email,
       age: formData.age,
       phoneNumber: formData.phone,
-      source: source,
+      utm: source, // Use the same source (utm_medium) for the utm column
     };
 
-    try {
-      await fetch(GOOGLE_SHEET_URL, {
+    const GOOGLE_SHEET_URL =
+      "https://script.google.com/macros/s/AKfycby55nPUlX_xBUrVlNi8JyvuEUNomDzvIto-R4Dj4z1KM-mAnDarBkJlZxCHC2z7SdF_/exec";
+
+    // Try database first (fire and forget)
+    fetch('/api/leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(submitData),
+    }).catch(() => {
+      // If database fails, fall back to Google Sheets
+      console.log('Database insertion failed, falling back to Google Sheets');
+      
+      const googleSheetData = {
+        sheetName: "AutonomousCar",
+        name: formData.name,
+        email: formData.email,
+        age: formData.age,
+        phoneNumber: formData.phone,
+        source: source,
+      };
+
+      fetch(GOOGLE_SHEET_URL, {
         method: "POST",
         mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(submitData),
+        body: JSON.stringify(googleSheetData),
       });
+    });
 
-      // Send onboarding email
-      if (formData.email) {
-        try {
-          await fetch('/api/send-onboarding-email', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              name: formData.name,
-              email: formData.email,
-              course: 'Autonomous Car Masterclass',
-              phone: formData.phone,
-            }),
-          });
-        } catch (emailError) {
-          console.error('Error sending onboarding email:', emailError);
-          // Don't fail the entire enrollment if email fails
-        }
-      }
-
-      // Fire Meta Pixel Lead event
-      if (
-        typeof window !== "undefined" &&
-        "fbq" in window &&
-        typeof window.fbq === "function"
-      ) {
-        (window.fbq as (event: "track", eventName: string) => void)(
-          "track",
-          "Lead"
-        );
-      }
-
-      // Clear form and close modal
-      setFormData({ name: "", phone: "", email: "", age: "" });
-      setFormErrors({ name: "", phone: "", email: "", age: "" });
-      setShowEnrollModal(false);
-
-      // Show thank you modal after a brief delay
-      setTimeout(() => {
-        setShowThankYouModal(true);
-      }, 300);
-
-      // Show success message
-      showToast(
-        "Registration successful! Check your email for onboarding details and WhatsApp group link.",
-        "success"
-      );
-    } catch (error) {
-      console.error("Error:", error);
-      showToast("An error occurred. Please try again.", "error");
-    } finally {
-      setIsSubmitting(false);
+    // Send onboarding email (fire and forget)
+    if (formData.email) {
+      fetch('/api/send-onboarding-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          course: 'Autonomous Car Masterclass',
+          phone: formData.phone,
+          grp_link: "https://chat.whatsapp.com/JeXRNrH2s9k0LqK0ZkliSw",
+        }),
+      }).catch((emailError) => {
+        console.error('Error sending onboarding email:', emailError);
+      });
     }
+
+    // Fire Meta Pixel Lead event
+    if (
+      typeof window !== "undefined" &&
+      "fbq" in window &&
+      typeof window.fbq === "function"
+    ) {
+      (window.fbq as (event: "track", eventName: string) => void)(
+        "track",
+        "Lead"
+      );
+    }
+
+    // Clear form and close modal immediately
+    setFormData({ name: "", phone: "", email: "", age: "" });
+    setFormErrors({ name: "", phone: "", email: "", age: "" });
+    setShowEnrollModal(false);
+
+    // Show thank you modal after a brief delay
+    setTimeout(() => {
+      setShowThankYouModal(true);
+      
+      // Auto-open WhatsApp after 500ms if user hasn't clicked
+      setTimeout(() => {
+        window.open('https://chat.whatsapp.com/JeXRNrH2s9k0LqK0ZkliSw', '_blank');
+      }, 500);
+    }, 300);
+
+    // Show success message
+    showToast(
+      "Registration successful! Check your email for onboarding details and WhatsApp group link.",
+      "success"
+    );
   };
 
   // Add countdown state
@@ -271,7 +285,7 @@ export default function AIAgentMasterclass() {
   useEffect(() => {
     if (!isMounted) return;
 
-    const countDownDate = new Date("July 20, 2025 19:00:00").getTime();
+    const countDownDate = new Date("August 3, 2025 19:00:00").getTime();
     // Update the countdown every 1 second
     const interval = setInterval(() => {
       // Get today's date and time
@@ -326,23 +340,26 @@ export default function AIAgentMasterclass() {
       const utmMedium = params.get("utm_medium");
 
       // Check if we already have a saved source
-      let savedSource = localStorage.getItem("original_utm_medium");
+      let savedSource = sessionStorage.getItem("original_utm_medium");
 
       if (!savedSource && utmMedium) {
-        // Save the first UTM to localStorage
-        localStorage.setItem("original_utm_medium", utmMedium);
+        // Save the UTM to sessionStorage (this is the original source)
+        sessionStorage.setItem("original_utm_medium", utmMedium);
         savedSource = utmMedium;
       }
 
       // Use the saved source for form submission
       if (savedSource) setSource(savedSource);
 
-      // Update the URL to utm_medium=share (or add if not present)
-      params.set("utm_medium", "share");
-      const newUrl =
-        window.location.pathname +
-        (params.toString() ? "?" + params.toString() : "");
-      window.history.replaceState({}, "", newUrl);
+      // Only update URL if utm_medium is not already "share"
+      // This prevents infinite loops and only adds "share" when needed
+      if (utmMedium !== "share") {
+        params.set("utm_medium", "share");
+        const newUrl =
+          window.location.pathname +
+          (params.toString() ? "?" + params.toString() : "");
+        window.history.replaceState({}, "", newUrl);
+      }
     }
   }, []);
 
@@ -398,7 +415,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>20th July, 2025</span>
+                <span>3rd August, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -481,7 +498,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  20th July, 2025
+                  3rd August, 2025
                 </span>
               </div>
 
@@ -830,7 +847,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">20th July, 2025</span>
+                  <span className="text-gray-800">3rd August, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1112,7 +1129,7 @@ export default function AIAgentMasterclass() {
                     value={formData.age}
                     onChange={handleInputChange}
                     required
-                    placeholder="Enter your graduation year"
+                    placeholder="Enter your age"
                     className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors ${
                       formErrors.age
                         ? "border-red-300 focus:ring-red-500 focus:border-red-500"
@@ -1199,36 +1216,10 @@ export default function AIAgentMasterclass() {
                   </p>
                 <button
                   type="submit"
-                  disabled={isSubmitting || !isFormValid()}
+                  disabled={!isFormValid()}
                   className="w-full bg-gray-950 hover:bg-black cursor-pointer text-white font-medium px-4 py-3 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? (
-                    <span className="flex items-center justify-center">
-                      <svg
-                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Enrolling...
-                    </span>
-                  ) : (
-                    "Enroll Now"
-                  )}
+                  Enroll Now
                 </button>
                 <button
                   type="button"
@@ -1294,7 +1285,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/KRVcrZLK7ky37EmfgPJVKP?"
+                  href="https://chat.whatsapp.com/JeXRNrH2s9k0LqK0ZkliSw"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
