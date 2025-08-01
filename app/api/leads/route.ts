@@ -3,7 +3,7 @@ import { sql } from '@/lib/db';
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, age, phoneNumber, utm, mc_id = 'cdb9a6a4-377b-48ae-8552-50ab50991739' } = await request.json();
+    const { name, email, age, phoneNumber, utm, mc_id} = await request.json();
 
     // Validate required fields
     if (!name || !age || !phoneNumber) {
