@@ -177,6 +177,7 @@ export default function AIAgentMasterclass() {
       age: formData.age,
       phoneNumber: formData.phone,
       utm: source, // Use the same source (utm_medium) for the utm column
+      mc_id: "cdb9a6a4-377b-48ae-8552-50ab50991739"
     };
 
     const GOOGLE_SHEET_URL =
