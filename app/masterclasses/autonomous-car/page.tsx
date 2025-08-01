@@ -224,6 +224,7 @@ export default function AIAgentMasterclass() {
           email: formData.email,
           course: 'Autonomous Car Masterclass',
           phone: formData.phone,
+          grp_link : "https://chat.whatsapp.com/HqfjeReZh9BDA7PEpxkXUm?"
         }),
       }).catch((emailError) => {
         console.error('Error sending onboarding email:', emailError);
