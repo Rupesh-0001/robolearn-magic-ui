@@ -39,7 +39,7 @@ export default function AutonomousCarMasterclass() {
 
 
   useEffect(() => {
-    const endDate = new Date("2025-07-27T23:59:59");
+    const endDate = new Date("2025-08-02T23:59:59");
 
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -955,13 +955,13 @@ export default function AutonomousCarMasterclass() {
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-2xl sm:text-3xl font-bold text-green-600">
-                ₹1,999
+                ₹2,499
               </span>
                 <span className="text-sm sm:text-lg text-gray-500 line-through">
                 ₹5,999
               </span>
                 <span className="text-xs sm:text-sm bg-green-100 text-green-600 px-2 py-1 rounded-full font-semibold">
-                  SAVE 67%
+                  SAVE 60%
               </span>
             </div>
               <div className="text-xs sm:text-sm text-gray-600 mb-2">
@@ -984,7 +984,7 @@ export default function AutonomousCarMasterclass() {
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                      amount: 1999                  
+                      amount: 2499                  
                     }),
                   });
                   const { order } = await orderResponse.json();
@@ -1075,13 +1075,13 @@ export default function AutonomousCarMasterclass() {
           <div className="flex p-2 w-full">
             <div className="w-[40%] flex flex-col justify-center items-end pr-2 sm:pr-4">
               <div className="flex items-center gap-1 sm:gap-2">
-                <span className="text-lg sm:text-xl font-bold text-black-600">₹1,999</span>
+                <span className="text-lg sm:text-xl font-bold text-black-600">₹2,499</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-2">
                 <span className="text-xs sm:text-sm text-gray-500 line-through">
                   ₹5,999
                 </span>
-                <span className="text-xs text-green-600 bg-green-100 px-1 rounded">67% off</span>
+                <span className="text-xs text-green-600 bg-green-100 px-1 rounded">60% off</span>
               </div>
               {/* <div className="text-xs text-gray-600 mt-1">
                 + ₹11,999 bonuses
@@ -1101,7 +1101,7 @@ export default function AutonomousCarMasterclass() {
                         'Content-Type': 'application/json', 
                       },
                       body: JSON.stringify({ 
-                        amount: 1999
+                        amount: 2499
                       }),
                     });
                     const { order } = await orderResponse.json();
