@@ -225,7 +225,7 @@ export default function AIAgentMasterclass() {
           email: formData.email,
           course: 'Autonomous Car Masterclass',
           phone: formData.phone,
-          grp_link : "https://chat.whatsapp.com/HqfjeReZh9BDA7PEpxkXUm?"
+          grp_link : "https://chat.whatsapp.com/HesOY6yaTv3B0tmSTbs9RR?"
         }),
       }).catch((emailError) => {
         console.error('Error sending onboarding email:', emailError);
@@ -255,7 +255,7 @@ export default function AIAgentMasterclass() {
       
       // Auto-open WhatsApp after 500ms if user hasn't clicked
       setTimeout(() => {
-        window.open('https://chat.whatsapp.com/HqfjeReZh9BDA7PEpxkXUm?', '_blank');
+        window.open('https://chat.whatsapp.com/HesOY6yaTv3B0tmSTbs9RR?', '_blank');
       }, 500);
     }, 300);
 
@@ -286,7 +286,7 @@ export default function AIAgentMasterclass() {
   useEffect(() => {
     if (!isMounted) return;
 
-    const countDownDate = new Date("August 2, 2025 19:00:00").getTime();
+    const countDownDate = new Date("August 10, 2025 19:00:00").getTime();
     // Update the countdown every 1 second
     const interval = setInterval(() => {
       // Get today's date and time
@@ -416,7 +416,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>2nd August, 2025</span>
+                <span>10th August, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -499,7 +499,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  2nd August, 2025
+                  10th August, 2025
                 </span>
               </div>
 
@@ -848,7 +848,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">2nd August, 2025</span>
+                  <span className="text-gray-800">10th August, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1286,7 +1286,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/HqfjeReZh9BDA7PEpxkXUm?"
+                  href="https://chat.whatsapp.com/HesOY6yaTv3B0tmSTbs9RR?"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
