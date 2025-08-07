@@ -58,7 +58,7 @@ export default async function CourseDetailPage({ searchParams }: { searchParams:
     );
   }
 
-  const totalLessons = course.lessons.length;
+  const totalLessons = 24;
   const completedLessons = course.lessons.filter(l => l.recording_url && l.recording_url.trim() !== '').length;
   const completion = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
   const startDate = course.course_start_date ? new Date(course.course_start_date).toLocaleDateString() : 'N/A';

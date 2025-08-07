@@ -137,7 +137,7 @@ export function Navbar() {
           )}
 
           {/* Auth Buttons */}
-          <div className="flex items-center space-x-2 hidden">
+          <div className="flex items-center space-x-2">
              {!loading && (
               <>
                 {user ? (
@@ -148,7 +148,7 @@ export function Navbar() {
                     onMouseLeave={() => setDropdownOpen(false)}
                   >
                     <button
-                      className="w-12 h-12 rounded-full bg-gradient-to-br from-[#df4271] via-[#ff4164] to-[#df4271] text-white flex items-center justify-center text-lg font-bold border-2 border-white/30 shadow-lg hover:shadow-xl cursor-pointer select-none transition-all duration-300 hover:scale-105 hover:from-[#c41b4e] hover:to-[#df4271] relative overflow-hidden group"
+                      className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-800 via-black to-gray-900 text-white flex items-center justify-center text-lg font-bold border-2 border-white/30 shadow-lg hover:shadow-xl cursor-pointer select-none transition-all duration-300 hover:scale-105 hover:from-black hover:to-gray-800 relative overflow-hidden group"
                       aria-label="User menu"
                       onClick={() => { if (isSmallScreen) setDropdownOpen((open) => !open); }}
                     >
@@ -186,7 +186,7 @@ export function Navbar() {
                     className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
                   >
                     <User className="h-4 w-4" />
-                    <span className="hidden sm:inline">Login</span>
+                    <span className="sm:inline cursor-pointer">Login</span>
                   </button>
                 )}
               </>
@@ -266,7 +266,7 @@ export function Navbar() {
 
             {/* Mobile Auth Buttons */}
             {!loading && (
-              <div className="pt-4 border-t border-gray-200 hidden">
+              <div className="pt-4 border-t border-gray-200">
                 {user ? (
                   <div className="space-y-2">
                     <div className="text-sm text-gray-600 text-center">

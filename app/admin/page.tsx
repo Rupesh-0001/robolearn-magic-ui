@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import BatchManagement from '@/components/admin/BatchManagement';
 // import { sql } from '@/lib/db';
 
 interface Student {
@@ -48,7 +49,7 @@ export default function AdminDashboard() {
   const [certificateRequests, setCertificateRequests] = useState<CertificateRequest[]>([]);
   const [certReqLoading, setCertReqLoading] = useState(false);
   const [certReqError, setCertReqError] = useState('');
-  const [activeTab, setActiveTab] = useState<'students' | 'batches' | 'enrollments' | 'certificates'>('students');
+  const [activeTab, setActiveTab] = useState<'students' | 'batches' | 'enrollments' | 'certificates' | 'batch-management'>('students');
   // const [showCreateUserModal, setShowCreateUserModal] = useState(false);
   // const [newUser, setNewUser] = useState({
   //   name: '',
@@ -204,6 +205,16 @@ export default function AdminDashboard() {
                 }`}
               >
                 Certificate Requests ({certificateRequests.length})
+              </button>
+              <button
+                onClick={() => setActiveTab('batch-management')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'batch-management'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Batch Management
               </button>
             </nav>
           </div>
@@ -414,6 +425,12 @@ export default function AdminDashboard() {
                     </table>
                   </div>
                 )}
+              </div>
+            )}
+
+            {activeTab === 'batch-management' && (
+              <div>
+                <BatchManagement />
               </div>
             )}
           </div>

@@ -35,7 +35,6 @@ export default function AutonomousCarMasterclass() {
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [isEnrolled, setIsEnrolled] = useState(false);
-  const [enrollmentLoading, setEnrollmentLoading] = useState(true);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -64,32 +63,9 @@ export default function AutonomousCarMasterclass() {
 
   // Check enrollment status
   useEffect(() => {
-    const checkEnrollment = async () => {
-      if (!user) {
-        setIsEnrolled(false);
-        setEnrollmentLoading(false);
-        return;
-      }
+    
 
-      try {
-        const response = await fetch('/api/auth/enrollment?course=Autonomous Car');
-        if (response.ok) {
-          const data = await response.json();
-          setIsEnrolled(data.isEnrolled);
-        } else {
-          setIsEnrolled(false);
-        }
-      } catch (error) {
-        console.error('Error checking enrollment:', error);
-        setIsEnrolled(false);
-      } finally {
-        setEnrollmentLoading(false);
-      }
-    };
-
-    if (!loading) {
-      checkEnrollment();
-    }
+   
   }, [user, loading]);
   const scroll = (direction: "left" | "right") => {
     if (carouselRef.current) {
@@ -191,12 +167,6 @@ export default function AutonomousCarMasterclass() {
           <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit rounded font-semibold">
             AUTONOMOUS CAR COURSE
           </span>
-            {!enrollmentLoading && isEnrolled && (
-              <span className="bg-green-100 text-green-700 px-3 py-1 text-sm rounded font-semibold flex items-center gap-1">
-                <CheckIcon className="h-4 w-4" />
-                Enrolled
-              </span>
-            )}
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">
             Autonomous System Revolution Program
@@ -303,11 +273,6 @@ export default function AutonomousCarMasterclass() {
               <h2 className="text-xl sm:text-2xl font-semibold">
               Course Overview
             </h2>
-              {!enrollmentLoading && isEnrolled && (
-                <span className="text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full border border-green-200">
-                  ✓ You have access to all lessons
-                </span>
-              )}
             </div>
             <div className="p-3">
               <div className="space-y-4">
