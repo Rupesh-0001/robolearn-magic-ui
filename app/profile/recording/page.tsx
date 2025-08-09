@@ -73,10 +73,7 @@ function RecordingPageContent() {
           return;
         }
         const data = await res.json();
-        console.log('Lesson data receivedd:', data); // Debug log
-        console.log('Original URL:', data.url); // Debug log
         const iframeUrl = convertToIframeUrl(data.url);
-        console.log('Converted iframe URL:', iframeUrl); // Debug log
         setLesson({ name: data.name, url: iframeUrl });
       } catch {
         setError('Failed to load recording.');

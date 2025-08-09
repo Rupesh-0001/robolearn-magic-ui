@@ -34,7 +34,7 @@ export default function AutonomousCarMasterclass() {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
-  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [isEnrolled] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,

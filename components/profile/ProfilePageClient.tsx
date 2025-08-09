@@ -1,5 +1,5 @@
 'use client';
-import { User as UserIcon, Calendar as CalendarIcon, BookOpen, GraduationCap, UserCircle2, Clock, Award, Sparkles, ArrowRight, Settings, Lock } from 'lucide-react';
+import { User as UserIcon, Calendar as CalendarIcon, BookOpen, GraduationCap, UserCircle2, Clock, Award, Sparkles, ArrowRight, Lock } from 'lucide-react';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';

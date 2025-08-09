@@ -192,7 +192,6 @@ export default function AIAgentMasterclass() {
       body: JSON.stringify(submitData),
     }).catch(() => {
       // If database fails, fall back to Google Sheets
-      console.log('Database insertion failed, falling back to Google Sheets');
       
       const googleSheetData = {
         sheetName: "AutonomousCar",

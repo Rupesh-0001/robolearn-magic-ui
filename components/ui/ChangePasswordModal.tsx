@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { X as XIcon, Eye, EyeOff, Lock, Shield } from 'lucide-react';
+import { X as XIcon, Eye, EyeOff, Shield } from 'lucide-react';
 import { ShimmerButton } from '@/components/magicui/shimmer-button';
 import { useAuth } from '@/hooks/useAuth';
 

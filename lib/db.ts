@@ -132,176 +132,176 @@ export async function initDatabase() {
     }
 
     // Add sample lessons to Autonomous Car Course (24 lessons)
-    const autonomousCarLessons = [
-      {
-        id: '1',
-        title: 'Introduction to Autonomous Vehicles',
-        description: 'Overview of autonomous vehicle technology and applications',
-        videoUrl: 'https://example.com/video1.mp4',
-        duration: 45
-      },
-      {
-        id: '2',
-        title: 'Sensor Systems and Perception',
-        description: 'Understanding lidar, radar, and camera systems',
-        videoUrl: 'https://example.com/video2.mp4',
-        duration: 60
-      },
-      {
-        id: '3',
-        title: 'Path Planning and Navigation',
-        description: 'Algorithms for route planning and obstacle avoidance',
-        videoUrl: 'https://example.com/video3.mp4',
-        duration: 75
-      },
-      {
-        id: '4',
-        title: 'Computer Vision Fundamentals',
-        description: 'Image processing and object detection techniques',
-        videoUrl: 'https://example.com/video4.mp4',
-        duration: 50
-      },
-      {
-        id: '5',
-        title: 'Machine Learning for Autonomous Systems',
-        description: 'Neural networks and deep learning applications',
-        videoUrl: 'https://example.com/video5.mp4',
-        duration: 65
-      },
-      {
-        id: '6',
-        title: 'Control Systems and PID Controllers',
-        description: 'Understanding feedback control mechanisms',
-        videoUrl: 'https://example.com/video6.mp4',
-        duration: 55
-      },
-      {
-        id: '7',
-        title: 'Localization and Mapping (SLAM)',
-        description: 'Simultaneous localization and mapping techniques',
-        videoUrl: 'https://example.com/video7.mp4',
-        duration: 70
-      },
-      {
-        id: '8',
-        title: 'Vehicle Dynamics and Kinematics',
-        description: 'Understanding vehicle motion and physics',
-        videoUrl: 'https://example.com/video8.mp4',
-        duration: 60
-      },
-      {
-        id: '9',
-        title: 'Traffic Sign Recognition',
-        description: 'Detecting and interpreting road signs',
-        videoUrl: 'https://example.com/video9.mp4',
-        duration: 45
-      },
-      {
-        id: '10',
-        title: 'Lane Detection and Tracking',
-        description: 'Identifying and following road lanes',
-        videoUrl: 'https://example.com/video10.mp4',
-        duration: 55
-      },
-      {
-        id: '11',
-        title: 'Obstacle Detection and Avoidance',
-        description: 'Identifying and avoiding obstacles',
-        videoUrl: 'https://example.com/video11.mp4',
-        duration: 65
-      },
-      {
-        id: '12',
-        title: 'Trajectory Planning',
-        description: 'Planning optimal paths for autonomous vehicles',
-        videoUrl: 'https://example.com/video12.mp4',
-        duration: 70
-      },
-      {
-        id: '13',
-        title: 'Vehicle-to-Vehicle Communication',
-        description: 'Communication protocols between autonomous vehicles',
-        videoUrl: 'https://example.com/video13.mp4',
-        duration: 50
-      },
-      {
-        id: '14',
-        title: 'Safety Systems and Fail-Safes',
-        description: 'Implementing safety mechanisms and backup systems',
-        videoUrl: 'https://example.com/video14.mp4',
-        duration: 60
-      },
-      {
-        id: '15',
-        title: 'Testing and Validation',
-        description: 'Methods for testing autonomous vehicle systems',
-        videoUrl: 'https://example.com/video15.mp4',
-        duration: 55
-      },
-      {
-        id: '16',
-        title: 'Regulatory Compliance',
-        description: 'Understanding legal requirements for autonomous vehicles',
-        videoUrl: 'https://example.com/video16.mp4',
-        duration: 45
-      },
-      {
-        id: '17',
-        title: 'Ethical Considerations in AI',
-        description: 'Addressing ethical challenges in autonomous systems',
-        videoUrl: 'https://example.com/video17.mp4',
-        duration: 50
-      },
-      {
-        id: '18',
-        title: 'Edge Computing for Autonomous Vehicles',
-        description: 'Processing data at the edge for real-time decisions',
-        videoUrl: 'https://example.com/video18.mp4',
-        duration: 60
-      },
-      {
-        id: '19',
-        title: 'Battery Management Systems',
-        description: 'Optimizing power consumption for autonomous vehicles',
-        videoUrl: 'https://example.com/video19.mp4',
-        duration: 55
-      },
-      {
-        id: '20',
-        title: 'Environmental Impact Assessment',
-        description: 'Evaluating the environmental impact of autonomous vehicles',
-        videoUrl: 'https://example.com/video20.mp4',
-        duration: 45
-      },
-      {
-        id: '21',
-        title: 'Future Trends in Autonomous Technology',
-        description: 'Exploring emerging technologies and future developments',
-        videoUrl: 'https://example.com/video21.mp4',
-        duration: 65
-      },
-      {
-        id: '22',
-        title: 'Industry Case Studies',
-        description: 'Real-world applications and success stories',
-        videoUrl: 'https://example.com/video22.mp4',
-        duration: 70
-      },
-      {
-        id: '23',
-        title: 'Capstone Project Planning',
-        description: 'Planning and designing your final autonomous vehicle project',
-        videoUrl: 'https://example.com/video23.mp4',
-        duration: 75
-      },
-      {
-        id: '24',
-        title: 'Final Project Implementation',
-        description: 'Building and testing your complete autonomous vehicle system',
-        videoUrl: 'https://example.com/video24.mp4',
-        duration: 80
-      }
-    ];
+    // const autonomousCarLessons = [
+    //   {
+    //     id: '1',
+    //     title: 'Introduction to Autonomous Vehicles',
+    //     description: 'Overview of autonomous vehicle technology and applications',
+    //     videoUrl: 'https://example.com/video1.mp4',
+    //     duration: 45
+    //   },
+    //   {
+    //     id: '2',
+    //     title: 'Sensor Systems and Perception',
+    //     description: 'Understanding lidar, radar, and camera systems',
+    //     videoUrl: 'https://example.com/video2.mp4',
+    //     duration: 60
+    //   },
+    //   {
+    //     id: '3',
+    //     title: 'Path Planning and Navigation',
+    //     description: 'Algorithms for route planning and obstacle avoidance',
+    //     videoUrl: 'https://example.com/video3.mp4',
+    //     duration: 75
+    //   },
+    //   {
+    //     id: '4',
+    //     title: 'Computer Vision Fundamentals',
+    //     description: 'Image processing and object detection techniques',
+    //     videoUrl: 'https://example.com/video4.mp4',
+    //     duration: 50
+    //   },
+    //   {
+    //     id: '5',
+    //     title: 'Machine Learning for Autonomous Systems',
+    //     description: 'Neural networks and deep learning applications',
+    //     videoUrl: 'https://example.com/video5.mp4',
+    //     duration: 65
+    //   },
+    //   {
+    //     id: '6',
+    //     title: 'Control Systems and PID Controllers',
+    //     description: 'Understanding feedback control mechanisms',
+    //     videoUrl: 'https://example.com/video6.mp4',
+    //     duration: 55
+    //   },
+    //   {
+    //     id: '7',
+    //     title: 'Localization and Mapping (SLAM)',
+    //     description: 'Simultaneous localization and mapping techniques',
+    //     videoUrl: 'https://example.com/video7.mp4',
+    //     duration: 70
+    //   },
+    //   {
+    //     id: '8',
+    //     title: 'Vehicle Dynamics and Kinematics',
+    //     description: 'Understanding vehicle motion and physics',
+    //     videoUrl: 'https://example.com/video8.mp4',
+    //     duration: 60
+    //   },
+    //   {
+    //     id: '9',
+    //     title: 'Traffic Sign Recognition',
+    //     description: 'Detecting and interpreting road signs',
+    //     videoUrl: 'https://example.com/video9.mp4',
+    //     duration: 45
+    //   },
+    //   {
+    //     id: '10',
+    //     title: 'Lane Detection and Tracking',
+    //     description: 'Identifying and following road lanes',
+    //     videoUrl: 'https://example.com/video10.mp4',
+    //     duration: 55
+    //   },
+    //   {
+    //     id: '11',
+    //     title: 'Obstacle Detection and Avoidance',
+    //     description: 'Identifying and avoiding obstacles',
+    //     videoUrl: 'https://example.com/video11.mp4',
+    //     duration: 65
+    //   },
+    //   {
+    //     id: '12',
+    //     title: 'Trajectory Planning',
+    //     description: 'Planning optimal paths for autonomous vehicles',
+    //     videoUrl: 'https://example.com/video12.mp4',
+    //     duration: 70
+    //   },
+    //   {
+    //     id: '13',
+    //     title: 'Vehicle-to-Vehicle Communication',
+    //     description: 'Communication protocols between autonomous vehicles',
+    //     videoUrl: 'https://example.com/video13.mp4',
+    //     duration: 50
+    //   },
+    //   {
+    //     id: '14',
+    //     title: 'Safety Systems and Fail-Safes',
+    //     description: 'Implementing safety mechanisms and backup systems',
+    //     videoUrl: 'https://example.com/video14.mp4',
+    //     duration: 60
+    //   },
+    //   {
+    //     id: '15',
+    //     title: 'Testing and Validation',
+    //     description: 'Methods for testing autonomous vehicle systems',
+    //     videoUrl: 'https://example.com/video15.mp4',
+    //     duration: 55
+    //   },
+    //   {
+    //     id: '16',
+    //     title: 'Regulatory Compliance',
+    //     description: 'Understanding legal requirements for autonomous vehicles',
+    //     videoUrl: 'https://example.com/video16.mp4',
+    //     duration: 45
+    //   },
+    //   {
+    //     id: '17',
+    //     title: 'Ethical Considerations in AI',
+    //     description: 'Ethical implications of autonomous vehicle decisions',
+    //     videoUrl: 'https://example.com/video17.mp4',
+    //     duration: 50
+    //   },
+    //   {
+    //     id: '18',
+    //     title: 'Data Management and Privacy',
+    //     description: 'Handling sensitive data in autonomous systems',
+    //     videoUrl: 'https://example.com/video18.mp4',
+    //     duration: 55
+    //   },
+    //   {
+    //     id: '19',
+    //     title: 'System Integration',
+    //     description: 'Integrating multiple subsystems into a cohesive whole',
+    //     videoUrl: 'https://example.com/video19.mp4',
+    //     duration: 70
+    //   },
+    //   {
+    //     id: '20',
+    //     title: 'Environmental Impact Assessment',
+    //     description: 'Evaluating the environmental impact of autonomous vehicles',
+    //     videoUrl: 'https://example.com/video20.mp4',
+    //     duration: 45
+    //   },
+    //   {
+    //     id: '21',
+    //     title: 'Future Trends in Autonomous Technology',
+    //     description: 'Exploring emerging technologies and future developments',
+    //     videoUrl: 'https://example.com/video21.mp4',
+    //     duration: 65
+    //   },
+    //   {
+    //     id: '22',
+    //     title: 'Industry Case Studies',
+    //     description: 'Real-world applications and success stories',
+    //     videoUrl: 'https://example.com/video22.mp4',
+    //     duration: 70
+    //   },
+    //   {
+    //     id: '23',
+    //     title: 'Capstone Project Planning',
+    //     description: 'Planning and designing your final autonomous vehicle project',
+    //     videoUrl: 'https://example.com/video23.mp4',
+    //     duration: 75
+    //   },
+    //   {
+    //     id: '24',
+    //     title: 'Final Project Implementation',
+    //     description: 'Building and testing your complete autonomous vehicle system',
+    //     videoUrl: 'https://example.com/video24.mp4',
+    //     duration: 80
+    //   }
+    // ];
 
     // await sql`
     //   UPDATE batches 
@@ -359,7 +359,6 @@ export async function initDatabase() {
       }
     }
 
-    console.log('Database initialized successfully');
   } catch (error) {
     console.error('Error initializing database:', error);
     throw error;

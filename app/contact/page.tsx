@@ -81,7 +81,6 @@ export default function ContactPage() {
                 body: JSON.stringify(formData)
             });
 
-            console.log('Form submitted:', formData);
             
             setFormData({
                 fname: '',

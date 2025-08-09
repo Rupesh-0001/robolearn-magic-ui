@@ -31,9 +31,9 @@ export async function GET(request: NextRequest) {
     `;
 
     // Transform the data to match the expected format
-    const courses = enrollments.map((enrollment: any) => {
+    const courses = enrollments.map((enrollment: { lessons?: Array<{ title?: string; id?: string; videoUrl?: string }> }) => {
       // Transform lessons to match the expected format
-      const transformedLessons = (enrollment.lessons || []).map((lesson: any) => ({
+      const transformedLessons = (enrollment.lessons || []).map((lesson: { title?: string; id?: string; videoUrl?: string }) => ({
         lesson_name: lesson.title || lesson.id,
         recording_url: lesson.videoUrl || ''
       }));
