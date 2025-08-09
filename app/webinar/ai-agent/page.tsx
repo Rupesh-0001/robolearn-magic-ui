@@ -74,15 +74,11 @@ export default function AIAgentWebinar() {
         currency: "INR",
         name: "AI Agent Webinar",
         description: "Purchase of AI Agent Webinar",
-        handler: async function (response: {
+        handler: async function (_response: {
           razorpay_payment_id: string;
           razorpay_order_id: string;
           razorpay_signature: string;
-        }) {
-          console.log(response);
-          
-
-          
+        }) {          
           // Show thank you modal after successful payment
           setShowThankYouModal(true);
           // Show success message

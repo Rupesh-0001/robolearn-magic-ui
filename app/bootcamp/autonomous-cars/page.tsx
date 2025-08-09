@@ -1008,12 +1008,11 @@ export default function AutonomousCarMasterclass() {
                       name: "Autonomous Car Course",
                       description: "Purchase of Autonomous Car Course",
                       order_id: order.id,
-                      handler: function (response: {
+                      handler: function (_response: {
                         razorpay_payment_id: string;
                         razorpay_order_id: string;
                         razorpay_signature: string;
                       }) {
-                        console.log(response);
                         setShowThankYouModal(true);
                         setIsLoading(false);
                       },
@@ -1125,12 +1124,11 @@ export default function AutonomousCarMasterclass() {
                         name: "Autonomous Car Course",
                         description: "Purchase of Autonomous Car Course",
                         order_id: order.id,
-                        handler: function (response: {
+                        handler: function (_response: {
                           razorpay_payment_id: string;
                           razorpay_order_id: string;
                           razorpay_signature: string;
                         }) {
-                          console.log(response);
                           setShowThankYouModal(true);
                           setIsLoading(false);
                         },

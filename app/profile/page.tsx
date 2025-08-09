@@ -35,6 +35,10 @@ async function fetchWithAuth(url: string) {
 
 const courseImages: Record<string, string> = {
   'Autonomous Car': '/CarCourse.png',
+  'Autonomous Car Course': '/autonomousCar.png',
+  'AI Agent Course': '/aiAgent.png',
+  'Robotic Arm Course': '/roboticArm.png',
+  'Drones Course': '/drone.png',
   // Add more course name to image mappings here
 };
 

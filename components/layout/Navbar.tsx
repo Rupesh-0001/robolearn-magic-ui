@@ -76,6 +76,7 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border overflow-visible">
       <div className="max-w-7xl 2xl:max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8 overflow-visible">
         <div className="flex items-center justify-between h-16 overflow-visible">
+          {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="font-bold text-xl">
               <svg
@@ -136,9 +137,10 @@ export function Navbar() {
             </div>
           )}
 
-          {/* Auth Buttons */}
-          <div className="flex items-center space-x-2 hidden">
-             {!loading && (
+          {/* Right side - Auth Buttons and Mobile Menu */}
+          <div className="flex items-center space-x-2">
+            {/* Auth Buttons */}
+            {!loading && (
               <>
                 {user ? (
                   <div
@@ -148,12 +150,12 @@ export function Navbar() {
                     onMouseLeave={() => setDropdownOpen(false)}
                   >
                     <button
-                      className="w-12 h-12 rounded-full bg-gradient-to-br from-[#df4271] via-[#ff4164] to-[#df4271] text-white flex items-center justify-center text-lg font-bold border-2 border-white/30 shadow-lg hover:shadow-xl cursor-pointer select-none transition-all duration-300 hover:scale-105 hover:from-[#c41b4e] hover:to-[#df4271] relative overflow-hidden group"
+                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-gray-800 via-black to-gray-900 text-white flex items-center justify-center text-lg font-bold border-2 border-white/30 shadow-lg hover:shadow-xl cursor-pointer select-none transition-all duration-300 hover:scale-105 hover:from-black hover:to-gray-800 relative overflow-hidden group"
                       aria-label="User menu"
                       onClick={() => { if (isSmallScreen) setDropdownOpen((open) => !open); }}
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <span className="relative z-10 drop-shadow-sm">{user.name?.charAt(0).toUpperCase() || "U"}</span>
+                      <span className="relative z-10 drop-shadow-sm text-sm sm:text-lg">{user.name?.charAt(0).toUpperCase() || "U"}</span>
                     </button>
                     {dropdownOpen && (
                       <div
@@ -183,35 +185,35 @@ export function Navbar() {
                 ) : (
                   <button
                     onClick={() => setShowAuthModal(true)}
-                    className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                    className="flex items-center space-x-1 px-3 py-2 text-sm font-medium bg-gradient-to-r from-gray-800 to-black text-white rounded-lg shadow-md hover:shadow-lg hover:from-black hover:to-gray-800 transition-all duration-200 hover:scale-105"
                   >
                     <User className="h-4 w-4" />
                     <span className="hidden sm:inline">Login</span>
                   </button>
                 )}
               </>
-            )} 
-          </div>
+            )}
 
-          {/* Mobile and Medium screen menu button */}
-          {isHomePage && (
-            <div className={cn("lg:hidden")}>
-              <button
-                type="button"
-                className="inline-flex items-center justify-center p-2 rounded-md text-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none"
-                aria-controls="mobile-menu"
-                aria-expanded={isMenuOpen}
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-              >
-                <span className="sr-only">Open main menu</span>
-                {isMenuOpen ? (
-                  <X className="block h-6 w-6" aria-hidden="true" />
-                ) : (
-                  <Menu className="block h-6 w-6" aria-hidden="true" />
-                )}
-              </button>
-            </div>
-          )}
+            {/* Mobile and Medium screen menu button */}
+            {isHomePage && (
+              <div className="lg:hidden">
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center p-2 rounded-md text-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none"
+                  aria-controls="mobile-menu"
+                  aria-expanded={isMenuOpen}
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  <span className="sr-only">Open main menu</span>
+                  {isMenuOpen ? (
+                    <X className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <Menu className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -266,7 +268,7 @@ export function Navbar() {
 
             {/* Mobile Auth Buttons */}
             {!loading && (
-              <div className="pt-4 border-t border-gray-200 hidden">
+              <div className="pt-4 border-t border-gray-200 w-full">
                 {user ? (
                   <div className="space-y-2">
                     <div className="text-sm text-gray-600 text-center">
@@ -286,21 +288,23 @@ export function Navbar() {
                         logout();
                         setIsMenuOpen(false);
                       }}
-                      className="w-full flex items-center justify-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                      className="w-full flex items-center justify-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"
                     >
                       <LogOut className="h-4 w-4" />
                       <span>Logout</span>
                     </button>
                   </div>
                 ) : (
-                  <Link
-                    href="/login"
-                    className="w-full flex items-center justify-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
+                  <button
+                    onClick={() => {
+                      setShowAuthModal(true);
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full flex items-center justify-center space-x-2 px-3 py-2 text-sm font-medium bg-gradient-to-r from-gray-800 to-black text-white rounded-lg shadow-md hover:shadow-lg hover:from-black hover:to-gray-800 transition-all duration-200"
                   >
                     <User className="h-4 w-4" />
                     <span>Login</span>
-                  </Link>
+                  </button>
                 )}
               </div>
             )}

@@ -16,6 +16,8 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const lessonIdx = parseInt(searchParams.get('lesson') || '', 10);
     const courseName = searchParams.get('course');
+    
+    
     if (isNaN(lessonIdx) || !courseName) {
       return NextResponse.json({ error: 'Invalid lesson or course' }, { status: 400 });
     }
@@ -45,7 +47,9 @@ export async function GET(request: NextRequest) {
     if (!lesson) {
       return NextResponse.json({ error: 'Lesson not found' }, { status: 404 });
     }
-    return NextResponse.json({ name: lesson.lesson_name, url: lesson.recording_url });
+    const lessonName = lesson.title || 'Recording';
+    const recordingUrl = lesson.videoUrl || '';
+    return NextResponse.json({ name: lessonName, url: recordingUrl });
   } catch (error) {
     console.error('Error in /api/auth/lesson-url:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

@@ -203,7 +203,6 @@ export async function POST(request: NextRequest) {
 
       // Send email
       await transporter.sendMail(mailOptions);
-      console.log('Onboarding email sent successfully to:', email);
 
     return NextResponse.json(
       { success: true, message: 'Onboarding email sent successfully' },

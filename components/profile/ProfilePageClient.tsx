@@ -1,8 +1,9 @@
 'use client';
-import { User as UserIcon, Calendar as CalendarIcon, BookOpen, GraduationCap, UserCircle2, Clock, Award, Sparkles, ArrowRight } from 'lucide-react';
+import { User as UserIcon, Calendar as CalendarIcon, BookOpen, GraduationCap, UserCircle2, Clock, Award, Sparkles, ArrowRight, Lock } from 'lucide-react';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import ChangePasswordModal from '../ui/ChangePasswordModal';
 
 interface Lesson {
   lesson_name: string;
@@ -28,6 +29,7 @@ export default function ProfilePageClient({ user, courses, courseImages }: {
   courseImages: Record<string, string>
 }) {
   const router = useRouter();
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
@@ -58,9 +60,19 @@ export default function ProfilePageClient({ user, courses, courseImages }: {
                     </div>
                   </div>
                 </div>
-                <div className="hidden sm:flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
-                  <Sparkles className="h-3 w-3 text-white" />
-                  <span className="text-white font-medium text-sm">Active Learner</span>
+                <div className="flex items-center gap-2">
+                  <div className="hidden sm:flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
+                    <Sparkles className="h-3 w-3 text-white" />
+                    <span className="text-white font-medium text-sm">Active Learner</span>
+                  </div>
+                  <button
+                    onClick={() => setShowChangePasswordModal(true)}
+                    className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-2 text-white hover:bg-white/30 transition-colors"
+                    title="Change Password"
+                  >
+                    <Lock className="h-4 w-4" />
+                    <span className="text-sm font-medium">Change Password</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -282,7 +294,7 @@ export default function ProfilePageClient({ user, courses, courseImages }: {
             {courses.map((course, idx) => {
               const imageSrc = courseImages[course.course_name] || '/CarCourse.jpg';
               const startDate = course.course_start_date ? new Date(course.course_start_date).toLocaleDateString() : 'N/A';
-              const totalLessons = course.lessons.length;
+              const totalLessons = 24;
               const completedLessons = course.lessons.filter(l => l.recording_url && l.recording_url.trim() !== '').length;
               const completion = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
               
@@ -354,6 +366,7 @@ export default function ProfilePageClient({ user, courses, courseImages }: {
           </div>
         )}
       </div>
+              <ChangePasswordModal open={showChangePasswordModal} onClose={() => setShowChangePasswordModal(false)} />
     </div>
   );
 } 

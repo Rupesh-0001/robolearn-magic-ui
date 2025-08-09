@@ -49,7 +49,6 @@ export async function POST(request: NextRequest) {
       RETURNING id
     `;
 
-    console.log('Lead stored successfully:', { name, email, age: ageNum, phoneNumber, mc_id });
 
     return NextResponse.json(
       { 
