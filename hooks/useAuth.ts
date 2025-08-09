@@ -9,6 +9,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
+  changePassword: (currentPassword: string, newPassword: string) => Promise<{ success: boolean; error?: string }>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthContextType>({
   login: async () => ({ success: false }),
   logout: async () => {},
   checkAuth: async () => {},
+  changePassword: async () => ({ success: false }),
 });
 
 export function useAuth() {
@@ -80,6 +82,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const changePassword = async (currentPassword: string, newPassword: string) => {
+    try {
+      const response = await fetch('/api/auth/change-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        return { success: true };
+      } else {
+        return { success: false, error: data.error };
+      }
+    } catch (error) {
+      console.error('Change password failed:', error);
+      return { success: false, error: 'Failed to change password. Please try again.' };
+    }
+  };
+
   useEffect(() => {
     checkAuth();
   }, []);
@@ -90,6 +115,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     login,
     logout,
     checkAuth,
+    changePassword,
   };
 
   return React.createElement(AuthContext.Provider, { value: contextValue }, children);
