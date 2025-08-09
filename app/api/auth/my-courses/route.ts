@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
 import { verifyToken } from '@/lib/auth';
 
+interface EnrollmentResult {
+  course_name: string;
+  course_start_date: string;
+  lessons?: Array<{ title?: string; id?: string; videoUrl?: string }>;
+  joined_date: string;
+  enrollment_id: number;
+}
+
 export async function GET(request: NextRequest) {
   try {
     // Check authentication
@@ -28,10 +36,10 @@ export async function GET(request: NextRequest) {
       JOIN students s ON e.student_id = s.student_id
       WHERE s.student_id = ${decoded.user.id}
       ORDER BY e.joined_date DESC
-    `;
+    ` as EnrollmentResult[];
 
     // Transform the data to match the expected format
-    const courses = enrollments.map((enrollment: { lessons?: Array<{ title?: string; id?: string; videoUrl?: string }> }) => {
+    const courses = enrollments.map((enrollment: EnrollmentResult) => {
       // Transform lessons to match the expected format
       const transformedLessons = (enrollment.lessons || []).map((lesson: { title?: string; id?: string; videoUrl?: string }) => ({
         lesson_name: lesson.title || lesson.id,

@@ -116,12 +116,69 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const updatedBatch = await sql`
-      UPDATE batches 
-      SET ${sql(updateData)}
-      WHERE batch_id = ${batch_id}
-      RETURNING batch_id, course_name, course_start_date, lessons
-    `;
+    // Build the update query dynamically using conditional template literals
+    let updatedBatch;
+    
+    if (updateData.course_name && updateData.course_start_date && updateData.lessons) {
+      updatedBatch = await sql`
+        UPDATE batches 
+        SET course_name = ${updateData.course_name}, 
+            course_start_date = ${updateData.course_start_date}, 
+            lessons = ${JSON.stringify(updateData.lessons)}::jsonb
+        WHERE batch_id = ${batch_id}
+        RETURNING batch_id, course_name, course_start_date, lessons
+      `;
+    } else if (updateData.course_name && updateData.course_start_date) {
+      updatedBatch = await sql`
+        UPDATE batches 
+        SET course_name = ${updateData.course_name}, 
+            course_start_date = ${updateData.course_start_date}
+        WHERE batch_id = ${batch_id}
+        RETURNING batch_id, course_name, course_start_date, lessons
+      `;
+    } else if (updateData.course_name && updateData.lessons) {
+      updatedBatch = await sql`
+        UPDATE batches 
+        SET course_name = ${updateData.course_name}, 
+            lessons = ${JSON.stringify(updateData.lessons)}::jsonb
+        WHERE batch_id = ${batch_id}
+        RETURNING batch_id, course_name, course_start_date, lessons
+      `;
+    } else if (updateData.course_start_date && updateData.lessons) {
+      updatedBatch = await sql`
+        UPDATE batches 
+        SET course_start_date = ${updateData.course_start_date}, 
+            lessons = ${JSON.stringify(updateData.lessons)}::jsonb
+        WHERE batch_id = ${batch_id}
+        RETURNING batch_id, course_name, course_start_date, lessons
+      `;
+    } else if (updateData.course_name) {
+      updatedBatch = await sql`
+        UPDATE batches 
+        SET course_name = ${updateData.course_name}
+        WHERE batch_id = ${batch_id}
+        RETURNING batch_id, course_name, course_start_date, lessons
+      `;
+    } else if (updateData.course_start_date) {
+      updatedBatch = await sql`
+        UPDATE batches 
+        SET course_start_date = ${updateData.course_start_date}
+        WHERE batch_id = ${batch_id}
+        RETURNING batch_id, course_name, course_start_date, lessons
+      `;
+    } else if (updateData.lessons) {
+      updatedBatch = await sql`
+        UPDATE batches 
+        SET lessons = ${JSON.stringify(updateData.lessons)}::jsonb
+        WHERE batch_id = ${batch_id}
+        RETURNING batch_id, course_name, course_start_date, lessons
+      `;
+    } else {
+      return NextResponse.json(
+        { error: 'No valid fields to update' },
+        { status: 400 }
+      );
+    }
 
     if (updatedBatch.length === 0) {
       return NextResponse.json(
