@@ -213,23 +213,23 @@ export default function AIAgentMasterclass() {
     });
 
     // Send onboarding email (fire and forget)
-    if (formData.email) {
-      fetch('/api/send-onboarding-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          course: 'Autonomous Car Masterclass',
-          phone: formData.phone,
-          grp_link : "https://chat.whatsapp.com/Ib5FIWwK6MYBAEKJmvFO7G?"
-        }),
-      }).catch((emailError) => {
-        console.error('Error sending onboarding email:', emailError);
-      });
-    }
+    // if (formData.email) {
+    //   fetch('/api/send-onboarding-email', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       name: formData.name,
+    //       email: formData.email,
+    //       course: 'Autonomous Car Masterclass',
+    //       phone: formData.phone,
+    //       grp_link : "https://chat.whatsapp.com/Ib5FIWwK6MYBAEKJmvFO7G?"
+    //     }),
+    //   }).catch((emailError) => {
+    //     console.error('Error sending onboarding email:', emailError);
+    //   });
+    // }
 
     // Fire Meta Pixel Lead event
     if (
