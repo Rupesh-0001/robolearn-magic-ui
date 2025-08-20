@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
+import { addToEnrollmentSheet } from '@/lib/enrollment-utils';
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,6 +14,11 @@ export async function POST(request: NextRequest) {
       amount, 
       batchId = 5 // Default batch ID for autonomous car course
     } = await request.json();
+
+    // Get the base URL from the request
+    const protocol = request.headers.get('x-forwarded-proto') || 'https';
+    const host = request.headers.get('host') || 'localhost:3000';
+    const baseUrl = `${protocol}://${host}`;
 
     // Validate required fields
     if (!name || !email || !phone || !paymentId || !orderId || !signature || !amount) {
@@ -94,7 +100,6 @@ export async function POST(request: NextRequest) {
       const isNewUser = existingStudent.length === 0;
       console.log('📧 (Existing enrollment) Attempting to send email to:', email, 'isNewUser:', isNewUser);
       
-      const baseUrl = process.env.NEXTJS_URL || 'https://www.robolearn.in';
       const emailApiUrl = `${baseUrl}/api/send-course-onboarding-email`;
       console.log('📧 (Existing enrollment) Email API URL:', emailApiUrl);
       
@@ -126,32 +131,18 @@ export async function POST(request: NextRequest) {
 
       // Add to enrollment sheet for existing enrollment (non-blocking)
       const currentDateTime = new Date().toISOString();
-      const enrollmentSheetApiUrl = `${baseUrl}/api/add-enrolment-sheet`;
       console.log('📋 (Existing enrollment) Attempting to add to enrollment sheet:', { name, email, phone, amount, currentDateTime });
-      console.log('📋 (Existing enrollment) Enrollment Sheet API URL:', enrollmentSheetApiUrl);
       
-      fetch(enrollmentSheetApiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          phone,
-          email,
-          pricePaid: amount,
-          coursePrice: 2499, // Original course price
-          dateTime: currentDateTime
-        }),
+      addToEnrollmentSheet({
+        name,
+        phone,
+        email,
+        pricePaid: amount,
+        coursePrice: 2499, // Original course price
+        dateTime: currentDateTime
       })
-      .then(async (sheetResponse) => {
-        console.log('📋 (Existing enrollment) Enrollment sheet API response status:', sheetResponse.status);
-        const sheetResult = await sheetResponse.json();
-        if (sheetResponse.ok) {
-          console.log('✅ (Existing enrollment) Added to enrollment sheet successfully:', sheetResult);
-        } else {
-          console.error('❌ (Existing enrollment) Failed to add to enrollment sheet:', sheetResult);
-        }
+      .then((result) => {
+        console.log('✅ (Existing enrollment) Added to enrollment sheet successfully:', result);
       })
       .catch((sheetError) => {
         console.error('💥 (Existing enrollment) Error adding to enrollment sheet:', sheetError);
@@ -197,8 +188,7 @@ export async function POST(request: NextRequest) {
       const isNewUser = existingStudent.length === 0;
       console.log('📧 Attempting to send email to:', email, 'isNewUser:', isNewUser);
       
-      // Create full URL for email API
-      const baseUrl = process.env.NEXTJS_URL || 'https://www.robolearn.in';
+      // Use dynamically constructed URL for internal API calls
       const emailApiUrl = `${baseUrl}/api/send-course-onboarding-email`;
       console.log('📧 Email API URL:', emailApiUrl);
       
@@ -231,32 +221,18 @@ export async function POST(request: NextRequest) {
 
       // Add to enrollment sheet (non-blocking)
       const currentDateTime = new Date().toISOString();
-      const enrollmentSheetApiUrl = `${baseUrl}/api/add-enrolment-sheet`;
       console.log('📋 Attempting to add to enrollment sheet:', { name, email, phone, amount, currentDateTime });
-      console.log('📋 Enrollment Sheet API URL:', enrollmentSheetApiUrl);
       
-      fetch(enrollmentSheetApiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          phone,
-          email,
-          pricePaid: amount,
-          coursePrice: 2499, // Original course price
-          dateTime: currentDateTime
-        }),
+      addToEnrollmentSheet({
+        name,
+        phone,
+        email,
+        pricePaid: amount,
+        coursePrice: 2499, // Original course price
+        dateTime: currentDateTime
       })
-      .then(async (sheetResponse) => {
-        console.log('📋 Enrollment sheet API response status:', sheetResponse.status);
-        const sheetResult = await sheetResponse.json();
-        if (sheetResponse.ok) {
-          console.log('✅ Added to enrollment sheet successfully:', sheetResult);
-        } else {
-          console.error('❌ Failed to add to enrollment sheet:', sheetResult);
-        }
+      .then((result) => {
+        console.log('✅ Added to enrollment sheet successfully:', result);
       })
       .catch((sheetError) => {
         console.error('💥 Error adding to enrollment sheet:', sheetError);
