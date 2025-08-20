@@ -41,7 +41,7 @@ export default function AutonomousCarMasterclass() {
     seconds: 0,
   });
 
-  const coursePrice = 2;
+  const coursePrice = 2499;
 
   // User details form state
   const [userDetails, setUserDetails] = useState({
