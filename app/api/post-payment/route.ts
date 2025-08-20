@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
       const isNewUser = existingStudent.length === 0;
       console.log('📧 (Existing enrollment) Attempting to send email to:', email, 'isNewUser:', isNewUser);
       
-      const baseUrl = process.env.NEXTJS_URL || 'http://localhost:3000';
+      const baseUrl = process.env.NEXTJS_URL || 'https://www.robolearn.in';
       const emailApiUrl = `${baseUrl}/api/send-course-onboarding-email`;
       console.log('📧 (Existing enrollment) Email API URL:', emailApiUrl);
       
@@ -198,7 +198,7 @@ export async function POST(request: NextRequest) {
       console.log('📧 Attempting to send email to:', email, 'isNewUser:', isNewUser);
       
       // Create full URL for email API
-      const baseUrl = process.env.NEXTJS_URL || 'http://localhost:3000';
+      const baseUrl = process.env.NEXTJS_URL || 'https://www.robolearn.in';
       const emailApiUrl = `${baseUrl}/api/send-course-onboarding-email`;
       console.log('📧 Email API URL:', emailApiUrl);
       
