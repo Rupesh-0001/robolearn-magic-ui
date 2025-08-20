@@ -63,6 +63,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (response.ok) {
         setUser(data.user);
+        // Store email in session storage
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('userEmail', data.user.email);
+        }
         return { success: true };
       } else {
         return { success: false, error: data.error };
@@ -79,10 +83,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         method: 'POST',
       });
       setUser(null);
+      // Clear email from session storage
+      if (typeof window !== 'undefined') {
+        sessionStorage.removeItem('userEmail');
+      }
       // Force a page refresh to clear any server-side state
       window.location.href = '/';
     } catch (error) {
       console.error('Logout failed:', error);
+      // Clear email from session storage even if logout API fails
+      if (typeof window !== 'undefined') {
+        sessionStorage.removeItem('userEmail');
+      }
       // Even if the API call fails, redirect to home page
       window.location.href = '/';
     }
