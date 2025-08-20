@@ -175,7 +175,7 @@ export function Navbar() {
                         )}
                         <button
                           onClick={() => { logout(); setDropdownOpen(false); }}
-                          className="flex items-center gap-2 w-full text-left px-6 py-3 my-1 text-base text-red-600 hover:bg-black hover:text-white cursor-pointer transition-colors"
+                          className="flex cursor-pointer items-center gap-2 w-full text-left px-6 py-3 my-1 text-base text-red-600 hover:bg-black hover:text-white cursor-pointer transition-colors"
                         >
                           <LogOut className="w-5 h-5" /> Logout
                         </button>
@@ -185,7 +185,7 @@ export function Navbar() {
                 ) : (
                   <button
                     onClick={() => setShowAuthModal(true)}
-                    className="flex items-center space-x-1 px-3 py-2 text-sm font-medium bg-gradient-to-r from-gray-800 to-black text-white rounded-lg shadow-md hover:shadow-lg hover:from-black hover:to-gray-800 transition-all duration-200 hover:scale-105"
+                    className="flex items-center cursor-pointer space-x-1 px-3 py-2 text-sm font-medium bg-gradient-to-r from-gray-800 to-black text-white rounded-lg shadow-md hover:shadow-lg hover:from-black hover:to-gray-800 transition-all duration-200 hover:scale-105"
                   >
                     <User className="h-4 w-4" />
                     <span className="hidden sm:inline">Login</span>
@@ -288,7 +288,7 @@ export function Navbar() {
                         logout();
                         setIsMenuOpen(false);
                       }}
-                      className="w-full flex items-center justify-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"
+                      className="w-full flex cursor-pointer items-center justify-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
                     >
                       <LogOut className="h-4 w-4" />
                       <span>Logout</span>
@@ -300,7 +300,7 @@ export function Navbar() {
                       setShowAuthModal(true);
                       setIsMenuOpen(false);
                     }}
-                    className="w-full flex items-center justify-center space-x-2 px-3 py-2 text-sm font-medium bg-gradient-to-r from-gray-800 to-black text-white rounded-lg shadow-md hover:shadow-lg hover:from-black hover:to-gray-800 transition-all duration-200"
+                    className="w-full flex cursor-pointer items-center justify-center space-x-2 px-3 py-2 text-sm font-medium bg-gradient-to-r from-gray-800 to-black text-white rounded-lg shadow-md hover:shadow-lg hover:from-black hover:to-gray-800 transition-all duration-200"
                   >
                     <User className="h-4 w-4" />
                     <span>Login</span>

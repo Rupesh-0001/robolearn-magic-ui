@@ -16,6 +16,9 @@ import {
   GraduationCap as StudentIcon,
   Award as CertificateIcon,
   X as XIcon,
+  User as UserIcon,
+  Mail as MailIcon,
+  Phone as PhoneIcon,
 } from "lucide-react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";
@@ -29,6 +32,7 @@ export default function AutonomousCarMasterclass() {
   const [openLecture, setOpenLecture] = useState<string | null>(null);
 
   const [showThankYouModal, setShowThankYouModal] = useState(false);
+  const [showUserDetailsModal, setShowUserDetailsModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -37,9 +41,39 @@ export default function AutonomousCarMasterclass() {
     seconds: 0,
   });
 
+  const coursePrice = 2;
+
+  // User details form state
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+  const [formErrors, setFormErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
+  // Check session storage for user details on component mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedEmail = sessionStorage.getItem("userEmail");
+      const storedName = sessionStorage.getItem("userName");
+      const storedPhone = sessionStorage.getItem("userPhone");
+      
+      setUserDetails((prev: typeof userDetails) => ({
+        ...prev,
+        email: storedEmail || prev.email,
+        name: storedName || prev.name,
+        phone: storedPhone || prev.phone,
+      }));
+    }
+  }, []);
+
 
   useEffect(() => {
-    const endDate = new Date("2025-08-17T23:59:59");
+    const endDate = new Date("2025-08-21T23:59:59");
 
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -75,6 +109,174 @@ export default function AutonomousCarMasterclass() {
 
   const handleCloseThankYouModal = () => {
     setShowThankYouModal(false);
+  };
+
+  const handleCloseUserDetailsModal = () => {
+    setShowUserDetailsModal(false);
+    setFormErrors({ name: "", email: "", phone: "" });
+  };
+
+  const validateForm = () => {
+    const errors = { name: "", email: "", phone: "" };
+    let isValid = true;
+
+    // Name validation
+    if (!userDetails.name.trim()) {
+      errors.name = "Name is required";
+      isValid = false;
+    } else if (userDetails.name.trim().length < 2) {
+      errors.name = "Name must be at least 2 characters";
+      isValid = false;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!userDetails.email.trim()) {
+      errors.email = "Email is required";
+      isValid = false;
+    } else if (!emailRegex.test(userDetails.email)) {
+      errors.email = "Please enter a valid email";
+      isValid = false;
+    }
+
+    // Phone validation
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!userDetails.phone.trim()) {
+      errors.phone = "Phone number is required";
+      isValid = false;
+    } else if (!phoneRegex.test(userDetails.phone.replace(/\s+/g, ''))) {
+      errors.phone = "Please enter a valid 10-digit Indian mobile number";
+      isValid = false;
+    }
+
+    setFormErrors(errors);
+    return isValid;
+  };
+
+  const handleInputChange = (field: keyof typeof userDetails, value: string) => {
+    setUserDetails((prev: typeof userDetails) => ({ ...prev, [field]: value }));
+    
+    // Clear error when user starts typing
+    if (formErrors[field]) {
+      setFormErrors((prev: typeof formErrors) => ({ ...prev, [field]: "" }));
+    }
+  };
+
+  const handleFormSubmit = async () => {
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+    try {
+      // Create order
+      const orderResponse = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: coursePrice
+        }),
+      });
+      const { order } = await orderResponse.json();
+
+      if (!order) {
+        throw new Error('Failed to create order');
+      }
+
+      const initializeRazorpay = () => {
+        const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
+
+        if (!razorpayKey) {
+          console.error("Razorpay key is not defined");
+          return;
+        }
+
+        const options = {
+          key: razorpayKey,
+          amount: order.amount,
+          currency: "INR",
+          name: "Autonomous Car Course",
+          description: "Purchase of Autonomous Car Course",
+          order_id: order.id,
+          handler: function (response: {
+            razorpay_payment_id: string;
+            razorpay_order_id: string;
+            razorpay_signature: string;
+          }) {
+            // Immediately show thank you modal for better UX
+            setShowUserDetailsModal(false);
+            setShowThankYouModal(true);
+            setIsLoading(false);
+            
+            // Save user details to session storage for future use
+            if (typeof window !== "undefined") {
+              sessionStorage.setItem("userEmail", userDetails.email);
+              sessionStorage.setItem("userName", userDetails.name);
+              sessionStorage.setItem("userPhone", userDetails.phone);
+            }
+
+            // Process post-payment operations in background (non-blocking)
+            fetch('/api/post-payment', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                name: userDetails.name,
+                email: userDetails.email,
+                phone: userDetails.phone,
+                paymentId: response.razorpay_payment_id,
+                orderId: response.razorpay_order_id,
+                signature: response.razorpay_signature,
+                                  amount: coursePrice,
+                batchId: 5 // Autonomous car course batch ID
+              }),
+            })
+            .then(async (postPaymentResponse) => {
+              const postPaymentResult = await postPaymentResponse.json();
+              if (postPaymentResponse.ok) {
+                console.log('Post-payment processing successful:', postPaymentResult);
+              } else {
+                console.error('Post-payment processing failed:', postPaymentResult);
+              }
+            })
+            .catch((error) => {
+              console.error('Error in post-payment processing:', error);
+            });
+          },
+          prefill: {
+            name: userDetails.name,
+            email: userDetails.email,
+            contact: userDetails.phone,
+          },
+          theme: {
+            color: "#000000",
+          },
+        };
+
+        try {
+          const rzp = new window.Razorpay(options);
+          rzp.open();
+          setIsLoading(false);
+        } catch (error) {
+          console.error("Error initializing Razorpay:", error);
+          setIsLoading(false);
+        }
+      };
+
+      if (typeof window !== "undefined" && "Razorpay" in window) {
+        initializeRazorpay();
+      } else {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.async = true;
+        script.onload = initializeRazorpay;
+        document.body.appendChild(script);
+      }
+    } catch (error) {
+      console.error("Error purchasing course:", error);
+      setIsLoading(false);
+    }
   };
 
   const formatTimeLeft = () => {
@@ -974,82 +1176,7 @@ export default function AutonomousCarMasterclass() {
             </div>
             <ShimmerButton
               className="w-full bg-white-600 text-white py-2 px-4 rounded-lg hover:bg-white-700 transition duration-300 text-sm sm:text-base cursor-pointer"
-              onClick={async () => {
-                setIsLoading(true);
-                try {
-                  // First create order
-                  const orderResponse = await fetch('/api/create-order', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      amount: 2499                  
-                    }),
-                  });
-                  const { order } = await orderResponse.json();
-
-                  if (!order) {
-                    throw new Error('Failed to create order');
-                  }
-
-                  const initializeRazorpay = () => {
-                    const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
-
-                    if (!razorpayKey) {
-                      console.error("Razorpay key is not defined");
-                      return;
-                    }
-
-                    const options = {
-                      key: razorpayKey,
-                      amount: order.amount,
-                      currency: "INR",
-                      name: "Autonomous Car Course",
-                      description: "Purchase of Autonomous Car Course",
-                      order_id: order.id,
-                      handler: function (_response: {
-                        razorpay_payment_id: string;
-                        razorpay_order_id: string;
-                        razorpay_signature: string;
-                      }) {
-                        setShowThankYouModal(true);
-                        setIsLoading(false);
-                      },
-                      prefill: {
-                        name: "",
-                        email: "",
-                        contact: "",
-                      },
-                      theme: {
-                        color: "#000000",
-                      },
-                    };
-
-                    try {
-                      const rzp = new window.Razorpay(options);
-                      rzp.open();
-                      setIsLoading(false);
-                    } catch (error) {
-                      console.error("Error initializing Razorpay:", error);
-                      setIsLoading(false);
-                    }
-                  };
-
-                  if (typeof window !== "undefined" && "Razorpay" in window) {
-                    initializeRazorpay();
-                  } else {
-                    const script = document.createElement("script");
-                    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-                    script.async = true;
-                    script.onload = initializeRazorpay;
-                    document.body.appendChild(script);
-                  }
-                } catch (error) {
-                  console.error("Error purchasing course:", error);
-                  setIsLoading(false);
-                }
-              }}
+              onClick={() => setShowUserDetailsModal(true)}
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">
@@ -1090,82 +1217,7 @@ export default function AutonomousCarMasterclass() {
               <ShimmerButton
                 borderRadius="8px"
                 className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
-                onClick={async () => {
-                  setIsLoading(true);
-                  try {
-                    // First create order
-                    const orderResponse = await fetch('/api/create-order', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json', 
-                      },
-                      body: JSON.stringify({ 
-                        amount: 2499
-                      }),
-                    });
-                    const { order } = await orderResponse.json();
-
-                    if (!order) {
-                      throw new Error('Failed to create order');
-                    }
-
-                    const initializeRazorpay = () => {
-                      const razorpayKey = "rzp_live_esTSJZdYt8HwVK";
-
-                      if (!razorpayKey) {
-                        console.error("Razorpay key is not defined");
-                        return;
-                      }
-
-                      const options = {
-                        key: razorpayKey,
-                        amount: order.amount,
-                        currency: "INR",
-                        name: "Autonomous Car Course",
-                        description: "Purchase of Autonomous Car Course",
-                        order_id: order.id,
-                        handler: function (_response: {
-                          razorpay_payment_id: string;
-                          razorpay_order_id: string;
-                          razorpay_signature: string;
-                        }) {
-                          setShowThankYouModal(true);
-                          setIsLoading(false);
-                        },
-                        prefill: {
-                          name: "",
-                          email: "",
-                          contact: "",
-                        },
-                        theme: {
-                          color: "#000000",
-                        },
-                      };
-
-                      try {
-                        const rzp = new window.Razorpay(options);
-                        rzp.open();
-                        setIsLoading(false);
-                      } catch (error) {
-                        console.error("Error initializing Razorpay:", error);
-                        setIsLoading(false);
-                      }
-                    };
-
-                    if (typeof window !== "undefined" && "Razorpay" in window) {
-                      initializeRazorpay();
-                    } else {
-                      const script = document.createElement("script");
-                      script.src = "https://checkout.razorpay.com/v1/checkout.js";
-                      script.async = true;
-                      script.onload = initializeRazorpay;
-                      document.body.appendChild(script);
-                    }
-                  } catch (error) {
-                    console.error("Error purchasing course:", error);
-                    setIsLoading(false);
-                  }
-                }}
+                onClick={() => setShowUserDetailsModal(true)}
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center">
@@ -1180,6 +1232,160 @@ export default function AutonomousCarMasterclass() {
           </div>
         </div>
       </div>
+
+      {/* User Details Modal */}
+      {showUserDetailsModal && (
+        <div
+          className="fixed inset-0 backdrop-blur-sm bg-neutral-500 bg-opacity-30 flex items-center justify-center z-50 p-4"
+          onClick={handleCloseUserDetailsModal}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 transform transition-all duration-300 ease-out"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-6 pb-4 border-b border-gray-100">
+              <div>
+                <h2 className="text-xl font-bold text-gray-900">Almost There!</h2>
+                <p className="text-sm text-gray-600 mt-1">Please provide your details to proceed</p>
+              </div>
+              <button
+                onClick={handleCloseUserDetailsModal}
+                className="text-gray-400 cursor-pointer hover:text-gray-600 transition-colors rounded-full p-1 hover:bg-gray-100"
+              >
+                <XIcon className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6">
+              <form className="space-y-5">
+                {/* Name Field */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Full Name *
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <UserIcon className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="text"
+                      value={userDetails.name}
+                      onChange={(e) => handleInputChange('name', e.target.value)}
+                      className={`block w-full pl-10 pr-3 py-3 border rounded-lg text-sm placeholder-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        formErrors.name ? 'border-red-300 bg-red-50' : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+                  {formErrors.name && (
+                    <p className="mt-1 text-xs text-red-600 flex items-center">
+                      <span className="w-1 h-1 bg-red-600 rounded-full mr-2"></span>
+                      {formErrors.name}
+                    </p>
+                  )}
+                </div>
+
+                {/* Email Field */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address *
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <MailIcon className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="email"
+                      value={userDetails.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      className={`block w-full pl-10 pr-3 py-3 border rounded-lg text-sm placeholder-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        formErrors.email ? 'border-red-300 bg-red-50' : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                      placeholder="Enter your email address"
+                    />
+                  </div>
+                  {formErrors.email && (
+                    <p className="mt-1 text-xs text-red-600 flex items-center">
+                      <span className="w-1 h-1 bg-red-600 rounded-full mr-2"></span>
+                      {formErrors.email}
+                    </p>
+                  )}
+                </div>
+
+                {/* Phone Field */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Mobile Number *
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <PhoneIcon className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="tel"
+                      value={userDetails.phone}
+                      onChange={(e) => {
+                        // Only allow numbers and limit to 10 digits
+                        const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                        handleInputChange('phone', value);
+                      }}
+                      className={`block w-full pl-10 pr-3 py-3 border rounded-lg text-sm placeholder-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        formErrors.phone ? 'border-red-300 bg-red-50' : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                      placeholder="Enter 10-digit mobile number"
+                      maxLength={10}
+                    />
+                  </div>
+                  {formErrors.phone && (
+                    <p className="mt-1 text-xs text-red-600 flex items-center">
+                      <span className="w-1 h-1 bg-red-600 rounded-full mr-2"></span>
+                      {formErrors.phone}
+                    </p>
+                  )}
+                </div>
+              </form>
+
+              {/* Buttons */}
+              <div className="flex gap-3 mt-8">
+                <button
+                  onClick={handleCloseUserDetailsModal}
+                  className="flex-1 px-4 py-3 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors focus:outline-none cursor-pointer focus:ring-2 focus:ring-gray-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  className="flex-1 px-4 py-3 text-sm font-medium bg-black text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 cursor-pointer"
+                  onClick={handleFormSubmit}
+                >
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Processing...
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center">
+                      <span className="hidden lg:block">Proceed to Payment</span>
+                      <span className="lg:hidden">Proceed</span>
+                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  )}
+                </button>
+              </div>
+
+              {/* Security Note */}
+              <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                <p className="text-xs text-blue-700 text-center">
+                  🔒 Your information is secure and will only be used for this purchase
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showThankYouModal && (
         <div
@@ -1231,7 +1437,7 @@ export default function AutonomousCarMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/Cmi9CaqJToy3mOnqTdqxha?"
+                  href="https://chat.whatsapp.com/FWUllPsPoM4IRiQD60gHv1?"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
