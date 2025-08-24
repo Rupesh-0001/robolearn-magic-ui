@@ -1,6 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 
-const sql = neon(process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_ZzGJF9NIW5gX@ep-patient-wildflower-a89s31e9-pooler.eastus2.azure.neon.tech/neondb?sslmode=require&channel_binding=require');
+const sql = neon(process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_ZzGJF9NIW5gX@ep-jolly-cherry-a8gnw1pc-pooler.eastus2.azure.neon.tech/neondb?sslmode=require&channel_binding=require');
 
 export { sql };
 
