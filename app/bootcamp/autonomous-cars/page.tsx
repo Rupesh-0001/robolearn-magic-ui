@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";
+import { extractReferralCodeFromCurrentPage } from "@/lib/referral-tracking";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -55,6 +56,9 @@ export default function AutonomousCarMasterclass() {
     phone: "",
   });
 
+  // Referral tracking state
+  const [referralCode, setReferralCode] = useState<string | null>(null);
+
   // Check session storage for user details on component mount
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -68,6 +72,13 @@ export default function AutonomousCarMasterclass() {
         name: storedName || prev.name,
         phone: storedPhone || prev.phone,
       }));
+
+      // Extract referral code from URL if present
+      const refCode = extractReferralCodeFromCurrentPage();
+      if (refCode) {
+        setReferralCode(refCode);
+        console.log('🎯 Referral code detected:', refCode);
+      }
     }
   }, []);
 
@@ -228,8 +239,9 @@ export default function AutonomousCarMasterclass() {
                 paymentId: response.razorpay_payment_id,
                 orderId: response.razorpay_order_id,
                 signature: response.razorpay_signature,
-                                  amount: coursePrice,
-                batchId: 5 // Autonomous car course batch ID
+                amount: coursePrice,
+                batchId: 5, // Autonomous car course batch ID
+                referralCode: referralCode // Include referral code if present
               }),
             })
             .then(async (postPaymentResponse) => {

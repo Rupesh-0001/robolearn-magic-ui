@@ -50,7 +50,7 @@ export default function AdminDashboard() {
   const [certificateRequests, setCertificateRequests] = useState<CertificateRequest[]>([]);
   const [certReqLoading, setCertReqLoading] = useState(false);
   const [certReqError, setCertReqError] = useState('');
-  const [activeTab, setActiveTab] = useState<'students' | 'batches' | 'enrollments' | 'certificates' | 'batch-management' | 'bulk-users'>('students');
+  const [activeTab, setActiveTab] = useState<'students' | 'batches' | 'enrollments' | 'certificates' | 'batch-management' | 'bulk-users' | 'ambassadors'>('students');
   // const [showCreateUserModal, setShowCreateUserModal] = useState(false);
   // const [newUser, setNewUser] = useState({
   //   name: '',
@@ -226,6 +226,16 @@ export default function AdminDashboard() {
                 }`}
               >
                 Bulk User Creation
+              </button>
+              <button
+                onClick={() => setActiveTab('ambassadors')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'ambassadors'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Ambassadors
               </button>
             </nav>
           </div>
@@ -448,6 +458,16 @@ export default function AdminDashboard() {
             {activeTab === 'bulk-users' && (
               <div>
                 <BulkUserCreation onUsersCreated={refreshData} />
+              </div>
+            )}
+
+            {activeTab === 'ambassadors' && (
+              <div>
+                <iframe 
+                  src="/admin/ambassadors" 
+                  className="w-full h-96 border-0"
+                  title="Ambassador Management"
+                />
               </div>
             )}
           </div>
