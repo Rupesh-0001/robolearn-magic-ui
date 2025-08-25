@@ -219,7 +219,7 @@ export default function AIAgentMasterclass() {
     //       email: formData.email,
     //       course: 'Autonomous Car Masterclass',
     //       phone: formData.phone,
-    //       grp_link : "https://chat.whatsapp.com/JK9U51JgqT1LJaO08KXUqQ?"
+    //       grp_link : "https://chat.whatsapp.com/FljjROmbYme0S2Ma5Ct7gb?"
     //     }),
     //   }).catch((emailError) => {
     //     console.error('Error sending onboarding email:', emailError);
@@ -249,7 +249,7 @@ export default function AIAgentMasterclass() {
       
       // Auto-open WhatsApp after 500ms if user hasn't clicked
       setTimeout(() => {
-        window.open('https://chat.whatsapp.com/JK9U51JgqT1LJaO08KXUqQ?', '_blank');
+        window.open('https://chat.whatsapp.com/FljjROmbYme0S2Ma5Ct7gb?', '_blank');
       }, 500);
     }, 300);
 
@@ -1279,7 +1279,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/JK9U51JgqT1LJaO08KXUqQ?"
+                  href="https://chat.whatsapp.com/FljjROmbYme0S2Ma5Ct7gb?"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
