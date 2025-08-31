@@ -193,7 +193,7 @@ export async function POST(request: NextRequest) {
     const mailOptions = {
       from: 'RoboLearn <no-reply@robolearn.in>',
       to: email,
-      cc: 'support@robolearn.in',
+      bcc: 'support@robolearn.in',
       subject: `Payment Confirmed - Welcome to ${courseName}!`,
       html: emailContent
     };
