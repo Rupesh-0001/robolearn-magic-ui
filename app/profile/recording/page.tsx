@@ -2,6 +2,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
 import { X as XIcon } from 'lucide-react';
+import HLSVideoPlayer from '@/components/ui/HLSVideoPlayer';
 
 // Utility function to convert various video URL formats to iframe-compatible URLs
 function convertToIframeUrl(url: string): string {
@@ -43,6 +44,11 @@ function convertToIframeUrl(url: string): string {
   
   // For other URLs, try to use as is
   return url;
+}
+
+// Utility function to check if URL is an HLS stream
+function isHLSStream(url: string): boolean {
+  return url.includes('.m3u8') || url.includes('application/vnd.apple.mpegurl');
 }
 
 function RecordingPageContent() {
@@ -127,6 +133,14 @@ function RecordingPageContent() {
               Try Again
             </button>
           </div>
+        ) : isHLSStream(lesson.url) ? (
+          <HLSVideoPlayer
+            src={lesson.url}
+            title={lesson.name || 'Recording'}
+            className="w-full h-full"
+            onError={handleIframeError}
+            onLoad={() => {}}
+          />
         ) : (
           <iframe
             src={lesson.url}
@@ -136,7 +150,7 @@ function RecordingPageContent() {
             className="w-full h-full border-none"
             sandbox="allow-scripts allow-same-origin allow-presentation allow-forms allow-popups"
             onError={handleIframeError}
-            onLoad={() => console.log('Iframe loaded successfully')}
+            onLoad={() => {}}
           />
         )}
       </div>
