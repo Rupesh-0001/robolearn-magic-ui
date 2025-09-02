@@ -136,7 +136,6 @@ function RecordingPageContent() {
         ) : isHLSStream(lesson.url) ? (
           <HLSVideoPlayer
             src={lesson.url}
-            title={lesson.name || 'Recording'}
             className="w-full h-full"
             onError={handleIframeError}
             onLoad={() => {}}

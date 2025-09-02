@@ -4,7 +4,6 @@ import Hls from 'hls.js';
 
 interface HLSVideoPlayerProps {
   src: string;
-  title?: string;
   className?: string;
   onError?: () => void;
   onLoad?: () => void;
@@ -26,7 +25,6 @@ function getProxiedUrl(url: string): string {
 
 export default function HLSVideoPlayer({ 
   src, 
-  title = 'Video', 
   className = '', 
   onError, 
   onLoad 
@@ -58,7 +56,7 @@ export default function HLSVideoPlayer({
         enableWorker: true,
         lowLatencyMode: true,
         backBufferLength: 90,
-        xhrSetup: function(xhr, url) {
+        xhrSetup: function(xhr, _url) {
           // Add CORS headers if needed
           xhr.withCredentials = false;
         }

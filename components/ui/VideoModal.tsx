@@ -39,7 +39,6 @@ export default function VideoModal({ lesson }: { lesson: Lesson }) {
                 {isHLSStream(lesson.recording_url) ? (
                   <HLSVideoPlayer
                     src={lesson.recording_url}
-                    title={lesson.lesson_name}
                     className="w-full h-96 rounded"
                   />
                 ) : (
