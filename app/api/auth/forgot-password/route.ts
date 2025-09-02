@@ -47,309 +47,394 @@ export async function POST(request: NextRequest) {
     
     const emailContent = `
       <!DOCTYPE html>
-      <html>
+      <html lang="en">
       <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Reset Your Password - RoboLearn</title>
-        <style>
-          * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-          }
-          
-          body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; 
-            line-height: 1.6; 
-            color: #2d3748; 
-            background: #f7fafc;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-          }
-          
-          .email-container { 
-            max-width: 600px; 
-            margin: 0 auto; 
-            background-color: #ffffff;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-          }
-          
-          .header { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            color: white; 
-            padding: 40px 30px; 
-            text-align: center;
-            position: relative;
-          }
-          
-          .header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #ffffff;
-          }
-          
-          .header p {
-            font-size: 18px;
-            opacity: 0.95;
-            color: #ffffff;
-            margin: 0;
-          }
-          
-          .content { 
-            background: #ffffff; 
-            padding: 40px 30px; 
-            color: #2d3748;
-          }
-          
-          .welcome-section {
-            text-align: center;
-            margin-bottom: 30px;
-          }
-          
-          .welcome-section h2 {
-            color: #1a202c;
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 15px;
-          }
-          
-          .welcome-section p {
-            color: #4a5568;
-            font-size: 16px;
-            line-height: 1.7;
-          }
-          
-          .action-section {
-            text-align: center;
-            margin: 40px 0;
-            padding: 30px;
-            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-          }
-          
-          .reset-button { 
-            display: inline-block; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            color: white; 
-            padding: 18px 36px; 
-            text-decoration: none; 
-            border-radius: 12px; 
-            font-weight: 600; 
-            font-size: 16px;
-            margin: 20px 0;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-          }
-          
-          .reset-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
-            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-          }
-          
-          .link-section {
-            margin: 30px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #3182ce;
-          }
-          
-          .link-section p {
-            margin-bottom: 10px;
-            font-weight: 500;
-            color: #2d3748;
-          }
-          
-          .link-box {
-            word-break: break-all;
-            background: #ffffff;
-            padding: 12px;
-            border-radius: 6px;
-            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-            font-size: 12px;
-            color: #4a5568;
-            border: 1px solid #e2e8f0;
-          }
-          
-          .security-notice { 
-            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%); 
-            border-left: 4px solid #e53e3e; 
-            padding: 25px; 
-            margin: 30px 0; 
-            border-radius: 12px;
-            border: 1px solid #feb2b2;
-          }
-          
-          .security-notice h3 {
-            color: #c53030;
-            margin-bottom: 15px;
-            font-size: 18px;
-            font-weight: 600;
-          }
-          
-          .security-notice ul {
-            list-style: none;
-            padding-left: 0;
-          }
-          
-          .security-notice li {
-            margin-bottom: 8px;
-            padding-left: 20px;
-            position: relative;
-            color: #742a2a;
-          }
-          
-          .security-notice li::before {
-            content: '🔒';
-            position: absolute;
-            left: 0;
-            top: 0;
-          }
-          
-          .info-section {
-            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
-            border-left: 4px solid #38a169;
-            padding: 20px;
-            margin: 30px 0;
-            border-radius: 12px;
-            border: 1px solid #9ae6b4;
-          }
-          
-          .info-section p {
-            color: #22543d;
-            margin-bottom: 0;
-            font-weight: 500;
-          }
-          
-          .footer { 
-            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); 
-            padding: 30px; 
-            text-align: center; 
-            color: #a0aec0;
-          }
-          
-          .footer p {
-            margin-bottom: 10px;
-          }
-          
-          .footer .team-signature {
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 15px;
-          }
-          
-          .footer .contact-info {
-            font-size: 14px;
-            color: #718096;
-            border-top: 1px solid #4a5568;
-            padding-top: 15px;
-            margin-top: 15px;
-          }
-          
-          .logo-section {
-            text-align: center;
-            margin-bottom: 20px;
-          }
-          
-          .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: #ffffff;
-            text-decoration: none;
-          }
-          
-          @media (max-width: 600px) {
-            body {
-              padding: 10px;
-            }
-            
-            .email-container {
-              border-radius: 12px;
-            }
-            
-            .header {
-              padding: 30px 20px;
-            }
-            
-            .header h1 {
-              font-size: 24px;
-            }
-            
-            .content {
-              padding: 30px 20px;
-            }
-            
-            .reset-button {
-              padding: 16px 28px;
-              font-size: 15px;
-            }
-          }
-        </style>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Reset Your Password - Robolearn</title>
+          <style>
+              /* Reset and Base Styles */
+              * {
+                  margin: 0;
+                  padding: 0;
+                  box-sizing: border-box;
+              }
+              
+              body {
+                  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                  line-height: 1.6;
+                  color: #2c3e50;
+                  background-color: #f5f6fa;
+                  padding: 20px;
+                  width: 100% !important;
+                  min-width: 100%;
+              }
+              
+              /* Main Container */
+              .email-container {
+                  max-width: 600px;
+                  margin: 0 auto;
+                  background-color: #ffffff;
+                  border-radius: 8px;
+                  overflow: hidden;
+                  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                  border: 1px solid #e1e8ed;
+              }
+              
+              /* Header */
+              .header {
+                  background-color: #34495e;
+                  color: #ffffff;
+                  padding: 40px 30px;
+                  text-align: center;
+                  border-bottom: 3px solid #2c3e50;
+              }
+              
+              .header h1 {
+                  margin: 0;
+                  font-size: 24px;
+                  font-weight: 700;
+                  line-height: 1.2;
+              }
+              
+              .header p {
+                  margin: 10px 0 0 0;
+                  font-size: 14px;
+                  opacity: 0.9;
+              }
+              
+              /* Content */
+              .content {
+                  padding: 30px 20px;
+              }
+              
+              .greeting {
+                  font-size: 18px;
+                  font-weight: 600;
+                  color: #2c3e50;
+                  margin-bottom: 20px;
+              }
+              
+              .content p {
+                  margin-bottom: 15px;
+                  font-size: 16px;
+                  line-height: 1.6;
+              }
+              
+              /* Action Section */
+              .action-section {
+                  background-color: #f8f9fa;
+                  border-radius: 6px;
+                  padding: 30px 25px;
+                  margin: 30px 0;
+                  text-align: center;
+                  border-left: 4px solid #34495e;
+                  border: 1px solid #e1e8ed;
+              }
+              
+              .reset-button {
+                  display: inline-block;
+                  background-color: #34495e;
+                  color: #ffffff !important;
+                  padding: 14px 28px;
+                  text-decoration: none;
+                  border-radius: 4px;
+                  font-weight: 600;
+                  font-size: 16px;
+                  margin: 20px auto;
+                  transition: background-color 0.3s ease;
+                  border: 2px solid #34495e;
+                  cursor: pointer;
+                  text-align: center;
+                  min-width: 250px;
+                  display: block;
+              }
+              
+              .reset-button:hover {
+                  background-color: #2c3e50;
+                  border-color: #2c3e50;
+              }
+              
+              /* Link Section */
+              .link-section {
+                  background-color: #ffffff;
+                  border-radius: 6px;
+                  padding: 30px 25px;
+                  margin: 30px 0;
+                  text-align: left;
+                  border: 2px solid #bdc3c7;
+                  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+              }
+              
+              .link-section h3 {
+                  color: #2c3e50;
+                  margin-bottom: 15px;
+                  font-size: 18px;
+                  line-height: 1.3;
+              }
+              
+              .link-section p {
+                  font-size: 15px;
+                  line-height: 1.6;
+                  margin-bottom: 12px;
+              }
+              
+              .link-box {
+                  word-break: break-all;
+                  background: #f8f9fa;
+                  padding: 12px;
+                  border-radius: 4px;
+                  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+                  font-size: 12px;
+                  color: #4a5568;
+                  border: 1px solid #e1e8ed;
+                  margin-top: 10px;
+              }
+              
+              /* Security Notice */
+              .security-notice {
+                  background-color: #fff3cd;
+                  border-left: 4px solid #ffc107;
+                  padding: 20px;
+                  margin: 25px 0;
+                  border-radius: 4px;
+                  font-weight: 500;
+                  color: #856404;
+              }
+              
+              .security-notice h3 {
+                  color: #856404;
+                  margin-bottom: 15px;
+                  font-size: 18px;
+                  font-weight: 600;
+              }
+              
+              .security-notice ul {
+                  list-style: none;
+                  padding-left: 0;
+              }
+              
+              .security-notice li {
+                  margin-bottom: 8px;
+                  padding-left: 20px;
+                  position: relative;
+                  color: #856404;
+              }
+              
+              .security-notice li::before {
+                  content: '🔒';
+                  position: absolute;
+                  left: 0;
+                  top: 0;
+              }
+              
+              /* Info Section */
+              .info-section {
+                  background-color: #d4edda;
+                  border: 1px solid #c3e6cb;
+                  padding: 20px;
+                  border-radius: 4px;
+                  margin: 25px 0;
+                  font-weight: 600;
+                  color: #155724;
+                  text-align: center;
+              }
+              
+              .info-section p {
+                  margin-bottom: 0;
+                  font-weight: 500;
+              }
+              
+              /* Help Section */
+              .help-section {
+                  background-color: #e8f4fd;
+                  border: 1px solid #bee5eb;
+                  padding: 20px;
+                  border-radius: 4px;
+                  margin: 25px 0;
+                  font-weight: 600;
+                  color: #0c5460;
+              }
+              
+              /* Footer */
+              .footer {
+                  background-color: #2c3e50;
+                  color: #ffffff;
+                  padding: 30px 25px;
+                  text-align: center;
+                  border-top: 1px solid #34495e;
+              }
+              
+              .footer p {
+                  margin: 5px 0;
+                  font-size: 14px;
+              }
+              
+              .team-signature {
+                  color: #ffffff;
+                  font-weight: 600;
+                  font-size: 16px;
+                  margin-bottom: 15px;
+              }
+              
+              .contact-info {
+                  font-size: 14px;
+                  color: #bdc3c7;
+                  border-top: 1px solid #34495e;
+                  padding-top: 15px;
+                  margin-top: 15px;
+              }
+              
+              .contact-info a {
+                  color: #bdc3c7;
+                  text-decoration: none;
+                  margin: 0 12px;
+                  font-weight: 500;
+                  font-size: 14px;
+                  border-bottom: 1px solid transparent;
+                  transition: color 0.3s ease, border-color 0.3s ease;
+              }
+              
+              .contact-info a:hover {
+                  color: #ffffff;
+                  border-bottom-color: #bdc3c7;
+              }
+              
+              /* Mobile Optimizations */
+              @media only screen and (max-width: 600px) {
+                  body {
+                      padding: 5px;
+                  }
+                  
+                  .email-container {
+                      border-radius: 10px;
+                  }
+                  
+                  .header {
+                      padding: 25px 15px;
+                  }
+                  
+                  .header h1 {
+                      font-size: 22px;
+                  }
+                  
+                  .content {
+                      padding: 25px 15px;
+                  }
+                  
+                  .greeting {
+                      font-size: 17px;
+                  }
+                  
+                  .reset-button {
+                      width: 100%;
+                      max-width: 300px;
+                      margin: 10px 0;
+                      padding: 18px 25px;
+                      font-size: 17px;
+                  }
+                  
+                  .security-notice,
+                  .link-section,
+                  .info-section,
+                  .help-section {
+                      padding: 20px 15px;
+                      margin: 20px 0;
+                  }
+                  
+                  .footer {
+                      padding: 20px 15px;
+                  }
+              }
+              
+              @media only screen and (max-width: 480px) {
+                  .header h1 {
+                      font-size: 20px;
+                  }
+                  
+                  .content p,
+                  .security-notice p,
+                  .info-section p,
+                  .help-section p {
+                      font-size: 14px;
+                  }
+                  
+                  .reset-button {
+                      padding: 16px 20px;
+                      font-size: 16px;
+                  }
+              }
+          </style>
       </head>
       <body>
-        <div class="email-container">
-          <div class="header">
-            <div class="logo-section">
-              <div class="logo">🤖 RoboLearn</div>
-            </div>
-            <h1>🔐 Password Reset Request</h1>
-            <p>Hi ${student.name},</p>
+          <div class="email-container">
+              <!-- Header -->
+              <div class="header">
+                  <h1>Robolearn India</h1>
+                  <p>Excellence in Autonomous Systems Education</p>
+              </div>
+              
+              <!-- Main Content -->
+              <div class="content">
+                  <div class="greeting">
+                      Dear ${student.name},
+                  </div>
+                  
+                  <p>We received a request to reset your password for your Robolearn account. If you made this request, please use the secure link below to reset your password.</p>
+                  
+                  <div class="security-notice">
+                      <h3>🛡️ Security Notice</h3>
+                      <ul>
+                          <li>This link will expire in <strong>1 hour</strong> for your security</li>
+                          <li>If you didn't request this password reset, please ignore this email</li>
+                          <li>Your password will remain unchanged until you create a new one</li>
+                          <li>Never share this link with anyone</li>
+                      </ul>
+                  </div>
+                  
+                  <!-- Action Section -->
+                  <div class="action-section">
+                      <h3>Reset Your Password</h3>
+                      <p>Click the button below to securely reset your password:</p>
+                      <a href="${resetUrl}" class="reset-button">
+                          🔑 Reset My Password
+                      </a>
+                  </div>
+                  
+                  <!-- Alternative Link Section -->
+                  <div class="link-section">
+                      <h3>Alternative Method</h3>
+                      <p>If the button doesn't work, copy and paste this link into your browser:</p>
+                      <div class="link-box">${resetUrl}</div>
+                  </div>
+                  
+                  <div class="help-section">
+                      <p>💡 <strong>Need Help?</strong> If you're having trouble clicking the button, copy and paste the URL above into your web browser.</p>
+                  </div>
+                  
+                  <div class="info-section">
+                      <p>✅ <strong>Account Security:</strong> If you didn't request a password reset, you can safely ignore this email. Your account remains secure and no changes will be made.</p>
+                  </div>
+                  
+                  <p style="text-align: center; font-style: italic; color: #666; margin-top: 15px;">
+                      Remember: Your security is our priority. This link is time-sensitive and will expire automatically. 🔐✨
+                  </p>
+              </div>
+              
+              <!-- Footer -->
+              <div class="footer">
+                  <p class="team-signature">Best regards,<br>The Robolearn Team</p>
+                  <div class="contact-info">
+                      <p>📧 This email was sent to: ${email}</p>
+                      <a href="mailto:support@robolearn.in">Support</a>
+                      <a href="https://www.robolearn.in">Website</a>
+                      <a href="tel:+917696433339">+91 7696433339</a>
+                  </div>
+                  <p style="font-size: 12px; opacity: 0.8; margin-top: 20px;">
+                      ROBOLEARNINDIA LLP | Ludhiana, Punjab, India - 141006
+                  </p>
+              </div>
           </div>
-          
-          <div class="content">
-            <div class="welcome-section">
-              <h2>Reset Your Password</h2>
-              <p>We received a request to reset your password for your RoboLearn account. If you made this request, please click the button below to securely reset your password.</p>
-            </div>
-            
-            <div class="action-section">
-              <a href="${resetUrl}" class="reset-button">🔑 Reset My Password</a>
-            </div>
-            
-            <div class="link-section">
-              <p><strong>Alternative Method:</strong></p>
-              <p>If the button doesn't work, copy and paste this link into your browser:</p>
-              <div class="link-box">${resetUrl}</div>
-            </div>
-            
-            <div class="security-notice">
-              <h3>🛡️ Security Notice</h3>
-              <ul>
-                <li>This link will expire in <strong>1 hour</strong> for your security</li>
-                <li>If you didn't request this password reset, please ignore this email</li>
-                <li>Your password will remain unchanged until you create a new one</li>
-                <li>Never share this link with anyone</li>
-              </ul>
-            </div>
-            
-            <div class="info-section">
-              <p>💡 <strong>Need Help?</strong> If you're having trouble clicking the button, copy and paste the URL above into your web browser.</p>
-            </div>
-            
-            <div class="info-section">
-              <p>✅ <strong>Account Security:</strong> If you didn't request a password reset, you can safely ignore this email. Your account remains secure and no changes will be made.</p>
-            </div>
-          </div>
-          
-          <div class="footer">
-            <p class="team-signature">Best regards,<br>The RoboLearn Team</p>
-            <div class="contact-info">
-              <p>📧 This email was sent to: ${email}</p>
-              <p>🆘 Need help? Contact us at <a href="mailto:support@robolearn.in" style="color: #63b3ed;">support@robolearn.in</a></p>
-              <p>🌐 Visit us at <a href="https://robolearn.in" style="color: #63b3ed;">robolearn.in</a></p>
-            </div>
-          </div>
-        </div>
       </body>
       </html>
     `;
@@ -367,10 +452,10 @@ export async function POST(request: NextRequest) {
 
     // Email options
     const mailOptions = {
-      from: 'RoboLearn <no-reply@robolearn.in>',
+      from: 'Robolearn <no-reply@robolearn.in>',
       to: email,
       bcc: 'support@robolearn.in',
-      subject: 'Reset Your RoboLearn Password',
+      subject: 'Reset Your Robolearn Password',
       html: emailContent
     };
 
