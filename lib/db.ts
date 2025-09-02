@@ -11,6 +11,8 @@ export interface Student {
   email: string;
   phone_number?: string;
   password?: string;
+  reset_token?: string;
+  reset_token_expiry?: Date;
 }
 
 export interface StudentWithPassword extends Student {

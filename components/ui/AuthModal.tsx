@@ -192,6 +192,14 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                 {loading ? "Signing in..." : "Sign In"}
               </ShimmerButton>
             </div>
+            <div className="text-center">
+              <a
+                href="/forgot-password"
+                className="text-sm text-blue-600 hover:text-blue-500 transition-colors"
+              >
+                Forgot your password?
+              </a>
+            </div>
           </form>
         ) : (
           <form className="space-y-6" onSubmit={handleRegister}>

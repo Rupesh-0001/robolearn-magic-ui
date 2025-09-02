@@ -52,7 +52,7 @@ export default async function ProfilePage() {
   
   // If no user is authenticated, redirect to login
   if (!userData?.user) {
-    redirect('/login');
+    redirect('/');
   }
 
   const courses: Course[] = (await fetchWithAuth(`${baseUrl}/api/auth/my-courses`)) || [];
