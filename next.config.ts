@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // Transpile packages that might have issues with Next.js
+  transpilePackages: ['@neondatabase/serverless'],
 };
 
 export default nextConfig;

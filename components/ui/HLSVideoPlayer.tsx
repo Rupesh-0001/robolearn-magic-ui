@@ -50,70 +50,115 @@ export default function HLSVideoPlayer({
     // Get the appropriate URL (proxied if needed)
     const videoUrl = getProxiedUrl(src);
 
-    if (Hls.isSupported()) {
-      // Use HLS.js for browsers that don't support native HLS
-      const hls = new Hls({
-        enableWorker: true,
-        lowLatencyMode: true,
-        backBufferLength: 90,
-        xhrSetup: function(xhr, _url) {
-          // Add CORS headers if needed
-          xhr.withCredentials = false;
-        }
-      });
-      
-      hlsRef.current = hls;
-      
-      hls.loadSource(videoUrl);
-      hls.attachMedia(video);
-      
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        setLoading(false);
-        onLoad?.();
-      });
-      
-      hls.on(Hls.Events.ERROR, (event, data) => {
-        if (data.fatal) {
-          switch(data.type) {
-            case Hls.ErrorTypes.NETWORK_ERROR:
-              setError('Network error. Trying to recover...');
-              hls.startLoad();
-              break;
-            case Hls.ErrorTypes.MEDIA_ERROR:
-              setError('Media error. Trying to recover...');
-              hls.recoverMediaError();
-              break;
-            default:
-              setError(`Failed to load video stream: ${data.details || 'Unknown error'}`);
-              setLoading(false);
-              onError?.();
-              break;
+    // Ensure video element is properly sized and visible
+    const initializeVideo = () => {
+      if (video.offsetWidth === 0 || video.offsetHeight === 0) {
+        // Video element not properly sized, retry after a short delay
+        setTimeout(initializeVideo, 100);
+        return;
+      }
+
+      if (Hls.isSupported()) {
+        // Use HLS.js for browsers that don't support native HLS
+        const hls = new Hls({
+          enableWorker: true,
+          lowLatencyMode: true,
+          backBufferLength: 90,
+          xhrSetup: function(xhr, _url) {
+            // Add CORS headers if needed
+            xhr.withCredentials = false;
           }
-        }
-      });
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      // Use native HLS support (Safari)
-      video.src = videoUrl;
-      video.addEventListener('loadedmetadata', () => {
-        setLoading(false);
-        onLoad?.();
-      });
-      video.addEventListener('error', () => {
-        setError('Failed to load video stream');
+        });
+        
+        hlsRef.current = hls;
+        
+        hls.loadSource(videoUrl);
+        hls.attachMedia(video);
+        
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          setLoading(false);
+          onLoad?.();
+        });
+        
+        hls.on(Hls.Events.ERROR, (event, data) => {
+          if (data.fatal) {
+            switch(data.type) {
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                setError('Network error. Trying to recover...');
+                hls.startLoad();
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                setError('Media error. Trying to recover...');
+                hls.recoverMediaError();
+                break;
+              default:
+                setError(`Failed to load video stream: ${data.details || 'Unknown error'}`);
+                setLoading(false);
+                onError?.();
+                break;
+            }
+          }
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        // Use native HLS support (Safari)
+        video.src = videoUrl;
+        video.addEventListener('loadedmetadata', () => {
+          setLoading(false);
+          onLoad?.();
+        });
+        video.addEventListener('error', () => {
+          setError('Failed to load video stream');
+          setLoading(false);
+          onError?.();
+        });
+      } else {
+        setError('HLS video playback is not supported in this browser');
         setLoading(false);
         onError?.();
+      }
+    };
+
+    // Start initialization
+    initializeVideo();
+
+    // Handle viewport changes
+    const handleResize = () => {
+      if (hlsRef.current && video.offsetWidth > 0 && video.offsetHeight > 0) {
+        // Video is visible and properly sized, ensure it's playing
+        if (video.paused && video.readyState >= 2) {
+          video.play().catch(() => {
+            // Ignore autoplay errors
+          });
+        }
+      }
+    };
+
+    // Add resize observer
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(video);
+
+    // Add intersection observer to handle visibility changes
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && hlsRef.current) {
+          // Video is visible, ensure it's properly initialized
+          setTimeout(handleResize, 100);
+        }
       });
-    } else {
-      setError('HLS video playback is not supported in this browser');
-      setLoading(false);
-      onError?.();
-    }
+    }, { threshold: 0.1 });
+    intersectionObserver.observe(video);
+
+    // Add window resize listener as fallback
+    window.addEventListener('resize', handleResize);
 
     return () => {
       if (hlsRef.current) {
         hlsRef.current.destroy();
         hlsRef.current = null;
       }
+      resizeObserver.disconnect();
+      intersectionObserver.disconnect();
+      window.removeEventListener('resize', handleResize);
     };
   }, [src, onError, onLoad]);
 
@@ -154,7 +199,12 @@ export default function HLSVideoPlayer({
         ref={videoRef}
         controls
         className="w-full h-full"
-        style={{ display: loading ? 'none' : 'block' }}
+        style={{ 
+          display: loading ? 'none' : 'block',
+          minWidth: '100%',
+          minHeight: '100%',
+          objectFit: 'contain'
+        }}
         onError={() => {
           setError('Failed to load video');
           setLoading(false);
