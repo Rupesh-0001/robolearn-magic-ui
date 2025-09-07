@@ -89,7 +89,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
     } catch (error) {
       console.error("💥 Registration error:", error);
       
-      if (error.name === 'AbortError') {
+      if (error instanceof Error && error.name === 'AbortError') {
         setError("Registration timed out. Please try again.");
       } else {
         setError("Registration failed. Please try again.");
