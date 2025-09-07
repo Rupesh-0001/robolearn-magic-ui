@@ -52,14 +52,30 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
     setError("");
     setSuccess("");
     setLoading(true);
+    
+    console.log("🔄 Starting registration process...");
+    
     try {
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
       const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, phoneNumber }),
+        signal: controller.signal,
       });
+      
+      clearTimeout(timeoutId);
+      
+      console.log("📡 Registration API response status:", response.status);
+      
       const data = await response.json();
+      console.log("📄 Registration API response data:", data);
+      
       if (response.ok) {
+        console.log("✅ Registration successful");
         setSuccess("Account created successfully! You can now login.");
         setName("");
         setEmail("");
@@ -67,12 +83,21 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
         setPhoneNumber("");
         setIsLogin(true);
       } else {
+        console.log("❌ Registration failed:", data.error);
         setError(data.error || "Registration failed");
       }
-    } catch {
-      setError("Registration failed. Please try again.");
+    } catch (error) {
+      console.error("💥 Registration error:", error);
+      
+      if (error.name === 'AbortError') {
+        setError("Registration timed out. Please try again.");
+      } else {
+        setError("Registration failed. Please try again.");
+      }
+    } finally {
+      console.log("🏁 Registration process completed, setting loading to false");
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
