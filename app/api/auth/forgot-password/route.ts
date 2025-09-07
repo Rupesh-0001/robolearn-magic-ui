@@ -43,7 +43,8 @@ export async function POST(request: NextRequest) {
     `;
 
     // Create reset password email content
-    const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://robolearn.in';
+    const resetUrl = `${baseUrl}/reset-password?token=${resetToken}`;
     
     const emailContent = `
       <!DOCTYPE html>
@@ -441,12 +442,12 @@ export async function POST(request: NextRequest) {
 
     // Create transporter using Hostinger SMTP
     const transporter = nodemailer.createTransport({
-      host: 'smtp.hostinger.com',
-      port: 465,
+      host: process.env.SMTP_HOST || 'smtp.hostinger.com',
+      port: parseInt(process.env.SMTP_PORT || '465'),
       secure: true,
       auth: {
-        user: 'no-reply@robolearn.in',
-        pass: 'RoboLearn@2412'
+        user: process.env.SMTP_USER || 'no-reply@robolearn.in',
+        pass: process.env.SMTP_PASS || 'RoboLearn@2412'
       }
     });
 
@@ -459,20 +460,24 @@ export async function POST(request: NextRequest) {
       html: emailContent
     };
 
-    // Send email (non-blocking)
-    transporter.sendMail(mailOptions)
-      .then(() => {
-        console.log('✅ Email sent successfully to:', email);
-      })
-      .catch((emailError) => {
-        console.error('❌ Email sending failed:', emailError);
-        // Don't fail the request if email fails, just log it
-      });
-
-    return NextResponse.json(
-      { message: 'If an account with that email exists, we have sent a password reset link.' },
-      { status: 200 }
-    );
+    // Send email synchronously to handle errors properly
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log('✅ Password reset email sent successfully to:', email);
+      
+      return NextResponse.json(
+        { message: 'If an account with that email exists, we have sent a password reset link.' },
+        { status: 200 }
+      );
+    } catch (emailError) {
+      console.error('❌ Email sending failed:', emailError);
+      
+      // Return error response if email fails
+      return NextResponse.json(
+        { error: 'Failed to send password reset email. Please try again later.' },
+        { status: 500 }
+      );
+    }
 
   } catch (error) {
     console.error('Forgot password error:', error);
