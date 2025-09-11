@@ -121,7 +121,13 @@ function RecordingPageContent() {
       
       {/* Video container */}
       <div className="flex-1 flex items-center justify-center bg-black">
-        {iframeError ? (
+        {isHLSStream(lesson.url) ? (
+          <HLSVideoPlayer
+            src={lesson.url}
+            className="max-w-[96vw] max-h-[85vh]"
+            onLoad={() => {}}
+          />
+        ) : iframeError ? (
           <div className="text-center text-white p-8">
             <div className="text-xl font-semibold mb-4">Recording Error</div>
             <div className="text-gray-300 mb-4">{iframeError}</div>
@@ -133,20 +139,13 @@ function RecordingPageContent() {
               Try Again
             </button>
           </div>
-        ) : isHLSStream(lesson.url) ? (
-          <HLSVideoPlayer
-            src={lesson.url}
-            className="w-full h-full"
-            onError={handleIframeError}
-            onLoad={() => {}}
-          />
         ) : (
           <iframe
             src={lesson.url}
             title={lesson.name || 'Recording'}
             allow="autoplay; encrypted-media; fullscreen"
             allowFullScreen
-            className="w-full h-full border-none"
+            className="max-w-[96vw] max-h-[85vh] w-full h-full border-none"
             sandbox="allow-scripts allow-same-origin allow-presentation allow-forms allow-popups"
             onError={handleIframeError}
             onLoad={() => {}}
