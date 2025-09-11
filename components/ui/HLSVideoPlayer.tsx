@@ -33,6 +33,9 @@ export default function HLSVideoPlayer({
   const hlsRef = useRef<Hls | null>(null);
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState(true);
+  const [resolvedUrl, setResolvedUrl] = useState<string>('');
+  const [useNativeHls, setUseNativeHls] = useState<boolean>(false);
+  const [awaitingStart, setAwaitingStart] = useState<boolean>(true);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -49,16 +52,12 @@ export default function HLSVideoPlayer({
 
     // Get the appropriate URL (proxied if needed)
     const videoUrl = getProxiedUrl(src);
+    setResolvedUrl(videoUrl);
 
-    // Ensure video element is properly sized and visible
+    // Initialize video immediately; don't block on size to avoid deadlock with loading overlay
     const initializeVideo = () => {
-      if (video.offsetWidth === 0 || video.offsetHeight === 0) {
-        // Video element not properly sized, retry after a short delay
-        setTimeout(initializeVideo, 100);
-        return;
-      }
-
       if (Hls.isSupported()) {
+        setUseNativeHls(false);
         // Use HLS.js for browsers that don't support native HLS
         const hls = new Hls({
           enableWorker: true,
@@ -78,9 +77,14 @@ export default function HLSVideoPlayer({
         hls.on(Hls.Events.MANIFEST_PARSED, () => {
           setLoading(false);
           onLoad?.();
+          // Wait for user interaction to start with sound
+          setAwaitingStart(true);
         });
         
         hls.on(Hls.Events.ERROR, (event, data) => {
+          // Surface detailed error info in console for diagnosis
+          // eslint-disable-next-line no-console
+          console.error('HLS.js error', { type: data.type, details: data.details, fatal: data.fatal });
           if (data.fatal) {
             switch(data.type) {
               case Hls.ErrorTypes.NETWORK_ERROR:
@@ -100,13 +104,17 @@ export default function HLSVideoPlayer({
           }
         });
       } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        setUseNativeHls(true);
         // Use native HLS support (Safari)
         video.src = videoUrl;
         video.addEventListener('loadedmetadata', () => {
           setLoading(false);
           onLoad?.();
+          setAwaitingStart(true);
         });
         video.addEventListener('error', () => {
+          // eslint-disable-next-line no-console
+          console.error('Native video error while loading HLS', { src: videoUrl });
           setError('Failed to load video stream');
           setLoading(false);
           onError?.();
@@ -114,6 +122,8 @@ export default function HLSVideoPlayer({
       } else {
         setError('HLS video playback is not supported in this browser');
         setLoading(false);
+        // eslint-disable-next-line no-console
+        console.error('HLS is not supported in this browser');
         onError?.();
       }
     };
@@ -151,6 +161,14 @@ export default function HLSVideoPlayer({
     // Add window resize listener as fallback
     window.addEventListener('resize', handleResize);
 
+    // Retry play on page visibility changes
+    const handleVisibility = () => {
+      if (!document.hidden && video.readyState >= 2 && video.paused) {
+        video.play().catch(() => {});
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
     return () => {
       if (hlsRef.current) {
         hlsRef.current.destroy();
@@ -159,6 +177,7 @@ export default function HLSVideoPlayer({
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, [src, onError, onLoad]);
 
@@ -168,7 +187,10 @@ export default function HLSVideoPlayer({
         <div className="text-center p-8">
           <div className="text-xl font-semibold mb-4">Video Error</div>
           <div className="text-gray-300 mb-4">{error}</div>
-          <div className="text-sm text-gray-400 mb-4">URL: {src}</div>
+          <div className="text-sm text-gray-400 mb-2">Source URL: {src}</div>
+          {resolvedUrl && (
+            <div className="text-xs text-gray-500 mb-4">Proxied URL: {resolvedUrl}</div>
+          )}
           <button
             onClick={() => {
               setError('');
@@ -195,15 +217,52 @@ export default function HLSVideoPlayer({
           </div>
         </div>
       )}
+      {awaitingStart && !loading && (
+        <button
+          className="absolute inset-0 z-20 flex items-center justify-center bg-black/30 text-white"
+          onClick={() => {
+            const v = videoRef.current;
+            if (!v) return;
+            v.muted = false;
+            v.play().catch(() => {});
+            setAwaitingStart(false);
+          }}
+        >
+          <span className="px-4 py-2 rounded bg-black/70 text-white text-sm hover:bg-black/80">Play with sound</span>
+        </button>
+      )}
       <video
         ref={videoRef}
         controls
+        // start paused and unmuted; user click will start playback with sound
+        playsInline
+        controlsList="nofullscreen"
         className="w-full h-full"
         style={{ 
-          display: loading ? 'none' : 'block',
-          minWidth: '100%',
-          minHeight: '100%',
+          display: 'block',
+          maxWidth: '100%',
+          maxHeight: '100%',
           objectFit: 'contain'
+        }}
+        onClick={() => {
+          if (awaitingStart) {
+            const v = videoRef.current;
+            if (!v) return;
+            v.muted = false;
+            v.play().catch(() => {});
+            setAwaitingStart(false);
+          }
+        }}
+        onDoubleClick={(e) => {
+          // Prevent browser double-click fullscreen toggle
+          e.preventDefault();
+          const v = videoRef.current;
+          if (!v) return;
+          if (v.paused && v.readyState >= 2) {
+            v.play().catch(() => {});
+          } else if (!v.paused) {
+            v.pause();
+          }
         }}
         onError={() => {
           setError('Failed to load video');
@@ -211,7 +270,9 @@ export default function HLSVideoPlayer({
           onError?.();
         }}
       >
-        <source src={src} type="application/vnd.apple.mpegurl" />
+        {useNativeHls && (
+          <source src={resolvedUrl || src} type="application/vnd.apple.mpegurl" />
+        )}
         Your browser does not support the video tag.
       </video>
     </div>
