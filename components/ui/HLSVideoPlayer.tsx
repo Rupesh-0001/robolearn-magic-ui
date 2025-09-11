@@ -83,7 +83,6 @@ export default function HLSVideoPlayer({
         
         hls.on(Hls.Events.ERROR, (event, data) => {
           // Surface detailed error info in console for diagnosis
-          // eslint-disable-next-line no-console
           console.error('HLS.js error', { type: data.type, details: data.details, fatal: data.fatal });
           if (data.fatal) {
             switch(data.type) {
@@ -113,7 +112,6 @@ export default function HLSVideoPlayer({
           setAwaitingStart(true);
         });
         video.addEventListener('error', () => {
-          // eslint-disable-next-line no-console
           console.error('Native video error while loading HLS', { src: videoUrl });
           setError('Failed to load video stream');
           setLoading(false);
@@ -122,7 +120,6 @@ export default function HLSVideoPlayer({
       } else {
         setError('HLS video playback is not supported in this browser');
         setLoading(false);
-        // eslint-disable-next-line no-console
         console.error('HLS is not supported in this browser');
         onError?.();
       }

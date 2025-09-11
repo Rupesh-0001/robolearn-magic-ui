@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
 
     const proxifySegment = (value: string) => {
       const abs = toAbsolute(value);
-      return `${origin}/api/proxy-hls/segment?base=${encodeURIComponent(baseUrl)}&file=${encodeURIComponent(value)}`;
+      return `${origin}/api/proxy-hls/segment?base=${encodeURIComponent(baseUrl)}&file=${encodeURIComponent(abs)}`;
     };
 
     const proxifyManifest = (value: string) => {
