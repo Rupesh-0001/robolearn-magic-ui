@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/auth';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { put } from '@vercel/blob';
 
 export const runtime = 'nodejs';
 
@@ -33,15 +32,13 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const resourcesDir = path.join(process.cwd(), 'public', 'resources');
-    await fs.mkdir(resourcesDir, { recursive: true });
+    const key = `lesson-resources/${Date.now()}-${originalName.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+    const { url } = await put(key, buffer, {
+      access: 'public',
+      contentType: 'application/zip'
+    });
 
-    const uniqueName = `${Date.now()}-${originalName.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
-    const filePath = path.join(resourcesDir, uniqueName);
-    await fs.writeFile(filePath, buffer);
-
-    const publicUrl = `/resources/${uniqueName}`;
-    return NextResponse.json({ url: publicUrl, name: uniqueName });
+    return NextResponse.json({ url, name: originalName });
   } catch (error) {
     console.error('Error uploading resource:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
