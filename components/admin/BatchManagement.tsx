@@ -24,6 +24,7 @@ interface Lesson {
   description?: string;
   videoUrl?: string;
   duration?: number;
+  resourceUrl?: string;
 }
 
 interface BatchEnrollment {
@@ -62,7 +63,8 @@ export default function BatchManagement() {
     title: '',
     description: '',
     videoUrl: '',
-    duration: ''
+    duration: '',
+    resourceUrl: ''
   });
 
   const [selectedStudent, setSelectedStudent] = useState('');
@@ -147,7 +149,8 @@ export default function BatchManagement() {
         title: newLesson.title,
         description: newLesson.description,
         videoUrl: newLesson.videoUrl,
-        duration: parseInt(newLesson.duration) || 0
+        duration: parseInt(newLesson.duration) || 0,
+        resourceUrl: newLesson.resourceUrl || undefined
       };
 
       const response = await fetch('/api/admin/lessons', {
@@ -161,7 +164,7 @@ export default function BatchManagement() {
 
       if (response.ok) {
         setShowAddLesson(false);
-        setNewLesson({ title: '', description: '', videoUrl: '', duration: '' });
+        setNewLesson({ title: '', description: '', videoUrl: '', duration: '', resourceUrl: '' });
         await fetchData();
         const updatedBatch = batches.find(b => b.batch_id === selectedBatch.batch_id);
         if (updatedBatch) {
@@ -195,7 +198,8 @@ export default function BatchManagement() {
             title: newLesson.title,
             description: newLesson.description,
             videoUrl: newLesson.videoUrl,
-            duration: parseInt(newLesson.duration) || 0
+            duration: parseInt(newLesson.duration) || 0,
+            resourceUrl: newLesson.resourceUrl || undefined
           }
         })
       });
@@ -203,7 +207,7 @@ export default function BatchManagement() {
       if (response.ok) {
         setShowEditLesson(false);
         setEditingLesson(null);
-        setNewLesson({ title: '', description: '', videoUrl: '', duration: '' });
+        setNewLesson({ title: '', description: '', videoUrl: '', duration: '', resourceUrl: '' });
         await fetchData();
         const updatedBatch = batches.find(b => b.batch_id === selectedBatch.batch_id);
         if (updatedBatch) {
@@ -259,7 +263,8 @@ export default function BatchManagement() {
       title: lesson.title,
       description: lesson.description || '',
       videoUrl: lesson.videoUrl || '',
-      duration: lesson.duration?.toString() || ''
+      duration: lesson.duration?.toString() || '',
+      resourceUrl: lesson.resourceUrl || ''
     });
     setShowEditLesson(true);
   };
@@ -426,6 +431,11 @@ export default function BatchManagement() {
                        {lesson.videoUrl && (
                          <p className="text-sm text-blue-600 truncate">{lesson.videoUrl}</p>
                        )}
+                       {lesson.resourceUrl && (
+                         <a href={lesson.resourceUrl} target="_blank" rel="noreferrer" className="text-sm text-green-700 underline">
+                           Download resources ZIP
+                         </a>
+                       )}
                      </div>
                      <div className="flex space-x-2">
                        <Button
@@ -586,6 +596,43 @@ export default function BatchManagement() {
                   placeholder="Enter duration in minutes"
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Resources ZIP
+                </label>
+                <input
+                  type="file"
+                  accept=".zip"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    try {
+                      setLoading(true);
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      const res = await fetch('/api/admin/upload-resource', {
+                        method: 'POST',
+                        body: formData
+                      });
+                      if (res.ok) {
+                        const data = await res.json();
+                        setNewLesson(prev => ({ ...prev, resourceUrl: data.url }));
+                      } else {
+                        const err = await res.json();
+                        setError(err.error || 'Failed to upload resource');
+                      }
+                    } catch {
+                      setError('Failed to upload resource');
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
+                  className="w-full border rounded-md px-3 py-2"
+                />
+                {newLesson.resourceUrl && (
+                  <p className="text-xs text-green-700 mt-1">Uploaded: {newLesson.resourceUrl}</p>
+                )}
+              </div>
             </div>
             <div className="flex justify-end space-x-2 mt-6">
               <Button
@@ -659,13 +706,61 @@ export default function BatchManagement() {
                   placeholder="Enter duration in minutes"
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Resources ZIP
+                </label>
+                <input
+                  type="file"
+                  accept=".zip"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    try {
+                      setLoading(true);
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      const res = await fetch('/api/admin/upload-resource', {
+                        method: 'POST',
+                        body: formData
+                      });
+                      if (res.ok) {
+                        const data = await res.json();
+                        setNewLesson(prev => ({ ...prev, resourceUrl: data.url }));
+                      } else {
+                        const err = await res.json();
+                        setError(err.error || 'Failed to upload resource');
+                      }
+                    } catch {
+                      setError('Failed to upload resource');
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
+                  className="w-full border rounded-md px-3 py-2"
+                />
+                {newLesson.resourceUrl && (
+                  <div className="flex items-center justify-between mt-1">
+                    <a href={newLesson.resourceUrl} target="_blank" rel="noreferrer" className="text-xs text-green-700 underline">
+                      Current ZIP
+                    </a>
+                    <button
+                      type="button"
+                      className="text-xs text-red-600"
+                      onClick={() => setNewLesson(prev => ({ ...prev, resourceUrl: '' }))}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="flex justify-end space-x-2 mt-6">
               <Button
                 onClick={() => {
                   setShowEditLesson(false);
                   setEditingLesson(null);
-                  setNewLesson({ title: '', description: '', videoUrl: '', duration: '' });
+                  setNewLesson({ title: '', description: '', videoUrl: '', duration: '', resourceUrl: '' });
                 }}
                 variant="outline"
               >

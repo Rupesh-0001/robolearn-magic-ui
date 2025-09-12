@@ -32,6 +32,7 @@ export interface Lesson {
   description?: string;
   videoUrl?: string;
   duration?: number;
+  resourceUrl?: string;
 }
 
 export interface Enrollment {
