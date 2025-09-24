@@ -1,6 +1,5 @@
 "use client";
 
-import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";
 import {
   Clock as ClockIcon,
@@ -12,7 +11,6 @@ import Image from 'next/image';
 
 export default function FutureProofingMasterclass() {
   const [showThankYouModal, setShowThankYouModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   // Carousel state
   const carouselRef = useRef<HTMLDivElement>(null);
