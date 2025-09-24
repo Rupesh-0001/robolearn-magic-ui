@@ -205,7 +205,7 @@ export default function HLSVideoPlayer({
   }
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative video-player-container ${className}`}>
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-900 text-white z-10">
           <div className="text-center">

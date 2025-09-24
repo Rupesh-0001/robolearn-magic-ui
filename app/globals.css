@@ -173,3 +173,24 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Video player controls visibility fix for smaller screens */
+@layer components {
+  .video-player-container {
+    position: relative;
+    overflow: visible;
+  }
+  
+  /* Ensure video controls are not clipped on smaller screens */
+  @media (max-height: 800px) {
+    .video-player-container {
+      padding-bottom: 20px; /* Minimal space for controls */
+    }
+  }
+  
+  @media (max-height: 600px) {
+    .video-player-container {
+      padding-bottom: 30px; /* Slightly more space for controls on very small screens */
+    }
+  }
+}
