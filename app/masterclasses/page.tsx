@@ -31,7 +31,7 @@ export default function ExplorePage() {
           {/* Course Block 1 */}
 
 
-          <Link href="/masterclasses/future-proofing-masterclass" className="block transition-transform hover:scale-[1.02]">
+          {/* <Link href="/masterclasses/future-proofing-masterclass" className="block transition-transform hover:scale-[1.02]">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow h-full flex flex-col">
             <div className="h-56 md:h-64 bg-gray-200 relative">
                 <Image
@@ -54,7 +54,7 @@ export default function ExplorePage() {
                 </div>
               </div>
             </div>
-          </Link>
+          </Link> */}
 
 
           
@@ -86,7 +86,7 @@ export default function ExplorePage() {
           </Link>
 
           {/* Course Block 2 */}
-          {/* <Link href="/masterclasses/ai-agent" className="block transition-transform hover:scale-[1.02]">
+          <Link href="/masterclasses/ai-agent" className="block transition-transform hover:scale-[1.02]">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow h-full flex flex-col">
             <div className="h-56 md:h-64 bg-gray-200 relative">
                 <Image
@@ -109,7 +109,7 @@ export default function ExplorePage() {
                 </div>
               </div>
             </div>
-          </Link> */}
+          </Link>
 
          
 

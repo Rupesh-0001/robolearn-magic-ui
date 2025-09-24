@@ -124,7 +124,7 @@ function RecordingPageContent() {
         {isHLSStream(lesson.url) ? (
           <HLSVideoPlayer
             src={lesson.url}
-            className="max-w-[96vw] max-h-[85vh]"
+            className="w-full h-full max-w-[96vw] max-h-[calc(100vh-120px)]"
             onLoad={() => {}}
           />
         ) : iframeError ? (
@@ -145,7 +145,7 @@ function RecordingPageContent() {
             title={lesson.name || 'Recording'}
             allow="autoplay; encrypted-media; fullscreen"
             allowFullScreen
-            className="max-w-[96vw] max-h-[85vh] w-full h-full border-none"
+            className="w-full h-full max-w-[96vw] max-h-[calc(100vh-120px)] border-none"
             sandbox="allow-scripts allow-same-origin allow-presentation allow-forms allow-popups"
             onError={handleIframeError}
             onLoad={() => {}}
