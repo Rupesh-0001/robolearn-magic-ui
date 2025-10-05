@@ -164,7 +164,18 @@ export default function AutonomousCarMasterclass() {
   };
 
   // Robust payment processing with retry and offline support
-  const processPaymentWithRetry = async (paymentData: any, maxRetries = 3) => {
+  const processPaymentWithRetry = async (paymentData: {
+    name: string;
+    email: string;
+    phone: string;
+    paymentId: string;
+    orderId: string;
+    signature: string;
+    amount: number;
+    batchId: number;
+    timestamp?: number;
+    retryCount?: number;
+  }, maxRetries = 3) => {
     const paymentKey = `payment_${paymentData.paymentId}`;
     
     // Store payment data locally for offline support
