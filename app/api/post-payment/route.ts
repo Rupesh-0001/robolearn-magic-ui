@@ -28,6 +28,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check for duplicate payment processing (with fallback if table doesn't exist)
+    let existingPayment = [];
+    try {
+      existingPayment = await sql`
+        SELECT payment_id FROM payment_logs 
+        WHERE payment_id = ${paymentId}
+      `;
+    } catch (error) {
+      console.log('⚠️ Payment_logs table not found, skipping duplicate check:', error.message);
+    }
+
+    if (existingPayment.length > 0) {
+      console.log('🔄 Duplicate payment detected, returning existing result:', paymentId);
+      return NextResponse.json(
+        { 
+          success: true,
+          message: 'Payment already processed',
+          paymentId,
+          duplicate: true
+        },
+        { status: 200 }
+      );
+    }
+
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -96,60 +120,97 @@ export async function POST(request: NextRequest) {
     if (existingEnrollment.length > 0) {
       console.log('User already enrolled, but sending email anyway');
       
-      // Send onboarding email even for existing enrollments
+      // Log payment for existing enrollment too (with fallback)
+      try {
+        await sql`
+          INSERT INTO payment_logs (payment_id, order_id, student_id, enrollment_id, amount, processed_at)
+          VALUES (${paymentId}, ${orderId}, ${studentId}, ${existingEnrollment[0].enrollment_id}, ${amount}, CURRENT_TIMESTAMP)
+        `;
+        console.log('✅ Payment logged for existing enrollment:', paymentId);
+      } catch (logError) {
+        console.error('⚠️ Failed to log payment for existing enrollment (non-critical):', logError.message);
+      }
+      
+      // Send onboarding email even for existing enrollments with retry
       const isNewUser = existingStudent.length === 0;
       console.log('📧 (Existing enrollment) Attempting to send email to:', email, 'isNewUser:', isNewUser);
       
-      const emailApiUrl = `${baseUrl}/api/send-course-onboarding-email`;
-      console.log('📧 (Existing enrollment) Email API URL:', emailApiUrl);
-      
-      fetch(emailApiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          isNewUser,
-          courseName: 'Autonomous Car Course',
-          enrollmentId: existingEnrollment[0].enrollment_id
-        }),
-      })
-      .then(async (emailResponse) => {
-        console.log('📧 (Existing enrollment) Email API response status:', emailResponse.status);
-        const emailResult = await emailResponse.json();
-        if (emailResponse.ok) {
-          console.log('✅ (Existing enrollment) Onboarding email sent successfully:', emailResult);
-        } else {
-          console.error('❌ (Existing enrollment) Failed to send onboarding email:', emailResult);
+      const sendEmailWithRetry = async (retryCount = 0) => {
+        const maxRetries = 3;
+        try {
+          const emailApiUrl = `${baseUrl}/api/send-course-onboarding-email`;
+          const response = await fetch(emailApiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              isNewUser,
+              courseName: 'Autonomous Car Course',
+              enrollmentId: existingEnrollment[0].enrollment_id
+            }),
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            console.log('✅ (Existing enrollment) Onboarding email sent successfully:', result);
+            return true;
+          } else {
+            throw new Error(`Email API returned ${response.status}`);
+          }
+        } catch (error) {
+          console.error(`❌ (Existing enrollment) Email send failed (attempt ${retryCount + 1}):`, error);
+          if (retryCount < maxRetries - 1) {
+            await new Promise(resolve => setTimeout(resolve, Math.pow(2, retryCount) * 1000));
+            return sendEmailWithRetry(retryCount + 1);
+          }
+          return false;
         }
-      })
-      .catch((emailError) => {
-        console.error('💥 (Existing enrollment) Error sending onboarding email:', emailError);
+      };
+
+      // Send email in background (non-blocking)
+      sendEmailWithRetry().catch(() => {
+        console.error('💥 (Existing enrollment) All email retry attempts failed');
       });
 
-      // Add to enrollment sheet for existing enrollment (non-blocking)
-      const currentDateTime = new Date().toISOString();
-      console.log('📋 (Existing enrollment) Attempting to add to enrollment sheet:', { name, email, phone, amount, currentDateTime });
-      
-      addToEnrollmentSheet({
-        name,
-        phone,
-        email,
-        pricePaid: amount,
-        coursePrice: 2499, // Original course price
-        dateTime: currentDateTime
-      })
-      .then((result) => {
-        console.log('✅ (Existing enrollment) Added to enrollment sheet successfully:', result);
-      })
-      .catch((sheetError) => {
-        console.error('💥 (Existing enrollment) Error adding to enrollment sheet:', sheetError);
+      // Add to enrollment sheet for existing enrollment with retry
+      const addToSheetWithRetry = async (retryCount = 0) => {
+        const maxRetries = 3;
+        try {
+          const currentDateTime = new Date().toISOString();
+          console.log('📋 (Existing enrollment) Attempting to add to enrollment sheet:', { name, email, phone, amount, currentDateTime });
+          
+          const result = await addToEnrollmentSheet({
+            name,
+            phone,
+            email,
+            pricePaid: amount,
+            coursePrice: 2999, // Original course price (before testing discount)
+            dateTime: currentDateTime
+          });
+          
+          console.log('✅ (Existing enrollment) Added to enrollment sheet successfully:', result);
+          return true;
+        } catch (error) {
+          console.error(`❌ (Existing enrollment) Sheet add failed (attempt ${retryCount + 1}):`, error);
+          if (retryCount < maxRetries - 1) {
+            await new Promise(resolve => setTimeout(resolve, Math.pow(2, retryCount) * 1000));
+            return addToSheetWithRetry(retryCount + 1);
+          }
+          return false;
+        }
+      };
+
+      // Add to sheet in background (non-blocking)
+      addToSheetWithRetry().catch(() => {
+        console.error('💥 (Existing enrollment) All sheet retry attempts failed');
       });
 
       return NextResponse.json(
         { 
+          success: true,
           message: 'User already enrolled in this course',
           studentId,
           enrollmentId: existingEnrollment[0].enrollment_id
@@ -173,7 +234,17 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Log payment details for record keeping
+      // Log payment details for record keeping and duplicate prevention (with fallback)
+      try {
+        await sql`
+          INSERT INTO payment_logs (payment_id, order_id, student_id, enrollment_id, amount, processed_at)
+          VALUES (${paymentId}, ${orderId}, ${studentId}, ${newEnrollment[0].enrollment_id}, ${amount}, CURRENT_TIMESTAMP)
+        `;
+        console.log('✅ Payment logged successfully:', paymentId);
+      } catch (logError) {
+        console.error('⚠️ Failed to log payment (non-critical):', logError.message);
+      }
+
       console.log('Payment processed successfully:', {
         studentId,
         paymentId,
@@ -184,58 +255,81 @@ export async function POST(request: NextRequest) {
         enrollmentId: newEnrollment[0].enrollment_id
       });
 
-      // Send onboarding email in background (non-blocking)
+      // Send onboarding email with retry mechanism
       const isNewUser = existingStudent.length === 0;
       console.log('📧 Attempting to send email to:', email, 'isNewUser:', isNewUser);
       
-      // Use dynamically constructed URL for internal API calls
-      const emailApiUrl = `${baseUrl}/api/send-course-onboarding-email`;
-      console.log('📧 Email API URL:', emailApiUrl);
-      
-      // Send email
-      fetch(emailApiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          isNewUser,
-          courseName: 'Autonomous Car Course',
-          enrollmentId: newEnrollment[0].enrollment_id
-        }),
-      })
-      .then(async (emailResponse) => {
-        console.log('📧 Email API response status:', emailResponse.status);
-        const emailResult = await emailResponse.json();
-        if (emailResponse.ok) {
-          console.log('✅ Onboarding email sent successfully:', emailResult);
-        } else {
-          console.error('❌ Failed to send onboarding email:', emailResult);
+      const sendEmailWithRetry = async (retryCount = 0) => {
+        const maxRetries = 3;
+        try {
+          const emailApiUrl = `${baseUrl}/api/send-course-onboarding-email`;
+          const response = await fetch(emailApiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              isNewUser,
+              courseName: 'Autonomous Car Course',
+              enrollmentId: newEnrollment[0].enrollment_id
+            }),
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            console.log('✅ Onboarding email sent successfully:', result);
+            return true;
+          } else {
+            throw new Error(`Email API returned ${response.status}`);
+          }
+        } catch (error) {
+          console.error(`❌ Email send failed (attempt ${retryCount + 1}):`, error);
+          if (retryCount < maxRetries - 1) {
+            await new Promise(resolve => setTimeout(resolve, Math.pow(2, retryCount) * 1000));
+            return sendEmailWithRetry(retryCount + 1);
+          }
+          return false;
         }
-      })
-      .catch((emailError) => {
-        console.error('💥 Error sending onboarding email:', emailError);
+      };
+
+      // Send email in background (non-blocking)
+      sendEmailWithRetry().catch(() => {
+        console.error('💥 All email retry attempts failed');
       });
 
-      // Add to enrollment sheet (non-blocking)
-      const currentDateTime = new Date().toISOString();
-      console.log('📋 Attempting to add to enrollment sheet:', { name, email, phone, amount, currentDateTime });
-      
-      addToEnrollmentSheet({
-        name,
-        phone,
-        email,
-        pricePaid: amount,
-        coursePrice: 2499, // Original course price
-        dateTime: currentDateTime
-      })
-      .then((result) => {
-        console.log('✅ Added to enrollment sheet successfully:', result);
-      })
-      .catch((sheetError) => {
-        console.error('💥 Error adding to enrollment sheet:', sheetError);
+      // Add to enrollment sheet with retry mechanism
+      const addToSheetWithRetry = async (retryCount = 0) => {
+        const maxRetries = 3;
+        try {
+          const currentDateTime = new Date().toISOString();
+          console.log('📋 Attempting to add to enrollment sheet:', { name, email, phone, amount, currentDateTime });
+          
+          const result = await addToEnrollmentSheet({
+            name,
+            phone,
+            email,
+            pricePaid: amount,
+            coursePrice: 2999, // Original course price (before testing discount)
+            dateTime: currentDateTime
+          });
+          
+          console.log('✅ Added to enrollment sheet successfully:', result);
+          return true;
+        } catch (error) {
+          console.error(`❌ Sheet add failed (attempt ${retryCount + 1}):`, error);
+          if (retryCount < maxRetries - 1) {
+            await new Promise(resolve => setTimeout(resolve, Math.pow(2, retryCount) * 1000));
+            return addToSheetWithRetry(retryCount + 1);
+          }
+          return false;
+        }
+      };
+
+      // Add to sheet in background (non-blocking)
+      addToSheetWithRetry().catch(() => {
+        console.error('💥 All sheet retry attempts failed');
       });
 
       return NextResponse.json({

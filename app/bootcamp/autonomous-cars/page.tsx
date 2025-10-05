@@ -34,6 +34,7 @@ export default function AutonomousCarMasterclass() {
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [showUserDetailsModal, setShowUserDetailsModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState<string>('');
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -41,7 +42,7 @@ export default function AutonomousCarMasterclass() {
     seconds: 0,
   });
 
-  const coursePrice = 2999;
+  const coursePrice = 2; // Temporarily set to ₹2 for testing
 
   // User details form state
   const [userDetails, setUserDetails] = useState({
@@ -162,6 +163,118 @@ export default function AutonomousCarMasterclass() {
     }
   };
 
+  // Robust payment processing with retry and offline support
+  const processPaymentWithRetry = async (paymentData: any, maxRetries = 3) => {
+    const paymentKey = `payment_${paymentData.paymentId}`;
+    
+    // Store payment data locally for offline support
+    if (typeof window !== "undefined") {
+      localStorage.setItem(paymentKey, JSON.stringify({
+        ...paymentData,
+        timestamp: Date.now(),
+        retryCount: 0
+      }));
+    }
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`🔄 Payment processing attempt ${attempt}/${maxRetries} for payment: ${paymentData.paymentId}`);
+        
+        const response = await fetch('/api/post-payment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(paymentData),
+        });
+
+        const result = await response.json();
+        
+        if (response.ok) {
+          console.log('✅ Payment processing successful:', result);
+          // Remove from local storage on success
+          if (typeof window !== "undefined") {
+            localStorage.removeItem(paymentKey);
+          }
+          return { success: true, result };
+        } else {
+          console.error(`❌ Payment processing failed (attempt ${attempt}):`, result);
+          if (attempt === maxRetries) {
+            throw new Error(result.error || 'Payment processing failed');
+          }
+        }
+      } catch (error) {
+        console.error(`💥 Payment processing error (attempt ${attempt}):`, error);
+        if (attempt === maxRetries) {
+          throw error;
+        }
+        // Wait before retry (exponential backoff)
+        await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+      }
+    }
+  };
+
+  // Check for pending payments on page load and handle mobile-specific issues
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const checkPendingPayments = async () => {
+        const keys = Object.keys(localStorage);
+        const paymentKeys = keys.filter(key => key.startsWith('payment_'));
+        
+        for (const key of paymentKeys) {
+          try {
+            const paymentData = JSON.parse(localStorage.getItem(key) || '{}');
+            const timeSincePayment = Date.now() - paymentData.timestamp;
+            
+            // Only retry if payment is less than 24 hours old
+            if (timeSincePayment < 24 * 60 * 60 * 1000) {
+              console.log('🔄 Found pending payment, retrying:', paymentData.paymentId);
+              await processPaymentWithRetry(paymentData);
+            } else {
+              // Remove old pending payments
+              localStorage.removeItem(key);
+            }
+          } catch (error) {
+            console.error('Error processing pending payment:', error);
+          }
+        }
+      };
+
+      // Check for pending payments after a short delay
+      setTimeout(checkPendingPayments, 2000);
+
+      // Handle page visibility changes (mobile browsers often suspend tabs)
+      const handleVisibilityChange = () => {
+        if (!document.hidden) {
+          // Page became visible again, check for pending payments
+          setTimeout(checkPendingPayments, 1000);
+        }
+      };
+
+      // Handle beforeunload to ensure payment data is saved
+      const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+        const keys = Object.keys(localStorage);
+        const paymentKeys = keys.filter(key => key.startsWith('payment_'));
+        if (paymentKeys.length > 0) {
+          // There are pending payments, warn user
+          e.preventDefault();
+          e.returnValue = 'You have a pending payment. Are you sure you want to leave?';
+          return e.returnValue;
+        }
+      };
+
+      // Add event listeners
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      window.addEventListener('beforeunload', handleBeforeUnload);
+
+      // Cleanup
+      return () => {
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+      };
+    }
+  }, []);
+
   const handleFormSubmit = async () => {
     if (!validateForm()) return;
 
@@ -198,7 +311,7 @@ export default function AutonomousCarMasterclass() {
           name: "Autonomous Car Course",
           description: "Purchase of Autonomous Car Course",
           order_id: order.id,
-          handler: function (response: {
+          handler: async function (response: {
             razorpay_payment_id: string;
             razorpay_order_id: string;
             razorpay_signature: string;
@@ -215,34 +328,43 @@ export default function AutonomousCarMasterclass() {
               sessionStorage.setItem("userPhone", userDetails.phone);
             }
 
-            // Process post-payment operations in background (non-blocking)
-            fetch('/api/post-payment', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                name: userDetails.name,
-                email: userDetails.email,
-                phone: userDetails.phone,
-                paymentId: response.razorpay_payment_id,
-                orderId: response.razorpay_order_id,
-                signature: response.razorpay_signature,
-                                  amount: coursePrice,
-                batchId: 5 // Autonomous car course batch ID
-              }),
-            })
-            .then(async (postPaymentResponse) => {
-              const postPaymentResult = await postPaymentResponse.json();
-              if (postPaymentResponse.ok) {
-                console.log('Post-payment processing successful:', postPaymentResult);
-              } else {
-                console.error('Post-payment processing failed:', postPaymentResult);
+            // Prepare payment data
+            const paymentData = {
+              name: userDetails.name,
+              email: userDetails.email,
+              phone: userDetails.phone,
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id,
+              signature: response.razorpay_signature,
+              amount: coursePrice,
+              batchId: 5 // Autonomous car course batch ID
+            };
+
+            // Process payment with retry mechanism
+            try {
+              setPaymentStatus('Processing your enrollment...');
+              await processPaymentWithRetry(paymentData);
+              setPaymentStatus('Enrollment completed successfully!');
+            } catch (error) {
+              console.error('❌ All payment processing attempts failed:', error);
+              setPaymentStatus('Processing failed - please contact support');
+              
+              // Show user-friendly error message with better UX
+              const errorMessage = `Payment was successful, but there was an issue processing your enrollment. 
+
+Your payment ID: ${response.razorpay_payment_id}
+
+Please contact our support team:
+📧 Email: support@robolearn.in
+📱 WhatsApp: +91 7696433339
+
+We'll process your enrollment manually within 2-4 hours.`;
+
+              // Use a more user-friendly modal instead of alert
+              if (confirm(errorMessage + '\n\nClick OK to join our WhatsApp community for faster support.')) {
+                window.open('https://chat.whatsapp.com/FWUllPsPoM4IRiQD60gHv1', '_blank');
               }
-            })
-            .catch((error) => {
-              console.error('Error in post-payment processing:', error);
-            });
+            }
           },
           prefill: {
             name: userDetails.name,
@@ -1157,13 +1279,13 @@ export default function AutonomousCarMasterclass() {
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-2xl sm:text-3xl font-bold text-green-600">
-                ₹2,999
+                ₹2
               </span>
                 <span className="text-sm sm:text-lg text-gray-500 line-through">
-                ₹5,999
+                ₹2,999
               </span>
-                <span className="text-xs sm:text-sm bg-green-100 text-green-600 px-2 py-1 rounded-full font-semibold">
-                  SAVE 50%
+                <span className="text-xs sm:text-sm bg-red-100 text-red-600 px-2 py-1 rounded-full font-semibold">
+                  TESTING MODE
               </span>
             </div>
               <div className="text-xs sm:text-sm text-gray-600 mb-2">
@@ -1201,13 +1323,13 @@ export default function AutonomousCarMasterclass() {
           <div className="flex p-2 w-full">
             <div className="w-[40%] flex flex-col justify-center items-end pr-2 sm:pr-4">
               <div className="flex items-center gap-1 sm:gap-2">
-                <span className="text-lg sm:text-xl font-bold text-black-600">₹2,999</span>
+                <span className="text-lg sm:text-xl font-bold text-black-600">₹2</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-2">
                 <span className="text-xs sm:text-sm text-gray-500 line-through">
-                  ₹5,999
+                  ₹2,999
                 </span>
-                <span className="text-xs text-green-600 bg-green-100 px-1 rounded">50% off</span>
+                <span className="text-xs text-red-600 bg-red-100 px-1 rounded">TESTING</span>
               </div>
               {/* <div className="text-xs text-gray-600 mt-1">
                 + ₹11,999 bonuses
@@ -1429,10 +1551,19 @@ export default function AutonomousCarMasterclass() {
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
                 Thank you for joining
               </h2>
-              <p className="text-gray-600 mb-8">
+              <p className="text-gray-600 mb-4">
                 Join our WhatsApp community to know more about the masterclass
                 and get notified when it&apos;s live.
               </p>
+              
+              {/* Payment Status */}
+              {paymentStatus && (
+                <div className="mb-6 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-sm text-blue-700 text-center">
+                    {paymentStatus}
+                  </p>
+                </div>
+              )}
 
               {/* Buttons */}
               <div className="space-y-3">
