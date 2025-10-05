@@ -35,6 +35,7 @@ export default function AutonomousCarMasterclass() {
   const [showUserDetailsModal, setShowUserDetailsModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<string>('');
+  const [pendingOrderId, setPendingOrderId] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -225,13 +226,76 @@ export default function AutonomousCarMasterclass() {
     }
   };
 
+  // Payment status polling for mobile background processing
+  const pollPaymentStatus = async (orderId: string, maxAttempts = 30) => {
+    console.log('🔄 Starting payment status polling for order:', orderId);
+    
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        // Check if we have payment data in localStorage
+        const paymentKey = `order_${orderId}`;
+        const storedPaymentData = localStorage.getItem(paymentKey);
+        
+        if (storedPaymentData) {
+          const paymentData = JSON.parse(storedPaymentData);
+          
+          // Try to verify payment with server
+          const response = await fetch('/api/verify-payment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              paymentId: paymentData.paymentId,
+              orderId: paymentData.orderId,
+              signature: paymentData.signature
+            }),
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            console.log('✅ Payment verified successfully:', result);
+            
+            // Clear stored data
+            localStorage.removeItem(paymentKey);
+            localStorage.removeItem(`payment_${paymentData.paymentId}`);
+            
+            // Show success modal
+            setShowUserDetailsModal(false);
+            setShowThankYouModal(true);
+            setPaymentStatus('Payment verified and enrollment completed!');
+            setPendingOrderId(null);
+            
+            return true;
+          }
+        }
+        
+        // Wait before next attempt (exponential backoff)
+        const delay = Math.min(1000 * Math.pow(1.5, attempt), 10000); // Max 10 seconds
+        await new Promise(resolve => setTimeout(resolve, delay));
+        
+      } catch (error) {
+        console.error(`❌ Payment polling error (attempt ${attempt}):`, error);
+        if (attempt === maxAttempts) {
+          console.log('⏰ Payment polling timeout reached');
+          setPendingOrderId(null);
+          return false;
+        }
+      }
+    }
+    
+    return false;
+  };
+
   // Check for pending payments on page load and handle mobile-specific issues
   useEffect(() => {
     if (typeof window !== "undefined") {
       const checkPendingPayments = async () => {
         const keys = Object.keys(localStorage);
         const paymentKeys = keys.filter(key => key.startsWith('payment_'));
+        const orderKeys = keys.filter(key => key.startsWith('order_'));
         
+        // Check for pending payments
         for (const key of paymentKeys) {
           try {
             const paymentData = JSON.parse(localStorage.getItem(key) || '{}');
@@ -247,6 +311,26 @@ export default function AutonomousCarMasterclass() {
             }
           } catch (error) {
             console.error('Error processing pending payment:', error);
+          }
+        }
+
+        // Check for pending orders (mobile background processing)
+        for (const key of orderKeys) {
+          try {
+            const orderData = JSON.parse(localStorage.getItem(key) || '{}');
+            const timeSinceOrder = Date.now() - orderData.timestamp;
+            
+            // Only poll if order is less than 1 hour old
+            if (timeSinceOrder < 60 * 60 * 1000) {
+              console.log('🔄 Found pending order, starting polling:', orderData.orderId);
+              setPendingOrderId(orderData.orderId);
+              pollPaymentStatus(orderData.orderId);
+            } else {
+              // Remove old pending orders
+              localStorage.removeItem(key);
+            }
+          } catch (error) {
+            console.error('Error processing pending order:', error);
           }
         }
       };
@@ -266,7 +350,8 @@ export default function AutonomousCarMasterclass() {
       const handleBeforeUnload = (e: BeforeUnloadEvent) => {
         const keys = Object.keys(localStorage);
         const paymentKeys = keys.filter(key => key.startsWith('payment_'));
-        if (paymentKeys.length > 0) {
+        const orderKeys = keys.filter(key => key.startsWith('order_'));
+        if (paymentKeys.length > 0 || orderKeys.length > 0) {
           // There are pending payments, warn user
           e.preventDefault();
           e.returnValue = 'You have a pending payment. Are you sure you want to leave?';
@@ -322,6 +407,12 @@ export default function AutonomousCarMasterclass() {
           name: "Autonomous Car Course",
           description: "Purchase of Autonomous Car Course",
           order_id: order.id,
+          notes: {
+            name: userDetails.name,
+            email: userDetails.email,
+            phone: userDetails.phone,
+            batchId: '5'
+          },
           handler: async function (response: {
             razorpay_payment_id: string;
             razorpay_order_id: string;
@@ -351,6 +442,14 @@ export default function AutonomousCarMasterclass() {
               batchId: 5 // Autonomous car course batch ID
             };
 
+            // Store order data for mobile background processing
+            if (typeof window !== "undefined") {
+              localStorage.setItem(`order_${response.razorpay_order_id}`, JSON.stringify({
+                ...paymentData,
+                timestamp: Date.now()
+              }));
+            }
+
             // Process payment with retry mechanism
             try {
               setPaymentStatus('Processing your enrollment...');
@@ -373,7 +472,7 @@ We'll process your enrollment manually within 2-4 hours.`;
 
               // Use a more user-friendly modal instead of alert
               if (confirm(errorMessage + '\n\nClick OK to join our WhatsApp community for faster support.')) {
-                window.open('https://chat.whatsapp.com/FWUllPsPoM4IRiQD60gHv1', '_blank');
+                window.open('https://chat.whatsapp.com/GNeeXh1iR0r4ffdULe1WAn', '_blank');
               }
             }
           },
@@ -1576,10 +1675,22 @@ We'll process your enrollment manually within 2-4 hours.`;
                 </div>
               )}
 
+              {/* Pending Payment Status */}
+              {pendingOrderId && (
+                <div className="mb-6 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <p className="text-sm text-yellow-700 text-center">
+                    🔄 Verifying your payment... This may take a few moments.
+                  </p>
+                  <p className="text-xs text-yellow-600 text-center mt-1">
+                    If you completed payment in the Razorpay app, we&apos;ll process it automatically.
+                  </p>
+                </div>
+              )}
+
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/FWUllPsPoM4IRiQD60gHv1?"
+                  href="https://chat.whatsapp.com/GNeeXh1iR0r4ffdULe1WAn?"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
