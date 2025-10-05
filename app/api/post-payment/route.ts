@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         WHERE payment_id = ${paymentId}
       `;
     } catch (error) {
-      console.log('⚠️ Payment_logs table not found, skipping duplicate check:', error.message);
+      console.log('⚠️ Payment_logs table not found, skipping duplicate check:', error instanceof Error ? error.message : String(error));
     }
 
     if (existingPayment.length > 0) {
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
         `;
         console.log('✅ Payment logged for existing enrollment:', paymentId);
       } catch (logError) {
-        console.error('⚠️ Failed to log payment for existing enrollment (non-critical):', logError.message);
+        console.error('⚠️ Failed to log payment for existing enrollment (non-critical):', logError instanceof Error ? logError.message : String(logError));
       }
       
       // Send onboarding email even for existing enrollments with retry
@@ -242,7 +242,7 @@ export async function POST(request: NextRequest) {
         `;
         console.log('✅ Payment logged successfully:', paymentId);
       } catch (logError) {
-        console.error('⚠️ Failed to log payment (non-critical):', logError.message);
+        console.error('⚠️ Failed to log payment (non-critical):', logError instanceof Error ? logError.message : String(logError));
       }
 
       console.log('Payment processed successfully:', {
