@@ -229,7 +229,7 @@ export default function AutonomousCarMasterclass() {
                 orderId: response.razorpay_order_id,
                 signature: response.razorpay_signature,
                                   amount: coursePrice,
-                batchId: 5 // Autonomous car course batch ID
+                batchId: 6 // Autonomous car course batch ID
               }),
             })
             .then(async (postPaymentResponse) => {
@@ -1437,7 +1437,7 @@ export default function AutonomousCarMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/FWUllPsPoM4IRiQD60gHv1?"
+                  href="https://chat.whatsapp.com/GNeeXh1iR0r4ffdULe1WAn"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"

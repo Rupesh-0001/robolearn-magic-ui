@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       orderId, 
       signature, 
       amount, 
-      batchId = 5 // Default batch ID for autonomous car course
+      batchId = 6 // Default batch ID for autonomous car course
     } = await request.json();
 
     // Get the base URL from the request
