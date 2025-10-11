@@ -138,7 +138,7 @@ export async function POST(request: NextRequest) {
         phone,
         email,
         pricePaid: amount,
-        coursePrice: 2499, // Original course price
+        coursePrice: 2999, // Original course price
         dateTime: currentDateTime
       })
       .then((result) => {
@@ -228,7 +228,7 @@ export async function POST(request: NextRequest) {
         phone,
         email,
         pricePaid: amount,
-        coursePrice: 2499, // Original course price
+        coursePrice: 2999, // Original course price
         dateTime: currentDateTime
       })
       .then((result) => {
