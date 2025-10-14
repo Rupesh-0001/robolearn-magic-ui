@@ -5,6 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import BatchManagement from '@/components/admin/BatchManagement';
 import BulkUserCreation from '@/components/admin/BulkUserCreation';
+import TokenManager from '@/components/admin/TokenManager';
 // import { sql } from '@/lib/db';
 
 interface Student {
@@ -50,7 +51,7 @@ export default function AdminDashboard() {
   const [certificateRequests, setCertificateRequests] = useState<CertificateRequest[]>([]);
   const [certReqLoading, setCertReqLoading] = useState(false);
   const [certReqError, setCertReqError] = useState('');
-  const [activeTab, setActiveTab] = useState<'students' | 'batches' | 'enrollments' | 'certificates' | 'batch-management' | 'bulk-users'>('students');
+  const [activeTab, setActiveTab] = useState<'students' | 'batches' | 'enrollments' | 'certificates' | 'batch-management' | 'bulk-users' | 'tokens'>('students');
   // const [showCreateUserModal, setShowCreateUserModal] = useState(false);
   // const [newUser, setNewUser] = useState({
   //   name: '',
@@ -226,6 +227,16 @@ export default function AdminDashboard() {
                 }`}
               >
                 Bulk User Creation
+              </button>
+              <button
+                onClick={() => setActiveTab('tokens')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'tokens'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Tokens
               </button>
             </nav>
           </div>
@@ -448,6 +459,12 @@ export default function AdminDashboard() {
             {activeTab === 'bulk-users' && (
               <div>
                 <BulkUserCreation onUsersCreated={refreshData} />
+              </div>
+            )}
+
+            {activeTab === 'tokens' && (
+              <div>
+                <TokenManager />
               </div>
             )}
           </div>

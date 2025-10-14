@@ -26,7 +26,7 @@ import { ShineBorder } from "@/components/magicui/shine-border";
 import Link from "next/link";
 import Image from "next/image";
 
-import '../../../types/razorpay';
+import '../../../../types/razorpay';
 
 export default function AutonomousCarMasterclass() {
   const [openLecture, setOpenLecture] = useState<string | null>(null);
@@ -41,7 +41,7 @@ export default function AutonomousCarMasterclass() {
     seconds: 0,
   });
 
-  const coursePrice = 2999;
+  const coursePrice = 501;
 
   // User details form state
   const [userDetails, setUserDetails] = useState({
@@ -293,11 +293,14 @@ export default function AutonomousCarMasterclass() {
 
   return (
     <main className="container mx-auto px-4 pt-16 mt-6 2xl:pb-8 pb-24">
+      <div className="mb-3 sm:mb-4">
+        <div className="rounded-md border border-gray-200 bg-gray-50 p-2 sm:p-3 text-gray-700 text-sm">
+          <span className="font-medium">Token access page.</span> For complete payment, visit the {" "}
+          <Link href="/courses/autonomous-car" className="underline font-medium">main course page</Link>.
+        </div>
+      </div>
       <div className="flex flex-col lg:flex-row gap-11">
         <div className="w-full lg:w-7/10" style={{ minHeight: '100vh' }}>
-          <span className="bg-[#fae3ea] text-[#df4271] px-3 py-1 text-sm lg:block hidden w-fit rounded font-semibold">
-            AUTONOMOUS CAR COURSE
-          </span>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">
             Autonomous System Revolution Program
           </h1>
@@ -1054,7 +1057,7 @@ export default function AutonomousCarMasterclass() {
                     </p>
                     <p className="text-xs text-[#df4271]">
                       <span className="line-through text-gray-700">₹9,999</span>{" "}
-                      Save 50%
+                      Token Amount
                     </p>
                   </div>
                 </div>
@@ -1090,7 +1093,7 @@ export default function AutonomousCarMasterclass() {
                     </p>
                     <p className="text-xs text-[#df4271]">
                       <span className="line-through text-gray-700">₹9,999</span>{" "}
-                      Save 50%
+                      Token Amount
                     </p>
                   </div>
                 </div>
@@ -1113,6 +1116,8 @@ export default function AutonomousCarMasterclass() {
         <div className="w-full lg:w-3/10 hidden lg:block">
           <div className="bg-white p-6 mt-30 rounded-lg shadow-md border border-gray-200 lg:sticky lg:top-22">
             <ShineBorder shineColor="#808080" className="w-full"></ShineBorder>
+            <div className="mt-3 mb-2">
+            </div>
             <h2 className="text-xl sm:text-2xl font-semibold mb-4">
               Course Details
             </h2>
@@ -1157,18 +1162,19 @@ export default function AutonomousCarMasterclass() {
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-2xl sm:text-3xl font-bold text-green-600">
-                ₹2,999
+                ₹501
               </span>
                 <span className="text-sm sm:text-lg text-gray-500 line-through">
                 ₹5,999
               </span>
                 <span className="text-xs sm:text-sm bg-green-100 text-green-600 px-2 py-1 rounded-full font-semibold">
-                  SAVE 50%
+                Token Amount
               </span>
             </div>
               <div className="text-xs sm:text-sm text-gray-600 mb-2">
                 <span className="text-black">+ ₹11,999 worth of bonuses included</span>
               </div>
+              <div className="text-xs text-amber-700 mb-2">This is a token page.</div>
               <div className="text-sm">
               <span className="text-black">Offer ends in</span>{" "}
                 <span className="text-[#df4271] font-semibold">{formatTimeLeft()}</span>
@@ -1184,7 +1190,7 @@ export default function AutonomousCarMasterclass() {
                   Processing...
                 </div>
               ) : (
-                "Buy Now"
+                "Proceed with Token"
               )}
             </ShimmerButton>
           </div>
@@ -1201,13 +1207,13 @@ export default function AutonomousCarMasterclass() {
           <div className="flex p-2 w-full">
             <div className="w-[40%] flex flex-col justify-center items-end pr-2 sm:pr-4">
               <div className="flex items-center gap-1 sm:gap-2">
-                <span className="text-lg sm:text-xl font-bold text-black-600">₹2,999</span>
+                <span className="text-lg sm:text-xl font-bold text-black-600">₹501</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-2">
                 <span className="text-xs sm:text-sm text-gray-500 line-through">
                   ₹5,999
                 </span>
-                <span className="text-xs text-green-600 bg-green-100 px-1 rounded">50% off</span>
+                <span className="text-xs text-green-600 bg-green-100 px-1 rounded">Token Amount</span>
               </div>
               {/* <div className="text-xs text-gray-600 mt-1">
                 + ₹11,999 bonuses
@@ -1225,7 +1231,7 @@ export default function AutonomousCarMasterclass() {
                     Processing...
                   </div>
                 ) : (
-                  "Buy Now"
+                  "Proceed with Token"
                 )}
               </ShimmerButton>
             </div>
@@ -1248,6 +1254,7 @@ export default function AutonomousCarMasterclass() {
               <div>
                 <h2 className="text-xl font-bold text-gray-900">Almost There!</h2>
                 <p className="text-sm text-gray-600 mt-1">Please provide your details to proceed</p>
+                <p className="text-xs text-amber-700 mt-1">Token page for access via token.</p>
               </div>
               <button
                 onClick={handleCloseUserDetailsModal}
@@ -1366,7 +1373,7 @@ export default function AutonomousCarMasterclass() {
                     </div>
                   ) : (
                     <div className="flex items-center justify-center">
-                      <span className="hidden lg:block">Proceed to Payment</span>
+                      <span className="hidden lg:block">Proceed</span>
                       <span className="lg:hidden">Proceed</span>
                       <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
