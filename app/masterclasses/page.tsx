@@ -85,8 +85,36 @@ export default function ExplorePage() {
             </div>
           </Link>
 
-          {/* Course Block 2 */}
-          <Link href="/masterclasses/ai-agent" className="block transition-transform hover:scale-[1.02]">
+          {/* MERN Stack Masterclass */}
+          <Link href="/masterclasses/mern-stack?utm_medium=landing" className="block transition-transform hover:scale-[1.02]">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow h-full flex flex-col">
+              <div className="h-56 md:h-64 bg-gray-200 relative">
+                <Image
+                  src="/mernStackMasterclass.JPG"
+                  alt="MERN Stack Masterclass"
+                  className="w-full h-full object-cover"
+                  width={400}
+                  height={256}
+                />
+              </div>
+              <div className="p-4 sm:p-6 flex-grow flex flex-col">
+                <p className="text-xs sm:text-sm text-gray-500 mb-2">
+                  1st November 2025 • 7:00pm
+                </p>
+                <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
+                  Full Stack Development with MERN
+                </h2>
+                <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Rupal Singla</p>
+                <div className="flex items-center mt-auto">
+                  <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">FREE</span>
+                  <span className="ml-2 line-through text-gray-400 text-sm">₹499</span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          {/* Course Block 2 - AI Agent Masterclass (Commented Out) */}
+          {/* <Link href="/masterclasses/ai-agent" className="block transition-transform hover:scale-[1.02]">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow h-full flex flex-col">
             <div className="h-56 md:h-64 bg-gray-200 relative">
                 <Image
@@ -109,7 +137,7 @@ export default function ExplorePage() {
                 </div>
               </div>
             </div>
-          </Link>
+          </Link> */}
 
          
 
