@@ -172,7 +172,7 @@ export default function MERNStackMasterclass() {
       age: formData.age,
       phoneNumber: formData.phone,
       utm: source, // Use the same source (utm_medium) for the utm column
-      mc_id: "mern-stack-masterclass-2025"
+      mc_id: "f1fb54a4-4f7b-4266-ac27-e57709071f1e"
     };
 
     const GOOGLE_SHEET_URL =
