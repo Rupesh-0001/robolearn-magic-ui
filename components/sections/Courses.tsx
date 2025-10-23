@@ -2,7 +2,6 @@ import Image from "next/image";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
-import aiAgent from "@/public/aiAgent.png";
 import mernStack from "@/public/mern_homepage.png";
 import drone from "@/public/drone.png";
 import robotics from "@/public/roboticArm.png";

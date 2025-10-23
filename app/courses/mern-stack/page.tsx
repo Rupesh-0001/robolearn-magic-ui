@@ -16,7 +16,6 @@ import {
   Calendar as AccessIcon,
   Award as CertificateIcon,
   X as XIcon,
-  Play as PlayIcon,
 } from "lucide-react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";
@@ -34,7 +33,6 @@ export default function MERNStackCourse() {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
-  const [isEnrolled] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -120,14 +118,6 @@ export default function MERNStackCourse() {
 
   const handleCloseThankYouModal = () => {
     setShowThankYouModal(false);
-  };
-
-  const handleCloseVideoModal = () => {
-    setShowVideoModal(false);
-    // Remove hash fragment when closing modal
-    if (typeof window !== 'undefined') {
-      window.history.pushState(null, '', window.location.pathname);
-    }
   };
 
   // Handle ESC key to close video modal
