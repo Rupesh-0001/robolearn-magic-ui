@@ -984,7 +984,7 @@ export default function MERNStackBootcamp() {
               <p className="text-sm sm:text-base text-gray-700 pt-1">
                 My name is <strong>Rupal Singla</strong>, and I&apos;m a <strong>Software Engineer</strong> with <strong>4 years of hands-on experience in Full Stack Development</strong>. Over the years, I&apos;ve worked on real-world projects that span frontend, backend, databases, APIs, and deployment, which helped me understand how all layers of modern applications connect together.
                 <br /><br />
-                Through this lecture series, I want to share my practical knowledge with you — not just theory, but the actual skills you&apos;ll need to build scalable, production-level applications. We&apos;ll start by understanding the core building blocks of full stack development — how frontend and backend interact, how data flows, and how to design and deploy a complete app from scratch.
+                Through this lecture series, I want to share my practical knowledge with you - not just theory, but the actual skills you&apos;ll need to build scalable, production-level applications. We&apos;ll start by understanding the core building blocks of full stack development — how frontend and backend interact, how data flows, and how to design and deploy a complete app from scratch.
                 <br /><br />
                 My goal is to make you <strong>industry-ready</strong>, help you think like a developer, and make sure you understand the <strong>&quot;why&quot;</strong> behind every concept, not just the <strong>&quot;how&quot;</strong>.
               </p>

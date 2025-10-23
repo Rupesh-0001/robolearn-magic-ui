@@ -563,7 +563,7 @@ export default function MERNStackMasterclass() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm text-gray-700 leading-relaxed">
-                    Learn the MERN stack technologies (MongoDB, Express.js, React, Node.js) and how they work together
+                    Learn the MERN stack technologies ( Node.js, React, MongoDB, Express.js) and how they work together
                   </p>
                 </div>
               </div>
