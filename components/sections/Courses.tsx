@@ -3,7 +3,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
 import aiAgent from "@/public/aiAgent.png";
-import mernStack from "@/public/mernCourse.JPG";
+import mernStack from "@/public/mern_homepage.png";
 import drone from "@/public/drone.png";
 import robotics from "@/public/roboticArm.png";
 import autonomous from "@/public/autonomousCar.png";
@@ -20,14 +20,14 @@ const courses = [
     href: "/courses/mern-stack",
     cta: "Start Learning",
     className: "col-span-1 row-span-1",
-    imageClassName: "translate-y-[-70px] translate-x-[10%]",
+    imageClassName: "translate-y-[-50px] translate-x-[15%]",
     hoverClassName: "group-hover:bg-blue-500/10",
     descriptionClassName: "max-w-2/3",
     image: (
       <Image
         src={mernStack}
         alt="MERN Stack Development"
-        className="max-h-96 scale-200 object-contain"
+        className="max-h-56 scale-125 object-contain"
       />
     ),
   },
