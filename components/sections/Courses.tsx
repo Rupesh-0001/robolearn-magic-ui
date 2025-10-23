@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
-import aiAgent from "@/public/aiAgent.png";
+import mernStack from "@/public/mern_homepage.png";
 import drone from "@/public/drone.png";
 import robotics from "@/public/roboticArm.png";
 import autonomous from "@/public/autonomousCar.png";
@@ -13,23 +13,41 @@ import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 
 const courses = [
   {
-    name: "AI Agents Mastery",
+    name: "MERN Stack Development",
     description:
-      "Learn to build intelligent AI agents that make decisions, automate tasks, and solve real-world problems.",
-    href: "/courses/ai-agent",
-    cta: "Explore Security",
+      "Master full stack web development with MongoDB, Express.js, React, and Node.js. Build production-ready applications.",
+    href: "/courses/mern-stack",
+    cta: "Start Learning",
     className: "col-span-1 row-span-1",
-    imageClassName: "translate-y-[-115px] translate-x-[22%]",
+    imageClassName: "translate-y-[-50px] translate-x-[15%]",
     hoverClassName: "group-hover:bg-blue-500/10",
-    descriptionClassName: "max-w-1/2",
+    descriptionClassName: "max-w-2/3",
     image: (
       <Image
-        src={aiAgent}
-        alt="AI Agents Mastery"
-        className="max-h-96 scale-250 object-contain"
+        src={mernStack}
+        alt="MERN Stack Development"
+        className="max-h-56 scale-125 object-contain"
       />
     ),
   },
+  // {
+  //   name: "AI Agents Mastery",
+  //   description:
+  //     "Learn to build intelligent AI agents that make decisions, automate tasks, and solve real-world problems.",
+  //   href: "/courses/ai-agent",
+  //   cta: "Explore Security",
+  //   className: "col-span-1 row-span-1",
+  //   imageClassName: "translate-y-[-115px] translate-x-[22%]",
+  //   hoverClassName: "group-hover:bg-blue-500/10",
+  //   descriptionClassName: "max-w-1/2",
+  //   image: (
+  //     <Image
+  //       src={aiAgent}
+  //       alt="AI Agents Mastery"
+  //       className="max-h-96 scale-250 object-contain"
+  //     />
+  //   ),
+  // },
   {
     name: "Drone Technology & Applications",
     description:
