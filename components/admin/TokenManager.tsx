@@ -52,8 +52,6 @@ export default function TokenManager() {
     [courseName]
   );
 
-  const tokenBaseUrl = useMemo(() => `${origin}${selectedCourse.tokenPath}`, [origin, selectedCourse]);
-
   const fetchTokens = async () => {
     setLoading(true);
     try {
