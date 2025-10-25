@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Token {
   uuid: string;
@@ -46,11 +46,6 @@ export default function TokenManager() {
   const [loading, setLoading] = useState(false);
 
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
-
-  const selectedCourse = useMemo(() => 
-    COURSE_OPTIONS.find(c => c.name === courseName) || COURSE_OPTIONS[0],
-    [courseName]
-  );
 
   const fetchTokens = async () => {
     setLoading(true);
