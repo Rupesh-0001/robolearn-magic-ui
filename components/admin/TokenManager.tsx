@@ -13,6 +13,28 @@ interface Token {
   created_at?: string;
 }
 
+interface CourseOption {
+  name: string;
+  batchId: number;
+  tokenPath: string;
+  defaultPrice: number;
+}
+
+const COURSE_OPTIONS: CourseOption[] = [
+  {
+    name: 'Autonomous Car Course',
+    batchId: 6,
+    tokenPath: '/bootcamp/autonomous-cars/token/',
+    defaultPrice: 501,
+  },
+  {
+    name: 'MERN - FSD',
+    batchId: 7,
+    tokenPath: '/bootcamp/mern-stack/token/',
+    defaultPrice: 501,
+  },
+];
+
 export default function TokenManager() {
   const [courseName, setCourseName] = useState('Autonomous Car Course');
   const [batchId, setBatchId] = useState<number>(6);
@@ -25,7 +47,12 @@ export default function TokenManager() {
 
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
-  const tokenBaseUrl = useMemo(() => `${origin}/bootcamp/autonomous-cars/token/`, [origin]);
+  const selectedCourse = useMemo(() => 
+    COURSE_OPTIONS.find(c => c.name === courseName) || COURSE_OPTIONS[0],
+    [courseName]
+  );
+
+  const tokenBaseUrl = useMemo(() => `${origin}${selectedCourse.tokenPath}`, [origin, selectedCourse]);
 
   const fetchTokens = async () => {
     setLoading(true);
@@ -42,6 +69,15 @@ export default function TokenManager() {
   useEffect(() => {
     fetchTokens();
   }, []);
+
+  const handleCourseChange = (newCourseName: string) => {
+    const course = COURSE_OPTIONS.find(c => c.name === newCourseName);
+    if (course) {
+      setCourseName(course.name);
+      setBatchId(course.batchId);
+      setPrice(course.defaultPrice);
+    }
+  };
 
   const handleCreate = async () => {
     setCreating(true);
@@ -83,11 +119,28 @@ export default function TokenManager() {
       <div className="grid grid-cols-1 md:grid-cols-5 gap-3 items-end bg-gray-50 p-4 rounded border border-gray-200 mb-6">
         <div className="flex flex-col">
           <label className="text-xs text-gray-600 mb-1">Course Name</label>
-          <input className="border rounded px-2 py-1" value={courseName} onChange={e => setCourseName(e.target.value)} />
+          <select 
+            className="border rounded px-2 py-1 bg-white cursor-pointer" 
+            value={courseName} 
+            onChange={e => handleCourseChange(e.target.value)}
+          >
+            {COURSE_OPTIONS.map(course => (
+              <option key={course.name} value={course.name}>
+                {course.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="flex flex-col">
           <label className="text-xs text-gray-600 mb-1">Batch ID</label>
-          <input className="border rounded px-2 py-1" type="number" value={batchId} onChange={e => setBatchId(parseInt(e.target.value || '0', 10))} />
+          <input 
+            className="border rounded px-2 py-1 bg-gray-100" 
+            type="number" 
+            value={batchId} 
+            onChange={e => setBatchId(parseInt(e.target.value || '0', 10))}
+            readOnly
+            title="Auto-set based on course selection"
+          />
         </div>
         <div className="flex flex-col">
           <label className="text-xs text-gray-600 mb-1">Price ({currency})</label>
@@ -122,22 +175,26 @@ export default function TokenManager() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {tokens.map(t => (
-                  <tr key={t.uuid}>
-                    <td className="px-4 py-2 text-sm">
-                      <a className="text-blue-600 hover:underline" href={`${tokenBaseUrl}${t.uuid}`} target="_blank" rel="noopener noreferrer">{tokenBaseUrl}{t.uuid}</a>
-                    </td>
-                    <td className="px-4 py-2 text-sm">{t.course_name}</td>
-                    <td className="px-4 py-2 text-sm">{t.batch_id}</td>
-                    <td className="px-4 py-2 text-sm">{t.currency} {t.price}</td>
-                    <td className="px-4 py-2 text-sm">{t.active ? 'Yes' : 'No'}</td>
-                    <td className="px-4 py-2 text-sm">
-                      <button onClick={() => toggleActive(t.uuid, !t.active)} className="px-3 py-1 bg-gray-800 text-white rounded text-xs">
-                        {t.active ? 'Deactivate' : 'Activate'}
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {tokens.map(t => {
+                  const tokenCourse = COURSE_OPTIONS.find(c => c.name === t.course_name) || COURSE_OPTIONS[0];
+                  const tokenUrl = `${origin}${tokenCourse.tokenPath}${t.uuid}`;
+                  return (
+                    <tr key={t.uuid}>
+                      <td className="px-4 py-2 text-sm">
+                        <a className="text-blue-600 hover:underline" href={tokenUrl} target="_blank" rel="noopener noreferrer">{tokenUrl}</a>
+                      </td>
+                      <td className="px-4 py-2 text-sm">{t.course_name}</td>
+                      <td className="px-4 py-2 text-sm">{t.batch_id}</td>
+                      <td className="px-4 py-2 text-sm">{t.currency} {t.price}</td>
+                      <td className="px-4 py-2 text-sm">{t.active ? 'Yes' : 'No'}</td>
+                      <td className="px-4 py-2 text-sm">
+                        <button onClick={() => toggleActive(t.uuid, !t.active)} className="px-3 py-1 bg-gray-800 text-white rounded text-xs">
+                          {t.active ? 'Deactivate' : 'Activate'}
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

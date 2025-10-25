@@ -25,10 +25,15 @@ import { ShineBorder } from "@/components/magicui/shine-border";
 
 import Link from "next/link";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 
-import '../../../../types/razorpay';
+import '../../../../../types/razorpay';
+import type { RazorpayOptions } from '../../../../../types/razorpay';
 
-export default function AutonomousCarMasterclass() {
+export default function MERNStackBootcamp() {
+  const params = useParams();
+  const uuid = (params as { uuid?: string })?.uuid as string;
+
   const [openLecture, setOpenLecture] = useState<string | null>(null);
 
   const [showThankYouModal, setShowThankYouModal] = useState(false);
@@ -41,7 +46,30 @@ export default function AutonomousCarMasterclass() {
     seconds: 0,
   });
 
-  const coursePrice = 501;
+  // Load token details for dynamic price/batch
+  const [token, setToken] = useState<{ price: number; batch_id: number; course_name: string; currency: string } | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      if (!uuid) return;
+      try {
+        const res = await fetch(`/api/tokens/${uuid}`);
+        const data = await res.json();
+        if (res.ok && data?.token) {
+          setToken({
+            price: data.token.price,
+            batch_id: data.token.batch_id,
+            course_name: data.token.course_name,
+            currency: data.token.currency || 'INR',
+          });
+        }
+      } catch {}
+    };
+    load();
+  }, [uuid]);
+
+  const coursePrice = token?.price ?? 501;
+  const selectedBatchId = token?.batch_id ?? 7; // fallback to MERN batch if token missing
 
   // User details form state
   const [userDetails, setUserDetails] = useState({
@@ -191,12 +219,12 @@ export default function AutonomousCarMasterclass() {
           return;
         }
 
-        const options = {
+        const options: RazorpayOptions = {
           key: razorpayKey,
           amount: order.amount,
-          currency: "INR",
-          name: "Autonomous Car Course",
-          description: "Purchase of Autonomous Car Course",
+          currency: token?.currency || "INR",
+          name: token?.course_name || "MERN Stack Course",
+          description: `Purchase of ${token?.course_name || "MERN Stack Full Development Course"}`,
           order_id: order.id,
           handler: function (response: {
             razorpay_payment_id: string;
@@ -228,8 +256,8 @@ export default function AutonomousCarMasterclass() {
                 paymentId: response.razorpay_payment_id,
                 orderId: response.razorpay_order_id,
                 signature: response.razorpay_signature,
-                                  amount: coursePrice,
-                batchId: 6 // Autonomous car course batch ID
+                amount: coursePrice,
+                batchId: selectedBatchId
               }),
             })
             .then(async (postPaymentResponse) => {
@@ -296,25 +324,25 @@ export default function AutonomousCarMasterclass() {
       <div className="mb-3 sm:mb-4">
         <div className="rounded-md border border-gray-200 bg-gray-50 p-2 sm:p-3 text-gray-700 text-sm">
           <span className="font-medium">Token access page.</span> For complete payment, visit the {" "}
-          <Link href="/courses/autonomous-car" className="underline font-medium">main course page</Link>.
+          <Link href="/courses/mern-stack" className="underline font-medium">main course page</Link>.
         </div>
       </div>
       <div className="flex flex-col lg:flex-row gap-11">
         <div className="w-full lg:w-7/10" style={{ minHeight: '100vh' }}>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold sm:mb-12 mt-2 lg:block hidden">
-            Autonomous System Revolution Program
+            Full Stack Development Mastery Program
           </h1>
           <div className="mb-8 sm:mb-12">
             <Image
-              src="/CarCourse.jpg"
-              alt="Autonomous Car"
+              src="/mernCourse.JPG"
+              alt="MERN Stack Course"
               className="rounded-lg shadow-lg w-full h-auto"
               width={800}
               height={450}
             />
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mt-2 lg:hidden block">
-            Autonomous System Revolution Program
+            Full Stack Development Mastery Program
           </h1>
 
           <div className="lg:hidden mb-8 mt-4">
@@ -327,13 +355,13 @@ export default function AutonomousCarMasterclass() {
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3 flex-shrink-0">
                     <LevelIcon className="w-3 h-3 text-gray-700" />
                   </div>
-                  <span>Advanced Level</span>
+                  <span>Beginner to Advanced</span>
                 </li>
                 <li className="flex items-center text-xs sm:text-sm lg:text-base">
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3 flex-shrink-0">
                     <DurationIcon className="w-3 h-3 text-gray-700" />
                   </div>
-                  <span>1.5 Months Mentorship</span>
+                  <span>2 Months Mentorship</span>
                 </li>
                 <li className="flex items-center text-xs sm:text-sm lg:text-base">
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3 flex-shrink-0">
@@ -345,7 +373,7 @@ export default function AutonomousCarMasterclass() {
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3 flex-shrink-0">
                     <StudentIcon className="w-3 h-3 text-gray-700" />
                   </div>
-                  <span>Specially for students</span>
+                  <span>Perfect for beginners & professionals</span>
                 </li>
                 <li className="flex items-center text-xs sm:text-sm lg:text-base">
                   <div className="bg-gray-100 rounded-full p-1.5 mr-3 flex-shrink-0">
@@ -368,7 +396,7 @@ export default function AutonomousCarMasterclass() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm text-gray-700 leading-relaxed">
-                    How to build a full perception-planning-control loop using real-world tools like ROS2, Carla, and Python
+                    Master React.js with hooks, context API, and state management to build dynamic, responsive user interfaces
                   </p>
                 </div>
               </div>
@@ -379,7 +407,7 @@ export default function AutonomousCarMasterclass() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm text-gray-700 leading-relaxed">
-                    Apply sensor fusion, object detection, and path planning using state-of-the-art AI and robotics techniques
+                    Build production-ready REST APIs using Node.js and Express.js with authentication and authorization
                   </p>
                 </div>
               </div>
@@ -390,7 +418,7 @@ export default function AutonomousCarMasterclass() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm text-gray-700 leading-relaxed">
-                    Master vehicle control systems using PID and MPC to simulate real actuation
+                    Design and manage MongoDB databases with Mongoose ODM for scalable data persistence
                   </p>
                 </div>
               </div>
@@ -401,7 +429,7 @@ export default function AutonomousCarMasterclass() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm text-gray-700 leading-relaxed">
-                    Design Tesla-style neural pipelines with BEV + Transformer models for AI-first FSD systems
+                    Deploy full stack applications to cloud platforms like Heroku, AWS, and Vercel with CI/CD pipelines
                   </p>
                 </div>
               </div>
@@ -410,74 +438,13 @@ export default function AutonomousCarMasterclass() {
 
           {/* Benefits Section */}
           <div className="my-8 sm:my-12">
-            <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 shadow-md">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
+            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-6 flex items-center gap-2">
                 <span className="whitespace-nowrap">Exclusive Bonuses You Get</span>
-                <span className="text-sm sm:text-base text-gray-600 font-normal">(Worth ₹11,999+)</span>
+                <span className="text-sm sm:text-base text-gray-600 font-normal">(Worth ₹12,999+)</span>
               </h2>
               <div className="space-y-4">
-                {/* <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
-                  <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">Complete Code Repository</h3>
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      Access to our private GitHub repository with all 8 project implementations, 
-                      including Tesla-style neural networks, Carla simulations, and ROS2 packages. 
-                      Ready-to-run code worth ₹5,000.
-                    </p>
-                  </div>
-                </div> */}
-
-                {/* <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-purple-50 to-violet-50 rounded-lg border border-purple-100">
-                  <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
-                    </svg>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">1-on-1 Mentorship Sessions</h3>
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      Two personalized 30-minute sessions with Harpreet Singh to review your projects, 
-                      career guidance, and technical troubleshooting. Direct access to industry expert worth ₹3,000.
-                    </p>
-                  </div>
-                </div> */}
-
-                {/* <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-100">
-                  <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
-                    </svg>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">Industry Case Studies Package</h3>
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      Exclusive access to 50+ real-world autonomous vehicle case studies from Tesla, Waymo, 
-                      Cruise, and other leading companies. Learn from actual implementations and failures worth ₹2,500.
-                    </p>
-                  </div>
-                </div> */}
-
-                {/* <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-orange-50 to-amber-50 rounded-lg border border-orange-100">
-                  <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 10v4a3 3 0 01-3 3H4a3 3 0 01-3-3v-4a5 5 0 0110 0c0 .34.024.673.07 1H12.93z"/>
-                    </svg>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">Job Placement Support</h3>
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      Resume review, interview preparation, and direct referrals to our network of 
-                      50+ autonomous vehicle companies. Career guidance package worth ₹2,000.
-                    </p>
-                  </div>
-                </div> */}
-
-                
+                {/* Optional bonus blocks intentionally kept commented out to match original */}
 
                 <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg border border-teal-100">
                   <div className="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
@@ -486,10 +453,25 @@ export default function AutonomousCarMasterclass() {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">AI Interview Companion</h3>
+                    <h3 className="font-semibold text-gray-900 mb-1">GitHub Mastery Session</h3>
                     <p className="text-sm text-gray-700 leading-relaxed">
-                      Interactive AI tool where you can practice interviews by selecting topics and difficulty levels. 
-                      Get realistic interview questions and instant feedback to ace your AV job interviews worth ₹2,000.
+                      Comprehensive session on Git & GitHub covering version control, branching strategies, pull requests, 
+                      code reviews, and collaborative development workflows. Essential for team projects worth ₹2,500.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
+                  <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Docker & Containerization Bonus</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Learn Docker fundamentals, containerizing your MERN applications, docker-compose for multi-container setups, 
+                      and deploying containerized apps. Industry-standard DevOps skill worth ₹3,000.
                     </p>
                   </div>
                 </div>
@@ -502,10 +484,10 @@ export default function AutonomousCarMasterclass() {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">Expert Resource File</h3>
+                    <h3 className="font-semibold text-gray-900 mb-1">Full Stack Developer Roadmap</h3>
                     <p className="text-sm text-gray-700 leading-relaxed">
-                      Comprehensive cheat sheet with all autonomous vehicle topics described precisely by industry experts. 
-                      Perfect for last-minute study and quick reference during interviews worth ₹1,500.
+                      Detailed roadmap with resources, best practices, and career progression paths for full stack developers. 
+                      Your complete guide to industry success worth ₹1,999.
                     </p>
                   </div>
                 </div>
@@ -517,28 +499,13 @@ export default function AutonomousCarMasterclass() {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">Exclusive Industry Expert Session</h3>
+                    <h3 className="font-semibold text-gray-900 mb-1">1:1 Career Mentorship</h3>
                     <p className="text-sm text-gray-700 leading-relaxed">
-                      One-on-one session with top autonomous vehicle industry experts. Get insider insights and career guidance worth ₹3,500.
+                      Personalized career guidance session covering resume building, portfolio optimization, 
+                      interview preparation, and job search strategies worth ₹2,500.
                     </p>
                   </div>
                 </div>
-
-                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-lg border border-yellow-100">
-                  <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 10v4a3 3 0 01-3 3H4a3 3 0 01-3-3v-4a5 5 0 0110 0c0 .34.024.673.07 1H12.93z"/>
-                    </svg>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">1:1 Interview Training</h3>
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      Personalized interview preparation with mock interviews, technical questions, 
-                      and feedback from autonomous vehicle hiring managers worth ₹3,000.
-                    </p>
-                  </div>
-                </div>
-
 
                 <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-red-50 to-pink-50 rounded-lg border border-red-100">
                   <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
@@ -550,8 +517,8 @@ export default function AutonomousCarMasterclass() {
                   <div className="flex-1">
                     <h3 className="font-semibold text-gray-900 mb-1">Lifetime Community Access</h3>
                     <p className="text-sm text-gray-700 leading-relaxed">
-                      Join our exclusive WhatsApp community with 500+ autonomous vehicle engineers. 
-                      Get instant help, share projects, and network with industry professionals worth ₹1,000.
+                      Join our exclusive WhatsApp community with 1000+ developers. 
+                      Get instant help, share projects, and network with professionals worth ₹1,000.
                     </p>
                   </div>
                 </div>
@@ -565,8 +532,8 @@ export default function AutonomousCarMasterclass() {
                   <div className="flex-1">
                     <h3 className="font-semibold text-gray-900 mb-1">Certificate of Excellence</h3>
                     <p className="text-sm text-gray-700 leading-relaxed">
-                      Professional certificate endorsed by industry experts, perfect for LinkedIn 
-                      and portfolio. Includes project showcase and skills verification worth ₹999.
+                      Professional certificate with project verification, perfect for LinkedIn 
+                      and portfolio. Includes skills endorsement worth ₹2,000.
                     </p>
                   </div>
                 </div>
@@ -822,84 +789,84 @@ export default function AutonomousCarMasterclass() {
                 professional tools, you&apos;ll graduate with real skills and a
                 full portfolio.
               </p>
-                  <div className="mb-4">
-                    <strong className="text-lg font-semibold">
-                      Top Projects You Will Build:
-                    </strong>
-                    <ul className="list-none mt-4 space-y-1">
-                      <li className="flex items-center">
-                        <span className="hidden sm:inline text-green-500 mr-2">
-                          ✅
-                        </span>
+              <div className="mb-4">
+                <strong className="text-lg font-semibold">
+                  Top Projects You Will Build:
+                </strong>
+                <ul className="list-none mt-4 space-y-1">
+                  <li className="flex items-center">
+                    <span className="hidden sm:inline text-green-500 mr-2">
+                      ✅
+                    </span>
                     <span className="sm:hidden text-green-500 mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          Lane Detection & Following (Level 1)
-                        </span>
-                      </li>
-                      <li className="flex items-center">
+                    <span className="text-sm sm:text-base">
+                      Lane Detection & Following (Level 1)
+                    </span>
+                  </li>
+                  <li className="flex items-center">
                     <span className="hidden sm:inline text-blue-500 mr-2">
-                          ✅
-                        </span>
+                      ✅
+                    </span>
                     <span className="sm:hidden text-blue-500 mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          Traffic Light and Sign Handling (Level 2)
-                        </span>
-                      </li>
-                      <li className="flex items-center">
+                    <span className="text-sm sm:text-base">
+                      Traffic Light and Sign Handling (Level 2)
+                    </span>
+                  </li>
+                  <li className="flex items-center">
                     <span className="hidden sm:inline text-purple-500 mr-2">
-                          ✅
-                        </span>
+                      ✅
+                    </span>
                     <span className="sm:hidden text-purple-500 mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          Lidar + Camera Obstacle Detection (Level 3)
-                        </span>
-                      </li>
-                      <li className="flex items-center">
+                    <span className="text-sm sm:text-base">
+                      Lidar + Camera Obstacle Detection (Level 3)
+                    </span>
+                  </li>
+                  <li className="flex items-center">
                     <span className="hidden sm:inline text-orange-500 mr-2">
-                          ✅
-                        </span>
+                      ✅
+                    </span>
                     <span className="sm:hidden text-orange-500 mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          Localization & SLAM System (Level 4)
-                        </span>
-                      </li>
-                      <li className="flex items-center">
+                    <span className="text-sm sm:text-base">
+                      Localization & SLAM System (Level 4)
+                    </span>
+                  </li>
+                  <li className="flex items-center">
                     <span className="hidden sm:inline text-red-500 mr-2">
-                          ✅
-                        </span>
+                      ✅
+                    </span>
                     <span className="sm:hidden text-red-500 mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          Agent Prediction + Path Planning Stack (Level 5–6)
-                        </span>
-                      </li>
-                      <li className="flex items-center">
+                    <span className="text-sm sm:text-base">
+                      Agent Prediction + Path Planning Stack (Level 5–6)
+                    </span>
+                  </li>
+                  <li className="flex items-center">
                     <span className="hidden sm:inline text-indigo-500 mr-2">
-                          ✅
-                        </span>
+                      ✅
+                    </span>
                     <span className="sm:hidden text-indigo-500 mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          MPC Control Simulator (Level 7)
-                        </span>
-                      </li>
-                      <li className="flex items-center">
+                    <span className="text-sm sm:text-base">
+                      MPC Control Simulator (Level 7)
+                    </span>
+                  </li>
+                  <li className="flex items-center">
                     <span className="hidden sm:inline text-pink-500 mr-2">
-                          ✅
-                        </span>
+                      ✅
+                    </span>
                     <span className="sm:hidden text-pink-500 mr-2">•</span>
-                        <span className="text-sm sm:text-base">
-                          Tesla-Style End-to-End Neural Driving Stack (Level 8)
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
+                    <span className="text-sm sm:text-base">
+                      Tesla-Style End-to-End Neural Driving Stack (Level 8)
+                    </span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 
           <div className="my-8 sm:my-12">
             <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 border border-blue-200 rounded-xl p-4 sm:p-6 shadow-lg">
               <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 text-center text-gray-800">
-              Who Is This Bootcamp For
-            </h2>
+                Who Is This Bootcamp For
+              </h2>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 <div className="bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg p-4 border border-blue-300 shadow-md hover:shadow-lg transition-shadow duration-300">
@@ -918,7 +885,7 @@ export default function AutonomousCarMasterclass() {
                       <span>Tech hobbyists with no prior experience</span>
                     </li>
                   </ul>
-              </div>
+                </div>
 
                 <div className="bg-gradient-to-br from-green-100 to-green-200 rounded-lg p-4 border border-green-300 shadow-md hover:shadow-lg transition-shadow duration-300">
                   <h3 className="font-bold text-gray-800 mb-3 text-sm sm:text-base">💼 Working Professionals</h3>
@@ -936,7 +903,7 @@ export default function AutonomousCarMasterclass() {
                       <span>Career changers to AV industry</span>
                     </li>
                   </ul>
-            </div>
+                </div>
 
                 <div className="bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg p-4 border border-purple-300 shadow-md hover:shadow-lg transition-shadow duration-300">
                   <h3 className="font-bold text-gray-800 mb-3 text-sm sm:text-base">🚀 Entrepreneurs & Innovators</h3>
@@ -972,8 +939,8 @@ export default function AutonomousCarMasterclass() {
                       <span>Advancing your career in AV</span>
                     </li>
                   </ul>
-                  </div>
                 </div>
+              </div>
             </div>
           </div>
 
@@ -1038,9 +1005,6 @@ export default function AutonomousCarMasterclass() {
                     width={400}
                     height={250}
                   />
-                  {/* <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
-                                        Popular
-                                    </div> */}
                 </div>
                 <div className="mt-3 px-3 pb-2 flex justify-between items-center">
                   <div>
@@ -1074,9 +1038,6 @@ export default function AutonomousCarMasterclass() {
                     width={400}
                     height={250}
                   />
-                  {/* <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
-                                        New
-                                    </div> */}
                 </div>
                 <div className="mt-3 px-3 pb-2 flex justify-between items-center">
                   <div>
@@ -1099,17 +1060,6 @@ export default function AutonomousCarMasterclass() {
                 </div>
               </Link>
             </div>
-            {/* <div className="mt-8 text-center">
-                            <Link 
-                                href="/courses" 
-                                className="inline-flex items-center text-blue-600 hover:text-blue-800"
-                            >
-                                View All Courses
-                                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </Link>
-                        </div> */}
           </div>
         </div>
 
@@ -1162,21 +1112,21 @@ export default function AutonomousCarMasterclass() {
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-2xl sm:text-3xl font-bold text-green-600">
-                ₹501
-              </span>
+                  ₹{coursePrice}
+                </span>
                 <span className="text-sm sm:text-lg text-gray-500 line-through">
-                ₹5,999
-              </span>
+                  ₹5,999
+                </span>
                 <span className="text-xs sm:text-sm bg-green-100 text-green-600 px-2 py-1 rounded-full font-semibold">
-                Token Amount
-              </span>
-            </div>
+                  Token Amount
+                </span>
+              </div>
               <div className="text-xs sm:text-sm text-gray-600 mb-2">
-                <span className="text-black">+ ₹11,999 worth of bonuses included</span>
+                <span className="text-black">+ ₹12,999 worth of bonuses included</span>
               </div>
               <div className="text-xs text-amber-700 mb-2">This is a token page.</div>
               <div className="text-sm">
-              <span className="text-black">Offer ends in</span>{" "}
+                <span className="text-black">Offer ends in</span>{" "}
                 <span className="text-[#df4271] font-semibold">{formatTimeLeft()}</span>
               </div>
             </div>
@@ -1207,7 +1157,7 @@ export default function AutonomousCarMasterclass() {
           <div className="flex p-2 w-full">
             <div className="w-[40%] flex flex-col justify-center items-end pr-2 sm:pr-4">
               <div className="flex items-center gap-1 sm:gap-2">
-                <span className="text-lg sm:text-xl font-bold text-black-600">₹501</span>
+                <span className="text-lg sm:text-xl font-bold text-black-600">₹{coursePrice}</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-2">
                 <span className="text-xs sm:text-sm text-gray-500 line-through">
@@ -1215,9 +1165,6 @@ export default function AutonomousCarMasterclass() {
                 </span>
                 <span className="text-xs text-green-600 bg-green-100 px-1 rounded">Token Amount</span>
               </div>
-              {/* <div className="text-xs text-gray-600 mt-1">
-                + ₹11,999 bonuses
-              </div> */}
             </div>
             <div className="w-[60%] sm:w-[70%]">
               <ShimmerButton
@@ -1437,14 +1384,14 @@ export default function AutonomousCarMasterclass() {
                 Thank you for joining
               </h2>
               <p className="text-gray-600 mb-8">
-                Join our WhatsApp community to know more about the masterclass
-                and get notified when it&apos;s live.
+                Join our WhatsApp community to connect with fellow developers
+                and get course updates.
               </p>
 
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/GNeeXh1iR0r4ffdULe1WAn"
+                  href="https://chat.whatsapp.com/HNmfPnaXeb37GvqE3IKrCa"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
@@ -1467,3 +1414,5 @@ export default function AutonomousCarMasterclass() {
     </main>
   );
 }
+
+
