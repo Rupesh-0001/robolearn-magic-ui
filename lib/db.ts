@@ -149,7 +149,7 @@ export async function initDatabase() {
       mernStackBatchId = existingBatch[0].batch_id;
     }
 
-    // Add sample lessons to Autonomous Car Course (24 lessons)
+    // Add sample lessons to Autonomous Car Course (25 lessons)
     // const autonomousCarLessons = [
     //   {
     //     id: '1',

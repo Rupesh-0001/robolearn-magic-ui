@@ -60,7 +60,7 @@ export default async function CourseDetailPage({ searchParams }: { searchParams:
   }
 
   // Determine total lessons based on course name
-  const totalLessons = course.course_name === 'MERN - FSD' ? 36 : 24;
+  const totalLessons = course.course_name === 'MERN - FSD' ? 36 : 25;
   const completedLessons = course.lessons.filter(l => l.recording_url && l.recording_url.trim() !== '').length;
   const completion = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
   const startDate = course.course_start_date ? new Date(course.course_start_date).toLocaleDateString() : 'N/A';

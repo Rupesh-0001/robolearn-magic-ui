@@ -408,6 +408,170 @@ export default function MERNStackBootcamp() {
             </div>
           </div>
 
+          {/* Course Details Section */}
+          <div className="my-8 sm:my-12 rounded-lg">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-4 sm:mb-6">
+              Complete Course Breakdown
+            </h2>
+            <div className="text-base text-gray-700 leading-relaxed">
+              <p className="mb-4">
+                Master the complete MERN stack through a structured 8-week journey from web fundamentals 
+                to full-stack development and deployment. This comprehensive program combines live classes, recorded lectures, 
+                and hands-on projects to transform you into an industry-ready developer.
+              </p>
+              
+              <div className="mb-6">
+                <strong className="text-lg font-semibold">
+                  What You&apos;ll Learn Week by Week:
+                </strong>
+                <ul className="list-none mt-3 space-y-2">
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">▸</span>
+                    <span className="text-sm sm:text-base">
+                      <strong>Week 1-2:</strong> Web Fundamentals (HTML5, CSS3, JavaScript ES6+) & Git/GitHub
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">▸</span>
+                    <span className="text-sm sm:text-base">
+                      <strong>Week 3-4:</strong> React.js (Components, Hooks, Routing, State Management)
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">▸</span>
+                    <span className="text-sm sm:text-base">
+                      <strong>Week 5:</strong> Backend Development (Node.js, Express.js, REST APIs)
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">▸</span>
+                    <span className="text-sm sm:text-base">
+                      <strong>Week 6:</strong> Database Management (MongoDB, Mongoose, CRUD Operations)
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">▸</span>
+                    <span className="text-sm sm:text-base">
+                      <strong>Week 7:</strong> Full Stack Integration (Authentication, JWT, CORS)
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">▸</span>
+                    <span className="text-sm sm:text-base">
+                      <strong>Week 8:</strong> Deployment & Production (Hosting, Environment Setup, Best Practices)
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mb-4">
+                <strong className="text-lg font-semibold">
+                  Projects You Will Build:
+                </strong>
+                <ul className="list-none mt-4 space-y-2">
+                  <li className="flex items-start">
+                    <span className="hidden sm:inline text-green-500 mr-2 mt-1">
+                      ✅
+                    </span>
+                    <span className="sm:hidden text-green-500 mr-2">•</span>
+                    <div className="text-sm sm:text-base">
+                      <strong>Personal Portfolio Website</strong> - Responsive design with HTML5 & CSS3
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="hidden sm:inline text-green-500 mr-2 mt-1">
+                      ✅
+                    </span>
+                    <span className="sm:hidden text-green-500 mr-2">•</span>
+                    <div className="text-sm sm:text-base">
+                      <strong>Interactive To-Do List</strong> - DOM manipulation & local storage
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="hidden sm:inline text-green-500 mr-2 mt-1">
+                      ✅
+                    </span>
+                    <span className="sm:hidden text-green-500 mr-2">•</span>
+                    <div className="text-sm sm:text-base">
+                      <strong>Weather/Movie Finder App</strong> - React with API integration
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="hidden sm:inline text-green-500 mr-2 mt-1">
+                      ✅
+                    </span>
+                    <span className="sm:hidden text-green-500 mr-2">•</span>
+                    <div className="text-sm sm:text-base">
+                      <strong>Product Listing App</strong> - Advanced React with routing & filters
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="hidden sm:inline text-green-500 mr-2 mt-1">
+                      ✅
+                    </span>
+                    <span className="sm:hidden text-green-500 mr-2">•</span>
+                    <div className="text-sm sm:text-base">
+                      <strong>REST API Backend</strong> - Task Manager/Blog API with Express.js
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="hidden sm:inline text-green-500 mr-2 mt-1">
+                      ✅
+                    </span>
+                    <span className="sm:hidden text-green-500 mr-2">•</span>
+                    <div className="text-sm sm:text-base">
+                      <strong>User CRUD API</strong> - MongoDB integration with Mongoose
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="hidden sm:inline text-purple-500 mr-2 mt-1">
+                      🚀
+                    </span>
+                    <span className="sm:hidden text-purple-500 mr-2">•</span>
+                    <div className="text-sm sm:text-base">
+                      <strong>Full Stack Authentication System</strong> - Complete MERN app with JWT
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mb-4">
+                <strong className="text-lg font-semibold">
+                  3 Major Capstone Projects:
+                </strong>
+                <ul className="list-none mt-4 space-y-2">
+                  <li className="flex items-start">
+                    <span className="hidden sm:inline text-blue-600 mr-2 mt-1 text-xl">
+                      🎯
+                    </span>
+                    <span className="sm:hidden text-blue-600 mr-2">•</span>
+                    <div className="text-sm sm:text-base">
+                      <strong>Zira Clone</strong> - Project Management Application with task boards, team collaboration, and real-time updates
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="hidden sm:inline text-blue-600 mr-2 mt-1 text-xl">
+                      🎯
+                    </span>
+                    <span className="sm:hidden text-blue-600 mr-2">•</span>
+                    <div className="text-sm sm:text-base">
+                      <strong>Make My Trip Clone</strong> - Travel Booking Platform with search, filters, booking system, and payment integration
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="hidden sm:inline text-blue-600 mr-2 mt-1 text-xl">
+                      🎯
+                    </span>
+                    <span className="sm:hidden text-blue-600 mr-2">•</span>
+                    <div className="text-sm sm:text-base">
+                      <strong>Advanced Calculator</strong> - Feature-rich calculation tool with history, scientific functions, and responsive UI
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
           {/* Benefits Section */}
           <div className="my-8 sm:my-12">
             <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 shadow-md">
