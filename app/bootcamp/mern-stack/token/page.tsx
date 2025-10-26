@@ -989,7 +989,7 @@ export default function MERNStackBootcamp() {
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-2xl sm:text-3xl font-bold text-green-600">
-                ₹501
+                ₹399
               </span>
                 <span className="text-sm sm:text-lg text-gray-500 line-through">
                 ₹5,999
@@ -1034,7 +1034,7 @@ export default function MERNStackBootcamp() {
           <div className="flex p-2 w-full">
             <div className="w-[40%] flex flex-col justify-center items-end pr-2 sm:pr-4">
               <div className="flex items-center gap-1 sm:gap-2">
-                <span className="text-lg sm:text-xl font-bold text-black-600">₹501</span>
+                <span className="text-lg sm:text-xl font-bold text-black-600">₹399</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-2">
                 <span className="text-xs sm:text-sm text-gray-500 line-through">
