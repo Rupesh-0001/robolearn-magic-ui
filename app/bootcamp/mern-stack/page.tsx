@@ -41,7 +41,7 @@ export default function MERNStackBootcamp() {
     seconds: 0,
   });
 
-  const coursePrice = 2999;
+  const coursePrice = 2;
 
   // User details form state
   const [userDetails, setUserDetails] = useState({
