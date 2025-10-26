@@ -31,7 +31,7 @@ const COURSE_OPTIONS: CourseOption[] = [
     name: 'MERN - FSD',
     batchId: 7,
     tokenPath: '/bootcamp/mern-stack/token/',
-    defaultPrice: 501,
+    defaultPrice: 399,
   },
 ];
 
