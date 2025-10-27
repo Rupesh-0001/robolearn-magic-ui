@@ -5,6 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { AmbassadorApplication } from './AmbassadorApplication';
 import { AmbassadorDashboard } from './AmbassadorDashboard';
 import { AmbassadorStatus } from './AmbassadorStatus';
+import AuthModal from '@/components/ui/AuthModal';
 
 interface AmbassadorData {
   status: 'pending' | 'approved' | 'rejected';
@@ -16,6 +17,7 @@ export function AmbassadorPageClient() {
   const { user, loading } = useAuth();
   const [ambassadorData, setAmbassadorData] = useState<AmbassadorData | null>(null);
   const [loadingAmbassador, setLoadingAmbassador] = useState(true);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -69,20 +71,23 @@ export function AmbassadorPageClient() {
 
   if (!user) {
     return (
-      <div className="text-center py-20">
-        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md mx-auto">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Login Required</h2>
-          <p className="text-gray-600 mb-6">
-            Please log in to your account to apply for the ambassador program.
-          </p>
-          <a
-            href="/login"
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-          >
-            Login to Apply
-          </a>
+      <>
+        <div className="text-center py-20">
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md mx-auto">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Login Required</h2>
+            <p className="text-gray-600 mb-6">
+              Please log in to your account to apply for the ambassador program.
+            </p>
+            <button
+              onClick={() => setShowAuthModal(true)}
+              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors cursor-pointer"
+            >
+              Login to Apply
+            </button>
+          </div>
         </div>
-      </div>
+        <AuthModal open={showAuthModal} onClose={() => setShowAuthModal(false)} />
+      </>
     );
   }
 
