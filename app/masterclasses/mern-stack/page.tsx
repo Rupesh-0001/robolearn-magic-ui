@@ -9,6 +9,7 @@ import {
   X as XIcon,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { extractReferralCodeFromCurrentPage } from "@/lib/referral-tracking";
 
 import Image from "next/image";
 
@@ -22,6 +23,7 @@ export default function MERNStackMasterclass() {
     age: "",
   });
   const [source, setSource] = useState("");
+  const [referralCode, setReferralCode] = useState<string | null>(null);
   const [formErrors, setFormErrors] = useState({
     name: "",
     phone: "",
@@ -37,6 +39,17 @@ export default function MERNStackMasterclass() {
     message: "",
     type: "success",
   });
+
+  // Extract referral code from URL on component mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const refCode = extractReferralCodeFromCurrentPage();
+      if (refCode) {
+        setReferralCode(refCode);
+        console.log('🎯 Referral code detected:', refCode);
+      }
+    }
+  }, []);
 
 
 
@@ -172,7 +185,8 @@ export default function MERNStackMasterclass() {
       age: formData.age,
       phoneNumber: formData.phone,
       utm: source, // Use the same source (utm_medium) for the utm column
-      mc_id: "f1fb54a4-4f7b-4266-ac27-e57709071f1e"
+      mc_id: "f1fb54a4-4f7b-4266-ac27-e57709071f1e",
+      referralCode: referralCode // Include referral code if present
     };
 
     const GOOGLE_SHEET_URL =
@@ -206,6 +220,12 @@ export default function MERNStackMasterclass() {
         body: JSON.stringify(googleSheetData),
       });
     });
+
+    // Track referral lead if referral code is present
+    if (referralCode) {
+      console.log('🎯 Tracking referral lead for MERN Stack Masterclass:', referralCode);
+      // Note: This tracks the lead/interest. Actual enrollment tracking happens at payment in post-payment route
+    }
 
     // Fire Meta Pixel Lead event
     if (
