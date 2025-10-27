@@ -2,10 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import CopyButton from '@/components/ui/CopyButton';
-import { ChevronDown, TrendingUp, Users, Award, Calendar, Share2, DollarSign } from 'lucide-react';
+import { ChevronDown, Users, Award, Calendar, Share2, DollarSign } from 'lucide-react';
+
+interface AmbassadorData {
+  referralCode?: string;
+  studentName?: string;
+}
 
 interface AmbassadorDashboardProps {
-  ambassadorData: any;
+  ambassadorData: AmbassadorData;
 }
 
 export function AmbassadorDashboard({ ambassadorData }: AmbassadorDashboardProps) {
@@ -31,7 +36,7 @@ export function AmbassadorDashboard({ ambassadorData }: AmbassadorDashboardProps
     if (ambassadorData?.referralCode && !referralLink) {
       setReferralLink(`${window.location.origin}/masterclasses/${selectedMasterclass}?ref=${ambassadorData.referralCode}`);
     }
-  }, [ambassadorData]);
+  }, [ambassadorData, referralLink, selectedMasterclass]);
 
   const fetchEnrollmentStats = async () => {
     try {
@@ -82,12 +87,6 @@ export function AmbassadorDashboard({ ambassadorData }: AmbassadorDashboardProps
     return 'Bronze Ambassador';
   };
 
-  const getTierIcon = () => {
-    if (enrollmentStats.totalEnrollments >= 16) return '';
-    if (enrollmentStats.totalEnrollments >= 5) return '';
-    return '';
-  };
-
   const calculateEarnings = () => {
     const avgMasterclassPrice = 2999; // Average price
     return Math.round(enrollmentStats.totalEnrollments * avgMasterclassPrice * getCommissionRate());
@@ -136,7 +135,7 @@ export function AmbassadorDashboard({ ambassadorData }: AmbassadorDashboardProps
                   Welcome back, {ambassadorData?.studentName || 'Ambassador'}!
                 </h2>
                 <p className="text-gray-300 text-sm sm:text-base">
-                  You're helping shape the future of tech education
+                  You&apos;re helping shape the future of tech education
                 </p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center min-w-[200px] border border-white/20">
@@ -479,7 +478,7 @@ export function AmbassadorDashboard({ ambassadorData }: AmbassadorDashboardProps
           <div className="text-center">
             <div className="text-6xl mb-4">🏆</div>
             <h4 className="text-xl font-bold text-yellow-600 mb-2">Congratulations!</h4>
-              <p className="text-gray-600">You've reached the highest tier - Gold Ambassador with 33% commission!</p>
+              <p className="text-gray-600">You&apos;ve reached the highest tier - Gold Ambassador with 33% commission!</p>
           </div>
         )}
       </div>
@@ -579,7 +578,7 @@ export function AmbassadorDashboard({ ambassadorData }: AmbassadorDashboardProps
                     `Get your first 5 referrals to unlock Silver tier and earn 20% commission on every sale!` :
                    enrollmentStats.totalEnrollments < 16 ? 
                     `Reach 16 referrals for Gold tier and maximize at 33% commission!` :
-                    `You're at Gold tier! Keep sharing to maximize your 33% commission earnings!`
+                    `You&apos;re at Gold tier! Keep sharing to maximize your 33% commission earnings!`
                   }
                 </div>
             </div>

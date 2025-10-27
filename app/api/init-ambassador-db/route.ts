@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { setupAmbassadorTables } from '@/lib/ambassador-db-setup';
 
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     // In production, you should add proper authentication here
     // For now, this is a setup endpoint

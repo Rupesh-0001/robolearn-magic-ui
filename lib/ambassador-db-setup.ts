@@ -104,7 +104,7 @@ export async function approveAmbassadorApplication(applicationId: number) {
 }
 
 // Function to reject an ambassador application (for admin use)
-export async function rejectAmbassadorApplication(applicationId: number, reason?: string) {
+export async function rejectAmbassadorApplication(applicationId: number, _reason?: string) {
   try {
     await sql`
       UPDATE ambassador_applications 

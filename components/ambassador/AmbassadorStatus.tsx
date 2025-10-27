@@ -26,7 +26,7 @@ export function AmbassadorStatus({ status }: AmbassadorStatusProps) {
           <div className="text-sm text-yellow-800 space-y-2">
             <div className="flex items-center">
               <div className="w-6 h-6 bg-yellow-200 rounded-full flex items-center justify-center mr-3 text-xs font-semibold">1</div>
-              <span>We're reviewing your application and verifying your college details</span>
+              <span>We&apos;re reviewing your application and verifying your college details</span>
             </div>
             <div className="flex items-center">
               <div className="w-6 h-6 bg-yellow-200 rounded-full flex items-center justify-center mr-3 text-xs font-semibold">2</div>
@@ -34,7 +34,7 @@ export function AmbassadorStatus({ status }: AmbassadorStatusProps) {
             </div>
             <div className="flex items-center">
               <div className="w-6 h-6 bg-yellow-200 rounded-full flex items-center justify-center mr-3 text-xs font-semibold">3</div>
-              <span>You'll receive an email notification about the decision</span>
+              <span>You&apos;ll receive an email notification about the decision</span>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@ export function AmbassadorStatus({ status }: AmbassadorStatusProps) {
             <li>• Incomplete or inaccurate information provided</li>
             <li>• Unable to verify college enrollment</li>
             <li>• ID proof document unclear or invalid</li>
-            <li>• Application doesn't meet current program requirements</li>
+            <li>• Application doesn&apos;t meet current program requirements</li>
           </ul>
         </div>
 

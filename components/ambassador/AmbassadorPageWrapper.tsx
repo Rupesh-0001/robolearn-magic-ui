@@ -4,9 +4,13 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { AmbassadorPageClient } from './AmbassadorPageClient';
 
+interface AmbassadorData {
+  status: 'pending' | 'approved' | 'rejected';
+}
+
 export function AmbassadorPageWrapper() {
   const { user, loading } = useAuth();
-  const [ambassadorData, setAmbassadorData] = useState<any>(null);
+  const [ambassadorData, setAmbassadorData] = useState<AmbassadorData | null>(null);
   const [loadingAmbassador, setLoadingAmbassador] = useState(true);
 
   useEffect(() => {

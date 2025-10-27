@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
 
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     console.log('🧪 Setting up test ambassador...');
 
@@ -187,8 +187,9 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Error setting up test ambassador:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: 'Failed to setup test ambassador', details: error.message }, 
+      { error: 'Failed to setup test ambassador', details: errorMessage }, 
       { status: 500 }
     );
   }

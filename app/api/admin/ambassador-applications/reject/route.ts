@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
-import { verifyToken, getUserById } from '@/lib/auth';
+import { verifyToken } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Admin access required' }, { status: 401 });
     }
 
-    const { applicationId, reason } = await request.json();
+    const { applicationId } = await request.json();
 
     if (!applicationId) {
       return NextResponse.json({ error: 'Application ID is required' }, { status: 400 });

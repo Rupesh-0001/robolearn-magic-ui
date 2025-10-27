@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
-import { verifyToken, getUserById } from '@/lib/auth';
+import { verifyToken } from '@/lib/auth';
 
 // Simple email function (in production, use a proper email service like SendGrid, AWS SES, etc.)
 async function sendApprovalEmail(email: string, name: string) {

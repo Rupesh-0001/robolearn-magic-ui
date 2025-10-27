@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 
 interface AmbassadorApplicationProps {
-  onSubmit: (formData: any) => Promise<{ success: boolean; error?: string }>;
+  onSubmit: (formData: FormData) => Promise<{ success: boolean; error?: string }>;
 }
 
 export function AmbassadorApplication({ onSubmit }: AmbassadorApplicationProps) {
@@ -78,7 +78,7 @@ export function AmbassadorApplication({ onSubmit }: AmbassadorApplicationProps) 
       } else {
         setMessage({ type: 'error', text: result.error || 'Failed to submit application.' });
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: 'error', text: 'An error occurred while submitting your application.' });
     } finally {
       setIsSubmitting(false);
@@ -430,9 +430,9 @@ export function AmbassadorApplication({ onSubmit }: AmbassadorApplicationProps) 
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
           <h3 className="font-semibold text-blue-900 mb-2">What happens next?</h3>
           <ul className="text-sm text-blue-800 space-y-1">
-            <li>• We'll review your application within 2-3 working days</li>
-            <li>• You'll receive an email notification about the status</li>
-            <li>• If approved, you'll get access to your ambassador dashboard</li>
+            <li>• We&apos;ll review your application within 2-3 working days</li>
+            <li>• You&apos;ll receive an email notification about the status</li>
+            <li>• If approved, you&apos;ll get access to your ambassador dashboard</li>
             <li>• You can start generating referral links and tracking enrollments</li>
           </ul>
         </div>

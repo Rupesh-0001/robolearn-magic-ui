@@ -22,7 +22,6 @@ import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { extractReferralCodeFromCurrentPage } from "@/lib/referral-tracking";
 
 import Link from "next/link";
 import Image from "next/image";

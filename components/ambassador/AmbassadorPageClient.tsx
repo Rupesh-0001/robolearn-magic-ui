@@ -6,9 +6,15 @@ import { AmbassadorApplication } from './AmbassadorApplication';
 import { AmbassadorDashboard } from './AmbassadorDashboard';
 import { AmbassadorStatus } from './AmbassadorStatus';
 
+interface AmbassadorData {
+  status: 'pending' | 'approved' | 'rejected';
+  referralCode?: string;
+  studentName?: string;
+}
+
 export function AmbassadorPageClient() {
   const { user, loading } = useAuth();
-  const [ambassadorData, setAmbassadorData] = useState<any>(null);
+  const [ambassadorData, setAmbassadorData] = useState<AmbassadorData | null>(null);
   const [loadingAmbassador, setLoadingAmbassador] = useState(true);
 
   useEffect(() => {
@@ -45,10 +51,10 @@ export function AmbassadorPageClient() {
         await fetchAmbassadorData();
         return { success: true };
       } else {
-        const error = await response.json();
-        return { success: false, error: error.message };
+        const errorData = await response.json();
+        return { success: false, error: errorData.message };
       }
-    } catch (error) {
+    } catch {
       return { success: false, error: 'An error occurred while submitting your application.' };
     }
   };
