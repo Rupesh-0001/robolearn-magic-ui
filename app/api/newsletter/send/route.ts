@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 
 export async function POST(request: NextRequest) {
   try {
-    const { issueId, testEmail } = await request.json();
+    const { issueId, testEmail, customEmails } = await request.json();
 
     // Get newsletter issue
     const issue = await sql`
@@ -27,15 +27,24 @@ export async function POST(request: NextRequest) {
       ORDER BY published_at DESC
     `;
 
-    // Get active subscribers
+    // Get active subscribers who are enrolled in courses
     let subscribers;
     if (testEmail) {
       // Send test email to specific address
       subscribers = [{ email: testEmail, name: 'Test User' }];
+    } else if (customEmails && customEmails.length > 0) {
+      // Send to custom email list
+      subscribers = customEmails.map(email => ({ email, name: 'Selected User' }));
     } else {
+      // Only send to students who are enrolled
+      // If student is deleted from DB, they won't appear in this query
       subscribers = await sql`
-        SELECT email, name FROM newsletter_subscriptions 
-        WHERE is_active = true
+        SELECT DISTINCT ns.email, ns.name 
+        FROM newsletter_subscriptions ns
+        INNER JOIN students s ON ns.email = s.email
+        INNER JOIN enrollments e ON s.student_id = e.student_id
+        WHERE ns.is_active = true
+        ORDER BY ns.email
       `;
     }
 

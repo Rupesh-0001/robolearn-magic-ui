@@ -9,50 +9,81 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '10');
     const offset = parseInt(searchParams.get('offset') || '0');
 
-    let query = sql`
-      SELECT article_id, title, content, summary, source, source_url, image_url, 
-             category, published_at, created_at, is_featured, tags
-      FROM news_articles
-      WHERE 1=1
-    `;
+    // Calculate date 1 month ago for filtering recent news
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
-    if (category) {
-      query = sql`
+    // Build articles query based on filters (always include 1 month filter)
+    let articles;
+    let countResult;
+
+    if (category && featured === 'true') {
+      // Both category and featured
+      articles = await sql`
+        SELECT article_id, title, content, summary, source, source_url, image_url, 
+               category, published_at, created_at, is_featured, tags
+        FROM news_articles
+        WHERE category = ${category} 
+          AND is_featured = true 
+          AND published_at >= ${oneMonthAgo}
+        ORDER BY published_at DESC, article_id DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as total FROM news_articles 
+        WHERE category = ${category} 
+          AND is_featured = true 
+          AND published_at >= ${oneMonthAgo}
+      `;
+    } else if (category) {
+      // Only category
+      articles = await sql`
         SELECT article_id, title, content, summary, source, source_url, image_url, 
                category, published_at, created_at, is_featured, tags
         FROM news_articles
         WHERE category = ${category}
+          AND published_at >= ${oneMonthAgo}
+        ORDER BY published_at DESC, article_id DESC
+        LIMIT ${limit} OFFSET ${offset}
       `;
-    }
-
-    if (featured === 'true') {
-      query = sql`
+      countResult = await sql`
+        SELECT COUNT(*) as total FROM news_articles 
+        WHERE category = ${category}
+          AND published_at >= ${oneMonthAgo}
+      `;
+    } else if (featured === 'true') {
+      // Only featured
+      articles = await sql`
         SELECT article_id, title, content, summary, source, source_url, image_url, 
                category, published_at, created_at, is_featured, tags
         FROM news_articles
         WHERE is_featured = true
+          AND published_at >= ${oneMonthAgo}
+        ORDER BY published_at DESC, article_id DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as total FROM news_articles 
+        WHERE is_featured = true
+          AND published_at >= ${oneMonthAgo}
+      `;
+    } else {
+      // No filters (only date filter)
+      articles = await sql`
+        SELECT article_id, title, content, summary, source, source_url, image_url, 
+               category, published_at, created_at, is_featured, tags
+        FROM news_articles
+        WHERE published_at >= ${oneMonthAgo}
+        ORDER BY published_at DESC, article_id DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as total FROM news_articles
+        WHERE published_at >= ${oneMonthAgo}
       `;
     }
 
-    const articles = await sql`
-      ${query}
-      ORDER BY published_at DESC
-      LIMIT ${limit} OFFSET ${offset}
-    `;
-
-    // Get total count for pagination
-    let countQuery = sql`SELECT COUNT(*) as total FROM news_articles WHERE 1=1`;
-    
-    if (category) {
-      countQuery = sql`SELECT COUNT(*) as total FROM news_articles WHERE category = ${category}`;
-    }
-    
-    if (featured === 'true') {
-      countQuery = sql`SELECT COUNT(*) as total FROM news_articles WHERE is_featured = true`;
-    }
-
-    const countResult = await countQuery;
-    const total = countResult[0]?.total || 0;
+    const total = parseInt(countResult[0]?.total || '0');
 
     return NextResponse.json(
       { 

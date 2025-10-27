@@ -36,18 +36,24 @@ export default function NewsArticles({
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFilterLoading, setIsFilterLoading] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(false);
-  const [offset, setOffset] = useState(0);
+  const [currentOffset, setCurrentOffset] = useState(0);
 
   const fetchArticles = useCallback(async (reset = false) => {
     try {
       if (reset) {
         setIsFilterLoading(true);
+        setIsLoading(true);
+      } else {
+        setIsLoadingMore(true);
       }
+      
+      const offsetToUse = reset ? 0 : currentOffset;
       
       const params = new URLSearchParams({
         limit: limit.toString(),
-        offset: reset ? '0' : offset.toString(),
+        offset: offsetToUse.toString(),
       });
 
       if (category) params.append('category', category);
@@ -59,11 +65,17 @@ export default function NewsArticles({
       if (response.ok) {
         if (reset) {
           setArticles(data.articles);
+          setCurrentOffset(limit);
         } else {
-          setArticles(prev => [...prev, ...data.articles]);
+          // Filter out any duplicates by article_id
+          setArticles(prev => {
+            const existingIds = new Set(prev.map(a => a.article_id));
+            const newArticles = data.articles.filter((a: NewsArticle) => !existingIds.has(a.article_id));
+            return [...prev, ...newArticles];
+          });
+          setCurrentOffset(prev => prev + limit);
         }
         setHasMore(data.pagination.hasMore);
-        setOffset(reset ? limit : prev => prev + limit);
       } else {
         toast.error(data.error || 'Failed to fetch articles');
       }
@@ -73,17 +85,15 @@ export default function NewsArticles({
     } finally {
       setIsLoading(false);
       setIsFilterLoading(false);
+      setIsLoadingMore(false);
     }
-  }, [category, featured, limit]);
+  }, [category, featured, limit, currentOffset]);
 
   useEffect(() => {
+    setCurrentOffset(0);
+    setArticles([]);
     fetchArticles(true);
-  }, [fetchArticles]);
-
-  // Reset offset when filters change
-  useEffect(() => {
-    setOffset(0);
-  }, [category, featured]);
+  }, [category, featured, limit]);
 
   const handleLoadMore = () => {
     fetchArticles(false);
@@ -257,13 +267,13 @@ export default function NewsArticles({
         <div className="text-center pt-8 mt-8">
           <Button 
             onClick={handleLoadMore}
-            disabled={isLoading}
+            disabled={isLoadingMore}
             className="px-6 sm:px-8 py-3 bg-black text-white hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? (
+            {isLoadingMore ? (
               <div className="flex items-center gap-2">
                 <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                Loading...
+                Loading More...
               </div>
             ) : (
               'Load More Articles'

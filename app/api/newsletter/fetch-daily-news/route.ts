@@ -42,7 +42,13 @@ export async function POST(request: NextRequest) {
           const data = await response.json();
           if (data.articles) {
             const processedArticles = data.articles
-              .filter(article => article.title && article.description && article.url)
+              .filter(article => 
+                article.title && 
+                article.description && 
+                article.url && 
+                article.url.startsWith('http') && // Ensure valid URL
+                article.title.length > 10 // Ensure meaningful title
+              )
               .map(article => ({
                 title: article.title,
                 content: article.description || article.content || '',
@@ -78,18 +84,25 @@ export async function POST(request: NextRequest) {
         if (response.ok) {
           const data = await response.json();
           if (data.articles) {
-            const processedArticles = data.articles.map(article => ({
-              title: article.title,
-              content: article.content || article.description || '',
-              summary: article.description?.substring(0, 200) + '...' || '',
-              source: article.source?.name || 'GNews',
-              source_url: article.url,
-              image_url: article.image || `https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=300&fit=crop&q=${Math.random()}`,
-              category: getCategoryFromContent(article.title + ' ' + article.description),
-              published_at: new Date(article.publishedAt),
-              is_featured: Math.random() > 0.7,
-              tags: ['robotics', 'ai', 'technology']
-            }));
+            const processedArticles = data.articles
+              .filter(article => 
+                article.title && 
+                article.url && 
+                article.url.startsWith('http') && // Ensure valid URL
+                article.title.length > 10 // Ensure meaningful title
+              )
+              .map(article => ({
+                title: article.title,
+                content: article.content || article.description || '',
+                summary: article.description?.substring(0, 200) + '...' || '',
+                source: article.source?.name || 'GNews',
+                source_url: article.url,
+                image_url: article.image || `https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=300&fit=crop&q=${Math.random()}`,
+                category: getCategoryFromContent(article.title + ' ' + article.description),
+                published_at: new Date(article.publishedAt),
+                is_featured: Math.random() > 0.7,
+                tags: ['robotics', 'ai', 'technology']
+              }));
             
             fetchedArticles.push(...processedArticles);
           }
@@ -150,10 +163,25 @@ export async function POST(request: NextRequest) {
     let insertedCount = 0;
     for (const article of uniqueArticles.slice(0, 10)) { // Limit to 10 articles per day
       try {
+        // Validate article has required fields and valid URL
+        if (!article.source_url || !article.source_url.startsWith('http')) {
+          console.log('⚠️ Skipping article with invalid URL:', article.title);
+          continue;
+        }
+
+        // Check if article already exists by title
+        const existingArticle = await sql`
+          SELECT article_id FROM news_articles WHERE title = ${article.title}
+        `;
+
+        if (existingArticle.length > 0) {
+          console.log('⚠️ Article already exists:', article.title);
+          continue;
+        }
+
         await sql`
           INSERT INTO news_articles (title, content, summary, source, source_url, image_url, category, published_at, is_featured, tags)
           VALUES (${article.title}, ${article.content}, ${article.summary}, ${article.source}, ${article.source_url}, ${article.image_url}, ${article.category}, ${article.published_at}, ${article.is_featured}, ${article.tags})
-          ON CONFLICT (title) DO NOTHING
         `;
         insertedCount++;
         console.log('✅ Successfully inserted article:', article.title);

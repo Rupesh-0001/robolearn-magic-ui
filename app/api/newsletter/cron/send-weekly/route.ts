@@ -92,10 +92,16 @@ export async function GET(request: NextRequest) {
 
     const issueId = newIssue[0].issue_id;
 
-    // Get active subscribers
+    // Get active subscribers who are enrolled in courses
+    // Join with students and enrollments to ensure they are enrolled
+    // If student is deleted from DB, they won't appear in this query
     const subscribers = await sql`
-      SELECT email, name FROM newsletter_subscriptions 
-      WHERE is_active = true
+      SELECT DISTINCT ns.email, ns.name 
+      FROM newsletter_subscriptions ns
+      INNER JOIN students s ON ns.email = s.email
+      INNER JOIN enrollments e ON s.student_id = e.student_id
+      WHERE ns.is_active = true
+      ORDER BY ns.email
     `;
 
     if (subscribers.length === 0) {

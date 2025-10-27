@@ -31,6 +31,13 @@ export default function NewsletterAdmin() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'articles' | 'issues' | 'send' | 'fetch'>('articles');
   const [isFetchingNews, setIsFetchingNews] = useState(false);
+  const [subscribers, setSubscribers] = useState<Array<{email: string, name: string}>>([]);
+  const [selectedEmails, setSelectedEmails] = useState<string[]>([]);
+  const [newEmail, setNewEmail] = useState('');
+  const [isLoadingSubscribers, setIsLoadingSubscribers] = useState(false);
+  const [isSending, setIsSending] = useState<{ [key: number]: boolean }>({});
+  const [isTestSending, setIsTestSending] = useState<{ [key: number]: boolean }>({});
+  const [isCreatingIssue, setIsCreatingIssue] = useState(false);
 
   const [newIssue, setNewIssue] = useState({
     title: '',
@@ -40,6 +47,7 @@ export default function NewsletterAdmin() {
   useEffect(() => {
     fetchArticles();
     fetchIssues();
+    fetchSubscribers();
   }, []);
 
   const fetchArticles = async () => {
@@ -74,6 +82,26 @@ export default function NewsletterAdmin() {
     }
   };
 
+  const fetchSubscribers = async () => {
+    setIsLoadingSubscribers(true);
+    try {
+      const response = await fetch('/api/newsletter/subscribers');
+      const data = await response.json();
+      if (response.ok) {
+        setSubscribers(data.subscribers || []);
+        // Pre-select all subscribers
+        setSelectedEmails(data.subscribers.map((s: any) => s.email));
+      } else {
+        toast.error('Failed to fetch subscribers');
+      }
+    } catch (error) {
+      console.error('Error fetching subscribers:', error);
+      toast.error('Error fetching subscribers');
+    } finally {
+      setIsLoadingSubscribers(false);
+    }
+  };
+
   const handleCreateIssue = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -82,6 +110,7 @@ export default function NewsletterAdmin() {
       return;
     }
 
+    setIsCreatingIssue(true);
     try {
       const response = await fetch('/api/newsletter/issues', {
         method: 'POST',
@@ -107,10 +136,19 @@ export default function NewsletterAdmin() {
     } catch (error) {
       console.error('Error creating issue:', error);
       toast.error('Error creating issue');
+    } finally {
+      setIsCreatingIssue(false);
     }
   };
 
-  const handleSendNewsletter = async (issueId: number, testEmail?: string) => {
+  const handleSendNewsletter = async (issueId: number, testEmail?: string, customEmails?: string[]) => {
+    // Set loading state based on whether it's a test send or regular send
+    if (testEmail) {
+      setIsTestSending(prev => ({ ...prev, [issueId]: true }));
+    } else {
+      setIsSending(prev => ({ ...prev, [issueId]: true }));
+    }
+
     try {
       const response = await fetch('/api/newsletter/send', {
         method: 'POST',
@@ -120,6 +158,7 @@ export default function NewsletterAdmin() {
         body: JSON.stringify({
           issueId,
           testEmail,
+          customEmails,
         }),
       });
 
@@ -133,6 +172,34 @@ export default function NewsletterAdmin() {
     } catch (error) {
       console.error('Error sending newsletter:', error);
       toast.error('Error sending newsletter');
+    } finally {
+      if (testEmail) {
+        setIsTestSending(prev => ({ ...prev, [issueId]: false }));
+      } else {
+        setIsSending(prev => ({ ...prev, [issueId]: false }));
+      }
+    }
+  };
+
+  const toggleEmailSelection = (email: string) => {
+    setSelectedEmails(prev => 
+      prev.includes(email) 
+        ? prev.filter(e => e !== email)
+        : [...prev, email]
+    );
+  };
+
+  const addCustomEmail = () => {
+    if (newEmail && newEmail.includes('@')) {
+      if (!selectedEmails.includes(newEmail)) {
+        setSelectedEmails(prev => [...prev, newEmail]);
+        if (!subscribers.find(s => s.email === newEmail)) {
+          setSubscribers(prev => [...prev, { email: newEmail, name: 'Custom' }]);
+        }
+      }
+      setNewEmail('');
+    } else {
+      toast.error('Please enter a valid email');
     }
   };
 
@@ -269,6 +336,94 @@ export default function NewsletterAdmin() {
         <div className="bg-white rounded-lg border border-gray-200">
           <div className="p-3 sm:p-4">
             <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-3">Newsletter Issues</h3>
+            
+            {/* Email Selection Section */}
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <h4 className="font-medium text-gray-900 mb-3 flex items-center gap-2">
+                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Email Recipients ({selectedEmails.length} selected)
+              </h4>
+              
+              {/* Add Custom Email */}
+              <div className="mb-4 flex gap-2">
+                <input
+                  type="email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && addCustomEmail()}
+                  placeholder="Add custom email (e.g., garghemant654@gmail.com)"
+                  className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <Button
+                  onClick={addCustomEmail}
+                  size="sm"
+                  className="bg-blue-600 hover:bg-blue-700 whitespace-nowrap"
+                >
+                  Add Email
+                </Button>
+              </div>
+
+              {/* Email List */}
+              {isLoadingSubscribers ? (
+                <div className="text-center py-4">
+                  <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-600 border-t-transparent mx-auto mb-2"></div>
+                  <p className="text-sm text-gray-600">Loading subscribers...</p>
+                </div>
+              ) : (
+                <div className="max-h-60 overflow-y-auto space-y-2">
+                  {subscribers.map((subscriber) => (
+                    <div key={subscriber.email} className="flex items-center gap-2 p-2 bg-white rounded border border-gray-200">
+                      <input
+                        type="checkbox"
+                        checked={selectedEmails.includes(subscriber.email)}
+                        onChange={() => toggleEmailSelection(subscriber.email)}
+                        className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900 truncate">{subscriber.email}</p>
+                        {subscriber.name && subscriber.name !== 'Custom' && (
+                          <p className="text-xs text-gray-500">{subscriber.name}</p>
+                        )}
+                      </div>
+                      <button
+                        onClick={() => {
+                          setSelectedEmails(prev => prev.filter(e => e !== subscriber.email));
+                          if (subscriber.name === 'Custom') {
+                            setSubscribers(prev => prev.filter(s => s.email !== subscriber.email));
+                          }
+                        }}
+                        className="text-red-600 hover:text-red-800 text-xs"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="mt-3 flex gap-2">
+                <Button
+                  onClick={() => setSelectedEmails(subscribers.map(s => s.email))}
+                  size="sm"
+                  variant="outline"
+                  className="text-xs"
+                >
+                  Select All
+                </Button>
+                <Button
+                  onClick={() => setSelectedEmails([])}
+                  size="sm"
+                  variant="outline"
+                  className="text-xs"
+                >
+                  Deselect All
+                </Button>
+              </div>
+            </div>
+
+            {/* Newsletter Issues List */}
             <div className="space-y-2 sm:space-y-3">
               {issues.map((issue) => (
                 <div key={issue.issue_id} className="border border-gray-200 rounded-lg p-2 sm:p-3">
@@ -291,11 +446,19 @@ export default function NewsletterAdmin() {
                     <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
                       {!issue.is_sent && (
                         <Button
-                          onClick={() => handleSendNewsletter(issue.issue_id)}
+                          onClick={() => handleSendNewsletter(issue.issue_id, undefined, selectedEmails)}
                           size="sm"
                           className="bg-green-600 hover:bg-green-700 text-xs"
+                          disabled={selectedEmails.length === 0 || isSending[issue.issue_id]}
                         >
-                          Send Now
+                          {isSending[issue.issue_id] ? (
+                            <div className="flex items-center gap-1">
+                              <div className="animate-spin rounded-full h-3 w-3 border-2 border-white border-t-transparent"></div>
+                              Sending...
+                            </div>
+                          ) : (
+                            `Send to ${selectedEmails.length} emails`
+                          )}
                         </Button>
                       )}
                       <Button
@@ -303,8 +466,16 @@ export default function NewsletterAdmin() {
                         size="sm"
                         variant="outline"
                         className="text-xs"
+                        disabled={isTestSending[issue.issue_id]}
                       >
-                        Test Send
+                        {isTestSending[issue.issue_id] ? (
+                          <div className="flex items-center gap-1">
+                            <div className="animate-spin rounded-full h-3 w-3 border-2 border-gray-600 border-t-transparent"></div>
+                            Sending...
+                          </div>
+                        ) : (
+                          'Test Send'
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -377,10 +548,17 @@ export default function NewsletterAdmin() {
 
               <Button
                 type="submit"
-                disabled={selectedArticles.length === 0}
+                disabled={selectedArticles.length === 0 || isCreatingIssue}
                 className="w-full text-xs sm:text-sm"
               >
-                Create Newsletter Issue
+                {isCreatingIssue ? (
+                  <div className="flex items-center gap-2 justify-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                    Creating Issue...
+                  </div>
+                ) : (
+                  'Create Newsletter Issue'
+                )}
               </Button>
             </form>
           </div>
