@@ -44,6 +44,7 @@ export function Footer() {
               <li><Link href="/careers" className="text-muted-foreground hover:text-foreground transition-colors">Careers</Link></li>
               <li><Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</Link></li>
               <li><Link href="/refund" className="text-muted-foreground hover:text-foreground transition-colors">Refund Policy</Link></li>
+              <li><Link href="/ambassador" className="text-muted-foreground hover:text-foreground transition-colors">Become an Ambassador</Link></li>
             </ul>
           </div>
         </div>

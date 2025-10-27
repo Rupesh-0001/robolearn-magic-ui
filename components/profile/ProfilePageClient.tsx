@@ -294,7 +294,8 @@ export default function ProfilePageClient({ user, courses, courseImages }: {
             {courses.map((course, idx) => {
               const imageSrc = courseImages[course.course_name] || '/CarCourse.jpg';
               const startDate = course.course_start_date ? new Date(course.course_start_date).toLocaleDateString() : 'N/A';
-              const totalLessons = 24;
+              // Determine total lessons based on course name
+              const totalLessons = course.course_name === 'MERN - FSD' ? 36 : 25;
               const completedLessons = course.lessons.filter(l => l.recording_url && l.recording_url.trim() !== '').length;
               const completion = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
               

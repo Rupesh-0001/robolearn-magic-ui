@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import BatchManagement from '@/components/admin/BatchManagement';
 import BulkUserCreation from '@/components/admin/BulkUserCreation';
 import NewsletterAdmin from '@/components/admin/NewsletterAdmin';
+import TokenManager from '@/components/admin/TokenManager';
 // import { sql } from '@/lib/db';
 
 interface Student {
@@ -51,7 +52,7 @@ export default function AdminDashboard() {
   const [certificateRequests, setCertificateRequests] = useState<CertificateRequest[]>([]);
   const [certReqLoading, setCertReqLoading] = useState(false);
   const [certReqError, setCertReqError] = useState('');
-  const [activeTab, setActiveTab] = useState<'students' | 'batches' | 'enrollments' | 'certificates' | 'batch-management' | 'bulk-users' | 'newsletter'>('students');
+  const [activeTab, setActiveTab] = useState<'students' | 'batches' | 'enrollments' | 'certificates' | 'batch-management' | 'bulk-users' | 'newsletter' | 'ambassadors' | 'tokens'>('students');
   // const [showCreateUserModal, setShowCreateUserModal] = useState(false);
   // const [newUser, setNewUser] = useState({
   //   name: '',
@@ -225,17 +226,6 @@ export default function AdminDashboard() {
                 </span>
               </button>
               <button
-                onClick={() => setActiveTab('newsletter')}
-                className={`py-2 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
-                  activeTab === 'newsletter'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                <span className="hidden sm:inline">Newsletter</span>
-                <span className="sm:hidden">News</span>
-              </button>
-              <button
                 onClick={() => setActiveTab('batch-management')}
                 className={`py-2 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === 'batch-management'
@@ -256,6 +246,39 @@ export default function AdminDashboard() {
               >
                 <span className="hidden sm:inline">Bulk Users</span>
                 <span className="sm:hidden">Bulk</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('newsletter')}
+                className={`py-2 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                  activeTab === 'newsletter'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <span className="hidden sm:inline">Newsletter</span>
+                <span className="sm:hidden">News</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('ambassadors')}
+                className={`py-2 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                  activeTab === 'ambassadors'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <span className="hidden sm:inline">Ambassadors</span>
+                <span className="sm:hidden">Ambas</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('tokens')}
+                className={`py-2 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                  activeTab === 'tokens'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <span className="hidden sm:inline">Tokens</span>
+                <span className="sm:hidden">Tokens</span>
               </button>
             </nav>
           </div>
@@ -487,6 +510,22 @@ export default function AdminDashboard() {
             {activeTab === 'newsletter' && (
               <div>
                 <NewsletterAdmin />
+              </div>
+            )}
+
+            {activeTab === 'ambassadors' && (
+              <div>
+                <iframe 
+                  src="/admin/ambassadors" 
+                  className="w-full h-96 border-0"
+                  title="Ambassador Management"
+                />
+              </div>
+            )}
+
+            {activeTab === 'tokens' && (
+              <div>
+                <TokenManager />
               </div>
             )}
           </div>

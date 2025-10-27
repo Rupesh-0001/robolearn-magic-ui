@@ -141,7 +141,7 @@ export async function initDatabase() {
 
     // Insert some sample batches with lessons
     const existingBatches = await sql`
-      SELECT course_name FROM batches WHERE course_name IN ('Autonomous Car Course', 'AI Agent Course')
+      SELECT course_name FROM batches WHERE course_name IN ('Autonomous Car Course', 'AI Agent Course', 'MERN - FSD')
     `;
 
     const existingBatchNames = existingBatches.map((batch: Record<string, unknown>) => batch.course_name as string);
@@ -176,7 +176,22 @@ export async function initDatabase() {
       aiAgentBatchId = existingBatch[0].batch_id;
     }
 
-    // Add sample lessons to Autonomous Car Course (24 lessons)
+    let mernStackBatchId: number;
+    if (!existingBatchNames.includes('MERN - FSD')) {
+      const mernStackBatch = await sql`
+        INSERT INTO batches (course_name, course_start_date, lessons)
+        VALUES ('MERN - FSD', CURRENT_DATE, '[]'::jsonb)
+        RETURNING batch_id
+      `;
+      mernStackBatchId = mernStackBatch[0].batch_id;
+    } else {
+      const existingBatch = await sql`
+        SELECT batch_id FROM batches WHERE course_name = 'MERN - FSD'
+      `;
+      mernStackBatchId = existingBatch[0].batch_id;
+    }
+
+    // Add sample lessons to Autonomous Car Course (25 lessons)
     // const autonomousCarLessons = [
     //   {
     //     id: '1',
@@ -385,6 +400,37 @@ export async function initDatabase() {
       WHERE batch_id = ${aiAgentBatchId}
     `;
 
+    // Add sample lessons to MERN Stack Course
+    const mernStackLessons = [
+      {
+        id: '1',
+        title: 'Introduction to MERN Stack',
+        description: 'Overview of MongoDB, Express, React, and Node.js',
+        videoUrl: 'https://example.com/mern-video1.mp4',
+        duration: 50
+      },
+      {
+        id: '2',
+        title: 'Frontend Development with React',
+        description: 'Building modern user interfaces with React',
+        videoUrl: 'https://example.com/mern-video2.mp4',
+        duration: 65
+      },
+      {
+        id: '3',
+        title: 'Backend Development with Node.js and Express',
+        description: 'Creating RESTful APIs and server-side logic',
+        videoUrl: 'https://example.com/mern-video3.mp4',
+        duration: 80
+      }
+    ];
+
+    await sql`
+      UPDATE batches 
+      SET lessons = ${JSON.stringify(mernStackLessons)}::jsonb
+      WHERE batch_id = ${mernStackBatchId}
+    `;
+
     // Create enrollment for hemant@example.com in Autonomous Car Course
     const hemantStudent = await sql`
       SELECT student_id FROM students WHERE email = 'hemant@example.com'
@@ -403,6 +449,9 @@ export async function initDatabase() {
         `;
       }
     }
+
+    console.log('Database initialized successfully with sample data');
+    console.log('Batch IDs:', { autonomousCarBatchId, aiAgentBatchId, mernStackBatchId });
 
   } catch (error) {
     console.error('Error initializing database:', error);
