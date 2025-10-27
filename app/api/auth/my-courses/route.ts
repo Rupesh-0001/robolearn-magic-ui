@@ -5,7 +5,7 @@ import { verifyToken } from '@/lib/auth';
 interface EnrollmentResult {
   course_name: string;
   course_start_date: string;
-  lessons?: Array<{ title?: string; id?: string; videoUrl?: string }>;
+  lessons?: Array<{ title?: string; id?: string; videoUrl?: string; resourceUrl?: string }>;
   joined_date: string;
   enrollment_id: number;
 }
@@ -41,9 +41,10 @@ export async function GET(request: NextRequest) {
     // Transform the data to match the expected format
     const courses = enrollments.map((enrollment: EnrollmentResult) => {
       // Transform lessons to match the expected format
-      const transformedLessons = (enrollment.lessons || []).map((lesson: { title?: string; id?: string; videoUrl?: string }) => ({
+      const transformedLessons = (enrollment.lessons || []).map((lesson: { title?: string; id?: string; videoUrl?: string; resourceUrl?: string }) => ({
         lesson_name: lesson.title || lesson.id,
-        recording_url: lesson.videoUrl || ''
+        recording_url: lesson.videoUrl || '',
+        resource_url: lesson.resourceUrl || ''
       }));
 
       return {

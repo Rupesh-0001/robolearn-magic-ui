@@ -4,6 +4,7 @@ export interface RazorpayOptions {
   currency: string;
   name: string;
   description: string;
+  order_id?: string;
   offers?: string[];
   handler: (response: {
     razorpay_payment_id: string;

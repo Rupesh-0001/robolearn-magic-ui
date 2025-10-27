@@ -5,7 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import BatchManagement from '@/components/admin/BatchManagement';
 import BulkUserCreation from '@/components/admin/BulkUserCreation';
-// import { sql } from '@/lib/db';
+import TokenManager from '@/components/admin/TokenManager';
 
 interface Student {
   student_id: number;
@@ -50,7 +50,7 @@ export default function AdminDashboard() {
   const [certificateRequests, setCertificateRequests] = useState<CertificateRequest[]>([]);
   const [certReqLoading, setCertReqLoading] = useState(false);
   const [certReqError, setCertReqError] = useState('');
-  const [activeTab, setActiveTab] = useState<'students' | 'batches' | 'enrollments' | 'certificates' | 'batch-management' | 'bulk-users' | 'ambassadors'>('students');
+  const [activeTab, setActiveTab] = useState<'students' | 'batches' | 'enrollments' | 'certificates' | 'batch-management' | 'bulk-users' | 'ambassadors' | 'tokens'>('students');
   // const [showCreateUserModal, setShowCreateUserModal] = useState(false);
   // const [newUser, setNewUser] = useState({
   //   name: '',
@@ -64,7 +64,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!loading && (!user || user.role !== 'admin')) {
-      router.push('/login');
+      router.push('/');
     }
   }, [user, loading, router]);
 
@@ -236,6 +236,16 @@ export default function AdminDashboard() {
                 }`}
               >
                 Ambassadors
+              </button>
+              <button
+                onClick={() => setActiveTab('tokens')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'tokens'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Tokens
               </button>
             </nav>
           </div>
@@ -468,6 +478,12 @@ export default function AdminDashboard() {
                   className="w-full h-96 border-0"
                   title="Ambassador Management"
                 />
+              </div>
+            )}
+
+            {activeTab === 'tokens' && (
+              <div>
+                <TokenManager />
               </div>
             )}
           </div>

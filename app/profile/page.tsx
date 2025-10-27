@@ -36,6 +36,7 @@ async function fetchWithAuth(url: string) {
 const courseImages: Record<string, string> = {
   'Autonomous Car': '/CarCourse.png',
   'Autonomous Car Course': '/autonomousCar.png',
+  'MERN - FSD': '/mernCourse.JPG',
   'AI Agent Course': '/aiAgent.png',
   'Robotic Arm Course': '/roboticArm.png',
   'Drones Course': '/drone.png',
@@ -52,7 +53,7 @@ export default async function ProfilePage() {
   
   // If no user is authenticated, redirect to login
   if (!userData?.user) {
-    redirect('/login');
+    redirect('/');
   }
 
   const courses: Course[] = (await fetchWithAuth(`${baseUrl}/api/auth/my-courses`)) || [];

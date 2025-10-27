@@ -97,9 +97,7 @@ export default function AIAgentMasterclass() {
         setFormErrors((prev) => ({ ...prev, name: "Name is required" }));
       }
     } else if (name === "age") {
-      if (!value.trim()) {
-        setFormErrors((prev) => ({ ...prev, age: "Age is required" }));
-      } else if (!validateAge(value)) {
+      if (value.trim() && !validateAge(value)) {
         setFormErrors((prev) => ({ ...prev, age: "Please enter a valid age." }));
       }
     } else if (name === "phone") {
@@ -131,7 +129,6 @@ export default function AIAgentMasterclass() {
     return (
       formData.name.trim() !== "" &&
       formData.phone.trim() !== "" &&
-      formData.age.trim() !== "" &&
       !formErrors.name &&
       !formErrors.phone &&
       !formErrors.email &&
@@ -150,9 +147,7 @@ export default function AIAgentMasterclass() {
       errors.name = "Name is required";
     }
 
-    if (!formData.age.trim()) {
-      errors.age = "Age is required";
-    } else if (!validateAge(formData.age)) {
+    if (formData.age.trim() && !validateAge(formData.age)) {
       errors.age = "Please enter a valid age.";
     }
 
@@ -224,7 +219,7 @@ export default function AIAgentMasterclass() {
     //       email: formData.email,
     //       course: 'Autonomous Car Masterclass',
     //       phone: formData.phone,
-    //       grp_link : "https://chat.whatsapp.com/JK9U51JgqT1LJaO08KXUqQ?"
+    //       grp_link : "https://chat.whatsapp.com/DqGbpFXGcmT8ue32z3jXAs"
     //     }),
     //   }).catch((emailError) => {
     //     console.error('Error sending onboarding email:', emailError);
@@ -254,7 +249,7 @@ export default function AIAgentMasterclass() {
       
       // Auto-open WhatsApp after 500ms if user hasn't clicked
       setTimeout(() => {
-        window.open('https://chat.whatsapp.com/JK9U51JgqT1LJaO08KXUqQ?', '_blank');
+        window.open('https://chat.whatsapp.com/DqGbpFXGcmT8ue32z3jXAs', '_blank');
       }, 500);
     }, 300);
 
@@ -285,7 +280,7 @@ export default function AIAgentMasterclass() {
   useEffect(() => {
     if (!isMounted) return;
 
-    const countDownDate = new Date("August 24, 2025 19:00:00").getTime();
+    const countDownDate = new Date("October 26, 2025 19:00:00").getTime();
     // Update the countdown every 1 second
     const interval = setInterval(() => {
       // Get today's date and time
@@ -415,7 +410,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>24th August, 2025</span>
+                <span>26th October, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -498,7 +493,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  24th August, 2025
+                  26th October, 2025
                 </span>
               </div>
 
@@ -847,7 +842,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">24th August, 2025</span>
+                  <span className="text-gray-800">26th October, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1120,7 +1115,7 @@ export default function AIAgentMasterclass() {
                     htmlFor="age"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Age<span className="text-red-500">*</span>
+                    Age <span className="text-gray-400">(Optional)</span>
                   </label>
                   <input
                     type="text"
@@ -1128,7 +1123,6 @@ export default function AIAgentMasterclass() {
                     name="age"
                     value={formData.age}
                     onChange={handleInputChange}
-                    required
                     placeholder="Enter your age"
                     className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-colors ${
                       formErrors.age
@@ -1285,7 +1279,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/JK9U51JgqT1LJaO08KXUqQ?"
+                  href="https://chat.whatsapp.com/DqGbpFXGcmT8ue32z3jXAs"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"

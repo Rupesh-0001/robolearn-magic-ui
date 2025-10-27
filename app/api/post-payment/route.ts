@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       orderId, 
       signature, 
       amount, 
-      batchId = 5, // Default batch ID for autonomous car course
+      batchId = 6, // Default batch ID for autonomous car course
       referralCode // Optional referral code for tracking
     } = await request.json();
 
@@ -88,6 +88,14 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Get batch details to determine course name
+    const batchDetails = await sql`
+      SELECT course_name FROM batches WHERE batch_id = ${batchId}
+    `;
+
+    const courseName = batchDetails.length > 0 ? batchDetails[0].course_name : 'Course';
+    console.log('📚 Course name for batch', batchId, ':', courseName);
+
     // Check if already enrolled in this batch
     const existingEnrollment = await sql`
       SELECT enrollment_id FROM enrollments 
@@ -113,7 +121,7 @@ export async function POST(request: NextRequest) {
           name,
           email,
           isNewUser,
-          courseName: 'Autonomous Car Course',
+          courseName: courseName,
           enrollmentId: existingEnrollment[0].enrollment_id
         }),
       })
@@ -161,15 +169,16 @@ export async function POST(request: NextRequest) {
 
       // Add to enrollment sheet for existing enrollment (non-blocking)
       const currentDateTime = new Date().toISOString();
-      console.log('📋 (Existing enrollment) Attempting to add to enrollment sheet:', { name, email, phone, amount, currentDateTime });
+      console.log('📋 (Existing enrollment) Attempting to add to enrollment sheet:', { name, email, phone, amount, currentDateTime, courseName });
       
       addToEnrollmentSheet({
         name,
         phone,
         email,
         pricePaid: amount,
-        coursePrice: 2499, // Original course price
-        dateTime: currentDateTime
+        coursePrice: 2999, // Original course price
+        dateTime: currentDateTime,
+        courseName: courseName
       })
       .then((result) => {
         console.log('✅ (Existing enrollment) Added to enrollment sheet successfully:', result);
@@ -232,7 +241,7 @@ export async function POST(request: NextRequest) {
           name,
           email,
           isNewUser,
-          courseName: 'Autonomous Car Course',
+          courseName: courseName,
           enrollmentId: newEnrollment[0].enrollment_id
         }),
       })
@@ -280,15 +289,16 @@ export async function POST(request: NextRequest) {
 
       // Add to enrollment sheet (non-blocking)
       const currentDateTime = new Date().toISOString();
-      console.log('📋 Attempting to add to enrollment sheet:', { name, email, phone, amount, currentDateTime });
+      console.log('📋 Attempting to add to enrollment sheet:', { name, email, phone, amount, currentDateTime, courseName });
       
       addToEnrollmentSheet({
         name,
         phone,
         email,
         pricePaid: amount,
-        coursePrice: 2499, // Original course price
-        dateTime: currentDateTime
+        coursePrice: 2999, // Original course price
+        dateTime: currentDateTime,
+        courseName: courseName
       })
       .then((result) => {
         console.log('✅ Added to enrollment sheet successfully:', result);

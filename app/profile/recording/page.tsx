@@ -2,6 +2,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
 import { X as XIcon } from 'lucide-react';
+import HLSVideoPlayer from '@/components/ui/HLSVideoPlayer';
 
 // Utility function to convert various video URL formats to iframe-compatible URLs
 function convertToIframeUrl(url: string): string {
@@ -43,6 +44,11 @@ function convertToIframeUrl(url: string): string {
   
   // For other URLs, try to use as is
   return url;
+}
+
+// Utility function to check if URL is an HLS stream
+function isHLSStream(url: string): boolean {
+  return url.includes('.m3u8') || url.includes('application/vnd.apple.mpegurl');
 }
 
 function RecordingPageContent() {
@@ -115,7 +121,13 @@ function RecordingPageContent() {
       
       {/* Video container */}
       <div className="flex-1 flex items-center justify-center bg-black">
-        {iframeError ? (
+        {isHLSStream(lesson.url) ? (
+          <HLSVideoPlayer
+            src={lesson.url}
+            className="w-full h-full max-w-[96vw] max-h-[calc(100vh-120px)]"
+            onLoad={() => {}}
+          />
+        ) : iframeError ? (
           <div className="text-center text-white p-8">
             <div className="text-xl font-semibold mb-4">Recording Error</div>
             <div className="text-gray-300 mb-4">{iframeError}</div>
@@ -133,10 +145,10 @@ function RecordingPageContent() {
             title={lesson.name || 'Recording'}
             allow="autoplay; encrypted-media; fullscreen"
             allowFullScreen
-            className="w-full h-full border-none"
+            className="w-full h-full max-w-[96vw] max-h-[calc(100vh-120px)] border-none"
             sandbox="allow-scripts allow-same-origin allow-presentation allow-forms allow-popups"
             onError={handleIframeError}
-            onLoad={() => console.log('Iframe loaded successfully')}
+            onLoad={() => {}}
           />
         )}
       </div>

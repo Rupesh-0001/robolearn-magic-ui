@@ -42,7 +42,7 @@ export default function AutonomousCarMasterclass() {
     seconds: 0,
   });
 
-  const coursePrice = 2499;
+  const coursePrice = 2999;
 
   // User details form state
   const [userDetails, setUserDetails] = useState({
@@ -84,7 +84,7 @@ export default function AutonomousCarMasterclass() {
 
 
   useEffect(() => {
-    const endDate = new Date("2025-08-21T23:59:59");
+    const endDate = new Date("2025-10-26T23:59:59");
 
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -240,7 +240,7 @@ export default function AutonomousCarMasterclass() {
                 orderId: response.razorpay_order_id,
                 signature: response.razorpay_signature,
                 amount: coursePrice,
-                batchId: 5, // Autonomous car course batch ID
+                batchId: 6, // Autonomous car course batch ID
                 referralCode: referralCode // Include referral code if present
               }),
             })
@@ -1169,13 +1169,13 @@ export default function AutonomousCarMasterclass() {
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-2xl sm:text-3xl font-bold text-green-600">
-                ₹2,499
+                ₹2,999
               </span>
                 <span className="text-sm sm:text-lg text-gray-500 line-through">
                 ₹5,999
               </span>
                 <span className="text-xs sm:text-sm bg-green-100 text-green-600 px-2 py-1 rounded-full font-semibold">
-                  SAVE 60%
+                  SAVE 50%
               </span>
             </div>
               <div className="text-xs sm:text-sm text-gray-600 mb-2">
@@ -1213,13 +1213,13 @@ export default function AutonomousCarMasterclass() {
           <div className="flex p-2 w-full">
             <div className="w-[40%] flex flex-col justify-center items-end pr-2 sm:pr-4">
               <div className="flex items-center gap-1 sm:gap-2">
-                <span className="text-lg sm:text-xl font-bold text-black-600">₹2,499</span>
+                <span className="text-lg sm:text-xl font-bold text-black-600">₹2,999</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-2">
                 <span className="text-xs sm:text-sm text-gray-500 line-through">
                   ₹5,999
                 </span>
-                <span className="text-xs text-green-600 bg-green-100 px-1 rounded">60% off</span>
+                <span className="text-xs text-green-600 bg-green-100 px-1 rounded">50% off</span>
               </div>
               {/* <div className="text-xs text-gray-600 mt-1">
                 + ₹11,999 bonuses
@@ -1449,7 +1449,7 @@ export default function AutonomousCarMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/FWUllPsPoM4IRiQD60gHv1?"
+                  href="https://chat.whatsapp.com/GNeeXh1iR0r4ffdULe1WAn"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"

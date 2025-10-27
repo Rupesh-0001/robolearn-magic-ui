@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 
 interface AmbassadorApplicationProps {
@@ -86,7 +86,161 @@ export function AmbassadorApplication({ onSubmit }: AmbassadorApplicationProps) 
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-8 max-w-4xl mx-auto">
+    <div className="max-w-6xl mx-auto space-y-8">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden rounded-xl shadow-xl">
+        {/* Background with gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900"></div>
+        
+        {/* Content */}
+        <div className="relative z-10 p-6 sm:p-8 md:p-12">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+              Exclusive Ambassador Benefits
+            </h2>
+            <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
+              Start earning commissions from day one and unlock higher tiers as you grow
+            </p>
+          </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+          {/* Bronze Tier */}
+          <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+            <div className="mb-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-bold text-xl text-gray-900">Bronze Tier</h3>
+                <span className="text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                  0-4 referrals
+                </span>
+              </div>
+              <div className="text-4xl font-extrabold text-gray-900 mb-1">10%</div>
+              <p className="text-sm text-gray-600">Commission per sale</p>
+            </div>
+            <div className="border-t border-gray-200 pt-4">
+              <p className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-3">Benefits Include</p>
+              <ul className="space-y-2 text-sm text-gray-700">
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>10% commission per sale</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Referral dashboard access</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Marketing materials</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Silver Tier */}
+          <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+            <div className="mb-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-bold text-xl text-gray-900">Silver Tier</h3>
+                <span className="text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                  5-15 referrals
+                </span>
+              </div>
+              <div className="text-4xl font-extrabold text-gray-900 mb-1">20%</div>
+              <p className="text-sm text-gray-600">Commission per sale</p>
+            </div>
+            <div className="border-t border-gray-200 pt-4">
+              <p className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-3">Benefits Include</p>
+              <ul className="space-y-2 text-sm text-gray-700">
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>20% commission per sale</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Priority support</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Exclusive promotions</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Performance bonuses</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Gold Tier */}
+          <div className="bg-black rounded-lg shadow-md border-2 border-black p-6 hover:shadow-lg transition-shadow relative">
+            <div className="absolute top-3 right-3 bg-white text-black text-xs px-2 py-1 rounded font-bold">
+              TOP TIER
+            </div>
+            <div className="mb-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-bold text-xl text-white">Gold Tier</h3>
+                <span className="text-sm font-medium text-gray-300 bg-white/10 px-3 py-1 rounded-full">
+                  16+ referrals
+                </span>
+              </div>
+              <div className="text-4xl font-extrabold text-white mb-1">33%</div>
+              <p className="text-sm text-gray-300">Commission per sale</p>
+            </div>
+            <div className="border-t border-white/20 pt-4">
+              <p className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3">Benefits Include</p>
+              <ul className="space-y-2 text-sm text-gray-200">
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>33% commission per sale</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Dedicated account manager</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>VIP event access</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Custom landing pages</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Special recognition</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      {/* Application Form */}
+      <div className="bg-white rounded-lg shadow-lg p-8">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-2">Apply to Become an Ambassador</h2>
         <p className="text-gray-600">
@@ -293,6 +447,7 @@ export function AmbassadorApplication({ onSubmit }: AmbassadorApplicationProps) 
           </button>
         </div>
       </form>
+      </div>
     </div>
   );
 }

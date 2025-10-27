@@ -1,6 +1,5 @@
 "use client";
 
-import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";
 import {
   Clock as ClockIcon,
@@ -12,7 +11,6 @@ import Image from 'next/image';
 
 export default function FutureProofingMasterclass() {
   const [showThankYouModal, setShowThankYouModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   // Carousel state
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -164,7 +162,8 @@ export default function FutureProofingMasterclass() {
             </div>
 
             <div className="flex items-center">
-              <ShimmerButton
+                            {/* Commented out original ShimmerButton with payment functionality */}
+              {/* <ShimmerButton
                 borderRadius="5px"
                 className="text-white text-sm sm:text-base font-semibold w-1/3 cursor-pointer mr-4 group"
                 onClick={async () => {
@@ -274,7 +273,30 @@ export default function FutureProofingMasterclass() {
                     </>
                   )}
                 </span>
-              </ShimmerButton>
+              </ShimmerButton> */}
+              
+              {/* New Coming Soon Button */}
+              <button
+                className="bg-gray-950 text-white text-sm sm:text-base font-semibold w-1/3 py-3 px-6 rounded-md mr-4 cursor-not-allowed opacity-75"
+                disabled
+              >
+                <span className="flex items-center justify-center">
+                  Coming Soon
+                  <svg
+                    className="w-4 h-4 ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </span>
+              </button>
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
                   {[1, 2, 3, 4].map((i) => (
@@ -710,7 +732,8 @@ export default function FutureProofingMasterclass() {
                   </div>
                 </div>
 
-              <ShimmerButton
+                            {/* Commented out original ShimmerButton with payment functionality */}
+              {/* <ShimmerButton
                 borderRadius="5px"
                 className="text-white text-sm sm:text-base font-semibold w-full cursor-pointer mr-4 group"
                 onClick={async () => {
@@ -821,7 +844,30 @@ export default function FutureProofingMasterclass() {
                     </>
                   )}
                 </span>
-              </ShimmerButton>
+              </ShimmerButton> */}
+              
+              {/* New Coming Soon Button */}
+              <button
+                className="bg-gray-950 text-white text-sm sm:text-base font-semibold w-full py-3 px-6 rounded-md cursor-not-allowed opacity-75"
+                disabled
+              >
+                <span className="flex items-center justify-center">
+                  Coming Soon
+                  <svg
+                    className="w-4 h-4 ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </span>
+              </button>
 
               <div className="pt-4">
                 <p className="text-center text-gray-700 font-medium mb-3">
@@ -883,7 +929,8 @@ export default function FutureProofingMasterclass() {
               </div>
             </div>
             <div className="w-[70%]">
-              <ShimmerButton
+                            {/* Commented out original ShimmerButton with payment functionality */}
+              {/* <ShimmerButton
                 borderRadius="8px"
                 className="w-full bg-white-600 text-white py-2 px-4 hover:bg-white-700 transition duration-300 text-lg font-medium cursor-pointer"
                 onClick={async () => {
@@ -976,7 +1023,30 @@ export default function FutureProofingMasterclass() {
                 ) : (
                   "Enroll Now"
                 )}
-              </ShimmerButton>
+              </ShimmerButton> */}
+              
+              {/* New Coming Soon Button */}
+              <button
+                className="w-full bg-gray-950 text-white py-2 px-4 text-lg font-medium cursor-not-allowed opacity-75 rounded-lg"
+                disabled
+              >
+                <div className="flex items-center justify-center">
+                  Coming Soon
+                  <svg
+                    className="w-4 h-4 ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+              </button>
             </div>
           </div>
         </div>

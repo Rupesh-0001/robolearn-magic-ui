@@ -6,6 +6,7 @@ import RequestCertificateButton from '../../../components/profile/RequestCertifi
 interface Lesson {
   lesson_name: string;
   recording_url: string;
+  resource_url?: string;
 }
 
 interface Course {
@@ -58,7 +59,8 @@ export default async function CourseDetailPage({ searchParams }: { searchParams:
     );
   }
 
-  const totalLessons = 24;
+  // Determine total lessons based on course name
+  const totalLessons = course.course_name === 'MERN - FSD' ? 36 : 25;
   const completedLessons = course.lessons.filter(l => l.recording_url && l.recording_url.trim() !== '').length;
   const completion = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
   const startDate = course.course_start_date ? new Date(course.course_start_date).toLocaleDateString() : 'N/A';
@@ -132,6 +134,19 @@ export default async function CourseDetailPage({ searchParams }: { searchParams:
                       <span className="text-gray-400 text-xs">Not Available</span>
                     )}
                   </div>
+                  {lesson.resource_url && lesson.resource_url.trim() !== '' && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium text-gray-600">Resources:</span>
+                      <a
+                        href={lesson.resource_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-green-50 text-green-700 rounded text-xs font-medium hover:bg-green-100 transition-colors duration-200"
+                      >
+                        Download ZIP
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -144,6 +159,7 @@ export default async function CourseDetailPage({ searchParams }: { searchParams:
                 <tr className="bg-gradient-to-r from-gray-50 to-gray-100">
                   <th className="py-4 px-6 text-left font-semibold text-gray-700">Lesson Name</th>
                   <th className="py-4 px-6 text-left font-semibold text-gray-700">Recording</th>
+                  <th className="py-4 px-6 text-left font-semibold text-gray-700">Resources</th>
                 </tr>
               </thead>
               <tbody>
@@ -168,6 +184,20 @@ export default async function CourseDetailPage({ searchParams }: { searchParams:
                         </Link>
                       ) : (
                         <span className="text-gray-400 text-sm">Not Available</span>
+                      )}
+                    </td>
+                    <td className="py-4 px-6">
+                      {lesson.resource_url && lesson.resource_url.trim() !== '' ? (
+                        <a
+                          href={lesson.resource_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-lg font-medium hover:bg-green-100 transition-colors duration-200"
+                        >
+                          Download ZIP
+                        </a>
+                      ) : (
+                        <span className="text-gray-400 text-sm">—</span>
                       )}
                     </td>
                   </tr>

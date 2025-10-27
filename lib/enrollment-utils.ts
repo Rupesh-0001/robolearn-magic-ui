@@ -7,6 +7,7 @@ export async function addToEnrollmentSheet(data: {
   pricePaid: number;
   coursePrice: number;
   dateTime?: string;
+  courseName?: string;
 }) {
   try {
     const key = 'secret-key';
@@ -18,7 +19,8 @@ export async function addToEnrollmentSheet(data: {
       email: data.email,
       pricePaid: data.pricePaid,
       coursePrice: data.coursePrice,
-      dateTime: data.dateTime || new Date().toISOString()
+      dateTime: data.dateTime || new Date().toISOString(),
+      courseName: data.courseName || 'Course'
     };
 
     const response = await fetch(url, {
