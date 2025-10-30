@@ -421,7 +421,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>7:00 pm to 9:00 pm</span>
+                <span>5:00 pm to 7:00 pm</span>
               </div>
             </div>
 
@@ -507,7 +507,7 @@ export default function AIAgentMasterclass() {
                     height={16}
                   />
                 </div>
-                <span className="text-gray-800 font-medium">7 pm to 9 pm</span>
+                <span className="text-gray-800 font-medium">5 pm to 7 pm</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <div className="text-gray-500 w-6 flex-shrink-0">
@@ -855,7 +855,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">7:00 pm to 9:00 pm</span>
+                  <span className="text-gray-800">5:00 pm to 7:00 pm</span>
                 </div>
 
                 <div className="flex items-center gap-2">
