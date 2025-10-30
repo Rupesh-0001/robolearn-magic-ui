@@ -250,7 +250,7 @@ export default function MERNStackMasterclass() {
       
       // Auto-open WhatsApp after 500ms if user hasn't clicked
       setTimeout(() => {
-        window.open('https://chat.whatsapp.com/G6H1M5pV6Q2JDy4FeeEpwI', '_blank');
+        window.open('https://chat.whatsapp.com/GhrZqnaJ9bFFSpLXnLw1tb', '_blank');
       }, 500);
     }, 300);
 
@@ -281,7 +281,7 @@ export default function MERNStackMasterclass() {
   useEffect(() => {
     if (!isMounted) return;
 
-    const countDownDate = new Date("October 26, 2025 19:00:00").getTime();
+    const countDownDate = new Date("November 1, 2025 19:00:00").getTime();
     // Update the countdown every 1 second
     const interval = setInterval(() => {
       // Get today's date and time
@@ -410,7 +410,7 @@ export default function MERNStackMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>26th October, 2025</span>
+                <span>1st November, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -493,7 +493,7 @@ export default function MERNStackMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                 26th October, 2025
+                 1st November, 2025
                 </span>
               </div>
 
@@ -848,7 +848,7 @@ export default function MERNStackMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">26th October, 2025</span>
+                  <span className="text-gray-800">1st November, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1241,7 +1241,7 @@ export default function MERNStackMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/G6H1M5pV6Q2JDy4FeeEpwI"
+                  href="https://chat.whatsapp.com/GhrZqnaJ9bFFSpLXnLw1tb"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
