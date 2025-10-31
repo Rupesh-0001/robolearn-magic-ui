@@ -250,7 +250,7 @@ export default function MERNStackMasterclass() {
       
       // Auto-open WhatsApp after 500ms if user hasn't clicked
       // setTimeout(() => {
-      //   window.open('https://chat.whatsapp.com/IuBUuWyYDdh9nlSCWsM3k4', '_blank');
+      //   window.open('https://chat.whatsapp.com/GhrZqnaJ9bFFSpLXnLw1tb', '_blank');
       // }, 500);
     }, 300);
 
@@ -1241,7 +1241,7 @@ export default function MERNStackMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/IuBUuWyYDdh9nlSCWsM3k4"
+                  href="https://chat.whatsapp.com/GhrZqnaJ9bFFSpLXnLw1tb"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
