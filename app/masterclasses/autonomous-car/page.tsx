@@ -248,9 +248,9 @@ export default function AIAgentMasterclass() {
       setShowThankYouModal(true);
       
       // Auto-open WhatsApp after 500ms if user hasn't clicked
-      setTimeout(() => {
-        window.open('https://chat.whatsapp.com/I5fV2U1DsCnLWATjJmlbhh?mode=wwt', '_blank');
-      }, 500);
+      // setTimeout(() => {
+      //   window.open('https://chat.whatsapp.com/I5fV2U1DsCnLWATjJmlbhh?mode=wwt', '_blank');
+      // }, 500);
     }, 300);
 
     // Show success message
