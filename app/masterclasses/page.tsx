@@ -71,7 +71,7 @@ export default function ExplorePage() {
               </div>
               <div className="p-4 sm:p-6 flex-grow flex flex-col">
                 <p className="text-xs sm:text-sm text-gray-500 mb-2">
-                  2nd November 2025 • 5:00pm
+                  5th November 2025 • 8:00pm
                 </p>
                 <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
                   Building Your Own Autonomous Car
