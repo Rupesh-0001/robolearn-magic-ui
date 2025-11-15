@@ -1,4 +1,4 @@
-"use client";
+"use client"; 
 
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { ShineBorder } from "@/components/magicui/shine-border";
