@@ -57,6 +57,48 @@ export interface UserWithPassword extends User {
   password: string;
 }
 
+// Newsletter related interfaces
+export interface NewsletterSubscription {
+  subscription_id: number;
+  email: string;
+  name?: string;
+  is_active: boolean;
+  subscribed_at: Date;
+  unsubscribed_at?: Date;
+  preferences?: NewsletterPreferences;
+}
+
+export interface NewsletterPreferences {
+  frequency: 'weekly' | 'monthly';
+  categories: string[];
+  include_promotions: boolean;
+}
+
+export interface NewsArticle {
+  article_id: number;
+  title: string;
+  content: string;
+  summary: string;
+  source: string;
+  source_url: string;
+  image_url?: string;
+  category: string;
+  published_at: Date;
+  created_at: Date;
+  is_featured: boolean;
+  tags: string[];
+}
+
+export interface NewsletterIssue {
+  issue_id: number;
+  title: string;
+  content: string;
+  sent_at?: Date;
+  created_at: Date;
+  article_ids: number[];
+  is_sent: boolean;
+}
+
 // Database query result types
 export interface StudentQueryResult {
   email: string;
