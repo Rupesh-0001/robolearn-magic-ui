@@ -62,7 +62,7 @@ export default function MERNStackMasterclass() {
   };
 
   const copyWhatsAppLink = async () => {
-    const link = "https://chat.whatsapp.com/GhrZqnaJ9bFFSpLXnLw1tb";
+    const link = "https://chat.whatsapp.com/HJnekfbIuIVH0ryLcrSjrx";
     try {
       await navigator.clipboard.writeText(link);
       setLinkCopied(true);
@@ -282,7 +282,7 @@ export default function MERNStackMasterclass() {
       
       // Auto-open WhatsApp after 500ms if user hasn't clicked
       // setTimeout(() => {
-      //   window.open('https://chat.whatsapp.com/GhrZqnaJ9bFFSpLXnLw1tb', '_blank');
+      //   window.open('https://chat.whatsapp.com/HJnekfbIuIVH0ryLcrSjrx', '_blank');
       // }, 500);
     }, 300);
 
@@ -313,7 +313,7 @@ export default function MERNStackMasterclass() {
   useEffect(() => {
     if (!isMounted) return;
 
-    const countDownDate = new Date("November 1, 2025 19:00:00").getTime();
+    const countDownDate = new Date("November 23, 2025 19:00:00").getTime();
     // Update the countdown every 1 second
     const interval = setInterval(() => {
       // Get today's date and time
@@ -442,7 +442,7 @@ export default function MERNStackMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>1st November, 2025</span>
+                <span>23rd November, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -525,7 +525,7 @@ export default function MERNStackMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                 1st November, 2025
+                 23rd November, 2025
                 </span>
               </div>
 
@@ -791,8 +791,8 @@ export default function MERNStackMasterclass() {
                 <div className="flex-shrink-0 md:block flex flex-col items-center mb-6 md:mb-0">
                   <div className="w-[100px] h-[120px] relative overflow-hidden rounded-lg">
                     <Image
-                      src="/rupal.jpeg"
-                      alt="Rupal Singla"
+                      src="/Rupesh.jpg"
+                      alt="Rupesh Ahuja"
                       width={100}
                       height={120}
                       className="rounded-lg object-cover w-full h-full"
@@ -802,7 +802,7 @@ export default function MERNStackMasterclass() {
                 <div className="md:flex md:flex-col">
                   <div className="text-center md:text-left">
                     <h3 className="text-lg sm:text-xl font-semibold mb-2">
-                      Rupal Singla
+                      Rupesh Ahuja
                     </h3>
                     <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
                       <ClockIcon className="w-4 h-4 mr-2" />
@@ -816,7 +816,7 @@ export default function MERNStackMasterclass() {
                 </div>
               </div>
               <p className="text-sm sm:text-base text-gray-700 pt-1">
-                My name is <strong>Rupal Singla</strong>, and I&apos;m a <strong>Software Engineer</strong> with <strong>4 years of hands-on experience in Full Stack Development</strong>. Over the years, I&apos;ve worked on real-world projects that span frontend, backend, databases, APIs, and deployment, which helped me understand how all layers of modern applications connect together.
+                My name is <strong>Rupesh Ahuja</strong>, and I&apos;m a <strong>Software Engineer</strong> with <strong>4 years of hands-on experience in Full Stack Development</strong>. Over the years, I&apos;ve worked on real-world projects that span frontend, backend, databases, APIs, and deployment, which helped me understand how all layers of modern applications connect together.
                 <br /><br />
                 Through this lecture series, I want to share my practical knowledge with you — not just theory, but the actual skills you&apos;ll need to build scalable, production-level applications. We&apos;ll start by understanding the core building blocks of full stack development — how frontend and backend interact, how data flows, and how to design and deploy a complete app from scratch.
                 <br /><br />
@@ -880,7 +880,7 @@ export default function MERNStackMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">1st November, 2025</span>
+                  <span className="text-gray-800">23rd November, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1277,7 +1277,7 @@ export default function MERNStackMasterclass() {
                   <input
                     type="text"
                     readOnly
-                    value="https://chat.whatsapp.com/GhrZqnaJ9bFFSpLXnLw1tb"
+                    value="https://chat.whatsapp.com/HJnekfbIuIVH0ryLcrSjrx"
                     className="flex-1 px-3 py-2 text-sm bg-white border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
                     onClick={(e) => (e.target as HTMLInputElement).select()}
                   />
@@ -1331,7 +1331,7 @@ export default function MERNStackMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/GhrZqnaJ9bFFSpLXnLw1tb"
+                  href="https://chat.whatsapp.com/HJnekfbIuIVH0ryLcrSjrx"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"

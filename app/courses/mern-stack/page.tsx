@@ -824,8 +824,8 @@ export default function MERNStackCourse() {
                 <div className="flex-shrink-0 md:block flex flex-col items-center mb-6 md:mb-0">
                   <div className="w-[100px] h-[120px] relative overflow-hidden rounded-lg">
                     <Image
-                      src="/rupal.jpeg"
-                      alt="Rupal Singla"
+                      src="/Rupesh.jpg"
+                      alt="Rupesh Ahuja"
                       width={100}
                       height={120}
                       className="rounded-lg object-cover w-full h-full"
@@ -835,7 +835,7 @@ export default function MERNStackCourse() {
                 <div className="md:flex md:flex-col">
                   <div className="text-center md:text-left">
                     <h3 className="text-lg sm:text-xl font-semibold mb-2">
-                      Rupal Singla
+                      Rupesh Ahuja
                     </h3>
                     <p className="text-sm sm:text-base text-gray-500 mb-2 flex items-center justify-center md:justify-start">
                       <ClockIcon className="w-4 h-4 mr-2" />
@@ -849,7 +849,7 @@ export default function MERNStackCourse() {
                 </div>
               </div>
               <p className="text-sm sm:text-base text-gray-700 pt-1">
-                My name is <strong>Rupal Singla</strong>, and I&apos;m a <strong>Software Engineer</strong> with <strong>4 years of hands-on experience in Full Stack Development</strong>. Over the years, I&apos;ve worked on real-world projects that span frontend, backend, databases, APIs, and deployment, which helped me understand how all layers of modern applications connect together.
+                My name is <strong>Rupesh Ahuja</strong>, and I&apos;m a <strong>Software Engineer</strong> with <strong>4 years of hands-on experience in Full Stack Development</strong>. Over the years, I&apos;ve worked on real-world projects that span frontend, backend, databases, APIs, and deployment, which helped me understand how all layers of modern applications connect together.
                 <br /><br />
                 Through this course, I want to share my practical knowledge with you — not just theory, but the actual skills you&apos;ll need to build scalable, production-level applications. We&apos;ll start by understanding the core building blocks of full stack development — how frontend and backend interact, how data flows, and how to design and deploy a complete app from scratch.
                 <br /><br />
