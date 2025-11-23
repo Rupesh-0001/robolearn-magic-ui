@@ -84,7 +84,7 @@ export default function AutonomousCarMasterclass() {
 
 
   useEffect(() => {
-    const endDate = new Date("2025-11-05T23:59:59");
+    const endDate = new Date("2025-11-23T23:59:59");
 
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -240,7 +240,7 @@ export default function AutonomousCarMasterclass() {
                 orderId: response.razorpay_order_id,
                 signature: response.razorpay_signature,
                 amount: coursePrice,
-                batchId: 6, // Autonomous car course batch ID
+                batchId: 8, // Autonomous car course batch ID
                 referralCode: referralCode // Include referral code if present
               }),
             })
@@ -1449,7 +1449,7 @@ export default function AutonomousCarMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/GNeeXh1iR0r4ffdULe1WAn"
+                  href="https://chat.whatsapp.com/KXTjrLQMerT5oi2VxOpOmY?mode=wwt"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"

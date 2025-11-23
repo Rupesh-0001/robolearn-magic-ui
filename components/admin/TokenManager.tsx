@@ -23,7 +23,7 @@ interface CourseOption {
 const COURSE_OPTIONS: CourseOption[] = [
   {
     name: 'Autonomous Car Course',
-    batchId: 6,
+    batchId: 8,
     tokenPath: '/bootcamp/autonomous-cars/token/',
     defaultPrice: 501,
   },
