@@ -71,7 +71,7 @@ export default function ExplorePage() {
               </div>
               <div className="p-4 sm:p-6 flex-grow flex flex-col">
                 <p className="text-xs sm:text-sm text-gray-500 mb-2">
-                  30th November 2025 • 5:00pm
+                  6th December 2025 • 5:00pm
                 </p>
                 <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
                   Building Your Own Autonomous Car
@@ -104,7 +104,7 @@ export default function ExplorePage() {
                 <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
                   Full Stack Development with MERN
                 </h2>
-                <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Rupesh Ahuja</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-4 flex-grow">by Rupal Singla</p>
                 <div className="flex items-center mt-auto">
                   <span className="text-[#0e8144] border border-solid border-[#0e8144] rounded px-2 py-1 bg-[#0e8144]/10 font-medium text-sm">FREE</span>
                   <span className="ml-2 line-through text-gray-400 text-sm">₹499</span>
