@@ -23,7 +23,8 @@ interface User {
 }
 
 async function fetchWithAuth(url: string) {
-  const cookieHeader = cookies().toString();
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore.getAll().map(cookie => `${cookie.name}=${cookie.value}`).join('; ');
   const res = await fetch(url, {
     headers: { Cookie: cookieHeader },
     cache: 'no-store',
