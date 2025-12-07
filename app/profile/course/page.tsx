@@ -16,7 +16,8 @@ interface Course {
 }
 
 async function fetchWithAuth(url: string) {
-  const cookieHeader = cookies().toString();
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore.getAll().map(cookie => `${cookie.name}=${cookie.value}`).join('; ');
   const res = await fetch(url, {
     headers: { Cookie: cookieHeader },
     cache: 'no-store',
@@ -63,7 +64,11 @@ export default async function CourseDetailPage({ searchParams }: { searchParams:
   const totalLessons = course.course_name === 'MERN - FSD' ? 36 : 25;
   const completedLessons = course.lessons.filter(l => l.recording_url && l.recording_url.trim() !== '').length;
   const completion = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
-  const startDate = course.course_start_date ? new Date(course.course_start_date).toLocaleDateString() : 'N/A';
+  const startDate = course.course_start_date ? new Date(course.course_start_date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }) : 'N/A';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 mt-12">

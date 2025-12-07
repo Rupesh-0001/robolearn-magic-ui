@@ -293,7 +293,11 @@ export default function ProfilePageClient({ user, courses, courseImages }: {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {courses.map((course, idx) => {
               const imageSrc = courseImages[course.course_name] || '/CarCourse.jpg';
-              const startDate = course.course_start_date ? new Date(course.course_start_date).toLocaleDateString() : 'N/A';
+              const startDate = course.course_start_date ? new Date(course.course_start_date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+              }) : 'N/A';
               // Determine total lessons based on course name
               const totalLessons = course.course_name === 'MERN - FSD' ? 36 : 25;
               const completedLessons = course.lessons.filter(l => l.recording_url && l.recording_url.trim() !== '').length;
