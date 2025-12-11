@@ -84,7 +84,7 @@ export default function AutonomousCarMasterclass() {
 
 
   useEffect(() => {
-    const endDate = new Date("2025-12-06T21:59:59");
+    const endDate = new Date("2025-12-13T15:59:59");
 
     const calculateTimeLeft = () => {
       const now = new Date();

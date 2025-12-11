@@ -49,7 +49,7 @@ export default function AIAgentMasterclass() {
   };
 
   const copyWhatsAppLink = async () => {
-    const link = "https://chat.whatsapp.com/ErDr1vNGs8R9D9IFFWDnuN?mode=wwt";
+    const link = "https://chat.whatsapp.com/CVjtdQ6grWEHAZYSQvB03A";
     try {
       await navigator.clipboard.writeText(link);
       setLinkCopied(true);
@@ -281,7 +281,7 @@ export default function AIAgentMasterclass() {
       
       // Auto-open WhatsApp after 500ms if user hasn't clicked
       setTimeout(() => {
-        window.open('https://chat.whatsapp.com/ErDr1vNGs8R9D9IFFWDnuN?mode=wwt', '_blank');
+        window.open('https://chat.whatsapp.com/CVjtdQ6grWEHAZYSQvB03A', '_blank');
       }, 500);
     }, 300);
 
@@ -312,7 +312,7 @@ export default function AIAgentMasterclass() {
   useEffect(() => {
     if (!isMounted) return;
 
-    const countDownDate = new Date("December 6, 2025 17:00:00").getTime();
+    const countDownDate = new Date("December 13, 2025 12:00:00").getTime();
     // Update the countdown every 1 second
     const interval = setInterval(() => {
       // Get today's date and time
@@ -442,7 +442,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>6th December, 2025</span>
+                <span>13th December, 2025</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -453,7 +453,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>5:00 pm to 7:00 pm</span>
+                <span>12:00 pm to 2:00 pm</span>
               </div>
             </div>
 
@@ -525,7 +525,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  6th December, 2025
+                  13th December, 2025
                 </span>
               </div>
 
@@ -539,7 +539,7 @@ export default function AIAgentMasterclass() {
                     height={16}
                   />
                 </div>
-                <span className="text-gray-800 font-medium">5 pm to 7 pm</span>
+                <span className="text-gray-800 font-medium">12 pm to 2 pm</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <div className="text-gray-500 w-6 flex-shrink-0">
@@ -874,7 +874,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">6th December, 2025</span>
+                  <span className="text-gray-800">13th December, 2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -887,7 +887,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">5:00 pm to 7:00 pm</span>
+                  <span className="text-gray-800">12:00 pm to 2:00 pm</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1315,7 +1315,7 @@ export default function AIAgentMasterclass() {
                   <input
                     type="text"
                     readOnly
-                    value="https://chat.whatsapp.com/ErDr1vNGs8R9D9IFFWDnuN?mode=wwt"
+                    value="https://chat.whatsapp.com/CVjtdQ6grWEHAZYSQvB03A"
                     className="flex-1 px-3 py-2 text-sm bg-white border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
                     onClick={(e) => (e.target as HTMLInputElement).select()}
                   />
@@ -1369,7 +1369,7 @@ export default function AIAgentMasterclass() {
               {/* Buttons */}
               <div className="space-y-3">
                 <a
-                  href="https://chat.whatsapp.com/ErDr1vNGs8R9D9IFFWDnuN?mode=wwt"
+                  href="https://chat.whatsapp.com/CVjtdQ6grWEHAZYSQvB03A"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
