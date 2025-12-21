@@ -802,11 +802,11 @@ export default function AutonomousCarMasterclass() {
                   </div>
                   <div className="text-right">
                     <p className="text-xs sm:text-sm text-gray-600 font-semibold">
-                      ₹5,999
+                      ₹7,999
                     </p>
                     <p className="text-xs text-[#df4271]">
                       <span className="line-through text-gray-700">₹9,999</span>{" "}
-                      Save 40%
+                      Save 20%
                     </p>
                   </div>
                 </div>
@@ -838,11 +838,11 @@ export default function AutonomousCarMasterclass() {
                   </div>
                   <div className="text-right">
                     <p className="text-xs sm:text-sm text-gray-600 font-semibold">
-                      ₹5,999
+                      ₹7,999
                     </p>
                     <p className="text-xs text-[#df4271]">
                       <span className="line-through text-gray-700">₹9,999</span>{" "}
-                      Save 40%
+                      Save 20%
                     </p>
                   </div>
                 </div>
@@ -908,14 +908,14 @@ export default function AutonomousCarMasterclass() {
             </ul>
             <div className="mb-2">
               <span className="text-xl sm:text-2xl font-bold text-black-600">
-                ₹5,999
+                ₹7,999
               </span>
               <span className="text-sm sm:text-xl text-gray-500 line-through ml-2">
                 ₹9,999
               </span>
               <span className="text-sm sm:text-base text-black-600 ml-2">
                 {" "}
-                SAVE 40%
+                SAVE 20%
               </span>
             </div>
             <div className="text-sm mb-4">
@@ -1013,13 +1013,13 @@ export default function AutonomousCarMasterclass() {
           <div className="flex p-2">
             <div className="w-[40%] flex flex-col justify-center items-end pr-4">
               <div className="flex items-center gap-2">
-                <span className="text-xl font-bold text-black-600">₹5,999</span>
+                <span className="text-xl font-bold text-black-600">₹7,999</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-gray-500 line-through">
                   ₹9,999
                 </span>
-                <span className="text-xs text-black-600">40% off</span>
+                <span className="text-xs text-black-600">20% off</span>
               </div>
             </div>
             <div className="w-[70%]">

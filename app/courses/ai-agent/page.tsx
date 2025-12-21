@@ -780,11 +780,11 @@ export default function AIAgentBootcamp() {
                   </div>
                   <div className="text-right">
                     <p className="text-xs sm:text-sm text-gray-600 font-semibold">
-                      ₹4,999
+                      ₹7,999
                     </p>
                     <p className="text-xs text-[#df4271]">
                       <span className="line-through text-gray-700">₹9,999</span>{" "}
-                      Save 50%
+                      Save 20%
                     </p>
                   </div>
                 </div>

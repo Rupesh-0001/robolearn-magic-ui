@@ -1172,10 +1172,10 @@ export default function AutonomousCarMasterclass() {
                 ₹3,999
               </span>
                 <span className="text-sm sm:text-lg text-gray-500 line-through">
-                ₹5,999
+                ₹7,999
               </span>
                 <span className="text-xs sm:text-sm bg-green-100 text-green-600 px-2 py-1 rounded-full font-semibold">
-                  SAVE 33%
+                  SAVE 50%
               </span>
             </div>
               <div className="text-xs sm:text-sm text-gray-600 mb-2">
@@ -1217,9 +1217,9 @@ export default function AutonomousCarMasterclass() {
               </div>
               <div className="flex items-center gap-1 sm:gap-2">
                 <span className="text-xs sm:text-sm text-gray-500 line-through">
-                  ₹5,999
+                  ₹7,999
                 </span>
-                <span className="text-xs text-green-600 bg-green-100 px-1 rounded">33% off</span>
+                <span className="text-xs text-green-600 bg-green-100 px-1 rounded">50% off</span>
               </div>
               {/* <div className="text-xs text-gray-600 mt-1">
                 + ₹11,999 bonuses
