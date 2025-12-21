@@ -1165,7 +1165,7 @@ export default function AutonomousCarMasterclass() {
                 ₹501
               </span>
                 <span className="text-sm sm:text-lg text-gray-500 line-through">
-                ₹5,999
+                ₹7,999
               </span>
                 <span className="text-xs sm:text-sm bg-green-100 text-green-600 px-2 py-1 rounded-full font-semibold">
                 Token Amount
@@ -1211,7 +1211,7 @@ export default function AutonomousCarMasterclass() {
               </div>
               <div className="flex items-center gap-1 sm:gap-2">
                 <span className="text-xs sm:text-sm text-gray-500 line-through">
-                  ₹5,999
+                  ₹7,999
                 </span>
                 <span className="text-xs text-green-600 bg-green-100 px-1 rounded">Token Amount</span>
               </div>
