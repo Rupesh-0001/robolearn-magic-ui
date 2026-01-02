@@ -312,7 +312,7 @@ export default function AIAgentMasterclass() {
   useEffect(() => {
     if (!isMounted) return;
 
-    const countDownDate = new Date("January 1, 2026 12:00:00").getTime();
+    const countDownDate = new Date("January 4, 2026 12:00:00").getTime();
     // Update the countdown every 1 second
     const interval = setInterval(() => {
       // Get today's date and time
@@ -442,7 +442,7 @@ export default function AIAgentMasterclass() {
                   width={20}
                   height={20}
                 />
-                <span>1st January, 2026</span>
+                <span>4th January, 2026</span>
               </div>
               <div className="w-px h-6 bg-gray-300"></div>
               <div className="flex items-center gap-2">
@@ -525,7 +525,7 @@ export default function AIAgentMasterclass() {
                   />
                 </div>
                 <span className="text-gray-800 font-medium">
-                  1st January, 2026
+                  4th January, 2026
                 </span>
               </div>
 
@@ -874,7 +874,7 @@ export default function AIAgentMasterclass() {
                       height={20}
                     />
                   </div>
-                  <span className="text-gray-800">1st January, 2026</span>
+                  <span className="text-gray-800">4th January, 2026</span>
                 </div>
 
                 <div className="flex items-center gap-2">
