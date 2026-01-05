@@ -193,4 +193,25 @@
       padding-bottom: 30px; /* Slightly more space for controls on very small screens */
     }
   }
+  
+  /* Google Drive pop-out button blocker */
+  .gdrive-popout-blocker {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    z-index: 10;
+    background: transparent;
+    cursor: default !important;
+    pointer-events: auto;
+  }
+  
+  .gdrive-popout-blocker:hover {
+    cursor: default !important;
+  }
+  
+  .gdrive-popout-blocker:active {
+    cursor: default !important;
+  }
 }

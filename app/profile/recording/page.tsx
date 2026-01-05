@@ -29,10 +29,20 @@ function convertToIframeUrl(url: string): string {
     }
   }
   
-  // If it's a Google Drive URL, convert to embed format
-  if (url.includes('drive.google.com/file/d/')) {
-    const fileId = url.match(/\/file\/d\/([^\/]+)/)?.[1];
+  // If it's a Google Drive URL, convert to preview format (we'll hide pop-out button with JS/CSS)
+  if (url.includes('drive.google.com')) {
+    let fileId = url.match(/\/file\/d\/([^\/\?]+)/)?.[1];
+    
+    if (!fileId) {
+      fileId = url.match(/[?&]id=([^&\n?#]+)/)?.[1];
+    }
+    
+    if (!fileId) {
+      fileId = url.match(/\/uc\?id=([^&\n?#]+)/)?.[1];
+    }
+    
     if (fileId) {
+      // Use preview URL - we'll hide the pop-out button with CSS/JS overlay
       return `https://drive.google.com/file/d/${fileId}/preview`;
     }
   }
@@ -94,6 +104,36 @@ function RecordingPageContent() {
     setIframeError('Failed to load the recording. Please check if the URL is correct.');
   };
 
+  // Prevent right-click and developer tools shortcuts
+  useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+      return false;
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+        (e.ctrlKey && (e.key === 'U' || e.key === 'S')) ||
+        (e.ctrlKey && e.key === 'u') ||
+        (e.ctrlKey && e.key === 's')
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    };
+
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   if (loading) {
     return <div className="flex items-center justify-center h-screen text-xl text-white">Loading...</div>;
   }
@@ -120,7 +160,11 @@ function RecordingPageContent() {
       </div>
       
       {/* Video container */}
-      <div className="flex-1 flex items-center justify-center bg-black">
+      <div 
+        className="flex-1 flex items-center justify-center bg-black select-none"
+        onContextMenu={(e) => e.preventDefault()}
+        style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
+      >
         {isHLSStream(lesson.url) ? (
           <HLSVideoPlayer
             src={lesson.url}
@@ -131,7 +175,6 @@ function RecordingPageContent() {
           <div className="text-center text-white p-8">
             <div className="text-xl font-semibold mb-4">Recording Error</div>
             <div className="text-gray-300 mb-4">{iframeError}</div>
-            <div className="text-sm text-gray-400 mb-4">URL: {lesson.url}</div>
             <button
               onClick={() => setIframeError('')}
               className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -140,16 +183,76 @@ function RecordingPageContent() {
             </button>
           </div>
         ) : (
-          <iframe
-            src={lesson.url}
-            title={lesson.name || 'Recording'}
-            allow="autoplay; encrypted-media; fullscreen"
-            allowFullScreen
-            className="w-full h-full max-w-[96vw] max-h-[calc(100vh-120px)] border-none"
-            sandbox="allow-scripts allow-same-origin allow-presentation allow-forms allow-popups"
-            onError={handleIframeError}
-            onLoad={() => {}}
-          />
+          // Use iframe for all video sources (YouTube, Vimeo, Zoom, Google Drive, etc.)
+          <div 
+            className="relative w-full h-full max-w-[96vw] max-h-[calc(100vh-120px)]"
+            onContextMenu={(e) => e.preventDefault()}
+          >
+            <iframe
+              src={lesson.url}
+              title={lesson.name || 'Recording'}
+              allow="autoplay; encrypted-media; fullscreen"
+              allowFullScreen
+              className="w-full h-full border-none pointer-events-auto"
+              sandbox="allow-scripts allow-same-origin allow-presentation allow-forms"
+              onError={handleIframeError}
+              onLoad={() => {
+                // Hide Google Drive pop-out button after iframe loads
+                if (lesson.url.includes('drive.google.com')) {
+                  const iframeContainer = document.querySelector('.relative.w-full.h-full');
+                  if (iframeContainer && !iframeContainer.querySelector('.gdrive-popout-blocker')) {
+                    const blocker = document.createElement('div');
+                    blocker.className = 'gdrive-popout-blocker';
+                    blocker.style.cssText = `
+                      position: absolute;
+                      top: 0;
+                      right: 0;
+                      width: 60px;
+                      height: 60px;
+                      z-index: 10;
+                      background: transparent;
+                      cursor: default;
+                      pointer-events: auto;
+                    `;
+                    blocker.onclick = (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      return false;
+                    };
+                    blocker.oncontextmenu = (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      return false;
+                    };
+                    iframeContainer.appendChild(blocker);
+                  }
+                }
+              }}
+              onContextMenu={(e) => e.preventDefault()}
+            />
+            {/* Additional overlay for Google Drive to block pop-out button */}
+            {lesson.url.includes('drive.google.com') && (
+              <div
+                className="absolute top-0 right-0 w-16 h-16 z-10"
+                style={{
+                  background: 'transparent',
+                  cursor: 'default',
+                  pointerEvents: 'auto'
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return false;
+                }}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return false;
+                }}
+                title=""
+              />
+            )}
+          </div>
         )}
       </div>
     </div>
